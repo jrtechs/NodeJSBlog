@@ -1,8 +1,14 @@
-var http = require('http');
+/**
+ * Main server file for the blog. This file is responsible for
+ * creating the server and listening for clients. The main run
+ * function parses the url and calls a sub module to make the
+ * appropriate pages.
+ */
+
+const http = require('http');
+
 const url = require('url');
-const fs = require('fs');
-const utils = require('./utils.js');
-const includes = require('./includes.js');
+const includes = require('./includes/includes.js');
 
 http.createServer(function (req, res)
 {
@@ -12,24 +18,25 @@ http.createServer(function (req, res)
     //prints header
     includes.printHeader(res);
 
-    utils.include(res, "README.md");
-
     if(filename.includes("/category"))
     {
-        console.log("categories");
-        test();
-    }
-    else if(filename.includes("/posts/"))
-    {
-        console.log("posts");
+        //categories or view a category page
     }
     else if(filename.includes("/downloads/"))
     {
-        console.log("downloads");
+        //downloads page
+        //probably will be implemented later
+    }
+    else if(filename.includes("/admin"))
+    {
+        //admin page
     }
     else
     {
-        console.log("default");
+        //normal blog entry
     }
+
+    //includes footer file
     includes.printFooter(res);
+
 }).listen(8080);
