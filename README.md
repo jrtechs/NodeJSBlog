@@ -1,9 +1,9 @@
 # NodeJSBlog
 Recreating my wordpress blog in node JS.
 
-##MYSQL Information
+## MYSQL Information
 
-'''sql
+```SQL
 create database blog_name;
 
 use blog_name;
@@ -44,4 +44,9 @@ primary key(popular_post_id)
 
 grant all on blog_name.* to blog_user@localhost identified by "password";
 
-'''
+```
+
+## Node Dependencies
+```bash
+npm install mysql
+```

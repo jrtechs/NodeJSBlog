@@ -10,10 +10,10 @@ const http = require('http');
 const url = require('url');
 const includes = require('./includes/includes.js');
 
-http.createServer(function (req, res)
+http.createServer(function (request_url, res)
 {
-    var q = url.parse(req.url, true);
-    var filename = "." + q.pathname;
+    var q = url.parse(request_url.url, true);
+    var filename = q.pathname;
 
     //prints header
     includes.printHeader(res);
@@ -21,6 +21,7 @@ http.createServer(function (req, res)
     if(filename.includes("/category"))
     {
         //categories or view a category page
+
     }
     else if(filename.includes("/downloads/"))
     {
@@ -30,10 +31,12 @@ http.createServer(function (req, res)
     else if(filename.includes("/admin"))
     {
         //admin page
+
     }
     else
     {
         //normal blog entry
+        require("./posts/posts.js").main(res, filename);
     }
 
     //includes footer file
