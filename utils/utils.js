@@ -9,6 +9,14 @@ module.exports=
 {
     include: function(res, fileName)
     {
-        res.write(fs.readFileSync(fileName));
+        try
+        {
+            res.write(fs.readFileSync(fileName));
+        }
+        catch (e)
+        {
+            console.log("Could not find " + fileName);
+        }
+
     }
 };

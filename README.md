@@ -22,6 +22,7 @@ primary key(user_id)
 create table categories(
 category_id mediumint unsigned not null AUTO_INCREMENT,
 name varchar(60) not null,
+url varchar(60) not null,
 primary key(category_id)
 );
 
