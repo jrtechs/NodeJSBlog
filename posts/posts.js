@@ -9,7 +9,7 @@ module.exports=
      * @param res
      * @param fileName request url
      */
-    main: function(res, requestURL)
+    main: function(res, requestURL, request)
     {
         res.write("<div class=\"w3-col l8 s12\">");
 

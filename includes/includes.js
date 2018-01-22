@@ -14,10 +14,12 @@ module.exports =
     {
         res.writeHead(200, {'Content-Type': 'text/html'});
         utils.include(res, HEADER_FILE);
+        return 0;
     },
     printFooter: function(res)
     {
         utils.include(res, FOOTER_FILE);
         res.end();
+        return 0;
     }
 };

@@ -1,5 +1,7 @@
 const mysql = require('mysql');
 
+const sanitizer = require('sanitizer');
+
 const con = mysql.createConnection({
     host: "localhost",
     user: "blog_user",
@@ -22,7 +24,6 @@ module.exports=
      */
     fetch : function(sqlStatement)
     {
-
         con.query(sqlStatement, function (err, result)
         {
             if (err) throw err;
@@ -34,23 +35,31 @@ module.exports=
     /**
      * Function used to use insert statements into the database
      *
+     * Don't worry, the input gets sanitized
+     *
      * @param sqlStatement
      * @return the id of the new record - if there is one
      */
     insert : function(sqlStatement)
     {
-        con.connect(function(err)
+        con.query(sanitizer.sanitize(sqlStatement), function (err, result)
         {
-            if (err) throw err;
-            con.query(sqlStatement, function (err, result)
+            if (err)
             {
-                if (err) throw err;
-                return result.insertId;
-            });
+                console.log(err);
+                return 0;
+            }
+            return result.insertId;
         });
-        return 0;
     },
 
+    /**
+     * Not to be mistaken for getPostData() in @file utils/utils.js,
+     * this function extracts a post entry from the sql server
+     *
+     * @param requestURL url user used to request blog post
+     * @return {*} the entry found in the data base -- if any
+     */
     getPost : function(requestURL)
     {
         var splitURL = requestURL.split("/");

@@ -11,16 +11,12 @@ const url = require('url');
 
 const includes = require('./includes/includes.js');
 
-http.createServer(function (request_url, res)
+var Promise = require('promise');
+
+http.createServer(function (request, res)
 {
-    var q = url.parse(request_url.url, true);
+    var q = url.parse(request.url, true);
     var filename = q.pathname;
-    console.log(filename.split("/"));
-    console.log(filename);
-    //prints header
-
-
-
 
     //handles image requests
     if(filename.includes("/img/"))
@@ -29,32 +25,69 @@ http.createServer(function (request_url, res)
     }
     else
     {
-        includes.printHeader(res);
+        var file = "";
 
-        //categories or view a category page
         if(filename.includes("/category"))
-            require("../posts/category.js").main(res, filename);
-        //downloads page
-        else if(filename.includes("/downloads/"))
-        {}
-
-
-        //admin page
+        {
+            //categories or view a category page
+            file = "../posts/category.js";
+        }
         else if(filename.includes("/admin"))
-            require("./admin/admin.js").main(res, filename);
-
-
-        //normal blog entry
+        {
+            //admin page
+            file = "./admin/admin.js";
+        }
         else
-            require("./posts/posts.js").main(res, filename);
+        {
+            //normal blog entry
+            file = "./posts/posts.js";
+        }
 
+        var displayHeader = function()
+        {
+            return new Promise(function(resolve, reject)
+            {
+                var status = includes.printHeader(res);
+                if(status == 0)
+                {
+                    console.log("Header done");
+                    resolve();
+                }
+            });
+        };
+        var displayContent = function()
+        {
+            return new Promise(function(resolve, reject)
+            {
+                require(file).main(res, filename, request).then(function(){
+                    resolve();
+                });
+            });
+        };
+        var displayFooter = function()
+        {
+            return new Promise(function(resolve, reject)
+            {
+                var status = includes.printFooter(res);
+                if(status == 0)
+                {
+                    console.log("Footer done");
+                    resolve();
+                }
+            });
+        };
 
-        //includes footer file
-        includes.printFooter(res);
+        displayHeader().then(function()
+        {
+
+            return displayContent();
+
+        }).then(function(){
+            return displayFooter()
+        }).then(function(){
+            console.log("finished!!!!!!!!!!!!!!!")
+        })
+
     }
-
-
-
-
 
 }).listen(8080);
