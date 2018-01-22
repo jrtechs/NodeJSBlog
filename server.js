@@ -59,7 +59,8 @@ http.createServer(function (request, res)
         {
             return new Promise(function(resolve, reject)
             {
-                require(file).main(res, filename, request).then(function(){
+                require(file).main(res, filename, request).then(function()
+                {
                     resolve();
                 });
             });
@@ -79,9 +80,7 @@ http.createServer(function (request, res)
 
         displayHeader().then(function()
         {
-
             return displayContent();
-
         }).then(function(){
             return displayFooter()
         }).then(function(){

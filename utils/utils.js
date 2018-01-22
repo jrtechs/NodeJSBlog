@@ -5,6 +5,8 @@
 
 const fs = require('fs');
 
+var Promise = require('promise');
+
 module.exports=
 {
     /**
@@ -16,15 +18,18 @@ module.exports=
      */
     include: function(result, fileName)
     {
-        try
+        return new Promise(function(resolve, reject)
         {
-            result.write(fs.readFileSync(fileName));
-        }
-        catch (e)
-        {
-            console.log("Could not find " + fileName);
-        }
-
+            try
+            {
+                result.write(fs.readFileSync(fileName));
+            }
+            catch (e)
+            {
+                console.log("Could not find " + fileName);
+            }
+            resolve();
+        });
     },
 
     /**

@@ -42,11 +42,11 @@ module.exports=
                     }
                 });
 
-            }
+            };
             var promiseToDisplayContents = function(postData)
             {
                return require("../admin/addCategory.js").main(result, postData);
-            }
+            };
 
             promiseToGetPost(request).then(function (postData)
             {

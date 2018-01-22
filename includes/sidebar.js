@@ -4,6 +4,6 @@ module.exports=
 {
     main: function(res, fileName)
     {
-        utils.include(res,"includes/sidebar.html");
+        return utils.include(res,"includes/sidebar.html");
     }
 };

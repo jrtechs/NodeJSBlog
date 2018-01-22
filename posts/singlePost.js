@@ -1,22 +1,29 @@
 const utils = require('../utils/utils.js');
 
+var Promise = require('promise');
+
 module.exports=
 {
     renderPost: function(res, post)
     {
-        res.write("<div class=\"w3-card-4 w3-margin w3-white\">");
-        //image
-        res.write("<div class=\"w3-container\">");
-        //title
-        res.write("<h3><b>" + post.name + "</b></h3>");
-        //date
-        res.write("<h5><span class=\"w3-opacity\">" + post.date + "</span></h5>");
-        res.write("</div>");
+        return new Promise(function (resolve, reject)
+        {
+            res.write("<div class=\"w3-card-4 w3-margin w3-white\">");
+            //image
+            res.write("<div class=\"w3-container\">");
+            //title
+            res.write("<h3><b>" + post.name + "</b></h3>");
+            //date
+            res.write("<h5><span class=\"w3-opacity\">" + post.date + "</span></h5>");
+            res.write("</div>");
 
-        res.write("<div class=\"w3-container\">");
-        //include page content
-        utils.include(res, "../entries/" + post.url);
-        res.write("</div></div>")
+            res.write("<div class=\"w3-container\">");
+            //include page content
+            utils.include(res, "../entries/" + post.url).then(function (value) {
+                res.write("</div></div>");
+                resolve();
+            });
+        });
     }
 };
 
