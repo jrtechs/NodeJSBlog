@@ -35,7 +35,7 @@ var fetch = function(sqlStatement)
                 console.log(err);
                 reject();
             }
-            console.log("sql statement method");
+            console.log(result);
             resolve(result);
         });
     });
@@ -107,5 +107,15 @@ module.exports=
             });
 
         });
+    },
+    /**
+     * Function used to retrieve all categories when making the sidebar
+     *
+     * @return {Promise<Response> | * | Array}
+     */
+    getCategories: function()
+    {
+        var q = "select * from categories";
+        return fetch(q);
     }
 };

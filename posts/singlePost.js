@@ -4,6 +4,13 @@ var Promise = require('promise');
 
 module.exports=
 {
+    /**
+     * renderPost() displays a single blog post in it's entirety
+     *
+     * @param res result sent to user
+     * @param post sql data about the blog post
+     * @return {*|Promise}
+     */
     renderPost: function(res, post)
     {
         return new Promise(function (resolve, reject)

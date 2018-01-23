@@ -2,17 +2,15 @@ const utils = require('../utils/utils.js');
 const sql = require('../utils/sql');
 var Promise = require('promise');
 
-var renderSideBar = function(res, requestURL)
-{
-    return new Promise(function(resolve, reject)
-    {
-        require("../includes/sidebar.js").main(res, requestURL).then(function()
-        {
-            resolve();
-        })
-    });
-};
 
+/**
+ * Function responsible for calling the appropriate sql requests to query
+ * database and serve correct blog post
+ *
+ * @param res the result sent to the client
+ * @param requestURL url requested from client
+ * @return {*|Promise} returns a resolved promise to preserve execution order
+ */
 var renderPost = function(res, requestURL)
 {
     return new Promise(function(resolve, reject)
@@ -25,7 +23,6 @@ var renderPost = function(res, requestURL)
         {
             sql.getPost(requestURL).then(function(post)
             {
-                console.log("a " + post);
                 if(post != 0)
                 {
                     return require("../posts/singlePost.js").renderPost(res, post);
@@ -50,7 +47,7 @@ var renderPost = function(res, requestURL)
 module.exports=
 {
     /**
-     * Function which parses a url and displays appropriate post
+     * Calls posts and sidebar modules to render blog contents in order
      *
      * @param res
      * @param fileName request url
@@ -61,7 +58,7 @@ module.exports=
         {
             renderPost(res, requestURL).then(function()
             {
-                return renderSideBar(res, requestURL);
+                return require("../sidebar/sidebar.js").main(res)
             }).then(function ()
             {
                 resolve();
