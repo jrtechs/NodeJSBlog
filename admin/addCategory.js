@@ -5,7 +5,6 @@ const qs = require('querystring');
 var Promise = require('promise');
 
 
-
 module.exports=
 {
     main: function(res, postData)
@@ -13,6 +12,15 @@ module.exports=
         utils.include(res, "./admin/addCategory.html");
         return this.processPost(res, postData);
     },
+    /**
+     * Checks for post data regarding adding a new category.
+     * If a post is made with add_category, it parses the url-- replaces spaces
+     * with dashes -- and calls a insert method on the database
+     *
+     * @param res
+     * @param postData
+     * @return {*|Promise}
+     */
     processPost: function(res, postData)
     {
         return new Promise(function(resolve, reject)
@@ -34,7 +42,7 @@ module.exports=
                 }
 
             }
-            resolve();
+            resolve(postData);
         });
     }
 };

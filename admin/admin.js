@@ -15,14 +15,19 @@ module.exports=
     {
         return new Promise(function(resolve, reject)
         {
+            result.write("<div class=\"w3-row\">");
             utils.getPostData(request).then(function (postData)
+            {
+                return require("../admin/newPost.js").main(result, postData);
+            }).then(function(postData)
             {
                 return require("../admin/addCategory.js").main(result, postData);
             }).then(function()
             {
                 console.log("admin page ended");
                 resolve();
-            });
+            })
+            result.write("</div>");
         });
     }
 };

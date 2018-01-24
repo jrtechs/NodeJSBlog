@@ -29,10 +29,8 @@ primary key(category_id)
 create table posts(
 post_id mediumint unsigned not null AUTO_INCREMENT,
 category_id mediumint unsigned not null,
-user_id mediumint unsigned not null,
 picture_url varchar(100) not null,
 published datetime not null,
-url varchar(100) not null,
 name varchar(100) not null,
 primary key(post_id)
 );

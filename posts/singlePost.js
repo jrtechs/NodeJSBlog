@@ -26,7 +26,7 @@ module.exports=
 
             res.write("<div class=\"w3-container\">");
             //include page content
-            utils.include(res, "../entries/" + post.url).then(function (value) {
+            utils.include(res, "../entries/" + post.url + ".html").then(function (value) {
                 res.write("</div></div>");
                 resolve();
             });
