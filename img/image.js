@@ -2,12 +2,15 @@ const utils = require('../utils/utils.js');
 
 module.exports=
     {
-        main: function(res, fileName)
+        /**Sends the user an image from the specified fileName.
+         *
+         * @param result
+         * @param fileName
+         */
+        main: function(result, fileName)
         {
-            path = "." + fileName;
-
-            res.contentType = 'image/png';
-            utils.include(res, path);
-            res.end();
+            result.contentType = 'image/png';
+            utils.include(result, "." + fileName);
+            result.end();
         }
     };

@@ -7,17 +7,7 @@ module.exports=
     {
         return new Promise(function(resolve, reject)
         {
-            sql.getCategories().then(function(categories)
-            {
-                console.log(categories);
-                for(var category in categories)
-                {
-                    res.write(category);
-                }
-            }).then(function())
-            {
-                resolve();
-            }
+            resolve();
         });
     }
 };

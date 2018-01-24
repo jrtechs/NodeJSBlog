@@ -8,18 +8,38 @@ const HEADER_FILE = "includes/header.html";
 
 const FOOTER_FILE = "includes/footer.html";
 
+const Promise = require('promise');
+
 module.exports =
 {
-    printHeader: function(res)
+    /** Appends the header html section to the result which is
+     * sent to the user.
+     *
+     * @param result
+     * @return {*} a promise retrieved from the utils.include function
+     */
+    printHeader: function(result)
     {
-        res.writeHead(200, {'Content-Type': 'text/html'});
-        utils.include(res, HEADER_FILE);
-        return 0;
+        result.writeHead(200, {'Content-Type': 'text/html'});
+        return utils.include(result, HEADER_FILE);
     },
-    printFooter: function(res)
+    /**
+     * Appends the footer to the result object
+     *
+     * @param result
+     * @return {*|Promise}
+     */
+    printFooter: function(result)
     {
-        utils.include(res, FOOTER_FILE);
-        res.end();
-        return 0;
+        return new Promise(function(resolve, reject)
+        {
+            console.log(FOOTER_FILE);
+            utils.include(result, FOOTER_FILE).then(function()
+            {
+                result.end();
+                resolve();
+            })
+
+        })
     }
 };

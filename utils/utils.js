@@ -38,29 +38,38 @@ module.exports=
      * @param request sent by user in initial server call
      * @return the post data
      */
-    getPostData: function(request)
+    getPostData: function(req)
     {
-        console.log("Get post data method");
-        if(request.method == 'POST')
+        return new Promise(function(resolve, reject)
         {
-            var body = '';
-
-            request.on('data', function (data)
+            if(req.method == 'POST')
             {
-                body += data;
+                var body = '';
 
-                //Kills request, don't steal my RAM!!
-                //You can only download so much ram ;)
-                if (body.length > 1e6)
-                    request.connection.destroy();
-            });
+                req.on('data', function (data)
+                {
+                    body += data;
 
-            request.on('end', function ()
+                    //Kills request, don't steal my RAM!!
+                    //You can only download so much ram ;)
+                    if (body.length > 1e6)
+                    {
+                        req.connection.destroy();
+                        reject();
+                    }
+
+                });
+
+                req.on('end', function ()
+                {
+                    console.log(body);
+                    resolve(body);
+                });
+            }
+            else
             {
-                console.log(body);
-                return body;
-            });
-        }
-        return {};
+                resolve(0);
+            }
+        });
     }
 };

@@ -11,8 +11,6 @@ const url = require('url');
 
 const includes = require('./includes/includes.js');
 
-var Promise = require('promise');
-
 http.createServer(function (request, res)
 {
     var q = url.parse(request.url, true);
@@ -27,66 +25,25 @@ http.createServer(function (request, res)
     {
         var file = "";
 
-        if(filename.includes("/category"))
-        {
-            //categories or view a category page
+        if(filename.includes("/category")) //single category page
             file = "../posts/category.js";
-        }
-        else if(filename.includes("/admin"))
-        {
-            //admin page
+
+        else if(filename.includes("/admin")) //top secret admin page
             file = "./admin/admin.js";
-        }
-        else
-        {
-            //normal blog entry
+
+        else //single post page
             file = "./posts/posts.js";
-        }
 
-        var displayHeader = function()
+        includes.printHeader(res).then(function()
         {
-            return new Promise(function(resolve, reject)
-            {
-                var status = includes.printHeader(res);
-                if(status == 0)
-                {
-                    console.log("Header done");
-                    resolve();
-                }
-            });
-        };
-        var displayContent = function()
+            return require(file).main(res, filename, request);
+        }).then(function()
         {
-            return new Promise(function(resolve, reject)
-            {
-                require(file).main(res, filename, request).then(function()
-                {
-                    resolve();
-                });
-            });
-        };
-        var displayFooter = function()
+            return includes.printFooter(res);
+        }).then(function()
         {
-            return new Promise(function(resolve, reject)
-            {
-                var status = includes.printFooter(res);
-                if(status == 0)
-                {
-                    console.log("Footer done");
-                    resolve();
-                }
-            });
-        };
-
-        displayHeader().then(function()
-        {
-            return displayContent();
-        }).then(function(){
-            return displayFooter()
-        }).then(function(){
-            console.log("finished!!!!!!!!!!!!!!!")
+            console.log("fin"); //for debugging
         })
-
     }
 
 }).listen(8080);

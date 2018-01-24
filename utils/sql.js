@@ -27,7 +27,6 @@ var fetch = function(sqlStatement)
     console.log("sql fetch method called");
     return new Promise(function(resolve, reject)
     {
-
         con.query(sqlStatement, function (err, result)
         {
             if (err)
