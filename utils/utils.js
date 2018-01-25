@@ -32,6 +32,20 @@ module.exports=
         });
     },
 
+    getFileContents: function(fileName)
+    {
+        try
+        {
+            return write(fs.readFileSync(fileName));
+        }
+        catch (e)
+        {
+            console.log("Could not find " + fileName);
+        }
+        return 0;
+    },
+
+
     /**
      * Function which is responsible for returning all post data.
      *

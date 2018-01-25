@@ -32,6 +32,7 @@ category_id mediumint unsigned not null,
 picture_url varchar(100) not null,
 published datetime not null,
 name varchar(100) not null,
+url varchar(100) not null,
 primary key(post_id)
 );
 
@@ -50,4 +51,5 @@ grant all on blog_name.* to blog_user@localhost identified by "password";
 npm install mysql
 npm install sanitizer
 npm install promise
+npm install markdown
 ```

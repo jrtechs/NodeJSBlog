@@ -24,7 +24,7 @@ con.connect(function(err) {
  */
 var fetch = function(sqlStatement)
 {
-    console.log("sql fetch method called");
+    console.log("sql fetch method called with + " + sqlStatement);
     return new Promise(function(resolve, reject)
     {
         con.query(sqlStatement, function (err, result)
@@ -38,7 +38,6 @@ var fetch = function(sqlStatement)
             resolve(result);
         });
     });
-
 };
 
 module.exports=
@@ -53,15 +52,19 @@ module.exports=
      */
     insert : function(sqlStatement)
     {
-        con.query((sqlStatement), function (err, result)
+        return new Promise(function(resolve, reject)
         {
-            if (err)
+            con.query(sanitizer.sanitize(sqlStatement), function (err, result)
             {
-                console.log(err);
-                return 0;
-            }
-            return result.insertId;
-        });
+                if (err)
+                {
+                    console.log(err);
+                    resolve(0);
+                }
+                console.log(sqlStatement);
+                resolve(result.insertId);
+            });
+        })
     },
 
     /**
@@ -75,19 +78,19 @@ module.exports=
     {
         return new Promise(function(resolve, reject)
         {
-            var splitURL = requestURL.split("/");
+            var splitURL = requestURL.split("/")
             var q = "select * from categories where url='" + splitURL[1] + "'";
+
             fetch(q).then(function (result_category)
             {
-                console.log(result_category);
                 if(result_category.length != 0)
                 {
 
-                    q = "select * from posts where category_id='" + result_category[0].category_id + "'  and url='" + splitURL[2] + "'";
-                    console.log(q);
-                    fetch(q).then(function (result_posts)
+                    var q2 = "select * from posts where category_id='" + result_category[0].category_id +
+                        "'  and url='" + splitURL[2] + "'";
+
+                    fetch(q2).then(function (result_posts)
                     {
-                        console.log(result_posts);
                         if(result_posts != 0)
                         {
                             resolve(result_posts[0]);
@@ -112,7 +115,7 @@ module.exports=
      *
      * @return {Promise<Response> | * | Array}
      */
-    getCategories: function()
+    getCategories : function()
     {
         var q = "select * from categories";
         return fetch(q);

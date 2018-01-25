@@ -2,6 +2,8 @@ const utils = require('../utils/utils.js');
 
 var Promise = require('promise');
 
+var markdown = require( "markdown" ).markdown;
+
 module.exports=
 {
     /**
@@ -25,11 +27,20 @@ module.exports=
             res.write("</div>");
 
             res.write("<div class=\"w3-container\">");
-            //include page content
-            utils.include(res, "../entries/" + post.url + ".html").then(function (value) {
-                res.write("</div></div>");
-                resolve();
-            });
+
+            var pathName =  "entries/" + post.url + ".md";
+            try
+            {
+                res.write(markdown.toHTML(utils.getFileContents(pathName)));
+            }
+            catch(ex)
+            {
+                console.log(ex);
+                //utils.include(res, "includes/404.html");
+            }
+
+            res.write("</div></div>");
+            resolve()
         });
     }
 };
