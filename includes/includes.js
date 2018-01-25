@@ -41,5 +41,18 @@ module.exports =
             })
 
         })
+    },
+
+    /**Sends a css file to the user
+     *
+     * @param result
+     * @param path
+     * @return {*}
+     */
+    sendCSS: function(result, path)
+    {
+        result.writeHead(200, {'Content-Type': 'text/css'});
+        utils.include(result, "./" + path);
+        result.end();
     }
 };

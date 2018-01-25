@@ -4,6 +4,10 @@ var Promise = require('promise');
 
 var markdown = require( "markdown" ).markdown;
 
+var Markdown = require('markdown-to-html').Markdown;
+var md = new Markdown();
+
+
 module.exports=
 {
     /**
@@ -23,7 +27,7 @@ module.exports=
             //title
             res.write("<h3><b>" + post.name + "</b></h3>");
             //date
-            res.write("<h5><span class=\"w3-opacity\">" + post.date + "</span></h5>");
+            res.write("<h5><span class=\"w3-opacity\">" + post.published.toDateString() + "</span></h5>");
             res.write("</div>");
 
             res.write("<div class=\"w3-container\">");
@@ -31,11 +35,16 @@ module.exports=
             var pathName =  "entries/" + post.url + ".md";
             try
             {
-                res.write(markdown.toHTML(utils.getFileContents(pathName)));
+                var html = markdown.toHTML(utils.getFileContents(pathName).toString());
+
+                html = html.split("<code>").join("<pre><code>");
+                html = html.split("</code>").join("</code></pre>");
+                res.write(html);
+                console.log(html);
             }
             catch(ex)
             {
-                console.log(ex);
+                //console.log(ex);
                 //utils.include(res, "includes/404.html");
             }
 

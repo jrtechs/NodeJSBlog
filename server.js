@@ -21,6 +21,10 @@ http.createServer(function (request, res)
     {
         require("./img/image.js").main(res, filename);
     }
+    else if(filename.includes("/css/"))
+    {
+        includes.sendCSS(res, filename)
+    }
     else
     {
         var file = "";

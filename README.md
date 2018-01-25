@@ -52,4 +52,6 @@ npm install mysql
 npm install sanitizer
 npm install promise
 npm install markdown
+npm install markdown-to-html -g
+npm install highlight
 ```

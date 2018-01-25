@@ -36,7 +36,7 @@ module.exports=
     {
         try
         {
-            return write(fs.readFileSync(fileName));
+            return fs.readFileSync(fileName);
         }
         catch (e)
         {

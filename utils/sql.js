@@ -24,17 +24,14 @@ con.connect(function(err) {
  */
 var fetch = function(sqlStatement)
 {
-    console.log("sql fetch method called with + " + sqlStatement);
     return new Promise(function(resolve, reject)
     {
         con.query(sqlStatement, function (err, result)
         {
             if (err)
             {
-                console.log(err);
                 reject();
             }
-            console.log(result);
             resolve(result);
         });
     });
@@ -61,7 +58,6 @@ module.exports=
                     console.log(err);
                     resolve(0);
                 }
-                console.log(sqlStatement);
                 resolve(result.insertId);
             });
         })
