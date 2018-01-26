@@ -4,9 +4,6 @@ var Promise = require('promise');
 
 var markdown = require( "markdown" ).markdown;
 
-var Markdown = require('markdown-to-html').Markdown;
-var md = new Markdown();
-
 
 module.exports=
 {
@@ -23,6 +20,8 @@ module.exports=
         {
             res.write("<div class=\"w3-card-4 w3-margin w3-white\">");
             //image
+            res.write("<img src=\"https://www.w3schools.com/w3images/woods.jpg\" alt=\"Nature\" style=\"width:100%\">");
+
             res.write("<div class=\"w3-container\">");
             //title
             res.write("<h3><b>" + post.name + "</b></h3>");

@@ -1,13 +1,61 @@
 var Promise = require('promise');
 const sql = require('../utils/sql');
+const utils = require('../utils/utils.js');
 
-module.exports=
+var renderPosts = function(result, resultURL)
 {
-    main: function(res, fileName)
+    var splitURL = resultURL.split("/");
+    if(splitURL.length >= 3)
     {
+        result.write("<div class=\"w3-col l8 s12\">\n");
+
         return new Promise(function(resolve, reject)
         {
-            resolve();
+            sql.getPostsFromCategory(splitURL[2]).then(function(posts)
+            {
+                posts.forEach(function(p)
+                {
+
+                    require("../posts/singlePost.js").renderPost(result, p);
+                });
+            }).then(function()
+            {
+                result.write("</div>");
+                resolve();
+            })
         });
     }
+    else
+    {
+        return utils.print404(result);
+    }
 };
+
+module.exports=
+    {
+        renderPostPreview: function(result, postSQLData)
+        {
+
+        },
+
+        /**
+         * Calls posts and sidebar modules to render blog contents in order
+         *
+         * @param res
+         * @param fileName request url
+         */
+        main: function(res, requestURL, request)
+        {
+            console.log("category page");
+            return new Promise(function(resolve, reject)
+            {
+                renderPosts(res, requestURL).then(function()
+                {
+                    return require("../sidebar/sidebar.js").main(res)
+                }).then(function ()
+                {
+                    resolve();
+                })
+            });
+        }
+    }

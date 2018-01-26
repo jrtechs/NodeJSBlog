@@ -85,5 +85,10 @@ module.exports=
                 resolve(0);
             }
         });
+    },
+
+    print404: function(result)
+    {
+        return this.include(result, "includes/404.html");
     }
 };

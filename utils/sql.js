@@ -115,5 +115,25 @@ module.exports=
     {
         var q = "select * from categories";
         return fetch(q);
+    },
+
+    getPostsFromCategory: function(requestURL)
+    {
+        return new Promise(function(resolve, reject)
+        {
+            var q = "select * from categories where name ='" + requestURL + "' limit 1";
+            fetch(q).then(function(categories)
+            {
+                if(categories.length != 0)
+                {
+                    var qPosts = "select * from posts where category_id='" + categories[0].category_id + "'";
+                    resolve(fetch(qPosts));
+                }
+                else
+                {
+                    resolve(0);
+                }
+            });
+        });
     }
 };

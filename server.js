@@ -29,14 +29,16 @@ http.createServer(function (request, res)
     {
         var file = "";
 
-        if(filename.includes("/category")) //single category page
-            file = "../posts/category.js";
+        if(filename.includes("/categories/")) //single category page
+            file = "./posts/category.js";
 
         else if(filename.includes("/admin")) //top secret admin page
             file = "./admin/admin.js";
 
         else //single post page
             file = "./posts/posts.js";
+
+        console.log(file);
 
         includes.printHeader(res).then(function()
         {

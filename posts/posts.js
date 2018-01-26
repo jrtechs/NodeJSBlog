@@ -29,7 +29,7 @@ var renderPost = function(res, requestURL)
                 }
                 else
                 {
-                    return utils.include(res, "includes/404.html");
+                    return utils.print404(res);
                 }
             }).then(function()
             {
@@ -54,6 +54,7 @@ module.exports=
      */
     main: function(res, requestURL, request)
     {
+        console.log("posts page");
         return new Promise(function(resolve, reject)
         {
             renderPost(res, requestURL).then(function()
