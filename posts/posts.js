@@ -21,6 +21,7 @@ var renderPost = function(res, requestURL)
         //user entered /category/name/ or /category/name
         if(splitURL.length == 3 || splitURL.length == 4)
         {
+            console.log("importante "+ requestURL)
             sql.getPost(requestURL).then(function(post)
             {
                 if(post != 0)

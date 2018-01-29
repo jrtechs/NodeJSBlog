@@ -117,6 +117,11 @@ module.exports=
         return fetch(q);
     },
 
+    /**
+     * Function which currently returns all posts of a particular category from the database
+     * @param requestURL
+     * @return {*|Promise}
+     */
     getPostsFromCategory: function(requestURL)
     {
         return new Promise(function(resolve, reject)
@@ -133,6 +138,37 @@ module.exports=
                 {
                     resolve(0);
                 }
+            });
+        });
+    },
+
+    /**
+     * Helper method which returns a list of objects which contains the url and name of thee ten most recent posts
+     *
+     * {[name: , url: ],[name: , url: ],[name: , url: ],...}
+     *
+     * @return {*|Promise}
+     */
+    getRecentPosts: function()
+    {
+        return new Promise(function(resolve, reject)
+        {
+            var q = "select name, category_id from posts order by post_id desc limit 10";
+            fetch(q).then(function(sqlPosts)
+            {
+                var posts = [];
+                sqlPosts.forEach(function(p)
+                {
+                    var getCategory = "select url from categories where category_id='" + p.category_id + "'";
+                    fetch(getCategory).then(function(url)
+                    {
+                        var obj = new Object();
+                        obj.name = p.name;
+                        obj.category = url.url;
+                        posts.push(obj);
+                    })
+                });
+                resolve(posts);
             });
         });
     }

@@ -29,14 +29,21 @@ http.createServer(function (request, res)
     {
         var file = "";
 
-        if(filename.includes("/categories/")) //single category page
+        var urlSplit = filename.split("/");
+
+        console.log(urlSplit);
+
+        if(urlSplit.length >= 2 && urlSplit[1] === 'category') //single category page
             file = "./posts/category.js";
 
-        else if(filename.includes("/admin")) //top secret admin page
+        else if(urlSplit.length >= 2 && urlSplit[1] === 'admin') //top secret admin page
             file = "./admin/admin.js";
 
-        else //single post page
+        else if(urlSplit.length >= 3)//single post page
             file = "./posts/posts.js";
+
+        else //single static page?
+            file = "./posts/pages.js";
 
         console.log(file);
 
