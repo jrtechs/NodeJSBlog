@@ -2,7 +2,11 @@ const mysql = require('mysql');
 
 const sanitizer = require('sanitizer');
 
-var Promise = require('promise');
+const Promise = require('promise');
+
+const crypto = require('crypto');
+
+const qs = require('querystring');
 
 const con = mysql.createConnection({
     host: "localhost",
@@ -13,7 +17,6 @@ const con = mysql.createConnection({
 
 con.connect(function(err) {
     if (err) throw err;
-    console.log("Connected!");
 });
 
 /**
@@ -139,6 +142,7 @@ module.exports=
                     resolve(0);
                 }
             });
+            resolve(0);
         });
     },
 
@@ -190,12 +194,61 @@ module.exports=
             });
         });
     },
-    getPage: function(name)
+    /**
+     * Function which checks to see if a user successfully logged in based on
+     * the post data which they sent
+     *
+     * @param postData the post data
+     * @return {*|Promise} a json object with {pass: , user: }
+     * the pass is whether or not they logged in successfully and the user is
+     * the username they successfully logged in with
+     */
+    checkLogin: function(postData)
     {
+        var post = qs.parse(postData);
         return new Promise(function(resolve, reject)
         {
-            var q = "";
-        });
+            var result = Object();
+            result.pass = false;
 
+            if(post.username && post.password)
+            {
+                var cleanName = sanitizer.sanitize(post.username);
+                var cleanPassword = sanitizer.sanitize(post.password);
+
+                var getSalt = "select * from users where user_name='" + cleanName + "'";
+                fetch(getSalt).then(function(saltResult)
+                {
+                    if(saltResult.length == 1)
+                    {
+                        var hashedPassword = crypto.createHash('sha256')
+                            .update(cleanPassword + saltResult[0].salt)
+                            .digest('hex');
+                        if(saltResult[0].password === hashedPassword)
+                        {
+                            //yay!
+                            result.pass = true;
+                            result.user = cleanName;
+                            resolve(result);
+                        }
+                        else
+                        {
+                            //wrong password
+                            resolve(result)
+                        }
+                    }
+                    else
+                    {
+                        //incorrect username
+                        resolve(result);
+                    }
+                })
+            }
+            else
+            {
+                //no login attempts were made
+                resolve(result);
+            }
+        });
     }
 };

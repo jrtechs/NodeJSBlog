@@ -10,12 +10,9 @@ use blog_name;
 
 create table users(
 user_id mediumint unsigned not null AUTO_INCREMENT,
-first_name varchar(20) not null,
-last_name varchar(40) not null,
 user_name varchar(60) not null,
-pass char(40) not null,
-registration_date datetime not null,
-admin boolean not null,
+password char(64) not null,
+salt char(64) not null,
 primary key(user_id)
 );
 
@@ -49,11 +46,12 @@ grant all on blog_name.* to blog_user@localhost identified by "password";
 ## Node Dependencies
 ```bash
 npm install express
-npm install client-sessions
+npm install express-sessions
 npm install mysql
 npm install sanitizer
 npm install promise
 npm install markdown
 npm install markdown-to-html -g
 npm install highlight
+npm install crypto
 ```

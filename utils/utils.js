@@ -32,6 +32,11 @@ module.exports=
         });
     },
 
+    /**
+     * Method which return the contents of a file as a string
+     * @param fileName
+     * @return {*}
+     */
     getFileContents: function(fileName)
     {
         try
@@ -71,12 +76,10 @@ module.exports=
                         req.connection.destroy();
                         reject();
                     }
-
                 });
 
                 req.on('end', function ()
                 {
-                    console.log(body);
                     resolve(body);
                 });
             }

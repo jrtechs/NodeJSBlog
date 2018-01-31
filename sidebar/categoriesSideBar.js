@@ -12,7 +12,6 @@ module.exports=
          */
         main: function(res)
         {
-            console.log("sidebar called");
             return new Promise(function(resolve, reject)
             {
                 res.write("<div class=\"w3-card w3-margin\">");
@@ -23,18 +22,16 @@ module.exports=
 
                 sql.getCategories().then(function(categories)
                 {
-                    console.log(categories[0].name);
                     categories.forEach(function(cat)
                     {
                         //res.write(cat.name);
-                        console.log(cat);
                         res.write("<li class=\"w3-padding-16\">");
 
                         res.write("<a href='/category/" + cat.url + "'><span class=\"w3-large\">" + cat.name + "</span><br></a>");
                         res.write("</li>");
 
                     });
-                    res.write("</ul>");
+                    res.write("</ul></div>");
                     resolve();
                 })
 

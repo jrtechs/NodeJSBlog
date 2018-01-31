@@ -1,5 +1,6 @@
 const utils = require('../utils/utils.js');
 var Promise = require('promise');
+var session = require('client-sessions');
 
 module.exports=
 {
@@ -18,7 +19,7 @@ module.exports=
         {
             if(request.session && request.session.user)
             {
-
+                console.log("user logged in");
                 utils.getPostData(request).then(function (postData)
                 {
                     return require("../admin/newPost.js").main(result, postData);
@@ -34,7 +35,13 @@ module.exports=
             else
             {
                 //login page
-                return require("../admin/login.js").main(result, request);
+                require("../admin/login.js").main(result, request).then(function()
+                {
+                    resolve();
+                }).catch(function(err)
+                {
+                    console.log(err);
+                })
             }
 
         });

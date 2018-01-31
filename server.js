@@ -11,18 +11,13 @@ const url = require('url');
 
 var express = require("express");
 
-var session = require('client-sessions');
+var session = require('express-session');
 
 const includes = require('./includes/includes.js');
 
 var app = express();
 
-app.use(session({
-    cookieName: 'session',
-    secret: 'random_string_goes_here',
-    duration: 30 * 60 * 1000,
-    activeDuration: 5 * 60 * 1000,
-}));
+app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 6000000 }}));
 
 app.use(function(request, res)
 {
@@ -44,8 +39,6 @@ app.use(function(request, res)
 
         var urlSplit = filename.split("/");
 
-        console.log(urlSplit);
-
         if(urlSplit.length >= 2 && urlSplit[1] === 'category') //single category page
             file = "./posts/category.js";
 
@@ -55,8 +48,6 @@ app.use(function(request, res)
         else
             file = "./posts/posts.js";
 
-        console.log(file);
-
         includes.printHeader(res).then(function()
         {
             return require(file).main(res, filename, request);
@@ -65,7 +56,7 @@ app.use(function(request, res)
             return includes.printFooter(res);
         }).then(function()
         {
-            console.log("fin"); //for debugging
+            //console.log("fin"); //for debugging
         })
     }
 

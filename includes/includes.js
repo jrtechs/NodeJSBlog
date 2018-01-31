@@ -33,7 +33,6 @@ module.exports =
     {
         return new Promise(function(resolve, reject)
         {
-            console.log(FOOTER_FILE);
             utils.include(result, FOOTER_FILE).then(function()
             {
                 result.end();

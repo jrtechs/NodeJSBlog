@@ -39,7 +39,6 @@ module.exports=
                 html = html.split("<code>").join("<pre><code>");
                 html = html.split("</code>").join("</code></pre>");
                 res.write(html);
-                console.log(html);
             }
             catch(ex)
             {
