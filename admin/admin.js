@@ -13,21 +13,30 @@ module.exports=
      */
     main: function(result, fileName, request)
     {
+        result.write("<div class=\"w3-row\">");
         return new Promise(function(resolve, reject)
         {
-            result.write("<div class=\"w3-row\">");
-            utils.getPostData(request).then(function (postData)
+            if(request.session && request.session.user)
             {
-                return require("../admin/newPost.js").main(result, postData);
-            }).then(function(postData)
+
+                utils.getPostData(request).then(function (postData)
+                {
+                    return require("../admin/newPost.js").main(result, postData);
+                }).then(function(postData)
+                {
+                    return require("../admin/addCategory.js").main(result, postData);
+                }).then(function()
+                {
+                    result.write("</div>");
+                    resolve();
+                });
+            }
+            else
             {
-                return require("../admin/addCategory.js").main(result, postData);
-            }).then(function()
-            {
-                console.log("admin page ended");
-                resolve();
-            })
-            result.write("</div>");
+                //login page
+                return require("../admin/login.js").main(result, request);
+            }
+
         });
     }
 };

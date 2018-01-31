@@ -5,7 +5,6 @@ module.exports=
     {
         main: function(res)
         {
-            console.log("sidebar called");
             return new Promise(function(resolve, reject)
             {
 

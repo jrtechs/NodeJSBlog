@@ -9,9 +9,22 @@ const http = require('http');
 
 const url = require('url');
 
+var express = require("express");
+
+var session = require('client-sessions');
+
 const includes = require('./includes/includes.js');
 
-http.createServer(function (request, res)
+var app = express();
+
+app.use(session({
+    cookieName: 'session',
+    secret: 'random_string_goes_here',
+    duration: 30 * 60 * 1000,
+    activeDuration: 5 * 60 * 1000,
+}));
+
+app.use(function(request, res)
 {
     var q = url.parse(request.url, true);
     var filename = q.pathname;
@@ -39,11 +52,8 @@ http.createServer(function (request, res)
         else if(urlSplit.length >= 2 && urlSplit[1] === 'admin') //top secret admin page
             file = "./admin/admin.js";
 
-        else if(urlSplit.length >= 3)//single post page
+        else
             file = "./posts/posts.js";
-
-        else //single static page?
-            file = "./posts/pages.js";
 
         console.log(file);
 
@@ -59,4 +69,6 @@ http.createServer(function (request, res)
         })
     }
 
-}).listen(8080);
+});
+
+http.createServer(app).listen(8080);

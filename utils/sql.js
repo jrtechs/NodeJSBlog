@@ -189,5 +189,13 @@ module.exports=
 
             });
         });
+    },
+    getPage: function(name)
+    {
+        return new Promise(function(resolve, reject)
+        {
+            var q = "";
+        });
+
     }
 };

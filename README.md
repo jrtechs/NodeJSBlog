@@ -48,6 +48,8 @@ grant all on blog_name.* to blog_user@localhost identified by "password";
 
 ## Node Dependencies
 ```bash
+npm install express
+npm install client-sessions
 npm install mysql
 npm install sanitizer
 npm install promise

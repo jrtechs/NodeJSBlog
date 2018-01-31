@@ -21,7 +21,6 @@ var renderPost = function(res, requestURL)
         //user entered /category/name/ or /category/name
         if(splitURL.length == 3 || splitURL.length == 4)
         {
-            console.log("importante "+ requestURL)
             sql.getPost(requestURL).then(function(post)
             {
                 if(post != 0)
@@ -40,7 +39,11 @@ var renderPost = function(res, requestURL)
         }
         else
         {
-            console.log("error in parameters");
+            utils.print404(res).then(function()
+            {
+               res.write("</div>");
+               resolve();
+            });
         }
     });
 };
@@ -55,7 +58,6 @@ module.exports=
      */
     main: function(res, requestURL, request)
     {
-        console.log("posts page");
         return new Promise(function(resolve, reject)
         {
             renderPost(res, requestURL).then(function()
