@@ -52,28 +52,3 @@ module.exports=
         });
     }
 };
-
-/*
-
-<div class="w3-card-4 w3-margin w3-white">
-
-    <img src="/w3images/woods.jpg" alt="Nature" style="width:100%">
-
-    <div class="w3-container">
-
-        <h3><b>TITLE HEADING</b></h3>
-
-        <h5>Title description, <span class="w3-opacity">Date</span></h5>
-
-    </div>
-
-
-
-    <div class="w3-container">
-        content
-
-    </div>
-
-</div>
-
- */

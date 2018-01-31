@@ -153,22 +153,40 @@ module.exports=
     {
         return new Promise(function(resolve, reject)
         {
-            var q = "select name, category_id from posts order by post_id desc limit 10";
+            var q = "select name,url, category_id from posts order by post_id desc limit 10";
             fetch(q).then(function(sqlPosts)
             {
-                var posts = [];
-                sqlPosts.forEach(function(p)
+                var promises = [];
+                sqlPosts.forEach(function(post)
                 {
-                    var getCategory = "select url from categories where category_id='" + p.category_id + "'";
-                    fetch(getCategory).then(function(url)
+                    promises.push(new Promise(function(res, rej)
                     {
-                        var obj = new Object();
-                        obj.name = p.name;
-                        obj.category = url.url;
-                        posts.push(obj);
-                    })
+                        var getCategory = "select url from categories where category_id='" + post.category_id + "'";
+                        fetch(getCategory).then(function(urls)
+                        {
+                            var obj = new Object();
+                            obj.name = post.name;
+                            obj.url = post.url;
+                            obj.category = urls[0].url;
+                            res(obj);
+                        });
+                    }));
                 });
-                resolve(posts);
+                Promise.all(promises).then(function(goodies)
+                {
+                    resolve(goodies);
+                });
+            });
+        });
+    },
+    getPopularPosts: function()
+    {
+        return new Promise(function(resolve, reject)
+        {
+            var q = "select * from popular_posts";
+            fetch(q).then(function(sqlPosts)
+            {
+
             });
         });
     }

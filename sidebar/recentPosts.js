@@ -19,7 +19,7 @@ module.exports=
                 {
                     posts.forEach(function(p)
                     {
-                        var url = '\\' +  p.category + '\\' + p.name;
+                        var url = '/' +  p.category + '/' + p.url;
                         res.write("<li class=\"w3-padding-16\">");
                         res.write("<a href='" + url + "'><span class=\"w3-large\">" + p.name + "</span><br></a>");
                         res.write("</li>");

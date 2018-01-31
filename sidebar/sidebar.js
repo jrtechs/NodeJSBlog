@@ -11,7 +11,7 @@ module.exports=
 
                 utils.include(res,"sidebar/sidebar.html").then(function()
                 {
-                    return require("../sidebar/popularPosts.js").main(res);
+                    return require("../sidebar/recentPosts.js").main(res);
                 }).then(function()
                 {
                     return require("../sidebar/categoriesSideBar.js").main(res);

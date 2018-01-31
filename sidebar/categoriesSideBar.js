@@ -30,7 +30,7 @@ module.exports=
                         console.log(cat);
                         res.write("<li class=\"w3-padding-16\">");
 
-                        res.write("<a href='\\category\\" + cat.url + "'><span class=\"w3-large\">" + cat.name + "</span><br></a>");
+                        res.write("<a href='/category/" + cat.url + "'><span class=\"w3-large\">" + cat.name + "</span><br></a>");
                         res.write("</li>");
 
                     });
