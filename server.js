@@ -37,6 +37,9 @@ app.use(function(request, res)
     {
         var file = "";
 
+        if(filename === '' || filename === '/')
+            filename = '/category/Java';
+
         var urlSplit = filename.split("/");
 
         if(urlSplit.length >= 2 && urlSplit[1] === 'category') //single category page

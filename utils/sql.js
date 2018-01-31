@@ -130,19 +130,20 @@ module.exports=
         return new Promise(function(resolve, reject)
         {
             var q = "select * from categories where name ='" + requestURL + "' limit 1";
+            console.log(q);
             fetch(q).then(function(categories)
             {
                 if(categories.length != 0)
                 {
                     var qPosts = "select * from posts where category_id='" + categories[0].category_id + "'";
+                    console.log(qPosts);
                     resolve(fetch(qPosts));
                 }
                 else
                 {
-                    resolve(0);
+                    resolve([]);
                 }
             });
-            resolve(0);
         });
     },
 
