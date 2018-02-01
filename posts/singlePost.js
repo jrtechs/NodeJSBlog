@@ -4,6 +4,8 @@ var Promise = require('promise');
 
 var markdown = require( "markdown" ).markdown;
 
+const sql = require('../utils/sql');
+
 
 module.exports=
 {
@@ -20,7 +22,10 @@ module.exports=
         {
             res.write("<div class=\"w3-card-4 w3-margin w3-white\">");
             //image
-            res.write("<img src=\"https://www.w3schools.com/w3images/woods.jpg\" alt=\"Nature\" style=\"width:100%\">");
+            if(!(post.picture_url ==="n/a"))
+            {
+                res.write("<img src=\"/img/posts/" + post.picture_url + "\" alt=\"Nature\" style=\"width:100%\">");
+            }
 
             res.write("<div class=\"w3-container\">");
             //title
@@ -31,23 +36,29 @@ module.exports=
 
             res.write("<div class=\"w3-container\">");
 
-            var pathName =  "entries/" + post.url + ".md";
             try
             {
-                var html = markdown.toHTML(utils.getFileContents(pathName).toString());
+                sql.getCategory(post.category_id).then(function(category)
+                {
+                    var pathName =  "entries/" + category.url + "/" + post.url + ".md";
 
-                html = html.split("<code>").join("<pre><code>");
-                html = html.split("</code>").join("</code></pre>");
-                res.write(html);
+                    var html = markdown.toHTML(utils.getFileContents(pathName).toString());
+
+                    html = html.split("<code>").join("<pre><code>");
+                    html = html.split("</code>").join("</code></pre>");
+                    html = html.split("\\`\\`\\`").join("```");
+                    html = html.split("![](media/").join("![](" + "entries/" + category.url + "/media/");
+                    res.write(html);
+
+                    res.write("</div></div>");
+                    resolve()
+                });
             }
             catch(ex)
             {
                 //console.log(ex);
                 //utils.include(res, "includes/404.html");
             }
-
-            res.write("</div></div>");
-            resolve()
         });
     }
 };

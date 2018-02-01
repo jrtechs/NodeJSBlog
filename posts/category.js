@@ -16,8 +16,6 @@ var renderPosts = function(result, resultURL)
             sql.getPostsFromCategory(splitURL[2]).then(function(posts)
             {
                 var promises = [];
-                console.log(posts);
-                console.log("^^^^");
                 posts.forEach(function(p)
                 {
                     promises.push(new Promise(function(res, rej)

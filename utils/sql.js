@@ -11,7 +11,7 @@ const qs = require('querystring');
 const con = mysql.createConnection({
     host: "localhost",
     user: "blog_user",
-    password: "password",
+    password: "password", //definitely not the password on production
     database: "blog_name"
 });
 
@@ -31,7 +31,7 @@ var fetch = function(sqlStatement)
     {
         con.query(sqlStatement, function (err, result)
         {
-            if (err)
+            if(err)
             {
                 reject();
             }
@@ -130,13 +130,11 @@ module.exports=
         return new Promise(function(resolve, reject)
         {
             var q = "select * from categories where name ='" + requestURL + "' limit 1";
-            console.log(q);
             fetch(q).then(function(categories)
             {
                 if(categories.length != 0)
                 {
                     var qPosts = "select * from posts where category_id='" + categories[0].category_id + "'";
-                    console.log(qPosts);
                     resolve(fetch(qPosts));
                 }
                 else
@@ -251,5 +249,10 @@ module.exports=
                 resolve(result);
             }
         });
+    },
+
+    getCategory: function(categoryId)
+    {
+        return fetch("select * from categories where category_id='" + categoryId + "'");
     }
 };

@@ -7,6 +7,8 @@
 
 const http = require('http');
 
+var https = require('https');
+
 const url = require('url');
 
 var express = require("express");
@@ -15,8 +17,23 @@ var session = require('express-session');
 
 const includes = require('./includes/includes.js');
 
+var forceSsl = require('express-force-ssl');
+
 var app = express();
 
+var fs = require('fs');
+
+//var key = fs.readFileSync('private.key');
+//var cert = fs.readFileSync( 'primary.crt' );
+//var ca = fs.readFileSync( 'encryption/intermediate.crt' );
+
+// var options = {
+//     key: key,
+//     cert: cert,
+//     ca: ca
+// };
+
+//the secret is different on production
 app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 6000000 }}));
 
 app.use(function(request, res)
@@ -25,7 +42,7 @@ app.use(function(request, res)
     var filename = q.pathname;
 
     //handles image requests
-    if(filename.includes("/img/"))
+    if(filename.includes("/img/") || filename.includes(".jpg"))
     {
         require("./img/image.js").main(res, filename);
     }
@@ -38,7 +55,7 @@ app.use(function(request, res)
         var file = "";
 
         if(filename === '' || filename === '/')
-            filename = '/category/Java';
+            filename = '/category/projects';
 
         var urlSplit = filename.split("/");
 
@@ -62,7 +79,10 @@ app.use(function(request, res)
             //console.log("fin"); //for debugging
         })
     }
-
 });
 
-http.createServer(app).listen(8080);
+//https.createServer(options, app).listen(443);
+
+http.createServer(app).listen(80);
+
+//app.use(forceSsl);
