@@ -1,4 +1,4 @@
-![video](https://www.youtube.com/watch?v=KC9zrgMt1FA)
+<iframe width="560" height="315" src="https://www.youtube.com/embed/KC9zrgMt1FA" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 This is a simple zombie shooter game that I made in visual basics. The graphics
 are very basic due to copyrights that I wanted to avoid – and lack of artistic
@@ -11,10 +11,10 @@ from the YouTube Audio Library.
 
 Downloads:
 
-![A screenshot of a computer Description generated with very high confidence](media/d3f05acc1973ea938920407511c28bff.png)
+![](media/d3f05acc1973ea938920407511c28bff.png)
 
 [Zombie Game YouTube demo](http://jrtechs.net/download/214/)
 
-![A screenshot of a computer Description generated with very high confidence](media/09d34d523359111041accf89c82fd6c2.png)
+![](media/09d34d523359111041accf89c82fd6c2.png)
 
 [Demo source code](http://jrtechs.net/download/211/)

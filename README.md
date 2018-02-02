@@ -50,9 +50,8 @@ npm install express-session
 npm install mysql
 npm install sanitizer
 npm install promise
-npm install markdown
-npm install markdown-to-html -g
 npm install highlight
 npm install crypto
 npm install express-force-ssl
+npm install remarkable
 ```

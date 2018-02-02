@@ -1,6 +1,6 @@
-\`\`\`
+```
 
-\@echo off
+@echo off
 
 color a
 
@@ -24,7 +24,7 @@ ping 127.0.0.1 -n 5
 
 goto startServer
 
-\`\`\`
+```
 
 This batch script great for Minecraft servers which frequently crash – for
 whatever reason. If you want to learn more about how this script works I would

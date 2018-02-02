@@ -7,47 +7,30 @@ Ex:
 |---|---|---|---|---|---|---|
 | x | 1 | 1 | 2 | 3 | 5 | 8 |
 
-\`\`\`
 
+
+```
 class Fibonacci
-
 {
-
    public static void main(String[] args)
-
    {
-
-       for(int i = 1; i \< 60; i ++)
-
+       for(int i = 1; i < 60; i ++)
        {
-
                System.out.println("Fibonacci " + i + " is: t" + fib(i));
-
        }
-
    }
 
-//recursive definition of bibonacci
-
+   //recursive definition of Fibonacci
    public static double fib(int n)
-
    {
-
        if(n == 1 \|\| n == 2)
-
        {
-
            return(1);
-
        }
-
        return(fib(n -1) + fib(n -2));
-
    }
-
 }
-
-\`\`\`
+```
 
 ![](media/088cc48e754c1b99e0fcd5a5eddb9d64.png)
 

@@ -6,6 +6,27 @@ var markdown = require( "markdown" ).markdown;
 
 const sql = require('../utils/sql');
 
+var Remarkable = require('remarkable');
+var hljs       = require('highlight.js') // https://highlightjs.org/
+
+// Actual default values
+var md = new Remarkable({
+    html:         true,
+    highlight: function (str, lang) {
+        if (lang && hljs.getLanguage(lang)) {
+            try {
+                return hljs.highlight(lang, str).value;
+            } catch (err) {}
+        }
+
+        try {
+            return hljs.highlightAuto(str).value;
+        } catch (err) {}
+
+        return ''; // use external default escaping
+    }
+});
+
 
 module.exports=
 {
@@ -35,19 +56,19 @@ module.exports=
             html +="</div>";
 
             html += "<div class=\"w3-container\">";
-
             try
             {
                 sql.getCategory(post.category_id).then(function(category)
                 {
                     var pathName =  "entries/" + category[0].url + "/" + post.url + ".md";
-                    html += markdown.toHTML(utils.getFileContents(pathName).toString());
+                    var markDown = utils.getFileContents(pathName).toString();
+                    markDown = markDown.split("![](media/").join("![](" + "../entries/" + category[0].url + "/media/");
+                    html += md.render(markDown);
 
-                    html = html.split("<code>").join("<pre><code>");
-                    html = html.split("</code>").join("</code></pre>");
-                    html = html.split("\\`\\`\\`").join("```");
-                    html = html.split("![](media/").join("![](" + "entries/" + category.url + "/media/");
+                    html = html.split("<img").join("<img width=\"%100\" ");
                     html += "</div></div>";
+
+
                     res.write(html);
                     resolve()
                 });

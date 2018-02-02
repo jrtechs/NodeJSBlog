@@ -41,7 +41,7 @@ app.use(function(request, res)
     var filename = q.pathname;
 
     //handles image requests
-    if(filename.includes("/img/") || filename.includes(".jpg"))
+    if(filename.includes("/img/") || filename.includes(".jpg") || filename.includes(".png"))
     {
         require("./img/image.js").main(res, filename);
     }
