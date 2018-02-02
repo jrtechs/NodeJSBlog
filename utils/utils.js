@@ -50,6 +50,24 @@ module.exports=
         return 0;
     },
 
+    /**
+     *
+     * @param fileName
+     * @return {*}
+     */
+    getFileLine: function(fileName)
+    {
+        try
+        {
+            return fs.readFileSync(fileName, "utf8").split('\n').join('');
+        }
+        catch (e)
+        {
+            console.log("Could not find " + fileName);
+        }
+        return 0;
+    },
+
 
     /**
      * Function which is responsible for returning all post data.

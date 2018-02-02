@@ -33,8 +33,7 @@ var app = express();
 //     cert: cert,
 //     ca: ca
 // };
-
-app.use(session({ secret: utils.getFileContents('../../session_secret'), cookie: { maxAge: 6000000 }}));
+app.use(session({ secret: utils.getFileLine('../session_secret'), cookie: { maxAge: 6000000 }}));
 
 app.use(function(request, res)
 {
@@ -55,7 +54,7 @@ app.use(function(request, res)
         var file = "";
 
         if(filename === '' || filename === '/')
-            filename = '/category/projects';
+            filename = '/category/Java';
 
         var urlSplit = filename.split("/");
 

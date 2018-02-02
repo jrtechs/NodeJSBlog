@@ -21,8 +21,7 @@ var renderPosts = function(result, resultURL)
                     promises.push(new Promise(function(res, rej)
                     {
                         require("../posts/singlePost.js")
-                            .renderPost(result, p)
-                            .then(function()
+                            .renderPost(result, p).then(function()
                         {
                             res();
                         });
@@ -60,7 +59,6 @@ module.exports=
          */
         main: function(res, requestURL, request)
         {
-            console.log("category page");
             return new Promise(function(resolve, reject)
             {
                 renderPosts(res, requestURL).then(function()

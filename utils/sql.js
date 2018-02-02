@@ -10,12 +10,13 @@ const qs = require('querystring');
 
 const utils = require('../utils/utils.js');
 
-const con = mysql.createConnection({
+var con = mysql.createConnection({
     host: "localhost",
     user: "blog_user",
-    password: utils.getFileContents('../../sql_secret'),
+    password: utils.getFileLine('../sql_secret'),
     database: "blog_name"
 });
+
 
 con.connect(function(err) {
     if (err) throw err;
