@@ -8,10 +8,12 @@ const crypto = require('crypto');
 
 const qs = require('querystring');
 
+const utils = require('../utils/utils.js');
+
 const con = mysql.createConnection({
     host: "localhost",
     user: "blog_user",
-    password: "password", //definitely not the password on production
+    password: utils.getFileContents('../../sql_secret'),
     database: "blog_name"
 });
 

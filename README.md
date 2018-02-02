@@ -46,7 +46,7 @@ grant all on blog_name.* to blog_user@localhost identified by "password";
 ## Node Dependencies
 ```bash
 npm install express
-npm install express-sessions
+npm install express-session
 npm install mysql
 npm install sanitizer
 npm install promise
@@ -54,5 +54,5 @@ npm install markdown
 npm install markdown-to-html -g
 npm install highlight
 npm install crypto
-npm i express-force-ssl
+npm install express-force-ssl
 ```

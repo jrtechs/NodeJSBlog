@@ -7,8 +7,6 @@
 
 const http = require('http');
 
-var https = require('https');
-
 const url = require('url');
 
 var express = require("express");
@@ -16,12 +14,15 @@ var express = require("express");
 var session = require('express-session');
 
 const includes = require('./includes/includes.js');
-
-var forceSsl = require('express-force-ssl');
+//
+const utils = require('./utils/utils.js');
+//
+// var forceSsl = require('express-force-ssl');
 
 var app = express();
 
-var fs = require('fs');
+// var https = require('https');
+
 
 //var key = fs.readFileSync('private.key');
 //var cert = fs.readFileSync( 'primary.crt' );
@@ -33,8 +34,7 @@ var fs = require('fs');
 //     ca: ca
 // };
 
-//the secret is different on production
-app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 6000000 }}));
+app.use(session({ secret: utils.getFileContents('../../session_secret'), cookie: { maxAge: 6000000 }}));
 
 app.use(function(request, res)
 {
@@ -83,6 +83,6 @@ app.use(function(request, res)
 
 //https.createServer(options, app).listen(443);
 
-http.createServer(app).listen(80);
+http.createServer(app).listen(8080);
 
 //app.use(forceSsl);
