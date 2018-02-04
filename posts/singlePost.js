@@ -65,7 +65,7 @@ module.exports=
                     markDown = markDown.split("![](media/").join("![](" + "../entries/" + category[0].url + "/media/");
                     html += md.render(markDown);
 
-                    html = html.split("<img").join("<img width=\"%100\" ");
+                    html = html.split("<img").join("<img style=\"max-width: 100%;\" ");
                     html += "</div></div>";
 
 

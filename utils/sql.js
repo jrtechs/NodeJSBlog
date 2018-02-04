@@ -14,7 +14,7 @@ var con = mysql.createConnection({
     host: "localhost",
     user: "blog_user",
     password: utils.getFileLine('../sql_secret'),
-    database: "blog_name"
+    database: "jrtechs_blog"
 });
 
 
