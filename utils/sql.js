@@ -257,5 +257,12 @@ module.exports=
     getCategory: function(categoryId)
     {
         return fetch("select * from categories where category_id='" + categoryId + "'");
+    },
+
+    getDownload: function(downloadURL)
+    {
+        var cleanD = sanitizer.sanitize(downloadURL);
+        var q = "select * from downloads where url='" + cleanD + "' limit 1";
+        return fetch(q);
     }
 };

@@ -33,6 +33,13 @@ url varchar(100) not null,
 primary key(post_id)
 );
 
+create table downloads(
+download_id mediumint unsigned not null AUTO_INCREMENT,
+url varchar(20) not null,
+file varchar(20) not null,
+primary key(download_id)
+);
+
 create table popular_posts(
 popular_post_id mediumint unsigned not null AUTO_INCREMENT,
 post_id mediumint unsigned not null,

@@ -21,18 +21,7 @@ const utils = require('./utils/utils.js');
 
 var app = express();
 
-// var https = require('https');
 
-
-//var key = fs.readFileSync('private.key');
-//var cert = fs.readFileSync( 'primary.crt' );
-//var ca = fs.readFileSync( 'encryption/intermediate.crt' );
-
-// var options = {
-//     key: key,
-//     cert: cert,
-//     ca: ca
-// };
 app.use(session({ secret: utils.getFileLine('../session_secret'), cookie: { maxAge: 6000000 }}));
 
 app.use(function(request, res)
@@ -49,12 +38,16 @@ app.use(function(request, res)
     {
         includes.sendCSS(res, filename)
     }
+    // else if(filename.includes(/download/))
+    // {
+    //     require("./downloads/downloads.js").main(res, filename, request);
+    // }
     else
     {
         var file = "";
 
         if(filename === '' || filename === '/')
-            filename = '/category/Java';
+            filename = '/web-development/why-i-stopped-using-wordpress';
 
         var urlSplit = filename.split("/");
 
@@ -67,15 +60,16 @@ app.use(function(request, res)
         else
             file = "./posts/posts.js";
 
+
         includes.printHeader(res).then(function()
         {
             return require(file).main(res, filename, request);
         }).then(function()
         {
             return includes.printFooter(res);
-        }).then(function()
+        }).catch(function(err)
         {
-            //console.log("fin"); //for debugging
+            console.log(err);
         })
     }
 });
