@@ -30,11 +30,13 @@ module.exports=
     {
         main: function(result, request)
         {
+            console.log("main of login.js");
             result.write("<div class=\"w3-col l8 s12\">");
             return new Promise(function(resolve, reject)
             {
                 utils.include(result, './admin/login.html').then(function()
                 {
+                    console.log("got login html");
                     return require("../sidebar/sidebar.js").main(result);
                 }).then(function()
                 {
