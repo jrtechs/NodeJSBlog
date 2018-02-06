@@ -45,7 +45,7 @@ module.exports=
             //image
             if(!(post.picture_url === "n/a"))
             {
-                html +="<img src=\"/img/posts/" + post.picture_url + "\" alt=\"Nature\" style=\"width:100%\">";
+                html +="<img src=\"/img/posts/" + post.picture_url + "\" alt=\"\" style=\"width:100%\">";
             }
 
             html += "<div class=\"w3-container\">";
