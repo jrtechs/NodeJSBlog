@@ -16,22 +16,18 @@ module.exports=
             {
                 res.write("<div class=\"w3-card w3-margin\">");
 
-                res.write("<div class=\"w3-container w3-padding\"><h4>Categories</h4></div>");
+                res.write("<div class=\"w3-container w3-padding w3-gray\"><h4>Categories</h4></div>");
 
-                res.write("<ul class=\"w3-ul w3-hoverable w3-white\">");
+                res.write("<div class=\"w3-bar-block w3-white\">");
 
                 sql.getCategories().then(function(categories)
                 {
                     categories.forEach(function(cat)
                     {
                         //res.write(cat.name);
-                        res.write("<li class=\"w3-padding-16\">");
-
-                        res.write("<a href='/category/" + cat.url + "'><span class=\"w3-large\">" + cat.name + "</span><br></a>");
-                        res.write("</li>");
-
+                        res.write("<a class=\"w3-bar-item w3-button\" href='/category/" + cat.url + "'>" + cat.name + "<br></a>");
                     });
-                    res.write("</ul></div>");
+                    res.write("</div></div>");
                     resolve();
                 })
 

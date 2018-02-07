@@ -132,7 +132,7 @@ module.exports=
     {
         return new Promise(function(resolve, reject)
         {
-            var q = "select * from categories where name ='" + requestURL + "' limit 1";
+            var q = "select * from categories where url ='" + requestURL + "'";
             fetch(q).then(function(categories)
             {
                 if(categories.length != 0)
