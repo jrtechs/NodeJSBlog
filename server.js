@@ -47,7 +47,7 @@ app.use(function(request, res)
         var file = "";
 
         if(filename === '' || filename === '/')
-            filename = '/web-development/why-i-stopped-using-wordpress';
+            filename = '/programming/using-english-conventions-to-write-clean-code/';
 
         var urlSplit = filename.split("/");
 
