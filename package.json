@@ -1,0 +1,26 @@
+{
+  "name": "jrtechs",
+  "version": "1.0.0",
+  "description": "Personal blog",
+  "main": "server.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jrtechs/NodeJSBlog.git"
+  },
+  "keywords": [
+    "nodejs",
+    "blog"
+  ],
+  "author": "Jeffery Russell",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jrtechs/NodeJSBlog/issues"
+  },
+  "homepage": "https://github.com/jrtechs/NodeJSBlog#readme"
+}

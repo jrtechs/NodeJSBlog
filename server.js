@@ -34,7 +34,7 @@ app.use(function(request, res)
     {
         require("./img/image.js").main(res, filename);
     }
-    else if(filename.includes("/css/"))
+    else if(filename.includes("/css/") || filename.includes(".txt"))
     {
         includes.sendCSS(res, filename)
     }
