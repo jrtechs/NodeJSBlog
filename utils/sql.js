@@ -264,5 +264,13 @@ module.exports=
         var cleanD = sanitizer.sanitize(downloadURL);
         var q = "select * from downloads where url='" + cleanD + "' limit 1";
         return fetch(q);
+    },
+
+    getSiteMap: function()
+    {
+        return new Promise(function(resolve, reject)
+        {
+
+        });
     }
 };

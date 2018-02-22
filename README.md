@@ -1,5 +1,5 @@
 # NodeJSBlog
-Recreating my wordpress blog in node JS.
+Recreating my Wordpress blog in node JS.
 
 ## MYSQL Information
 
