@@ -6,9 +6,8 @@ floppy drives, however, there are thousands of videos on YouTube.
 This project first started over a year ago when I connected two floppy drives to
 a Raspberry Pi to play the Star Wars theme.
 
-<iframe width="560" height="315"
-src="https://www.youtube.com/embed/wcnUvPMpqjA" frameborder="0" allow="autoplay;
-encrypted-media" allowfullscreen\></iframe\>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/wcnUvPMpqjA" frameborder="0" allow="autoplay; 
+encrypted-media" allowfullscreen></iframe>
 
 Although this was fun, there was hardly any software for playing different music
 on the Raspberry Pi. I managed to hack the software to also play Jingle Bells,
@@ -19,7 +18,7 @@ drive orchestra.
 
 <iframe width="560" height="315"
 src="https://www.youtube.com/embed/qwbcrR-6dTU" frameborder="0" allow="autoplay;
-encrypted-media" allowfullscreen\></iframe\>
+encrypted-media" allowfullscreen></iframe>
 
 What is nice about using an Arduino, is that the software used is more
 developed. Unlike the program I used with the Raspberry Pi, the software used
