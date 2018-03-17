@@ -149,6 +149,7 @@ Open up your Arduino software and paste the following code in the editor:
 ```
 
 #include <TimerOne.h>
+#define RESOLUTION1 40
 
 boolean firstRun = true; // Used for one-run-only stuffs;
 
@@ -182,8 +183,8 @@ int currentState[] = {
   0,0,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW
 };
   
-//Current period assigned to each pin. 0 = off. Each period is of the length specified by the RESOLUTION
-//variable above. i.e. A period of 10 is (RESOLUTION x 10) microseconds long.
+//Current period assigned to each pin. 0 = off. Each period is of the length specified by the RESOLUTION1
+//variable above. i.e. A period of 10 is (RESOLUTION1 x 10) microseconds long.
 unsigned int currentPeriod[] = {
   0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 };
@@ -215,7 +216,7 @@ void setup(){
   pinMode(16, OUTPUT); // Step control 8
   pinMode(17, OUTPUT); // Direction 8
 
-  Timer1.initialize(RESOLUTION); // Set up a timer at the defined resolution
+  Timer1.initialize(RESOLUTION1); // Set up a timer at the defined resolution
   Timer1.attachInterrupt(tick); // Attach the tick function
 
   Serial.begin(9600);
