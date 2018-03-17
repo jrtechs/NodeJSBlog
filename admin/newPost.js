@@ -42,6 +42,8 @@ module.exports=
                         "', '" + post.add_post_date + "', '" + post.add_post_name + "', '" + urls + "')";
                     sql.insert(q).then(function()
                     {
+                        var map = require('../utils/generateSiteMap');
+                        map.main();
                         resolve();
                     })
                 }

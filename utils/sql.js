@@ -276,6 +276,37 @@ module.exports=
     {
         return new Promise(function(resolve, reject)
         {
+            var base = "http://jrtechs.net/";
+            var sm = base + "\n";
+            var promises = [];
+            module.exports.getCategories().then(function(categories)
+            {
+                categories.forEach(function(cat)
+                {
+                    promises.push(new Promise(function(res, rej)
+                    {
+                        sm += base + "category/" + cat.url + "\n";
+
+                        module.exports.getPostsFromCategory(cat.url).then(function(posts)
+                        {
+                            posts.forEach(function(post)
+                            {
+                                sm += base + cat.url + "/" + post.url + "\n";
+                            });
+                            res()
+                        })
+                    }));
+                });
+
+                Promise.all(promises).then(function()
+                {
+                    resolve(sm);
+                }).catch(function(error)
+                {
+                    throw error;
+                });
+
+            });
 
         });
     }

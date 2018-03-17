@@ -4,9 +4,9 @@ Recreating my Wordpress blog in node JS.
 ## MYSQL Information
 
 ```SQL
-create database blog_name;
+create database jrtechs_blog;
 
-use blog_name;
+use jrtechs_blog;
 
 create table users(
 user_id mediumint unsigned not null AUTO_INCREMENT,
@@ -46,7 +46,7 @@ post_id mediumint unsigned not null,
 primary key(popular_post_id)
 );
 
-grant all on blog_name.* to blog_user@localhost identified by "password";
+grant all on jrtechs_blog.* to blog_user@localhost identified by "password";
 
 ```
 

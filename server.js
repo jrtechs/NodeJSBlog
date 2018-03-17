@@ -19,8 +19,10 @@ const utils = require('./utils/utils.js');
 //
 // var forceSsl = require('express-force-ssl');
 
-var app = express();
+var map = require('./utils/generateSiteMap');
+map.main();
 
+var app = express();
 
 app.use(session({ secret: utils.getFileLine('../session_secret'), cookie: { maxAge: 6000000 }}));
 
