@@ -88,7 +88,8 @@ module.exports=
                 if(result_category.length != 0)
                 {
 
-                    var q2 = "select * from posts where category_id='" + result_category[0].category_id +
+                    var q2 = "select * from posts where category_id='" +
+                        result_category[0].category_id +
                         "'  and url='" + splitURL[2] + "'";
 
                     fetch(q2).then(function (result_posts)
@@ -124,7 +125,8 @@ module.exports=
     },
 
     /**
-     * Function which currently returns all posts of a particular category from the database
+     * Function which currently returns all posts of a particular
+     * category from the database
      * @param requestURL
      * @return {*|Promise}
      */
@@ -137,7 +139,8 @@ module.exports=
             {
                 if(categories.length != 0)
                 {
-                    var qPosts = "select * from posts where category_id='" + categories[0].category_id + "'";
+                    var qPosts = "select * from posts where category_id='" +
+                        categories[0].category_id + "' order by published desc";
                     resolve(fetch(qPosts));
                 }
                 else
@@ -149,7 +152,8 @@ module.exports=
     },
 
     /**
-     * Helper method which returns a list of objects which contains the url and name of thee ten most recent posts
+     * Helper method which returns a list of objects which contains the url
+     * and name of thee ten most recent posts
      *
      * {[name: , url: ],[name: , url: ],[name: , url: ],...}
      *
@@ -159,7 +163,8 @@ module.exports=
     {
         return new Promise(function(resolve, reject)
         {
-            var q = "select name,url, category_id from posts order by post_id desc limit 10";
+            var q = "select name,url, category_id from posts order " +
+                "by post_id desc limit 10";
             fetch(q).then(function(sqlPosts)
             {
                 var promises = [];
@@ -167,7 +172,8 @@ module.exports=
                 {
                     promises.push(new Promise(function(res, rej)
                     {
-                        var getCategory = "select url from categories where category_id='" + post.category_id + "'";
+                        var getCategory = "select url from categories where " +
+                            "category_id='" + post.category_id + "'";
                         fetch(getCategory).then(function(urls)
                         {
                             var obj = new Object();
@@ -218,7 +224,8 @@ module.exports=
                 var cleanName = sanitizer.sanitize(post.username);
                 var cleanPassword = sanitizer.sanitize(post.password);
 
-                var getSalt = "select * from users where user_name='" + cleanName + "'";
+                var getSalt = "select * from users where user_name='" +
+                    cleanName + "'";
                 fetch(getSalt).then(function(saltResult)
                 {
                     if(saltResult.length == 1)
@@ -228,14 +235,12 @@ module.exports=
                             .digest('hex');
                         if(saltResult[0].password === hashedPassword)
                         {
-                            //yay!
                             result.pass = true;
                             result.user = cleanName;
                             resolve(result);
                         }
                         else
                         {
-                            //wrong password
                             resolve(result)
                         }
                     }
@@ -256,7 +261,8 @@ module.exports=
 
     getCategory: function(categoryId)
     {
-        return fetch("select * from categories where category_id='" + categoryId + "'");
+        return fetch("select * from categories where category_id='"
+            + categoryId + "'");
     },
 
     getDownload: function(downloadURL)
