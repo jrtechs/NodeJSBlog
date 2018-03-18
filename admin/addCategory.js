@@ -2,7 +2,7 @@ const utils = require('../utils/utils.js');
 const sql = require('../utils/sql');
 
 const qs = require('querystring');
-var Promise = require('promise');
+const Promise = require('promise');
 
 
 /**
@@ -34,7 +34,6 @@ var printCategories = function(res)
                 res.write("</tr>");
             });
             res.write("</tbody></table></div>");
-            console.log("resolved");
             resolve();
         })
     });
@@ -56,8 +55,7 @@ var processPost = function(res, postData)
         var post = qs.parse(postData);
         if(post.add_category)
         {
-            var url = post.add_category.replace(/ /i, "-");
-            url = url.toLowerCase();
+            var url = post.add_category.split(" ").join("-").toLowerCase();
             var q = "insert into categories (name, url) values " +
                 "('" + post.add_category + "','" + url + "')";
             if(sql.insert(q) != 0)
@@ -68,7 +66,6 @@ var processPost = function(res, postData)
             {
                 console.log("error adding category");
             }
-
         }
         resolve(postData);
     });
@@ -88,9 +85,8 @@ module.exports=
                 return processPost(res, postData);
             }).then(function()
             {
-
                 res.write("</div>");
-                resolve();
+                resolve(postData);
             }).catch(function(err)
             {
                 console.log(err);

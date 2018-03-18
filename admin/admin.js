@@ -26,10 +26,17 @@ module.exports=
                 }).then(function(postData)
                 {
                     return require("../admin/addCategory.js").main(result, postData);
-                }).then(function()
+                }).then(function(postData)
                 {
                     result.write("</div>");
+                    console.log("hmmm");
+                    return require("../admin/editPost.js").main(result, postData);
+                }).then(function()
+                {
                     resolve();
+                }).catch(function(error)
+                {
+                    throw error;
                 });
             }
             else

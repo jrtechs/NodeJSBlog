@@ -19,7 +19,7 @@ const utils = require('./utils/utils.js');
 //
 // var forceSsl = require('express-force-ssl');
 
-var map = require('./utils/generateSiteMap');
+var map = require('./utils/generateSiteMap.js');
 map.main();
 
 var app = express();

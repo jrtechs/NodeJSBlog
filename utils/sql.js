@@ -36,7 +36,8 @@ var fetch = function(sqlStatement)
         {
             if(err)
             {
-                reject();
+                console.log(err);
+                reject(err);
             }
             resolve(result);
         });
@@ -67,6 +68,27 @@ module.exports=
                 resolve(result.insertId);
             });
         })
+    },
+
+    /**
+     * function which fetches the sql info on a post based on it's sql id
+     * @param id
+     * @returns {Array}
+     */
+    getPostById: function(id)
+    {
+        console.log("select * from posts where post_id='" + id + "' limit 1");
+
+        return new Promise(function(resolve, reject)
+        {
+            fetch("select * from posts where post_id='" + id + "' limit 1").then(function(post)
+            {
+                resolve(post[0]);
+            }).catch(function(error)
+            {
+                reject(error);
+            });
+        });
     },
 
     /**
@@ -259,6 +281,21 @@ module.exports=
         });
     },
 
+    /**
+     * Fetches a promise containing every post in the database
+     * @returns {Array}
+     */
+    getAllPosts: function()
+    {
+        return fetch("select * from posts order by published desc");
+    },
+
+
+    /**
+     * Fetches the sql category information based on it's id
+     * @param categoryId
+     * @returns {Array}
+     */
     getCategory: function(categoryId)
     {
         return fetch("select * from categories where category_id='"
@@ -272,6 +309,24 @@ module.exports=
         return fetch(q);
     },
 
+    editPost: function(postData)
+    {
+        var url = postData.edit_name_new.split(" ").join("-").toLowerCase();
+        var q = "update posts ";
+        q+= "set category_id='" + postData.edit_cat_num + "' ";
+        q+= ",name='" + postData.edit_name_new + "' ";
+        q+= ",url='" + url + "' ";
+        q+= ",picture_url='" + postData.edit_pic + "' ";
+        q+= ",published='" + postData.edit_date + "' ";
+        q+= " where post_id='" + postData.edit_post_2 + "'";
+        return module.exports.insert(q);
+    },
+
+    /**
+     * Function which returns a promise which contains the string of the
+     * entire sitemap for the blog.
+     * @returns {Promise|*}
+     */
     getSiteMap: function()
     {
         return new Promise(function(resolve, reject)
