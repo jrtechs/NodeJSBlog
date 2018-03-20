@@ -31,6 +31,79 @@ var md = new Remarkable({
 module.exports=
 {
     /**
+     * Renders a preview of the post with a link to view more
+     *
+     * @param res
+     * @param post
+     */
+    renderPreview: function(res, post)
+    {
+       return new Promise(function(resolve, reject)
+       {
+           var html = "<div class=\"w3-card-4 w3-margin w3-white\">";
+
+           //image
+           if(!(post.picture_url === "n/a"))
+           {
+               html +="<img src=\"/img/posts/" + post.picture_url +
+                   "\" alt=\"\" style=\"width:100%\">";
+           }
+
+           html += "<div class=\"w3-container\">";
+           //title
+           html += "<h3><b>" + post.name + "</b></h3>";
+           //date
+           html += "<h5><span class=\"w3-opacity\">" +
+               post.published.toDateString() + "</span></h5>";
+           html +="</div>";
+
+           html += "<div class=\"w3-container\">";
+
+           try
+           {
+               sql.getCategory(post.category_id).then(function(category)
+               {
+                   var pathName =  "entries/" + category[0].url + "/"
+                       + post.url + ".md";
+                   var markDown = utils.getFileContents(pathName).toString();
+
+                   markDown = markDown.split("![](media/").join("![](" + "../entries/"
+                       + category[0].url + "/media/");
+                   var htmlPost = md.render(markDown).split("<p>");
+
+                   for(var i = 0; i < 3; i++)
+                   {
+                       html+= "<p>" + htmlPost[i];
+                   }
+
+                   html = html.split("<img").join("<img style=\"max-width: 100%;\" ");
+
+                   html += "      <div class=\"w3-row\">\n" +
+                       "          <p class='w3-center'><button class=\"w3-button " +
+                       "w3-padding-large w3-white w3-border\"  onclick=\"location.href='" +
+                       "http://jrtechs.net/" + category[0].url + "/" + post.url +
+                       "'\"><b>READ MORE &raquo;</b></button></p>\n" +
+                       "      </div>\n";
+
+                   html += "</div></div>";
+                   res.write(html);
+
+                   resolve()
+               }).catch(function(error)
+               {
+                   console.log(error);
+                   reject(error);
+               });
+           }
+           catch(ex)
+           {
+               reject(ex);
+               console.log(ex);
+           }
+       });
+    },
+
+    /**
      * renderPost() displays a single blog post in it's entirety
      *
      * @param res result sent to user
@@ -45,14 +118,16 @@ module.exports=
             //image
             if(!(post.picture_url === "n/a"))
             {
-                html +="<img src=\"/img/posts/" + post.picture_url + "\" alt=\"\" style=\"width:100%\">";
+                html +="<img src=\"/img/posts/" + post.picture_url +
+                    "\" alt=\"\" style=\"width:100%\">";
             }
 
             html += "<div class=\"w3-container\">";
             //title
             html += "<h3><b>" + post.name + "</b></h3>";
             //date
-            html += "<h5><span class=\"w3-opacity\">" + post.published.toDateString() + "</span></h5>";
+            html += "<h5><span class=\"w3-opacity\">" +
+                post.published.toDateString() + "</span></h5>";
             html +="</div>";
 
             html += "<div class=\"w3-container\">";
@@ -60,9 +135,11 @@ module.exports=
             {
                 sql.getCategory(post.category_id).then(function(category)
                 {
-                    var pathName =  "entries/" + category[0].url + "/" + post.url + ".md";
+                    var pathName =  "entries/" + category[0].url + "/"
+                        + post.url + ".md";
                     var markDown = utils.getFileContents(pathName).toString();
-                    markDown = markDown.split("![](media/").join("![](" + "../entries/" + category[0].url + "/media/");
+                    markDown = markDown.split("![](media/").join("![](" + "../entries/"
+                        + category[0].url + "/media/");
                     html += md.render(markDown);
 
                     html = html.split("<img").join("<img style=\"max-width: 100%;\" ");

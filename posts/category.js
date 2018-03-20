@@ -21,7 +21,7 @@ var renderPosts = function(result, resultURL)
                     promises.push(new Promise(function(res, rej)
                     {
                         require("../posts/singlePost.js")
-                            .renderPost(result, p).then(function()
+                            .renderPreview(result, p).then(function()
                         {
                             res();
                         });
@@ -46,11 +46,6 @@ var renderPosts = function(result, resultURL)
 
 module.exports=
     {
-        renderPostPreview: function(result, postSQLData)
-        {
-
-        },
-
         /**
          * Calls posts and sidebar modules to render blog contents in order
          *
@@ -67,6 +62,10 @@ module.exports=
                 }).then(function ()
                 {
                     resolve();
+                }).catch(function(error)
+                {
+                    console.log(error);
+                    reject(error);
                 })
             });
         }

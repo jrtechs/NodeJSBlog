@@ -49,19 +49,22 @@ app.use(function(request, res)
         var file = "";
 
         if(filename === '' || filename === '/')
-            filename = '/programming/using-english-conventions-to-write-clean-code/';
-
-        var urlSplit = filename.split("/");
-
-        if(urlSplit.length >= 2 && urlSplit[1] === 'category') //single category page
-            file = "./posts/category.js";
-
-        else if(urlSplit.length >= 2 && urlSplit[1] === 'admin') //top secret admin page
-            file = "./admin/admin.js";
-
+        {
+            file="./posts/homePage.js";
+        }
         else
-            file = "./posts/posts.js";
+        {
+            var urlSplit = filename.split("/");
 
+            if(urlSplit.length >= 2 && urlSplit[1] === 'category') //single category page
+                file = "./posts/category.js";
+
+            else if(urlSplit.length >= 2 && urlSplit[1] === 'admin') //top secret admin page
+                file = "./admin/admin.js";
+
+            else
+                file = "./posts/posts.js";
+        }
 
         includes.printHeader(res).then(function()
         {

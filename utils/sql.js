@@ -173,6 +173,12 @@ module.exports=
         });
     },
 
+
+    getRecentPostSQL: function()
+    {
+        return fetch("select * from posts order by post_id desc limit 10");
+    },
+
     /**
      * Helper method which returns a list of objects which contains the url
      * and name of thee ten most recent posts
@@ -213,6 +219,9 @@ module.exports=
             });
         });
     },
+
+
+
     getPopularPosts: function()
     {
         return new Promise(function(resolve, reject)

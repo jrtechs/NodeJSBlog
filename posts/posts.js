@@ -62,7 +62,7 @@ module.exports=
         {
             renderPost(res, requestURL).then(function()
             {
-                return require("../sidebar/sidebar.js").main(res)
+                return require("../sidebar/sidebar.js").main(res);
             }).then(function ()
             {
                 resolve();
