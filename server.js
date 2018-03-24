@@ -14,10 +14,8 @@ var express = require("express");
 var session = require('express-session');
 
 const includes = require('./includes/includes.js');
-//
+
 const utils = require('./utils/utils.js');
-//
-// var forceSsl = require('express-force-ssl');
 
 var map = require('./utils/generateSiteMap.js');
 map.main();
@@ -26,6 +24,10 @@ var app = express();
 
 app.use(session({ secret: utils.getFileLine('../session_secret'), cookie: { maxAge: 6000000 }}));
 
+
+/**
+ * Parses the request url and calls correct JS files
+ */
 app.use(function(request, res)
 {
     var q = url.parse(request.url, true);
@@ -40,10 +42,6 @@ app.use(function(request, res)
     {
         includes.sendCSS(res, filename)
     }
-    // else if(filename.includes(/download/))
-    // {
-    //     require("./downloads/downloads.js").main(res, filename, request);
-    // }
     else
     {
         var file = "";
@@ -78,9 +76,4 @@ app.use(function(request, res)
         })
     }
 });
-
-//https.createServer(options, app).listen(443);
-
 http.createServer(app).listen(8080);
-
-//app.use(forceSsl);

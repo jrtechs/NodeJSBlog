@@ -108,6 +108,12 @@ module.exports=
         });
     },
 
+    /**
+     * Displays 404 error to user
+     *
+     * @param result
+     * @returns {*}
+     */
     print404: function(result)
     {
         return this.include(result, "includes/404.html");

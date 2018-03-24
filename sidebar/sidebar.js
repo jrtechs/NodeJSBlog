@@ -3,6 +3,12 @@ var Promise = require('promise');
 
 module.exports=
     {
+        /** Method which renders the entire sidebar through calling
+         * appropriate widget js files.
+         *
+         * @param res
+         * @returns {*|Promise}
+         */
         main: function(res)
         {
             return new Promise(function(resolve, reject)
@@ -14,7 +20,8 @@ module.exports=
                     return require("../sidebar/recentPosts.js").main(res);
                 }).then(function()
                 {
-                    return require("../sidebar/categoriesSideBar.js").main(res);
+                    return require("../sidebar/categoriesSideBar.js")
+                        .main(res);
                 }).then(function()
                 {
                     res.write("</div>");

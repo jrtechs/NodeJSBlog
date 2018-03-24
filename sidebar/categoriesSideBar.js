@@ -30,7 +30,6 @@ module.exports=
                     res.write("</div></div>");
                     resolve();
                 })
-
             });
         }
     };

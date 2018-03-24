@@ -6,7 +6,11 @@ const Promise = require('promise');
 
 const postRenderer = require('../posts/singlePost.js');
 
-
+/**Renders each recent post for the homepage of the website
+ *
+ * @param result
+ * @returns {*|Promise}
+ */
 var renderRecentPosts = function(result)
 {
     return new Promise(function(resolve, reject)

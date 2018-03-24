@@ -3,7 +3,13 @@ const sql = require('../utils/sql');
 const utils = require('../utils/utils.js');
 
 
-
+/**
+ * Renders all posts in a single category
+ *
+ * @param result
+ * @param resultURL
+ * @returns {*}
+ */
 var renderPosts = function(result, resultURL)
 {
     var splitURL = resultURL.split("/");

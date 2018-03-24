@@ -81,7 +81,8 @@ module.exports=
 
         return new Promise(function(resolve, reject)
         {
-            fetch("select * from posts where post_id='" + id + "' limit 1").then(function(post)
+            fetch("select * from posts where post_id='" + id + "' limit 1")
+                .then(function(post)
             {
                 resolve(post[0]);
             }).catch(function(error)
@@ -174,6 +175,10 @@ module.exports=
     },
 
 
+    /**
+     * Fetches the recent posts from the database.
+     * @returns {Array}
+     */
     getRecentPostSQL: function()
     {
         return fetch("select * from posts order by post_id desc limit 10");
@@ -221,7 +226,10 @@ module.exports=
     },
 
 
-
+    /**
+     * TODO
+     * @returns {*|Promise}
+     */
     getPopularPosts: function()
     {
         return new Promise(function(resolve, reject)
@@ -311,6 +319,12 @@ module.exports=
             + categoryId + "'");
     },
 
+
+    /**TODO work on website downloads
+     *
+     * @param downloadURL
+     * @returns {Array}
+     */
     getDownload: function(downloadURL)
     {
         var cleanD = sanitizer.sanitize(downloadURL);
@@ -318,6 +332,12 @@ module.exports=
         return fetch(q);
     },
 
+    /**
+     * Based on the post data submitted by the user this function updates
+     * the information on the post in the database
+     * @param postData
+     * @returns {*|the}
+     */
     editPost: function(postData)
     {
         var url = postData.edit_name_new.split(" ").join("-").toLowerCase();

@@ -4,7 +4,6 @@ const sql = require('../utils/sql');
 
 module.exports=
 {
-
     main: function()
     {
         sql.getSiteMap().then(function(result)
