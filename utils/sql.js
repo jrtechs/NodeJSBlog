@@ -32,7 +32,7 @@ var fetch = function(sqlStatement)
 {
     return new Promise(function(resolve, reject)
     {
-        con.query(sqlStatement, function (err, result)
+        con.query(sanitizer.sanitize(sqlStatement), function (err, result)
         {
             if(err)
             {

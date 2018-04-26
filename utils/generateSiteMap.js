@@ -4,6 +4,11 @@ const sql = require('../utils/sql');
 
 module.exports=
 {
+
+    /**
+     * Function which is responsible for writing the sitemap
+     * to ../sitemap.txt
+     */
     main: function()
     {
         sql.getSiteMap().then(function(result)
