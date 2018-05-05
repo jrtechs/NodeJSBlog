@@ -11,6 +11,8 @@ const url = require('url');
 
 var express = require("express");
 
+const fs = require('fs');
+
 var session = require('express-session');
 
 const includes = require('./includes/includes.js');
@@ -25,7 +27,10 @@ var app = express();
 app.use(session({ secret: utils.getFileLine('../session_secret'), cookie: { maxAge: 6000000 }}));
 
 var privateKey = fs.readFileSync('/etc/letsencrypt/live/jrtechs.net/privkey.pem');
+
 var certificate = fs.readFileSync('/etc/letsencrypt/live/jrtechs.net/certificate.pem');
+
+var port = 8080;
 
 
 /**
@@ -79,4 +84,8 @@ app.use(function(request, res)
         })
     }
 });
-http.createServer(app).listen(8080);
+
+https.createServer({
+    key: privateKey,
+    cert: certificate
+}, app).listen(port);
