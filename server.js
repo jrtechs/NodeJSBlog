@@ -24,6 +24,9 @@ var app = express();
 
 app.use(session({ secret: utils.getFileLine('../session_secret'), cookie: { maxAge: 6000000 }}));
 
+var privateKey = fs.readFileSync('/etc/letsencrypt/live/jrtechs.net/privkey.pem');
+var certificate = fs.readFileSync('/etc/letsencrypt/live/jrtechs.net/certificate.pem');
+
 
 /**
  * Parses the request url and calls correct JS files
