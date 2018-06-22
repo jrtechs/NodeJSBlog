@@ -7,6 +7,8 @@
 
 const http = require('http');
 
+const https = require('https');
+
 const url = require('url');
 
 var express = require("express");
@@ -28,9 +30,9 @@ app.use(session({ secret: utils.getFileLine('../session_secret'), cookie: { maxA
 
 var privateKey = fs.readFileSync('/etc/letsencrypt/live/jrtechs.net/privkey.pem');
 
-var certificate = fs.readFileSync('/etc/letsencrypt/live/jrtechs.net/certificate.pem');
+var certificate = fs.readFileSync('/etc/letsencrypt/live/jrtechs.net/cert.pem');
 
-var port = 8080;
+var port = 8000;
 
 
 /**
@@ -85,7 +87,4 @@ app.use(function(request, res)
     }
 });
 
-https.createServer({
-    key: privateKey,
-    cert: certificate
-}, app).listen(port);
+http.createServer(app).listen(port);
