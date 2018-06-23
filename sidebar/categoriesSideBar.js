@@ -18,17 +18,17 @@ module.exports=
 
                 //res.write("<div class=\"w3-container w3-padding w3-gray\"><h4>Categories</h4></div>");
 
-                res.write("<div class=\"container\"><h4>Categories</h4></div>");
+                res.write("<div class=\"container\"><h4 class=\"align-content-center\">Categories</h4></div>");
 
                 //res.write("<div class=\"w3-bar-block w3-white\">");
-                res.write("<div class=\"\">");
+                res.write("<div class=\"list-group\">");
 
                 sql.getCategories().then(function(categories)
                 {
                     categories.forEach(function(cat)
                     {
                         //res.write(cat.name);
-                        res.write("<a class=\"btn-lg\" href='/category/" + cat.url + "'>" + cat.name + "<br></a>");
+                        res.write("<a class=\"list-group-item\" href='/category/" + cat.url + "'>" + cat.name + "<br></a>");
                     });
                     res.write("</div></div>");
                     resolve();

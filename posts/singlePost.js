@@ -48,7 +48,7 @@ module.exports=
            if(!(post.picture_url === "n/a"))
            {
                html +="<img src=\"/img/posts/" + post.picture_url +
-                   "\" alt=\"\" style=\"width:100%\">";
+                   "\" alt=\"\" style=\"width:100%; height:10%\">";
            }
 
            html += "<div class=\"container\">";
@@ -78,7 +78,7 @@ module.exports=
                        html+= "<p>" + htmlPost[i];
                    }
 
-                   html = html.split("<img").join("<img style=\"max-width: 100%;\" ");
+                   html = html.split("<img").join("<img style=\"width: 100%; height:10%\" ");
 
                    html += "      <div class=\"row\">\n" +
                        "          <p class='w3-center'><button class=\"w3-button " +
@@ -116,15 +116,15 @@ module.exports=
     {
         return new Promise(function (resolve, reject)
         {
-            var html = "<div class=\"container\">";
+            var html = "<div class=\"\">";
             //image
             if(!(post.picture_url === "n/a"))
             {
                 html +="<img src=\"/img/posts/" + post.picture_url +
-                    "\" alt=\"\" style=\"width:100%\">";
+                    "\" alt=\"\" class=\"w-100\">";
             }
 
-            html += "<div class=\"container\">";
+            html += "<div class=\"\">";
             //title
             html += "<h3><b>" + post.name + "</b></h3>";
             //date
@@ -132,7 +132,7 @@ module.exports=
                 post.published.toDateString() + "</span></h5>";
             html +="</div>";
 
-            html += "<div class=\"container\">";
+            html += "<div class=\"\">";
             try
             {
                 sql.getCategory(post.category_id).then(function(category)

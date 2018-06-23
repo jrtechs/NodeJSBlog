@@ -61,6 +61,7 @@ module.exports=
         {
             return new Promise(function(resolve, reject)
             {
+
                 renderRecentPosts(result).then(function()
                 {
                     return require("../sidebar/sidebar.js").main(result);

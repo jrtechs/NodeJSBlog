@@ -13,7 +13,7 @@ module.exports=
         {
             return new Promise(function(resolve, reject)
             {
-                res.write("<div class=\"w3-col l4\">");
+                res.write("<div class=\"col-md-4\">");
 
                 utils.include(res,"sidebar/sidebar.html").then(function()
                 {
