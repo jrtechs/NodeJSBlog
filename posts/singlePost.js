@@ -81,7 +81,7 @@ module.exports=
                    html = html.split("<img").join("<img style=\"width: 100%; height:10%\" ");
 
                    html += "      <div class=\"\">\n" +
-                       "          <p class='w3-center'><button class=\"btn btn-secondary btn-lg " +
+                       "          <p class='text-center'><button class=\"btn btn-secondary btn-lg " +
                        "w3-padding-large w3-white w3-border\"  onclick=\"location.href='" +
                        "http://jrtechs.net/" + category[0].url + "/" + post.url +
                        "'\"><b>READ MORE &raquo;</b></button></p>\n" +

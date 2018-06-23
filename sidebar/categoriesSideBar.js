@@ -34,7 +34,7 @@ module.exports=
                         //res.write(cat.name);
                         res.write("<a class=\"list-group-item\" href='/category/" + cat.url + "'>" + cat.name + "<br></a>");
                     });
-                    res.write("</div></div>");
+                    res.write("</div></div><br>");
                     resolve();
                 })
             });
