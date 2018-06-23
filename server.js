@@ -7,8 +7,6 @@
 
 const http = require('http');
 
-const https = require('https');
-
 const url = require('url');
 
 var express = require("express");
@@ -27,10 +25,6 @@ map.main();
 var app = express();
 
 app.use(session({ secret: utils.getFileLine('../session_secret'), cookie: { maxAge: 6000000 }}));
-
-var privateKey = fs.readFileSync('/etc/letsencrypt/live/jrtechs.net/privkey.pem');
-
-var certificate = fs.readFileSync('/etc/letsencrypt/live/jrtechs.net/cert.pem');
 
 var port = 8000;
 

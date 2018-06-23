@@ -15,7 +15,7 @@ var renderPosts = function(result, resultURL)
     var splitURL = resultURL.split("/");
     if(splitURL.length >= 3)
     {
-        result.write("<div class=\"w3-col l8 s12\">\n");
+        result.write("<div class='col-md-8'>");
 
         return new Promise(function(resolve, reject)
         {

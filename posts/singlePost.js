@@ -40,7 +40,9 @@ module.exports=
     {
        return new Promise(function(resolve, reject)
        {
-           var html = "<div class=\"w3-card-4 w3-margin w3-white\">";
+           //var html = "<div class=\"w3-card-4 w3-margin w3-white\">";
+
+           var html = "<div class=\"row\">";
 
            //image
            if(!(post.picture_url === "n/a"))
@@ -49,7 +51,7 @@ module.exports=
                    "\" alt=\"\" style=\"width:100%\">";
            }
 
-           html += "<div class=\"w3-container\">";
+           html += "<div class=\"container\">";
            //title
            html += "<h3><b>" + post.name + "</b></h3>";
            //date
@@ -57,7 +59,7 @@ module.exports=
                post.published.toDateString() + "</span></h5>";
            html +="</div>";
 
-           html += "<div class=\"w3-container\">";
+           html += "<div class=\"container\">";
 
            try
            {
@@ -78,7 +80,7 @@ module.exports=
 
                    html = html.split("<img").join("<img style=\"max-width: 100%;\" ");
 
-                   html += "      <div class=\"w3-row\">\n" +
+                   html += "      <div class=\"row\">\n" +
                        "          <p class='w3-center'><button class=\"w3-button " +
                        "w3-padding-large w3-white w3-border\"  onclick=\"location.href='" +
                        "http://jrtechs.net/" + category[0].url + "/" + post.url +
@@ -114,7 +116,7 @@ module.exports=
     {
         return new Promise(function (resolve, reject)
         {
-            var html = "<div class=\"w3-card-4 w3-margin w3-white\">";
+            var html = "<div class=\"container\">";
             //image
             if(!(post.picture_url === "n/a"))
             {
@@ -122,7 +124,7 @@ module.exports=
                     "\" alt=\"\" style=\"width:100%\">";
             }
 
-            html += "<div class=\"w3-container\">";
+            html += "<div class=\"container\">";
             //title
             html += "<h3><b>" + post.name + "</b></h3>";
             //date
@@ -130,7 +132,7 @@ module.exports=
                 post.published.toDateString() + "</span></h5>";
             html +="</div>";
 
-            html += "<div class=\"w3-container\">";
+            html += "<div class=\"container\">";
             try
             {
                 sql.getCategory(post.category_id).then(function(category)

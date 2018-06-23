@@ -18,7 +18,7 @@ var renderRecentPosts = function(result)
         sql.getRecentPostSQL().then(function(posts)
         {
             var postPromises = [];
-            result.write("<div class='w3-col l8 s12'>");
+            result.write("<div class='col-md-8'>");
             posts.forEach(function(post)
             {
                 postPromises.push(new Promise(function(res, rej)

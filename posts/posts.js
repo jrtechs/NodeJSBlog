@@ -15,7 +15,7 @@ var renderPost = function(res, requestURL)
 {
     return new Promise(function(resolve, reject)
     {
-        res.write("<div class=\"w3-col l8 s12\">");
+        res.write("<div class='col-md-8'>");
         var splitURL = requestURL.split("/");
 
         //user entered /category/name/ or /category/name
