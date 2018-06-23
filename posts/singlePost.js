@@ -42,7 +42,7 @@ module.exports=
        {
            //var html = "<div class=\"w3-card-4 w3-margin w3-white\">";
 
-           var html = "<div class=\"row\">";
+           var html = "<div class=\"blogPost\">";
 
            //image
            if(!(post.picture_url === "n/a"))
@@ -51,7 +51,7 @@ module.exports=
                    "\" alt=\"\" style=\"width:100%; height:10%\">";
            }
 
-           html += "<div class=\"container\">";
+           html += "<div class=\"p-4\"><div class=\"\">";
            //title
            html += "<h3><b>" + post.name + "</b></h3>";
            //date
@@ -59,7 +59,7 @@ module.exports=
                post.published.toDateString() + "</span></h5>";
            html +="</div>";
 
-           html += "<div class=\"container\">";
+           html += "<div class=\"\">";
 
            try
            {
@@ -80,14 +80,14 @@ module.exports=
 
                    html = html.split("<img").join("<img style=\"width: 100%; height:10%\" ");
 
-                   html += "      <div class=\"row\">\n" +
-                       "          <p class='w3-center'><button class=\"w3-button " +
+                   html += "      <div class=\"\">\n" +
+                       "          <p class='w3-center'><button class=\"btn btn-secondary btn-lg " +
                        "w3-padding-large w3-white w3-border\"  onclick=\"location.href='" +
                        "http://jrtechs.net/" + category[0].url + "/" + post.url +
                        "'\"><b>READ MORE &raquo;</b></button></p>\n" +
                        "      </div>\n";
 
-                   html += "</div></div>";
+                   html += "</div></div></div><br><br>";
                    res.write(html);
 
                    resolve()
@@ -116,7 +116,7 @@ module.exports=
     {
         return new Promise(function (resolve, reject)
         {
-            var html = "<div class=\"\">";
+            var html = "<div class=\"blogPost\">";
             //image
             if(!(post.picture_url === "n/a"))
             {
@@ -124,7 +124,7 @@ module.exports=
                     "\" alt=\"\" class=\"w-100\">";
             }
 
-            html += "<div class=\"\">";
+            html += "<div class=\"p-4\"><div class=\"\">";
             //title
             html += "<h3><b>" + post.name + "</b></h3>";
             //date
@@ -145,7 +145,7 @@ module.exports=
                     html += md.render(markDown);
 
                     html = html.split("<img").join("<img style=\"max-width: 100%;\" ");
-                    html += "</div></div>";
+                    html += "</div></div></div><br><br>";
 
 
                     res.write(html);

@@ -15,10 +15,14 @@ module.exports=
 
                 res.write("<div class=\"container\">");
 
-                res.write("<div class=\"\">" +
-                    "<h4 class=\"align-content-center\">Recent Posts</h4></div>");
+                // res.write("<div class=\"\">" +
+                //     "<h4 class=\"text-center\">Recent Posts</h4></div>");
 
                 res.write("<div class=\"list-group\">");
+
+                res.write("  <a href=\"#\" class=\"list-group-item list-group-item-action flex-column align-items-start active\">\n" +
+                    "      <h5 class=\"mb-1\">Recent Posts</h5>\n" +
+                    "  </a>");
 
                 sql.getRecentPosts().then(function(posts)
                 {
