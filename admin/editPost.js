@@ -34,7 +34,7 @@ var renderPostRow = function(result, post)
         //edit
         result.write("<td><form action=\"/admin/\" method =\"post\" >\n" +
             "    <input type=\"submit\" name=\"submit\" value=\"Edit\"\n" +
-            "              class=\"w3-teal w3-padding-16 w3-hover-dark-grey w3-btn-block w3-center-align\"/>\n" +
+            "              class=\"btn btn-secondary\"/>\n" +
             "<input type='hidden' name='edit_post' value='" + post.post_id + "'/>"+
             "</form></td>");
 
@@ -50,10 +50,10 @@ var renderPostRow = function(result, post)
  */
 var postsTable = function(result)
 {
-    result.write("<div class='w3-row'>");
-    result.write("<h1 class=\"w3-text-teal w3-center\">Posts</h1>");
-    result.write("<div class=\"w3-responsive w3-card-4\"><table class=\"w3-table w3-striped w3-bordered\"><thead>");
-    result.write("<tr class=\"w3-teal\">");
+    result.write("<div class='blogPost p-2'>");
+    result.write("<h1 class=\"text-center\">Posts</h1>");
+    result.write("<div class=\"\"><table class=\"table table-striped\">");
+    result.write("<thead class=\"thead-dark\"><tr>");
     result.write("<td>Category #</td><td>Name</td><td>Header Picture</td><td>Date</td><td>Edit</td>");
     result.write("</tr></thead><tbody>");
     return new Promise(function(resolve, reject)
@@ -77,7 +77,7 @@ var postsTable = function(result)
             });
             Promise.all(postPromises).then(function()
             {
-                result.write("</tbody></table></div></div>");
+                result.write("</tbody></table></div></div><br>");
                 resolve();
             }).catch(function(error)
             {
@@ -104,30 +104,30 @@ var displayRenderForm = function(result, post_id)
     {
         sql.getPostById(post_id).then(function(post)
         {
-            result.write("<div class='w3-row'>"+
-                "<h1 class=\"w3-text-teal w3-center\">Edit Post</h1>"+
-                "<form action=\"/admin/\" method =\"post\" class=\"w3-container w3-card-4\">"+
-                "    <div class=\"w3-group w3-padding-16\">\n" +
-                "        <input class=\"w3-input\" type=\"text\" name=\"edit_cat_num\" value='" + post.category_id + "' required>\n" +
+            result.write("<div class='blogPost p-2'>"+
+                "<h1 class=\"text-center\">Edit Post</h1>"+
+                "<form action=\"/admin/\" method =\"post\" >"+
+                "    <div class=\"form-group\">\n" +
+                "        <input class=\"form-control\" type=\"text\" name=\"edit_cat_num\" value='" + post.category_id + "' required>\n" +
                 "        <label class=\"w3-label w3-validate\">Category Number</label>\n" +
                 "    </div>"+
-                "    <div class=\"w3-group w3-padding-16\">\n" +
-                "        <input class=\"w3-input\" type=\"text\" name=\"edit_name_new\" value='" + post.name + "' required>\n" +
+                "    <div class=\"form-group\">\n" +
+                "        <input class=\"form-control\" type=\"text\" name=\"edit_name_new\" value='" + post.name + "' required>\n" +
                 "        <label class=\"w3-label w3-validate\">Post Title</label>\n" +
                 "    </div>"+
-                "    <div class=\"w3-group w3-padding-16\">\n" +
-                "        <input class=\"w3-input\" type=\"text\" name=\"edit_pic\" value='" + post.picture_url + "' required>\n" +
+                "    <div class=\"form-group\">\n" +
+                "        <input class=\"form-control\" type=\"text\" name=\"edit_pic\" value='" + post.picture_url + "' required>\n" +
                 "        <label class=\"w3-label w3-validate\">Picture URL</label>\n" +
                 "    </div>"+
-                "    <div class=\"w3-group w3-padding-16\">\n" +
-                "        <input class=\"w3-input\" type=\"date\" name=\"edit_date\" value='" + post.published.toISOString().split('T')[0] + "' required>\n" +
+                "    <div class=\"form-group\">\n" +
+                "        <input class=\"form-control\" type=\"date\" name=\"edit_date\" value='" + post.published.toISOString().split('T')[0] + "' required>\n" +
                 "        <label class=\"w3-label w3-validate\">Published Date</label>\n" +
                 "    </div>"+
-                "    <p><input type=\"submit\" name=\"submit\" value=\"Edit\"\n" +
-                "              class=\"w3-teal w3-padding-16 w3-hover-dark-grey w3-btn-block w3-center-align\"/></p>"+
+                "    <div><input type=\"submit\" name=\"submit\" value=\"Edit\"\n" +
+                "              class=\"btn btn-lg btn-secondary\"/></div>"+
                 "<input type='hidden' name='edit_post_2' value='" + post_id + "'/>"+
                 "</form>"+
-                "</div>"
+                "</div><br>"
             );
             resolve();
         }).catch(function(error)
@@ -196,6 +196,7 @@ module.exports=
     {
         return new Promise(function(resolve, reject)
         {
+            result.write("<br>");
             processPost(result, postData).then(function()
             {
                 return postsTable(result);

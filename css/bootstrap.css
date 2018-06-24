@@ -1854,12 +1854,6 @@ pre code {
     background-color: rgba(0, 0, 0, 0.075);
 }
 
-.table .thead-dark th {
-    color: #fff;
-    background-color: #212529;
-    border-color: #32383e;
-}
-
 .table .thead-light th {
     color: #495057;
     background-color: #F8F5F0;
@@ -9683,7 +9677,11 @@ a:hover
     border-radius: 0.25rem;
 }
 
-
+.table .thead-dark{
+    color: #fff;
+    background-color: #513E7D;
+    border-color: #32383e;
+}
 
 footer
 {

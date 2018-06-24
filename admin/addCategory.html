@@ -1,11 +1,16 @@
 
-<h1 class="w3-text-teal w3-center">Add Category</h1>
+<div class="blogPost">
+    <h1 class="text-center">Add Category</h1>
 
-<form action="/admin/" method ="post" class="w3-container w3-card-4">
-    <div class="w3-group w3-padding-16">
-        <input class="w3-input" type="text" name="add_category" required>
-        <label class="w3-label w3-validate">Category</label>
-    </div>
-    <p><input type="submit" name="submit" value="Add"
-              class="w3-padding-16 w3-hover-dark-grey w3-btn-block w3-center-align"/></p>
-</form>
+    <form action="/admin/" method ="post" class="p-2">
+        <div class="form-group">
+            <input class="form-control" type="text" name="add_category" required>
+            <label>Category</label>
+        </div>
+        <div class="text-center">
+            <input type="submit" name="submit" value="Add"
+                   class="btn btn-lg btn-secondary"/>
+        </div>
+    </form>
+</div>
+<br>

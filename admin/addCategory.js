@@ -12,9 +12,11 @@ const Promise = require('promise');
  */
 var printCategories = function(res)
 {
-    res.write("<h1 class=\"w3-text-teal w3-center\">Categories</h1>");
-    res.write("<div class=\"w3-responsive w3-card-4\"><table class=\"w3-table w3-striped w3-bordered\"><thead>");
-    res.write("<tr class=\"w3-teal\">");
+    res.write("<div class=\"blogPost p-2 \">");
+    res.write("<h1 class=\"text-center\">Categories</h1>");
+    res.write("<div class=\"\"><table class=\"table table-striped\">");
+    res.write("<thead class=\"thead-dark\">");
+    res.write("<tr>");
     res.write("<td>Name</td><td>URL</td><td>Edit</td>");
     res.write("</tr></thead><tbody>");
     return new Promise(function(resolve, reject)
@@ -33,7 +35,7 @@ var printCategories = function(res)
 
                 res.write("</tr>");
             });
-            res.write("</tbody></table></div>");
+            res.write("</tbody></table></div></div>");
             resolve();
         })
     });
@@ -76,7 +78,7 @@ module.exports=
 {
     main: function(res, postData)
     {
-        res.write("<div class=\"w3-third w3-container\">");
+        res.write("<div class=\"col-md-6\">");
         return new Promise(function(resolve, reject)
         {
             utils.include(res, "./admin/addCategory.html");
