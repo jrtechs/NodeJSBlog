@@ -1,7 +1,28 @@
 # NodeJSBlog
-Recreating my Wordpress blog in node JS.
+This is a project I did to recreate my word press blog using plane node js. If I were to 
+do this again, I would use PHP. NodeJS is great, however, it was a pain to deal 
+with all the asynchronous calls when trying to create a web page in a linear fashion.
+
+If you want to run this project, it requires Mysql, npm, and node to be installed. For 
+deployment I use a [Nginx](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-16-04) 
+proxy.
+
+
+## Color scheme
+
+[Adobe Color Wheel](https://color.adobe.com/create/color-wheel/?copy=true&base=2&rule=Custom&selected=3&name=Copy%20of%20Site&mode=rgb&rgbvalues=0.231,0.325499999999957,0.42,0,0.7450980392156863,0.6980392156862745,0.10196078431372549,0.36470588235294116,0.38823529411764707,0.8235294117647058,0.7529411764705882,1,0.3165071770335184,0.24148325358851674,0.49&swatchOrder=0,1,2,3,4)
+
+Blue:
+- Primary: #3B536B
+- Secondary: #00BEB2
+
+Purple:
+- Primary: #513E7D
+- Secondary: #D2C0FF
 
 ## MYSQL Information
+
+![](blogSql.svg)
 
 ```SQL
 create database jrtechs_blog;
@@ -32,6 +53,8 @@ name varchar(100) not null,
 url varchar(100) not null,
 primary key(post_id)
 );
+
+// not used yet
 
 create table downloads(
 download_id mediumint unsigned not null AUTO_INCREMENT,

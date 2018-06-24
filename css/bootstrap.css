@@ -9637,10 +9637,13 @@ a:hover
     background-color: #3B536B !important;
 }
 
-#mainNav {
+#mainNav
+{
     font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 700;
     text-transform: uppercase;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 
 
@@ -9668,7 +9671,8 @@ a:hover
 }
 
 
-.navbar-toggler {
+.navbar-toggler
+{
     padding: 0.25rem 0.75rem;
     font-size: 1.09375rem;
     line-height: 1;
