@@ -4,7 +4,7 @@ do this again, I would use PHP. NodeJS is great, however, it was a pain to deal
 with all the asynchronous calls when trying to create a web page in a linear fashion.
 
 If you want to run this project, it requires Mysql, npm, and node to be installed. For 
-deployment I use a [Nginx](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-16-04) 
+deployment I used a [Nginx](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-16-04) 
 proxy.
 
 

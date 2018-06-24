@@ -69,7 +69,7 @@ module.exports=
                        + post.url + ".md";
                    var markDown = utils.getFileContents(pathName).toString();
 
-                   markDown = markDown.split("![](media/").join("![](" + "../entries/"
+                   markDown = markDown.split("(media/").join("(" + "../entries/"
                        + category[0].url + "/media/");
                    var htmlPost = md.render(markDown).split("<p>");
 
@@ -140,7 +140,7 @@ module.exports=
                     var pathName =  "entries/" + category[0].url + "/"
                         + post.url + ".md";
                     var markDown = utils.getFileContents(pathName).toString();
-                    markDown = markDown.split("![](media/").join("![](" + "../entries/"
+                    markDown = markDown.split("(media/").join("(" + "../entries/"
                         + category[0].url + "/media/");
                     html += md.render(markDown);
 
