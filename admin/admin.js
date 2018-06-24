@@ -14,12 +14,10 @@ module.exports=
      */
     main: function(result, fileName, request)
     {
-        result.write("<div class=\"w3-row\">");
         return new Promise(function(resolve, reject)
         {
             if(request.session && request.session.user)
             {
-                console.log("user logged in");
                 utils.getPostData(request).then(function (postData)
                 {
                     return require("../admin/newPost.js").main(result, postData);
@@ -28,8 +26,7 @@ module.exports=
                     return require("../admin/addCategory.js").main(result, postData);
                 }).then(function(postData)
                 {
-                    result.write("</div>");
-                    console.log("hmmm");
+                    result.write("</div>"); //ends main row
                     return require("../admin/editPost.js").main(result, postData);
                 }).then(function()
                 {

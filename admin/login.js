@@ -31,7 +31,6 @@ module.exports=
         main: function(result, request)
         {
             console.log("main of login.js");
-            result.write("<div class=\"w3-col l8 s12\">");
             return new Promise(function(resolve, reject)
             {
                 utils.include(result, './admin/login.html').then(function()
@@ -43,6 +42,7 @@ module.exports=
                     return processLogin(result, request);
                 }).then(function()
                 {
+                    result.write("</div>");
                     resolve();
                 })
             });
