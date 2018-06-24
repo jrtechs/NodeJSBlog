@@ -73,7 +73,7 @@ body {
     font-size: 0.875rem;
     font-weight: 400;
     line-height: 1.5;
-    color: #3E3F3A;
+    color: #2c3e50;
     text-align: left;
     background-color: #fff;
 }
@@ -6299,9 +6299,7 @@ button.close {
     vertical-align: text-top !important;
 }
 
-.bg-primary {
-    background-color: #325D88 !important;
-}
+
 
 a.bg-primary:hover, a.bg-primary:focus,
 button.bg-primary:hover,
@@ -9515,19 +9513,6 @@ a.text-dark:hover, a.text-dark:focus {
     color: #b9a78a;
 }
 
-footer {
-    color: white; }
-footer h3 {
-    margin-bottom: 30px; }
-footer .footer-above {
-    padding-top: 50px;
-    background-color: #3E3F3A; }
-footer .footer-col {
-    margin-bottom: 50px; }
-footer .footer-below {
-    padding: 25px 0;
-    background-color: #3E3F3A; }
-
 
 .btn-social {
     font-size: 20px;
@@ -9602,26 +9587,27 @@ a
 
 a:hover
 {
-    color: #1A5D63;
+    color: #D2C0FF;
     text-decoration: underline;
 }
 
 
-.list-group-item {
+.list-group-item
+{
     position: relative;
     display: block;
     padding: 0.75rem 1.25rem;
     margin-bottom: -1px;
     background-color: #fff;
     border: 1px solid #DFD7CA;
-    color: #1a5d63;
+    color: #2c3e50;
 }
 
 .list-group-item:hover, .list-group-item:focus {
     z-index: 1;
     text-decoration: none;
-    color: #fff1d6;
-    background-color: #00BEB2;
+    color: #2c3e50;
+    background-color: #D2C0FF;
 }
 
 
@@ -9630,15 +9616,15 @@ a:hover
     display: block;
     padding: 0.75rem 1.25rem;
     margin-bottom: -1px;
-    color: #fff1d6;
-    background-color: #1a5d63;
+    color: #fff;
+    background-color: #8767D1;
     border-color: #DFD7CA;
 }
 
 .list-group-item-action:hover, .list-group-item-action:focus {
-    color: #fff1d6;
+    color: #fff;
     text-decoration: none;
-    background-color: #1a5d63;
+    background-color: #8767D1;
 }
 
 .list-group-item-action:active {
@@ -9648,10 +9634,124 @@ a:hover
 
 .btn-secondary {
     color: #fff;
-    background-color: #1a5d63;
+    background-color: #8767D1;
 }
 
 .btn-secondary:hover {
-    color: #fff;
-    background-color: #00BEB2;
+    color: #2c3e50;
+    background-color: #D2C0FF;
+}
+
+
+.bg-primary {
+    background-color: #3B536B !important;
+}
+
+#mainNav {
+    font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    border: none;
+}
+#mainNav a:focus
+{
+    outline: none;
+}
+#mainNav .navbar-brand
+{
+    font-size: 1.1rem;
+    color: white;
+}
+#mainNav .navbar-brand.active, #mainNav .navbar-brand:active, #mainNav .navbar-brand:focus, #mainNav .navbar-brand:hover
+{
+    color: white;
+}
+#mainNav .navbar-nav
+{
+    letter-spacing: 1px;
+}
+#mainNav .navbar-nav li.nav-item a.nav-link
+{
+    color: white;
+}
+#mainNav .navbar-nav li.nav-item a.nav-link:hover
+{
+    color: #D2C0FF;
+    outline: none;
+}
+#mainNav .navbar-nav li.nav-item a.nav-link:active, #mainNav .navbar-nav li.nav-item a.nav-link:focus
+{
+    color: white;
+}
+#mainNav .navbar-toggler
+{
+    font-size: 14px;
+    padding: 11px;
+    text-transform: uppercase;
+    color: white;
+    border-color: white;
+}
+#mainNav .navbar-toggler:focus, #mainNav .navbar-toggler:hover
+{
+    color: white;
+    border-color: #18BC9C;
+    background-color: #D2C0FF;
+}
+
+@media (min-width: 992px)
+{
+    #mainNav {
+        padding-top: 15px;
+        padding-bottom: 15px;
+        -webkit-transition: padding-top 0.3s, padding-bottom 0.3s;
+        -moz-transition: padding-top 0.3s, padding-bottom 0.3s;
+        transition: padding-top 0.3s, padding-bottom 0.3s;
+    }
+    #mainNav .navbar-brand {
+        font-size: 2em;
+        -webkit-transition: all 0.3s;
+        -moz-transition: all 0.3s;
+        transition: all 0.3s; }
+    #mainNav .navbar-nav > li.nav-item > a.nav-link.active
+    {
+        color: white;
+        border-radius: 3px;
+        background: #D2C0FF;
+    }
+    #mainNav .navbar-nav > li.nav-item > a.nav-link.active:active, #mainNav .navbar-nav > li.nav-item > a.nav-link.active:focus, #mainNav .navbar-nav > li.nav-item > a.nav-link.active:hover
+    {
+        color: white;
+        background: #D2C0FF;
+    }
+    #mainNav.navbar-shrink
+    {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    #mainNav.navbar-shrink .navbar-brand
+    {
+        font-size: 1.5em;
+    }
+}
+
+footer {
+    color: white;
+}
+footer h3
+{
+    margin-bottom: 30px;
+}
+footer .footer-above
+{
+    padding-top: 50px;
+    background-color: #3B536B;
+}
+footer .footer-col
+{
+    margin-bottom: 50px;
+}
+footer .footer-below
+{
+    padding: 25px 0;
+    background-color: #3B536B;
 }
