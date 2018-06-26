@@ -68,8 +68,18 @@ already does this to a certain extent when they recommend you games that are pop
 
 ![Steam friends graph](media/steam/ben2.png)
 
-### Hosting Project
+### Hosting the Project
+
+Hosting the front end of this project is really easy, it is just thrown on a apache server. The backend
+is more tricky since it needs to run both a java app and a gremlin server. Currently I am hosting this
+project on an Ubuntu VM with 4gb ram. At idle this project only takes 1gb of ram, however, under heavy 
+loads it uses around 2 gb of ram and saturates the cpu. 
 
 ![Steam friends graph](media/steam/jrtechs2.png)
 
 ### Future Plans for Project
+
+In the future I would love to add more graphs to this website. Instead of just displaying graphs it would
+also be cool to create pages which try's to identify friends groups, people you may know, and best
+friends. There is a ton of game information available on the steam api, it might be useful to make
+graphs based on friends who play the same games. 
