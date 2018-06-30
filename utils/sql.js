@@ -328,8 +328,52 @@ module.exports=
     getDownload: function(downloadURL)
     {
         var cleanD = sanitizer.sanitize(downloadURL);
-        var q = "select * from downloads where file='" + cleanD + "' limit 1";
-        return fetch(q);
+        var q = "select * from downloads where name='" + cleanD + "' limit 1";
+
+        return new Promise(function(resolve, reject)
+        {
+           fetch(q).then(function(sqlData)
+           {
+               return module.exports.incrementDownloadCount(sqlData);
+           }).then(function(sqlData)
+           {
+               resolve(sqlData)
+           }).catch(function(error)
+           {
+               reject(error);
+           })
+        });
+    },
+
+
+    /** Increments the download count in the database
+     *
+     * @param sqlRow
+     * @returns {*|Promise}
+     */
+    incrementDownloadCount: function(sqlRow)
+    {
+        return new Promise(function(resolve, reject)
+        {
+            if(sqlRow.length == 1)
+            {
+                var q = "update downloads set download_count='" +
+                    (sqlRow[0].download_count + 1) + "' where download_id='" +
+                    sqlRow[0].download_id + "'";
+                console.log(q);
+                module.exports.insert(q).then(function(r)
+                {
+                    resolve(sqlRow);
+                }).catch(function(err)
+                {
+                    reject(err);
+                })
+            }
+            else
+            {
+                resolve(sqlRow);
+            }
+        });
     },
 
 
@@ -341,6 +385,22 @@ module.exports=
     getAllDownloads: function()
     {
         return fetch("select * from downloads");
+    },
+
+
+    /**
+     * Inserts a download row into the database
+     *
+     * @param name of the download
+     * @param file name of file
+     * @returns {*|the}
+     */
+    addDownload: function(name, file)
+    {
+        var q = "insert into downloads (name, file, download_count) " +
+            "values('" + name + "', '" + file + "', '0')";
+
+        return module.exports.insert(q);
     },
 
     /**

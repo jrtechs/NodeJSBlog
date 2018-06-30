@@ -22,10 +22,17 @@ var addDownloadPostData = function(res, postData)
         var post = qs.parse(postData);
         if(post.add_download)
         {
-            console.log("addind post to db");
             console.log(post);
+
+            sql.addDownload(post.add_download_name, post.add_download_file).then(function()
+            {
+                resolve(postData);
+            });
         }
-        resolve(postData);
+        else
+        {
+            resolve(postData);
+        }
     });
 };
 
@@ -129,7 +136,7 @@ var displayDownloads = function(res, postData)
     {
         displayDownloadsPostData(res, postData).then(function()
         {
-            res.write("<div class='blogPost p-2'>");
+            res.write("<div class='blogPost'>");
             res.write("<h1 class=\"text-center\">Downloads</h1>");
             res.write("<div class=\"\"><table class=\"table table-striped\">");
             res.write("<thead class=\"thead-dark\"><tr>");
@@ -137,15 +144,12 @@ var displayDownloads = function(res, postData)
             res.write("</tr></thead><tbody>");
 
 
-
             sql.getAllDownloads().then(function(downloads)
             {
-                console.log("sql thing finished");
                 var downloadPromises = [];
 
                 downloads.forEach(function(download)
                 {
-                    console.log("push elements");
                    downloadPromises.push(new Promise(function(resolveDownload, reject)
                    {
                        renderDownloadRow(res, download).then(function()
@@ -162,7 +166,6 @@ var displayDownloads = function(res, postData)
                 {
                     res.write("</tbody></table></div></div><br>");
                     res.write("</div>");
-                    console.log("got to the end of downloads table");
                     resolve(postData);
                 });
             }).catch(function(error)

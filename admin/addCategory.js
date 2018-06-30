@@ -12,7 +12,7 @@ const Promise = require('promise');
  */
 var printCategories = function(res)
 {
-    res.write("<div class=\"blogPost p-2 \">");
+    res.write("<div class=\"blogPost\">");
     res.write("<h1 class=\"text-center\">Categories</h1>");
     res.write("<div class=\"\"><table class=\"table table-striped\">");
     res.write("<thead class=\"thead-dark\">");

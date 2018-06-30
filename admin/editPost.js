@@ -104,7 +104,7 @@ var displayRenderForm = function(result, post_id)
     {
         sql.getPostById(post_id).then(function(post)
         {
-            result.write("<div class='blogPost p-2'>"+
+            result.write("<div class='blogPost'>"+
                 "<h1 class=\"text-center\">Edit Post</h1>"+
                 "<form action=\"/admin/\" method =\"post\" >"+
                 "    <div class=\"form-group\">\n" +

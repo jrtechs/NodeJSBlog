@@ -63,7 +63,7 @@ create table downloads(
 download_id mediumint unsigned not null AUTO_INCREMENT,
 file varchar(40) not null,
 name varchar(20) not null,
-download_count mediumint unsigned null,
+download_count mediumint not null,
 primary key(download_id)
 );
 
