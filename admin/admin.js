@@ -1,6 +1,5 @@
 const utils = require('../utils/utils.js');
 var Promise = require('promise');
-var session = require('client-sessions');
 
 module.exports=
 {
@@ -28,12 +27,15 @@ module.exports=
                 {
                     result.write("</div>"); //ends main row
                     return require("../admin/editPost.js").main(result, postData);
+                }).then(function(postData)
+                {
+                    return require("../admin/addDownload.js").main(result, postData);
                 }).then(function()
                 {
                     resolve();
                 }).catch(function(error)
                 {
-                    throw error;
+                    reject(error);
                 });
             }
             else

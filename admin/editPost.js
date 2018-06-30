@@ -202,7 +202,7 @@ module.exports=
                 return postsTable(result);
             }).then(function()
             {
-                resolve();
+                resolve(postData);
             }).catch(function(error)
             {
                 console.log("Error in edit post module");

@@ -320,7 +320,7 @@ module.exports=
     },
 
 
-    /**TODO work on website downloads
+    /**Returns download information associated with a download name
      *
      * @param downloadURL
      * @returns {Array}
@@ -328,8 +328,19 @@ module.exports=
     getDownload: function(downloadURL)
     {
         var cleanD = sanitizer.sanitize(downloadURL);
-        var q = "select * from downloads where url='" + cleanD + "' limit 1";
+        var q = "select * from downloads where file='" + cleanD + "' limit 1";
         return fetch(q);
+    },
+
+
+    /**
+     * Fetches all the downloads from the database
+     *
+     * @returns {Array}
+     */
+    getAllDownloads: function()
+    {
+        return fetch("select * from downloads");
     },
 
     /**

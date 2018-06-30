@@ -20,6 +20,9 @@ Purple:
 - Primary: #513E7D
 - Secondary: #D2C0FF
 
+
+006688
+
 ## MYSQL Information
 
 ![](blogSql.svg)
@@ -58,8 +61,9 @@ primary key(post_id)
 
 create table downloads(
 download_id mediumint unsigned not null AUTO_INCREMENT,
-url varchar(20) not null,
-file varchar(20) not null,
+file varchar(40) not null,
+name varchar(20) not null,
+download_count mediumint unsigned null,
 primary key(download_id)
 );
 

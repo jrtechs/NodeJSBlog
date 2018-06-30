@@ -46,6 +46,10 @@ app.use(function(request, res)
     {
         includes.sendCSS(res, filename)
     }
+    else if(filename.includes("/downloads/"))
+    {
+        require("./downloads/downloads.js").main(res, filename, request);
+    }
     else
     {
         var file = "";

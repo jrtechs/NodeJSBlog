@@ -22,13 +22,13 @@ module.exports=
          */
         main: function(res, requestURL, request)
         {
-            res.setHeader('Content-disposition', 'attachment; filename=dramaticpenguin.MOV');
             return new Promise(function(resolve, reject)
             {
                 var urlSplit = requestURL.split("/");
                 console.log(urlSplit);
                 if(urlSplit.length == 3 || urlSplit.length == 4)
                 {
+                    console.log(urlSplit[2]);
                     sql.getDownload(urlSplit[2]).then(function(result)
                     {
                         console.log(result);
