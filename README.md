@@ -44,7 +44,6 @@ url varchar(100) not null,
 primary key(post_id)
 );
 
-// not used yet
 
 create table downloads(
 download_id mediumint unsigned not null AUTO_INCREMENT,

@@ -11,8 +11,6 @@ const url = require('url');
 
 var express = require("express");
 
-const fs = require('fs');
-
 var session = require('express-session');
 
 const includes = require('./includes/includes.js');
@@ -34,55 +32,69 @@ var port = 8000;
  */
 app.use(function(request, res)
 {
-    var q = url.parse(request.url, true);
-    var filename = q.pathname;
 
-    //handles image requests
-    if(filename.includes("/img/") || filename.includes(".jpg") || filename.includes(".png"))
-    {
-        require("./img/image.js").main(res, filename);
-    }
-    else if(filename.includes("/css/") || filename.includes(".txt"))
-    {
-        includes.sendCSS(res, filename)
-    }
-    else if(filename.includes("/downloads/"))
-    {
-        require("./downloads/downloads.js").main(res, filename, request);
-    }
-    else
-    {
-        var file = "";
+    console.log(request.headers.host);
 
-        if(filename === '' || filename === '/')
+    if(request.headers.host.includes("localhost:" + port) ||
+        request.headers.host.includes("jrtechs.net"))
+    {
+        var q = url.parse(request.url, true);
+        var filename = q.pathname;
+
+        //handles image requests
+        if(filename.includes("/img/") || filename.includes(".jpg") || filename.includes(".png"))
         {
-            file="./posts/homePage.js";
+            require("./img/image.js").main(res, filename);
+        }
+        else if(filename.includes("/css/") || filename.includes(".txt"))
+        {
+            includes.sendCSS(res, filename)
+        }
+        else if(filename.includes("/downloads/"))
+        {
+            require("./downloads/downloads.js").main(res, filename, request);
         }
         else
         {
-            var urlSplit = filename.split("/");
+            var file = "";
 
-            if(urlSplit.length >= 2 && urlSplit[1] === 'category') //single category page
-                file = "./posts/category.js";
-
-            else if(urlSplit.length >= 2 && urlSplit[1] === 'admin') //top secret admin page
-                file = "./admin/admin.js";
-
+            if(filename === '' || filename === '/')
+            {
+                file="./posts/homePage.js";
+            }
             else
-                file = "./posts/posts.js";
-        }
+            {
+                var urlSplit = filename.split("/");
 
-        includes.printHeader(res).then(function()
-        {
-            return require(file).main(res, filename, request);
-        }).then(function()
-        {
-            return includes.printFooter(res);
-        }).catch(function(err)
-        {
-            console.log(err);
-        })
+                if(urlSplit.length >= 2 && urlSplit[1] === 'category') //single category page
+                    file = "./posts/category.js";
+
+                else if(urlSplit.length >= 2 && urlSplit[1] === 'admin') //top secret admin page
+                    file = "./admin/admin.js";
+
+                else
+                    file = "./posts/posts.js";
+            }
+
+            includes.printHeader(res).then(function()
+            {
+                return require(file).main(res, filename, request);
+            }).then(function()
+            {
+                return includes.printFooter(res);
+            }).catch(function(err)
+            {
+                console.log(err);
+            })
+        }
     }
+    else
+    {
+        utils.printWrongHost(res);
+        res.end();
+    }
+
+
 });
 
 http.createServer(app).listen(port);

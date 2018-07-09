@@ -32,6 +32,7 @@ module.exports=
         });
     },
 
+
     /**
      * Method which return the contents of a file as a string
      * @param fileName
@@ -49,6 +50,7 @@ module.exports=
         }
         return 0;
     },
+
 
     /**
      *
@@ -108,6 +110,7 @@ module.exports=
         });
     },
 
+
     /**
      * Displays 404 error to user
      *
@@ -117,5 +120,17 @@ module.exports=
     print404: function(result)
     {
         return this.include(result, "includes/404.html");
+    },
+
+
+    /**
+     * Displays 404 error to user
+     *
+     * @param result
+     * @returns {*}
+     */
+    printWrongHost: function(result)
+    {
+        return this.include(result, "includes/incorrectHost.html");
     }
 };
