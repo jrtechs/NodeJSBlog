@@ -89,3 +89,12 @@ Blue:
 Purple:
 - Primary: #513E7D
 - Secondary: #D2C0FF
+
+Stuff for automated image compression
+```
+apt-get install jpegoptim
+jpegoptim --size=500k *.jpg
+apt-get install optipng
+optipng *.png
+
+```
