@@ -18,29 +18,27 @@ module.exports =
      * @param result
      * @return {*} a promise retrieved from the utils.include function
      */
-    printHeader: function(result)
+    printHeader: function()
     {
-        result.writeHead(200, {'Content-Type': 'text/html'});
-        return utils.include(result, HEADER_FILE);
+        // utils.getFileContents(HEADER_FILE);
+        return utils.include(HEADER_FILE);
     },
+
+
     /**
      * Appends the footer to the result object
      *
-     * @param result
      * @return {*|Promise}
      */
-    printFooter: function(result)
+    printFooter: function()
     {
-        return new Promise(function(resolve, reject)
-        {
-            utils.include(result, FOOTER_FILE).then(function()
-            {
-                result.end();
-                resolve();
-            })
-
-        })
+        return utils.include(FOOTER_FILE);
+        // return new Promise(function(resolve, reject)
+        // {
+        //     resolve(utils.getFileContents(FOOTER_FILE));
+        // })
     },
+
 
     /**Sends a css file to the user
      *
@@ -51,7 +49,14 @@ module.exports =
     sendCSS: function(result, path)
     {
         result.writeHead(200, {'Content-Type': 'text/css'});
-        utils.include(result, "./" + path);
-        result.end();
+        utils.include("./" + path).then(function(content)
+        {
+            result.write(content);
+            result.end();
+        }).catch(function(error)
+        {
+            console.log(error);
+        });
+
     }
 };

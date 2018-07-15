@@ -13,22 +13,22 @@ module.exports=
      * A function similar to the include statement in PHP
      * This function writes a file to the output
      *
-     * @param result the result that is sent to the user from node
      * @param fileName the file to append to the result
      */
-    include: function(result, fileName)
+    include: function(fileName)
     {
         return new Promise(function(resolve, reject)
         {
             try
             {
-                result.write(fs.readFileSync(fileName));
+                resolve(fs.readFileSync(fileName));
+
             }
             catch (e)
             {
                 console.log("Could not find " + fileName);
+                resolve("");
             }
-            resolve();
         });
     },
 

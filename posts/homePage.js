@@ -11,21 +11,22 @@ const postRenderer = require('../posts/singlePost.js');
  * @param result
  * @returns {*|Promise}
  */
-var renderRecentPosts = function(result)
+var renderRecentPosts = function()
 {
     return new Promise(function(resolve, reject)
     {
+        console.log("recent post render page");
         sql.getRecentPostSQL().then(function(posts)
         {
             var postPromises = [];
-            result.write("<div class='col-md-8'>");
+            var content = "<div class='col-md-8'>";
             posts.forEach(function(post)
             {
                 postPromises.push(new Promise(function(res, rej)
                 {
-                    postRenderer.renderPreview(result, post).then(function()
+                    postRenderer.renderPreview(post).then(function(cont)
                     {
-                        res();
+                        res(cont);
                     }).catch(function(error)
                     {
                         rej(error);
@@ -33,17 +34,16 @@ var renderRecentPosts = function(result)
                 }));
             });
 
-            Promise.all(postPromises).then(function()
+            Promise.all(postPromises).then(function(cont)
             {
-                result.write("</div>");
-                resolve();
+                content = content + cont.join('') + "</div>";
+                resolve(content);
             }).catch(function(error)
             {
                 reject(error);
             })
         }).catch(function(error)
         {
-            console.log(error);
             reject(error);
         })
     });
@@ -57,22 +57,32 @@ module.exports=
          * @param res
          * @param fileName request url
          */
-        main: function(result, requestURL, request)
+        main: function(requestURL, request)
         {
             return new Promise(function(resolve, reject)
             {
+                // renderRecentPosts().then(function()
+                // {
+                //     return require("../sidebar/sidebar.js").main();
+                // }).then(function()
+                // {
+                //     resolve();
+                // }).catch(function(error)
+                // {
+                //     console.log(error);
+                //     reject(error);
+                // })
 
-                renderRecentPosts(result).then(function()
+
+                console.log("home page");
+                Promise.all([renderRecentPosts(), require("../sidebar/sidebar.js").main()]).then(function(content)
                 {
-                    return require("../sidebar/sidebar.js").main(result);
-                }).then(function()
-                {
-                    resolve();
+                    console.log("fin posts");
+                    resolve(content.join(''));
                 }).catch(function(error)
                 {
-                    console.log(error);
                     reject(error);
-                })
+                });
             })
         }
     };

@@ -10,7 +10,10 @@ module.exports=
         main: function(result, fileName)
         {
             result.contentType = 'image/png';
-            utils.include(result, "." + fileName);
-            result.end();
+            utils.include("." + fileName).then(function(content)
+            {
+                result.write(content);
+                result.end();
+            });
         }
     };

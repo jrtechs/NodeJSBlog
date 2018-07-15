@@ -9,22 +9,22 @@ const http = require('http');
 
 const url = require('url');
 
-var express = require("express");
+const express = require("express");
 
-var session = require('express-session');
+const session = require('express-session');
 
 const includes = require('./includes/includes.js');
 
 const utils = require('./utils/utils.js');
 
-var map = require('./utils/generateSiteMap.js');
+const map = require('./utils/generateSiteMap.js');
 map.main();
 
-var app = express();
+const app = express();
 
 app.use(session({ secret: utils.getFileLine('../session_secret'), cookie: { maxAge: 6000000 }}));
 
-var port = 8000;
+const port = 8000;
 
 
 /**
@@ -76,16 +76,31 @@ app.use(function(request, res)
                     file = "./posts/posts.js";
             }
 
-            includes.printHeader(res).then(function()
+            // includes.printHeader(res).then(function()
+            // {
+            //     return require(file).main(res, filename, request);
+            // }).then(function()
+            // {
+            //     return includes.printFooter(res);
+            // }).catch(function(err)
+            // {
+            //     console.log(err);
+            // })
+
+            res.writeHead(200, {'Content-Type': 'text/html'});
+
+            Promise.all([includes.printHeader(),
+                require(file).main(filename, request),
+                includes.printFooter()]).then(function(content)
             {
-                return require(file).main(res, filename, request);
-            }).then(function()
-            {
-                return includes.printFooter(res);
+                console.log("main fin");
+                res.write(content.join(''));
+                res.end();
             }).catch(function(err)
             {
                 console.log(err);
-            })
+            });
+
         }
     }
     else

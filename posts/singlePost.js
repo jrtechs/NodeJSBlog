@@ -36,7 +36,7 @@ module.exports=
      * @param res
      * @param post
      */
-    renderPreview: function(res, post)
+    renderPreview: function(post)
     {
        return new Promise(function(resolve, reject)
        {
@@ -88,9 +88,8 @@ module.exports=
                        "      </div>\n";
 
                    html += "</div></div></div><br><br>";
-                   res.write(html);
 
-                   resolve()
+                   resolve(html)
                }).catch(function(error)
                {
                    console.log(error);
@@ -100,7 +99,6 @@ module.exports=
            catch(ex)
            {
                reject(ex);
-               console.log(ex);
            }
        });
     },
@@ -112,7 +110,7 @@ module.exports=
      * @param post sql data about the blog post
      * @return {*|Promise}
      */
-    renderPost: function(res, post)
+    renderPost: function(post)
     {
         return new Promise(function (resolve, reject)
         {
@@ -148,14 +146,12 @@ module.exports=
                     html += "</div></div></div><br><br>";
 
 
-                    res.write(html);
-                    resolve()
+                    resolve(html);
                 });
             }
             catch(ex)
             {
-                //console.log(ex);
-                //utils.include(res, "includes/404.html");
+                reject(ex);
             }
         });
     }
