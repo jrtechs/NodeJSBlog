@@ -26,6 +26,7 @@ app.use(session({ secret: utils.getFileLine('../session_secret'), cookie: { maxA
 
 const port = 8000;
 
+app.use(express.static(__dirname + './', { maxAge: 86400000 }));
 
 /**
  * Parses the request url and calls correct JS files
@@ -83,6 +84,7 @@ app.use(function(request, res)
             }).catch(function(err)
             {
                 console.log(err);
+                throw err;
             });
         }
     }

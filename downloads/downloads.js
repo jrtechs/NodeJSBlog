@@ -3,9 +3,7 @@
  including html files easier for me programming.
  */
 
-const fs = require('fs');
-
-var Promise = require('promise');
+const Promise = require('promise');
 
 const utils = require('../utils/utils.js');
 
@@ -34,7 +32,7 @@ module.exports=
                         console.log(result);
                         if(result.length == 1)
                         {
-                            var file = './downloads/content/' + result[0].file;
+                            const file = './downloads/content/' + result[0].file;
                             res.download(file);
                         }
                         else
@@ -48,9 +46,9 @@ module.exports=
                 }
                 else
                 {
-                    utils.print404(res).then(function()
+                    utils.print404().then(function(content)
                     {
-                        resolve();
+                        resolve(content);
                     })
                 }
             });

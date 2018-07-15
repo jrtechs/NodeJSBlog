@@ -7,50 +7,48 @@ const Promise = require('promise');
 
 /**
  * Displays all the categories in the database
- * @param res
  * @return {*|Promise}
  */
-var printCategories = function(res)
+const printCategories = function()
 {
-    res.write("<div class=\"blogPost\">");
-    res.write("<h1 class=\"text-center\">Categories</h1>");
-    res.write("<div class=\"\"><table class=\"table table-striped\">");
-    res.write("<thead class=\"thead-dark\">");
-    res.write("<tr>");
-    res.write("<td>Name</td><td>URL</td><td>Edit</td>");
-    res.write("</tr></thead><tbody>");
+    var html = "<div class=\"blogPost\">" +
+        "<h1 class=\"text-center\">Categories</h1>" +
+        "<div class=\"\"><table class=\"table table-striped\">" +
+        "<thead class=\"thead-dark\">" +
+        "<tr>" +
+        "<td>Name</td><td>URL</td><td>Edit</td>" +
+        "</tr></thead><tbody>";
+
     return new Promise(function(resolve, reject)
     {
         sql.getCategories().then(function(categories)
         {
             categories.forEach(function(c)
             {
-                res.write("<tr>");
-
-                res.write("<td>" + c.name + "</td>");
-
-                res.write("<td>" + c.url + "</td>");
-
-                res.write("<td>" + c.category_id + "</td>");
-
-                res.write("</tr>");
+                html +="<tr>" +
+                    "<td>" + c.name + "</td>" +
+                    "<td>" + c.url + "</td>" +
+                    "<td>" + c.category_id + "</td>" +
+                    "</tr>";
             });
-            res.write("</tbody></table></div></div>");
-            resolve();
+            resolve(html + "</tbody></table></div></div>");
+        }).catch(function(error)
+        {
+            reject(error);
         })
     });
 };
+
 
 /**
  * Checks for post data regarding adding a new category.
  * If a post is made with add_category, it parses the url-- replaces spaces
  * with dashes -- and calls a insert method on the database
  *
- * @param res
  * @param postData
  * @return {*|Promise}
  */
-var processPost = function(res, postData)
+const processPost = function(postData)
 {
     return new Promise(function(resolve, reject)
     {
@@ -69,30 +67,24 @@ var processPost = function(res, postData)
                 console.log("error adding category");
             }
         }
-        resolve(postData);
+        resolve("");
     });
 };
 
 
 module.exports=
 {
-    main: function(res, postData)
+    main: function(postData)
     {
-        res.write("<div class=\"col-md-6\">");
         return new Promise(function(resolve, reject)
         {
-            utils.include(res, "./admin/addCategory.html");
-            printCategories(res).then(function()
+            Promise.all([utils.include("./admin/addCategory.html"), printCategories(), processPost(postData)]).then(function(html)
             {
-                //console.write("categories finished");
-                return processPost(res, postData);
-            }).then(function()
+                resolve("<div class=\"col-md-6\">" + html.join('') + "</div></div>");
+            }).catch(function(error)
             {
-                res.write("</div>");
-                resolve(postData);
-            }).catch(function(err)
-            {
-                console.log(err);
+                console.log("error in cat.js");
+                reject(error);
             })
         });
     }

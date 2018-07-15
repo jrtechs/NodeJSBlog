@@ -5,7 +5,7 @@
 
 const fs = require('fs');
 
-var Promise = require('promise');
+const Promise = require('promise');
 
 module.exports=
 {

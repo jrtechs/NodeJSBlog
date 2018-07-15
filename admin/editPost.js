@@ -8,54 +8,39 @@ const Promise = require('promise');
 const qs = require('querystring');
 const sql = require('../utils/sql');
 
+
 /**
  * Displays a single row in the posts view
- * @param result
+ *
  * @param post
  */
-var renderPostRow = function(result, post)
+const renderPostRow = function(post)
 {
-    return new Promise(function(resolve, reject)
-    {
-        result.write("<tr>");
-
-        //category
-        result.write("<td>" + post.category_id + "</td>");
-
-        //name
-        result.write("<td>" + post.name + "</td>");
-
-        //picture
-        result.write("<td>" + post.picture_url + "</td>");
-
-        //date
-        result.write("<td>" + post.published + "</td>");
-
-        //edit
-        result.write("<td><form action=\"/admin/\" method =\"post\" >\n" +
-            "    <input type=\"submit\" name=\"submit\" value=\"Edit\"\n" +
+    return "<tr>" +
+        "<td>" + post.category_id + "</td>" +
+        "<td>" + post.name + "</td>" +
+        "<td>" + post.picture_url + "</td>" +
+        "<td>" + post.published + "</td>" +
+        "<td><form action=\"/admin/\" method =\"post\" >\n" +
+            "<input type=\"submit\" name=\"submit\" value=\"Edit\"\n" +
             "              class=\"btn btn-secondary\"/>\n" +
             "<input type='hidden' name='edit_post' value='" + post.post_id + "'/>"+
-            "</form></td>");
-
-        result.write("</tr>");
-
-        resolve();
-    });
+            "</form></td>" +
+        "</tr>";
 };
+
 
 /**
  * Displays all the posts in a table
- * @param result
  */
-var postsTable = function(result)
+const postsTable = function()
 {
-    result.write("<div class='blogPost p-2'>");
-    result.write("<h1 class=\"text-center\">Posts</h1>");
-    result.write("<div class=\"\"><table class=\"table table-striped\">");
-    result.write("<thead class=\"thead-dark\"><tr>");
-    result.write("<td>Category #</td><td>Name</td><td>Header Picture</td><td>Date</td><td>Edit</td>");
-    result.write("</tr></thead><tbody>");
+    var html = "<div class='blogPost p-2'>" +
+        "<h1 class=\"text-center\">Posts</h1>" +
+        "<div class=\"\"><table class=\"table table-striped\">" +
+        "<thead class=\"thead-dark\"><tr>" +
+        "<td>Category #</td><td>Name</td><td>Header Picture</td><td>Date</td><td>Edit</td>" +
+        "</tr></thead><tbody>";
     return new Promise(function(resolve, reject)
     {
         sql.getAllPosts().then(function(posts)
@@ -63,48 +48,35 @@ var postsTable = function(result)
             var postPromises = [];
             posts.forEach(function(post)
             {
-                postPromises.push(new Promise(function(res, rej)
-                {
-                    renderPostRow(result, post).then(function()
-                    {
-                       res();
-                    }).catch(function(error)
-                    {
-                        console.log("error rendering " + post);
-                        rej(error);
-                    })
-                }));
+                postPromises.push(renderPostRow(post));
             });
-            Promise.all(postPromises).then(function()
+
+            Promise.all(postPromises).then(function(htmls)
             {
-                result.write("</tbody></table></div></div><br>");
-                resolve();
+                resolve(html + htmls.join('') + "</tbody></table></div></div><br>");
             }).catch(function(error)
             {
-                console.log(error);
-                console.log("error rendering posts");
                 reject(error);
             });
         }).catch(function(error)
         {
-            console.log("error with sql query");
             reject(error);
         })
     });
 };
 
+
 /**
  * Displays the edit form for edit posts
- * @param result
  * @param post_id
  */
-var displayRenderForm = function(result, post_id)
+const displayRenderForm = function(post_id)
 {
     return new Promise(function(resolve, reject)
     {
         sql.getPostById(post_id).then(function(post)
         {
-            result.write("<div class='blogPost'>"+
+            var html = "<div class='blogPost'>"+
                 "<h1 class=\"text-center\">Edit Post</h1>"+
                 "<form action=\"/admin/\" method =\"post\" >"+
                 "    <div class=\"form-group\">\n" +
@@ -127,26 +99,24 @@ var displayRenderForm = function(result, post_id)
                 "              class=\"btn btn-lg btn-secondary\"/></div>"+
                 "<input type='hidden' name='edit_post_2' value='" + post_id + "'/>"+
                 "</form>"+
-                "</div><br>"
-            );
-            resolve();
+                "</div><br>";
+
+            resolve(html);
         }).catch(function(error)
         {
-            console.log(error);
-            console.log("error getting post from sql in display Reender Form");
             reject(error);
         });
 
     });
 };
 
+
 /**
  * Detects if the post data came from the edit form in posts table or edit post
  * in the edit post form. Based on this, this function will call one of two functions
- * @param result
  * @param postData
  */
-var processPost = function(result, postData)
+const processPost = function(postData)
 {
     return new Promise(function(resolve, reject)
     {
@@ -155,30 +125,27 @@ var processPost = function(result, postData)
         if(postParsed.edit_post)
         {
             //display edit form
-            displayRenderForm(result, postParsed.edit_post).then(function()
+            displayRenderForm(postParsed.edit_post).then(function(html)
             {
-                resolve();
+                resolve(html);
             }).catch(function(error)
             {
-                console.log(error);
-                console.log("error processing the edit post data");
+                reject(error);
             });
         }
         else if(postParsed.edit_post_2)
         {
-            //insert edit into sql
-
-            sql.editPost(postParsed).then(function()
+            sql.editPost(postParsed).then(function(html)
             {
-                resolve();
+                resolve(html);
             }).catch(function(error)
             {
-                console.log("error inserting edit post data into sql");
+                reject(error);
             });
         }
         else
         {
-            resolve();
+            resolve("");
         }
     });
 };
@@ -189,25 +156,21 @@ module.exports=
     /**
      * Method which calls helper functions which processes post data for editing posts
      * and calls a function which displays all the posts in a table
-     * @param result
      * @param postData
      */
-    main: function(result, postData)
+    main: function(postData)
     {
         return new Promise(function(resolve, reject)
         {
-            result.write("<br>");
-            processPost(result, postData).then(function()
+            Promise.all([processPost(postData),
+                postsTable()]).then(function(html)
             {
-                return postsTable(result);
-            }).then(function()
-            {
-                resolve(postData);
+                resolve("<br>" + html.join(''));
             }).catch(function(error)
             {
-                console.log("Error in edit post module");
+                console.log("error in edit post.js");
                 reject(error);
-            });
+            })
         });
     }
 };

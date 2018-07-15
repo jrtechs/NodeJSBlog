@@ -2,7 +2,7 @@ const utils = require('../utils/utils.js');
 const Promise = require('promise');
 const sql = require('../utils/sql');
 
-var processLogin = function(result, request)
+const processLogin = function(request)
 {
     return new Promise(function(resolve, reject)
     {
@@ -14,13 +14,16 @@ var processLogin = function(result, request)
             if(loginResult.pass)
             {
                 request.session.user = loginResult.user;
-                result.write("<meta http-equiv=\"refresh\" content=\"0\">");
+                console.log("user has logged in");
+                resolve("<meta http-equiv=\"refresh\" content=\"0\">");
             }
-            resolve();
+            else
+            {
+                resolve("");
+            }
         }).catch(function(err)
         {
-            console.log(err);
-            resolve();
+            reject(err);
         })
     });
 };
@@ -28,22 +31,18 @@ var processLogin = function(result, request)
 
 module.exports=
     {
-        main: function(result, request)
+        main: function(request)
         {
-            console.log("main of login.js");
             return new Promise(function(resolve, reject)
             {
-                utils.include(result, './admin/login.html').then(function()
+                Promise.all([utils.include('./admin/login.html'),
+                    require("../sidebar/sidebar.js").main(),
+                    processLogin(request)]).then(function(html)
                 {
-                    console.log("got login html");
-                    return require("../sidebar/sidebar.js").main(result);
-                }).then(function()
+                    resolve(html.join('') + "</div>");
+                }).catch(function(err)
                 {
-                    return processLogin(result, request);
-                }).then(function()
-                {
-                    result.write("</div>");
-                    resolve();
+                    reject(err);
                 })
             });
         },

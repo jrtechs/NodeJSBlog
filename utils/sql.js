@@ -10,7 +10,7 @@ const qs = require('querystring');
 
 const utils = require('../utils/utils.js');
 
-var con = mysql.createConnection({
+const con = mysql.createConnection({
     host: "localhost",
     user: "blog_user",
     password: utils.getFileLine('../sql_secret'),
@@ -22,13 +22,14 @@ con.connect(function(err) {
     if (err) throw err;
 });
 
+
 /**
  * Function used to query the database for records
  *
  * @param sqlStatement
  * @returns {Array}
  */
-var fetch = function(sqlStatement)
+const fetch = function(sqlStatement)
 {
     return new Promise(function(resolve, reject)
     {
@@ -43,6 +44,7 @@ var fetch = function(sqlStatement)
         });
     });
 };
+
 
 module.exports=
 {
@@ -251,7 +253,7 @@ module.exports=
      */
     checkLogin: function(postData)
     {
-        var post = qs.parse(postData);
+        const post = qs.parse(postData);
         return new Promise(function(resolve, reject)
         {
             var result = Object();

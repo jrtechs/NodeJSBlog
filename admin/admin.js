@@ -1,17 +1,16 @@
 const utils = require('../utils/utils.js');
-var Promise = require('promise');
+const Promise = require('promise');
 
 module.exports=
 {
     /**
      * Method calls the admin widgets it correct order
      *
-     * @param result
      * @param fileName
      * @param request
      * @return {*|Promise}
      */
-    main: function(result, fileName, request)
+    main: function(fileName, request)
     {
         return new Promise(function(resolve, reject)
         {
@@ -19,31 +18,25 @@ module.exports=
             {
                 utils.getPostData(request).then(function (postData)
                 {
-                    return require("../admin/newPost.js").main(result, postData);
-                }).then(function(postData)
-                {
-                    return require("../admin/addCategory.js").main(result, postData);
-                }).then(function(postData)
-                {
-                    result.write("</div>"); //ends main row
-                    return require("../admin/editPost.js").main(result, postData);
-                }).then(function(postData)
-                {
-                    return require("../admin/addDownload.js").main(result, postData);
-                }).then(function()
-                {
-                    resolve();
-                }).catch(function(error)
-                {
-                    reject(error);
+                    Promise.all([require("../admin/newPost.js").main(postData),
+                        require("../admin/addCategory.js").main(postData),
+                        require("../admin/editPost.js").main(postData),
+                        require("../admin/addDownload.js").main(postData)])
+                            .then(function(content)
+                    {
+                        resolve(content.join(''));
+                    }).catch(function(error)
+                    {
+                        reject(error);
+                    });
                 });
             }
             else
             {
                 //login page
-                require("../admin/login.js").main(result, request).then(function()
+                require("../admin/login.js").main(request).then(function(html)
                 {
-                    resolve();
+                    resolve(html);
                 }).catch(function(err)
                 {
                     console.log(err);

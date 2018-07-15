@@ -11,11 +11,10 @@ const Promise = require('promise');
 
 /**
  * Processes post requests from the addDownload form
- * @param res
  * @param postData
  * @returns {*|Promise}
  */
-var addDownloadPostData = function(res, postData)
+var addDownloadPostData = function(postData)
 {
     return new Promise(function(resolve, reject)
     {
@@ -26,12 +25,15 @@ var addDownloadPostData = function(res, postData)
 
             sql.addDownload(post.add_download_name, post.add_download_file).then(function()
             {
-                resolve(postData);
-            });
+                resolve("");
+            }).catch(function(error)
+            {
+                reject(error);
+            })
         }
         else
         {
-            resolve(postData);
+            resolve("");
         }
     });
 };
@@ -40,27 +42,23 @@ var addDownloadPostData = function(res, postData)
 /**
  * Displays the addDownload form the the user
  *
- * @param res
  * @param postData
  * @returns {*|Promise}
  */
-var addDownload = function(res, postData)
+const addDownload = function(postData)
 {
-    res.write("<div class=\"col-md-6\">");
+    //res.write("<div class=\"col-md-6\">");
     return new Promise(function(resolve, reject)
     {
-        addDownloadPostData(res, postData).then(function()
+        Promise.all([addDownloadPostData(postData), utils.include("./admin/addDownload.html")]).then(function(html)
         {
-            return utils.include(res, "./admin/addDownload.html");
-        }).then(function()
+            console.log("add download is good");
+            resolve("<div class=\"col-md-6\">" + html.join('') + "</div>");
+        }).catch(function(error)
         {
-            res.write("</div>");
-            resolve(postData);
-        }).catch(function(err)
-        {
-            console.log(err);
-            reject(err);
-        });
+            console.log(error);
+            reject(error);
+        })
     });
 };
 
@@ -68,11 +66,10 @@ var addDownload = function(res, postData)
 /**
  * Handel form requests from the downloads table
  *
- * @param res
  * @param postData
  * @returns {*|Promise}
  */
-var displayDownloadsPostData = function(res, postData)
+const displayDownloadsPostData = function(postData)
 {
     return new Promise(function(resolve, reject)
     {
@@ -90,58 +87,42 @@ var displayDownloadsPostData = function(res, postData)
 /**
  * Renders a single download row in the downloads table
  *
- * @param result
  * @param download
  * @returns {*|Promise}
  */
-var renderDownloadRow = function(result, download)
+const renderDownloadRow = function(download)
 {
-    return new Promise(function(resolve, reject)
-    {
-        result.write("<tr>");
-
-        //download name
-        result.write("<td>" + download.name + "</td>");
-
-        //file name
-        result.write("<td>" + download.file + "</td>");
-
-        //download count
-        result.write("<td>" + download.download_count + "</td>");
-
-        //edit
-        result.write("<td><form action=\"/admin/\" method =\"post\" >\n" +
+    return "<tr>" +
+        "<td>" + download.name + "</td>" +
+        "<td>" + download.file + "</td>" +
+        "<td>" + download.download_count + "</td>" +
+        "<td><form action=\"/admin/\" method =\"post\" >\n" +
             "    <input type=\"submit\" name=\"submit\" value=\"Edit\"\n" +
             "              class=\"btn btn-secondary\"/>\n" +
             "<input type='hidden' name='delete_download' value='" + download.download_id + "'/>"+
-            "</form></td>");
-
-        result.write("</tr>");
-
-        resolve();
-    });
+            "</form></td>" +
+        "</tr>";
 };
 
 
 /**
  * Displays all the download information in a table
- * @param res
  * @param postData
  * @returns {*|Promise}
  */
-var displayDownloads = function(res, postData)
+const displayDownloads = function(postData)
 {
-    res.write("<div class=\"col-md-6\">");
+    var html = "<div class=\"col-md-6\">";
     return new Promise(function(resolve, reject)
     {
-        displayDownloadsPostData(res, postData).then(function()
+        displayDownloadsPostData(postData).then(function()
         {
-            res.write("<div class='blogPost'>");
-            res.write("<h1 class=\"text-center\">Downloads</h1>");
-            res.write("<div class=\"\"><table class=\"table table-striped\">");
-            res.write("<thead class=\"thead-dark\"><tr>");
-            res.write("<td>Download Name</td><td>File</td><td>Download Count</td><td>Delete</td>");
-            res.write("</tr></thead><tbody>");
+             html += "<div class='blogPost'>" +
+                "<h1 class=\"text-center\">Downloads</h1>" +
+                "<div class=\"\"><table class=\"table table-striped\">" +
+                "<thead class=\"thead-dark\"><tr>" +
+                "<td>Download Name</td><td>File</td><td>Download Count</td><td>Delete</td>" +
+                "</tr></thead><tbody>";
 
 
             sql.getAllDownloads().then(function(downloads)
@@ -150,26 +131,20 @@ var displayDownloads = function(res, postData)
 
                 downloads.forEach(function(download)
                 {
-                   downloadPromises.push(new Promise(function(resolveDownload, reject)
-                   {
-                       renderDownloadRow(res, download).then(function()
-                       {
-                           resolveDownload();
-                       }).catch(function(error)
-                       {
-                           reject(error);
-                       })
-                   }));
+                    downloadPromises.push(renderDownloadRow(download));
                 });
 
-                Promise.all(downloadPromises).then(function()
+                Promise.all(downloadPromises).then(function(htmls)
                 {
-                    res.write("</tbody></table></div></div><br>");
-                    res.write("</div>");
-                    resolve(postData);
+                    var htmlafter = "</tbody></table></div></div><br>" +
+                        "</div>";
+
+                    console.log("display download is good");
+                    resolve(html + htmls.join('') + htmlafter);
                 });
             }).catch(function(error)
             {
+                console.log(error);
                 reject(error);
             });
         });
@@ -180,23 +155,18 @@ var displayDownloads = function(res, postData)
 
 module.exports=
 {
-    main: function(res, postData)
+    main: function(postData)
     {
-        res.write("<div class=\"row\">");
         return new Promise(function(resolve, reject)
         {
-            addDownload(res, postData).then(function()
+            Promise.all([addDownload(postData), displayDownloads(postData)]).then(function(html)
             {
-                return displayDownloads(res, postData);
-            }).then(function()
+                resolve("<div class=\"row\">" + html.join('') + "</div>");
+            }).catch(function(error)
             {
-                res.write("</div>");
-                resolve(postData);
-            }).catch(function(err)
-            {
-                console.log(err);
-                reject(err);
-            })
+                console.log("error in add downloads.js");
+                reject(error);
+            });
         });
     }
 };
