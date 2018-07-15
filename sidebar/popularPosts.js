@@ -10,7 +10,6 @@ module.exports=
          */
         main: function(res)
         {
-            console.log("sidebar called");
             return new Promise(function(resolve, reject)
             {
                 res.write("<div class=\"w3-card w3-margin\">");

@@ -32,14 +32,10 @@ const port = 8000;
  */
 app.use(function(request, res)
 {
-
-    console.log(request.headers.host);
-
     if(request.headers.host.includes("localhost:" + port) ||
         request.headers.host.includes("jrtechs.net"))
     {
-        var q = url.parse(request.url, true);
-        var filename = q.pathname;
+        const filename = url.parse(request.url, true).pathname;
 
         //handles image requests
         if(filename.includes("/img/") || filename.includes(".jpg") || filename.includes(".png"))
@@ -76,31 +72,18 @@ app.use(function(request, res)
                     file = "./posts/posts.js";
             }
 
-            // includes.printHeader(res).then(function()
-            // {
-            //     return require(file).main(res, filename, request);
-            // }).then(function()
-            // {
-            //     return includes.printFooter(res);
-            // }).catch(function(err)
-            // {
-            //     console.log(err);
-            // })
-
             res.writeHead(200, {'Content-Type': 'text/html'});
 
             Promise.all([includes.printHeader(),
                 require(file).main(filename, request),
                 includes.printFooter()]).then(function(content)
             {
-                console.log("main fin");
                 res.write(content.join(''));
                 res.end();
             }).catch(function(err)
             {
                 console.log(err);
             });
-
         }
     }
     else

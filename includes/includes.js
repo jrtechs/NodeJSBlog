@@ -20,7 +20,6 @@ module.exports =
      */
     printHeader: function()
     {
-        // utils.getFileContents(HEADER_FILE);
         return utils.include(HEADER_FILE);
     },
 
@@ -33,10 +32,6 @@ module.exports =
     printFooter: function()
     {
         return utils.include(FOOTER_FILE);
-        // return new Promise(function(resolve, reject)
-        // {
-        //     resolve(utils.getFileContents(FOOTER_FILE));
-        // })
     },
 
 

@@ -1,6 +1,6 @@
 const utils = require('../utils/utils.js');
 const sql = require('../utils/sql');
-var Promise = require('promise');
+const Promise = require('promise');
 
 
 /**
@@ -11,11 +11,10 @@ var Promise = require('promise');
  * @param requestURL url requested from client
  * @return {*|Promise} returns a resolved promise to preserve execution order
  */
-var renderPost = function(res, requestURL)
+const renderPost = function(requestURL)
 {
     return new Promise(function(resolve, reject)
     {
-        res.write("<div class='col-md-8'>");
         var splitURL = requestURL.split("/");
 
         //user entered /category/name/ or /category/name
@@ -25,24 +24,25 @@ var renderPost = function(res, requestURL)
             {
                 if(post != 0)
                 {
-                    return require("../posts/singlePost.js").renderPost(res, post);
+                    return require("../posts/singlePost.js").renderPost(post);
                 }
                 else
                 {
-                    return utils.print404(res);
+                    return utils.print404();
                 }
-            }).then(function()
+            }).then(function(html)
             {
-                res.write("</div>");
-                resolve();
+                resolve("<div class='col-md-8'>" + html + "</div>");
+            }).catch(function(error)
+            {
+                reject(error);
             })
         }
         else
         {
-            utils.print404(res).then(function()
+            utils.print404().then(function(html)
             {
-               res.write("</div>");
-               resolve();
+               resolve("<div class='col-md-8'>" + html + "</div>");
             });
         }
     });
@@ -53,20 +53,19 @@ module.exports=
     /**
      * Calls posts and sidebar modules to render blog contents in order
      *
-     * @param res
      * @param fileName request url
      */
-    main: function(res, requestURL, request)
+    main: function(requestURL, request)
     {
         return new Promise(function(resolve, reject)
         {
-            renderPost(res, requestURL).then(function()
+            Promise.all([renderPost(requestURL), require("../sidebar/sidebar.js").main()]).then(function(content)
             {
-                return require("../sidebar/sidebar.js").main(res);
-            }).then(function ()
+                resolve(content.join(''));
+            }).catch(function(error)
             {
-                resolve();
-            });
+                reject(error);
+            })
         });
     }
 };

@@ -15,7 +15,6 @@ var renderRecentPosts = function()
 {
     return new Promise(function(resolve, reject)
     {
-        console.log("recent post render page");
         sql.getRecentPostSQL().then(function(posts)
         {
             var postPromises = [];
@@ -61,23 +60,8 @@ module.exports=
         {
             return new Promise(function(resolve, reject)
             {
-                // renderRecentPosts().then(function()
-                // {
-                //     return require("../sidebar/sidebar.js").main();
-                // }).then(function()
-                // {
-                //     resolve();
-                // }).catch(function(error)
-                // {
-                //     console.log(error);
-                //     reject(error);
-                // })
-
-
-                console.log("home page");
                 Promise.all([renderRecentPosts(), require("../sidebar/sidebar.js").main()]).then(function(content)
                 {
-                    console.log("fin posts");
                     resolve(content.join(''));
                 }).catch(function(error)
                 {

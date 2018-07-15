@@ -22,7 +22,6 @@ module.exports=
             try
             {
                 resolve(fs.readFileSync(fileName));
-
             }
             catch (e)
             {
@@ -117,9 +116,9 @@ module.exports=
      * @param result
      * @returns {*}
      */
-    print404: function(result)
+    print404: function()
     {
-        return this.include(result, "includes/404.html");
+        return this.include("includes/404.html");
     },
 
 
@@ -129,8 +128,8 @@ module.exports=
      * @param result
      * @returns {*}
      */
-    printWrongHost: function(result)
+    printWrongHost: function()
     {
-        return this.include(result, "includes/incorrectHost.html");
+        return this.include("includes/incorrectHost.html");
     }
 };

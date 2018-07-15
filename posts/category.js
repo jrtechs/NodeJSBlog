@@ -6,17 +6,14 @@ const utils = require('../utils/utils.js');
 /**
  * Renders all posts in a single category
  *
- * @param result
  * @param resultURL
  * @returns {*}
  */
-var renderPosts = function(result, resultURL)
+var renderPosts = function(resultURL)
 {
     var splitURL = resultURL.split("/");
     if(splitURL.length >= 3)
     {
-        result.write("<div class='col-md-8'>");
-
         return new Promise(function(resolve, reject)
         {
             sql.getPostsFromCategory(splitURL[2]).then(function(posts)
@@ -27,26 +24,32 @@ var renderPosts = function(result, resultURL)
                     promises.push(new Promise(function(res, rej)
                     {
                         require("../posts/singlePost.js")
-                            .renderPreview(result, p).then(function()
+                            .renderPreview(p).then(function(html)
                         {
-                            res();
-                        });
+                            res(html);
+                        }).catch(function(error)
+                        {
+                            rej(error);
+                        })
                     }));
                 });
-                return Promise.all(promises);
-            }).then(function()
-            {
-                result.write("</div>");
-                resolve();
+
+                Promise.all(promises).then(function(content)
+                {
+                    resolve("<div class='col-md-8'>" + content.join('') + "</div>");
+                }).catch(function(error)
+                {
+                    reject(error);
+                });
             }).catch(function(err)
             {
-                console.log(err);
+                reject(err);
             })
         });
     }
     else
     {
-        return utils.print404(result);
+        return utils.print404();
     }
 };
 
@@ -58,21 +61,18 @@ module.exports=
          * @param res
          * @param fileName request url
          */
-        main: function(res, requestURL, request)
+        main: function(requestURL, request)
         {
             return new Promise(function(resolve, reject)
             {
-                renderPosts(res, requestURL).then(function()
+                Promise.all([renderPosts(requestURL),
+                    require("../sidebar/sidebar.js").main()]).then(function(content)
                 {
-                    return require("../sidebar/sidebar.js").main(res)
-                }).then(function ()
+                    resolve(content.join(''));
+                }).catch(function(err)
                 {
-                    resolve();
-                }).catch(function(error)
-                {
-                    console.log(error);
-                    reject(error);
+                    reject(err);
                 })
             });
         }
-    }
+    };

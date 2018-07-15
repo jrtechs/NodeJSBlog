@@ -11,12 +11,7 @@ module.exports=
         {
             return new Promise(function(resolve, reject)
             {
-
-                console.log("recent page");
-
-
                 var content = "<div class=\"container\">";
-
 
                 content +="<div class=\"list-group\">";
 

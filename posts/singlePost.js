@@ -92,7 +92,6 @@ module.exports=
                    resolve(html)
                }).catch(function(error)
                {
-                   console.log(error);
                    reject(error);
                });
            }
@@ -144,7 +143,6 @@ module.exports=
 
                     html = html.split("<img").join("<img style=\"max-width: 100%;\" ");
                     html += "</div></div></div><br><br>";
-
 
                     resolve(html);
                 });
