@@ -43,7 +43,7 @@ module.exports =
      */
     sendCSS: function(result, path, cache)
     {
-        result.writeHead(200, {'Content-Type': 'text/css', 'Cache-Control': 'max-age=3600'});
+        result.writeHead(200, {'Content-Type': 'text/css', 'Cache-Control': 'public, max-age=604800'});
 
         var css = cache.get(path);
 

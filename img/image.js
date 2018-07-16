@@ -10,7 +10,7 @@ module.exports=
         main: function(result, fileName, cache)
         {
             //result.contentType = 'image/png';
-            result.writeHead(200, {'Content-Type': 'image/png', 'Cache-Control': 'max-age=3600'});
+            result.writeHead(200, {'Content-Type': 'image/png', 'Cache-Control': 'public, max-age=604800'});
 
             var img = cache.get(fileName);
             if(img == null)

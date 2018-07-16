@@ -54,23 +54,56 @@
     </div>
 </footer>
 
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>-->
+
+<script>
+    var e = document.querySelector(".navbar-toggler");
+    var t = document.querySelector(".navbar-collapse");
+    var a = e.getAttribute("aria-expanded");
+
+    function getMaxHeight(t)
+    {
+        // Source: http://n12v.com/css-transition-to-from-auto/
+        var prevHeight = t.style.height;
+        t.style.height = 'auto';
+        var maxHeight = getComputedStyle(t).height;
+        t.style.height = prevHeight;
+        t.offsetHeight; // force repaint
+        return maxHeight;
+    }
+
+    e.onclick = function()
+    {
+        if (a == "false")
+        {
+            t.classList.remove('collapse');
+            e.setAttribute('aria-expanded', true);
+            t.style.height = getMaxHeight(t);
+        }
+        else
+        {
+            t.classList.remove("collapse");
+            t.classList.remove("in");
+            e.setAttribute("aria-expanded", false);
+            t.style.height = getComputedStyle(t).height;
+            t.offsetHeight,t.style.height="0px";
+
+            t.classList.remove('collapsing');
+            t.classList.add('collapse');
+
+            // Check whether the element is unhidden
+            if (t.style.height !== '0px') {
+                t.classList.add('in');
+                t.style.height = 'auto';
+            }
+        }
+        a = e.getAttribute("aria-expanded");
+    }
+</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
-
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-51392711-1"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'UA-51392711-1');
-</script>
 
 </body>
 
