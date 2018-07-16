@@ -41,17 +41,28 @@ module.exports =
      * @param path
      * @return {*}
      */
-    sendCSS: function(result, path)
+    sendCSS: function(result, path, cache)
     {
-        result.writeHead(200, {'Content-Type': 'text/css'});
-        utils.include("./" + path).then(function(content)
-        {
-            result.write(content);
-            result.end();
-        }).catch(function(error)
-        {
-            console.log(error);
-        });
+        result.writeHead(200, {'Content-Type': 'text/css', 'Cache-Control': 'max-age=3600'});
 
+        var css = cache.get(path);
+
+        if(css == null)
+        {
+            utils.include("./" + path).then(function(content)
+            {
+                result.write(content);
+                result.end();
+                cache.put(path, content);
+            }).catch(function(error)
+            {
+                console.log(error);
+            });
+        }
+        else
+        {
+            result.write(css);
+            result.end();
+        }
     }
 };

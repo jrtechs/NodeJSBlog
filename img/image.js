@@ -7,13 +7,25 @@ module.exports=
          * @param result
          * @param fileName
          */
-        main: function(result, fileName)
+        main: function(result, fileName, cache)
         {
-            result.contentType = 'image/png';
-            utils.include("." + fileName).then(function(content)
+            //result.contentType = 'image/png';
+            result.writeHead(200, {'Content-Type': 'image/png', 'Cache-Control': 'max-age=3600'});
+
+            var img = cache.get(fileName);
+            if(img == null)
             {
-                result.write(content);
+                utils.include("." + fileName).then(function(content)
+                {
+                    result.write(content);
+                    result.end();
+                    cache.put(content);
+                });
+            }
+            else
+            {
+                result.write(img);
                 result.end();
-            });
+            }
         }
     };

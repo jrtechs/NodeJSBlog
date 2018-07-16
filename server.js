@@ -26,7 +26,8 @@ app.use(session({ secret: utils.getFileLine('../session_secret'), cookie: { maxA
 
 const port = 8000;
 
-app.use(express.static(__dirname + './', { maxAge: 86400000 }));
+const cache = require('memory-cache');
+
 
 /**
  * Parses the request url and calls correct JS files
@@ -41,11 +42,11 @@ app.use(function(request, res)
         //handles image requests
         if(filename.includes("/img/") || filename.includes(".jpg") || filename.includes(".png"))
         {
-            require("./img/image.js").main(res, filename);
+            require("./img/image.js").main(res, filename, cache);
         }
         else if(filename.includes("/css/") || filename.includes(".txt"))
         {
-            includes.sendCSS(res, filename)
+            includes.sendCSS(res, filename, cache)
         }
         else if(filename.includes("/downloads/"))
         {
@@ -55,37 +56,48 @@ app.use(function(request, res)
         {
             var file = "";
 
-            if(filename === '' || filename === '/')
+            var html = cache.get(filename);
+
+            res.writeHead(200, {'Content-Type': 'text/html'});
+            if(html == null)
             {
-                file="./posts/homePage.js";
+                if(filename === '' || filename === '/')
+                {
+                    file="./posts/homePage.js";
+                }
+                else
+                {
+                    var urlSplit = filename.split("/");
+
+                    if(urlSplit.length >= 2 && urlSplit[1] === 'category') //single category page
+                        file = "./posts/category.js";
+
+                    else if(urlSplit.length >= 2 && urlSplit[1] === 'admin') //top secret admin page
+                        file = "./admin/admin.js";
+
+                    else
+                        file = "./posts/posts.js";
+                }
+
+                Promise.all([includes.printHeader(),
+                    require(file).main(filename, request),
+                    includes.printFooter()]).then(function(content)
+                {
+                    res.write(content.join(''));
+                    res.end();
+                    cache.put(filename, content.join(''));
+
+                }).catch(function(err)
+                {
+                    console.log(err);
+                    throw err;
+                });
             }
             else
             {
-                var urlSplit = filename.split("/");
-
-                if(urlSplit.length >= 2 && urlSplit[1] === 'category') //single category page
-                    file = "./posts/category.js";
-
-                else if(urlSplit.length >= 2 && urlSplit[1] === 'admin') //top secret admin page
-                    file = "./admin/admin.js";
-
-                else
-                    file = "./posts/posts.js";
-            }
-
-            res.writeHead(200, {'Content-Type': 'text/html'});
-
-            Promise.all([includes.printHeader(),
-                require(file).main(filename, request),
-                includes.printFooter()]).then(function(content)
-            {
-                res.write(content.join(''));
+                res.write(html);
                 res.end();
-            }).catch(function(err)
-            {
-                console.log(err);
-                throw err;
-            });
+            }
         }
     }
     else
@@ -93,8 +105,6 @@ app.use(function(request, res)
         utils.printWrongHost(res);
         res.end();
     }
-
-
 });
 
 http.createServer(app).listen(port);
