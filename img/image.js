@@ -17,7 +17,7 @@ module.exports=
             {
                 utils.include("." + fileName).then(function(content)
                 {
-                    var eTag = crypto.createHash('md5').update(img).digest('hex');
+                    var eTag = crypto.createHash('md5').update(content).digest('hex');
                     result.writeHead(200, {'Content-Type': 'image/png', 'Cache-Control': 'public, max-age=2678400', 'ETag': '"' + eTag + '"'});
                     result.write(content);
                     result.end();
