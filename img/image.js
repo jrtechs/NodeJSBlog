@@ -1,4 +1,5 @@
 const utils = require('../utils/utils.js');
+const crypto = require('crypto');
 
 module.exports=
     {
@@ -10,13 +11,14 @@ module.exports=
         main: function(result, fileName, cache)
         {
             //result.contentType = 'image/png';
-            result.writeHead(200, {'Content-Type': 'image/png', 'Cache-Control': 'public, max-age=604800'});
 
             var img = cache.get(fileName);
             if(img == null)
             {
                 utils.include("." + fileName).then(function(content)
                 {
+                    var eTag = crypto.createHash('md5').update(img).digest('hex');
+                    result.writeHead(200, {'Content-Type': 'image/png', 'Cache-Control': 'public, max-age=2678400', 'ETag': '"' + eTag + '"'});
                     result.write(content);
                     result.end();
                     cache.put(content);
@@ -24,6 +26,8 @@ module.exports=
             }
             else
             {
+                var eTag = crypto.createHash('md5').update(img).digest('hex');
+                result.writeHead(200, {'Content-Type': 'image/png', 'Cache-Control': 'public, max-age=2678400', 'ETag': '"' + eTag + '"'});
                 result.write(img);
                 result.end();
             }

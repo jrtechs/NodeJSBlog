@@ -10,6 +10,8 @@ const FOOTER_FILE = "includes/footer.html";
 
 const Promise = require('promise');
 
+const crypto = require('crypto');
+
 module.exports =
 {
     /** Appends the header html section to the result which is
@@ -43,7 +45,7 @@ module.exports =
      */
     sendCSS: function(result, path, cache)
     {
-        result.writeHead(200, {'Content-Type': 'text/css', 'Cache-Control': 'public, max-age=604800'});
+
 
         var css = cache.get(path);
 
@@ -51,6 +53,8 @@ module.exports =
         {
             utils.include("./" + path).then(function(content)
             {
+                var eTag = crypto.createHash('md5').update(content).digest('hex');
+                result.writeHead(200, {'Content-Type': 'text/css', 'Cache-Control': 'public, max-age=2678400', 'ETag': '"' + eTag + '"'});
                 result.write(content);
                 result.end();
                 cache.put(path, content);
@@ -61,6 +65,8 @@ module.exports =
         }
         else
         {
+            var eTag = crypto.createHash('md5').update(css).digest('hex');
+            result.writeHead(200, {'Content-Type': 'text/css', 'Cache-Control': 'public, max-age=2678400', 'ETag': '"' + eTag + '"'});
             result.write(css);
             result.end();
         }
