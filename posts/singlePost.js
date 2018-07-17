@@ -79,6 +79,7 @@ module.exports=
                    }
 
                    html = html.split("<img").join("<img style=\"width: 100%; height:10%\" ");
+                   html = html.split("<code>").join("<code class='hljs cpp'>");
 
                    html += "      <div class=\"\">\n" +
                        "          <p class='text-center'><button class=\"btn btn-secondary btn-lg " +
@@ -142,6 +143,7 @@ module.exports=
                     html += md.render(markDown);
 
                     html = html.split("<img").join("<img style=\"max-width: 100%;\" ");
+                    html = html.split("<code>").join("<code class='hljs cpp'>");
                     html += "</div></div></div><br><br>";
 
                     resolve(html);

@@ -3,7 +3,6 @@
 </div></div>
 
 <!-- Footer -->
-<!-- Footer -->
 <footer class="text-center">
     <div class="footer-above">
         <div class="container">
@@ -54,56 +53,7 @@
     </div>
 </footer>
 
-<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>-->
-
-<script>
-    var e = document.querySelector(".navbar-toggler");
-    var t = document.querySelector(".navbar-collapse");
-    var a = e.getAttribute("aria-expanded");
-
-    function getMaxHeight(t)
-    {
-        // Source: http://n12v.com/css-transition-to-from-auto/
-        var prevHeight = t.style.height;
-        t.style.height = 'auto';
-        var maxHeight = getComputedStyle(t).height;
-        t.style.height = prevHeight;
-        t.offsetHeight; // force repaint
-        return maxHeight;
-    }
-
-    e.onclick = function()
-    {
-        if (a == "false")
-        {
-            t.classList.remove('collapse');
-            e.setAttribute('aria-expanded', true);
-            t.style.height = getMaxHeight(t);
-        }
-        else
-        {
-            t.classList.remove("collapse");
-            t.classList.remove("in");
-            e.setAttribute("aria-expanded", false);
-            t.style.height = getComputedStyle(t).height;
-            t.offsetHeight,t.style.height="0px";
-
-            t.classList.remove('collapsing');
-            t.classList.add('collapse');
-
-            // Check whether the element is unhidden
-            if (t.style.height !== '0px') {
-                t.classList.add('in');
-                t.style.height = 'auto';
-            }
-        }
-        a = e.getAttribute("aria-expanded");
-    }
-</script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
-
+<script src="/js/navBar.min.js" async></script>
 
 </body>
 

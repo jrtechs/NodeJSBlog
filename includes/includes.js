@@ -54,7 +54,7 @@ module.exports =
             utils.include("./" + path).then(function(content)
             {
                 var eTag = crypto.createHash('md5').update(content).digest('hex');
-                result.writeHead(200, {'Content-Type': 'text/css', 'Cache-Control': 'public, max-age=2678400', 'ETag': '"' + eTag + '"'});
+                result.writeHead(200, {'Content-Type': 'text/css', 'Cache-Control': 'public, max-age=2678400', 'ETag': '"' + eTag + '"', 'Vary': 'Accept-Encoding'});
                 result.write(content);
                 result.end();
                 cache.put(path, content);
@@ -66,7 +66,7 @@ module.exports =
         else
         {
             var eTag = crypto.createHash('md5').update(css).digest('hex');
-            result.writeHead(200, {'Content-Type': 'text/css', 'Cache-Control': 'public, max-age=2678400', 'ETag': '"' + eTag + '"'});
+            result.writeHead(200, {'Content-Type': 'text/css', 'Cache-Control': 'public, max-age=2678400', 'ETag': '"' + eTag + '"', 'Vary': 'Accept-Encoding'});
             result.write(css);
             result.end();
         }

@@ -48,6 +48,10 @@ app.use(function(request, res)
         {
             includes.sendCSS(res, filename, cache)
         }
+        else if(filename.includes("/js/") || filename.includes(".js"))
+        {
+            require("./js/js.js").main(res, filename, cache);
+        }
         else if(filename.includes("/downloads/"))
         {
             require("./downloads/downloads.js").main(res, filename, request);
