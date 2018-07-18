@@ -44,7 +44,7 @@ app.use(function(request, res)
         {
             require("./img/image.js").main(res, filename, cache);
         }
-        else if(filename.includes("/css/") || filename.includes(".txt"))
+        else if(filename.includes("/css/") || filename.includes(".woff2"))
         {
             includes.sendCSS(res, filename, cache)
         }
@@ -55,6 +55,25 @@ app.use(function(request, res)
         else if(filename.includes("/downloads/"))
         {
             require("./downloads/downloads.js").main(res, filename, request);
+        }
+        else if(filename.includes("/admin"))
+        {
+            res.writeHead(200, {'Content-Type': 'text/html'});
+
+            file = "./admin/admin.js";
+
+            Promise.all([includes.printHeader(),
+                require(file).main(filename, request),
+                includes.printFooter()]).then(function(content)
+            {
+                res.write(content.join(''));
+                res.end();
+
+            }).catch(function(err)
+            {
+                console.log(err);
+                throw err;
+            });
         }
         else
         {
@@ -75,9 +94,6 @@ app.use(function(request, res)
 
                     if(urlSplit.length >= 2 && urlSplit[1] === 'category') //single category page
                         file = "./posts/category.js";
-
-                    else if(urlSplit.length >= 2 && urlSplit[1] === 'admin') //top secret admin page
-                        file = "./admin/admin.js";
 
                     else
                         file = "./posts/posts.js";

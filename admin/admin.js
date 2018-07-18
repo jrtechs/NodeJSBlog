@@ -34,6 +34,7 @@ module.exports=
             else
             {
                 //login page
+                console.log("login page");
                 require("../admin/login.js").main(request).then(function(html)
                 {
                     resolve(html);
