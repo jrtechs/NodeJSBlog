@@ -122,7 +122,8 @@ app.use(function(request, res)
     }
     else
     {
-        utils.printWrongHost(res);
+        // utils.printWrongHost(res);
+        res.writeHead(418, {});
         res.end();
     }
 });
