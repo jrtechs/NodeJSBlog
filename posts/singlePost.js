@@ -119,7 +119,7 @@ module.exports=
             if(!(post.picture_url === "n/a"))
             {
                 html +="<img src=\"/img/posts/" + post.picture_url +
-                    "\" alt=\"\" class=\"w-100\">";
+                    "\" alt=\"\" style=\"width:100%; height:10%\">";
             }
 
             html += "<div class=\"p-4\"><div class=\"\">";
