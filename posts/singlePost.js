@@ -114,23 +114,23 @@ module.exports=
     {
         return new Promise(function (resolve, reject)
         {
-            var html = "<div class=\"blogPost\">";
+            var htmlHead = "<div class=\"blogPost\">";
             //image
             if(!(post.picture_url === "n/a"))
             {
-                html +="<img src=\"/img/posts/" + post.picture_url +
+                htmlHead +="<img src=\"/img/posts/" + post.picture_url +
                     "\" alt=\"\" style=\"width:100%; height:10%\">";
             }
 
-            html += "<div class=\"p-4\"><div class=\"\">";
+            htmlHead += "<div class=\"p-4\"><div class=\"\">";
             //title
-            html += "<h3><b>" + post.name + "</b></h3>";
+            htmlHead += "<h3><b>" + post.name + "</b></h3>";
             //date
-            html += "<h5><span class=\"w3-opacity\">" +
+            htmlHead += "<h5><span class=\"w3-opacity\">" +
                 post.published.toDateString() + "</span></h5>";
-            html +="</div>";
+            htmlHead +="</div>";
 
-            html += "<div class=\"\">";
+            var html = "<div class=\"\">";
             try
             {
                 sql.getCategory(post.category_id).then(function(category)
@@ -146,7 +146,7 @@ module.exports=
                     html = html.split("<code>").join("<code class='hljs cpp'>");
                     html += "</div></div></div><br><br>";
 
-                    resolve(html);
+                    resolve(htmlHead + html);
                 });
             }
             catch(ex)
