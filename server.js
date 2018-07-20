@@ -11,18 +11,22 @@ const url = require('url');
 
 const express = require("express");
 
-const session = require('express-session');
+//const session = require('express-session');
 
 const includes = require('./includes/includes.js');
 
-const utils = require('./utils/utils.js');
 
 const map = require('./utils/generateSiteMap.js');
 map.main();
 
 const app = express();
 
-app.use(session({ secret: utils.getFileLine('../session_secret'), cookie: { maxAge: 6000000 }}));
+//app.use(session({ secret: utils.getFileLine('../session_secret'), cookie: { maxAge: 6000000 }}));
+
+//compresses the site
+
+var compression = require('compression')
+app.use(compression());
 
 const port = 8000;
 

@@ -75,6 +75,7 @@ npm install crypto
 npm install remarkable
 npm install markdown
 npm install highlight.js
+npm install compression
 
 npm install memory-cache --save
 ```
