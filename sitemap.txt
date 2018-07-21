@@ -5,7 +5,11 @@ http://jrtechs.net/category/test
 http://jrtechs.net/category/testing-2
 http://jrtechs.net/category/testing-three 3
 http://jrtechs.net/category/other
+http://jrtechs.net/category/web-development
+http://jrtechs.net/category/web-development
 http://jrtechs.net/projects/steam-friends-graph
 http://jrtechs.net/projects/java-fibonacci-solver
 http://jrtechs.net/projects/musical-floppy-drive-build-log
 http://jrtechs.net/java/top-three-recommended-java-ides
+http://jrtechs.net/web-development/node-website-optimization
+http://jrtechs.net/web-development/node-website-optimization

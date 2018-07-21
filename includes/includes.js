@@ -8,6 +8,8 @@ const HEADER_FILE = "includes/header.html";
 
 const FOOTER_FILE = "includes/footer.html";
 
+const ADMIN_HEADER = "includes/adminHeader.html";
+
 const Promise = require('promise');
 
 const crypto = require('crypto');
@@ -34,6 +36,16 @@ module.exports =
     printFooter: function()
     {
         return utils.include(FOOTER_FILE);
+    },
+
+    /**
+     * Displays the admin header
+     *
+     * @returns {*|Promise}
+     */
+    printAdminHeader()
+    {
+        return utils.include(ADMIN_HEADER);
     },
 
 
