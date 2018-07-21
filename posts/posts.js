@@ -53,7 +53,8 @@ module.exports=
     /**
      * Calls posts and sidebar modules to render blog contents in order
      *
-     * @param fileName request url
+     * @param requestURL
+     * @returns {Promise|*}
      */
     main: function(requestURL, request)
     {
