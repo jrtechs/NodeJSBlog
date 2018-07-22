@@ -3,16 +3,16 @@ retention. Google looks favorable upon websites which are well optimized and
 fast. If you are using a CMS like WordPress or Wix, a lot of optimization is
 done automatically. If you like to build stuff from scratch like me, there is a
 ton of work required to optimize a website. This post will cover the 8 things that 
-I did to decrease the load time of this node blog by two seconds.
+I did to decrease the load time of this blog written in node by two seconds.
 
 #### Final Results
 
 ![Final Website Speed Test](media/websiteOptimization/finalResults.png)
  
-This is testing on a single blog post.
+This is the result for a single blog post.
  
 Before the improvements my home page took 3.14 seconds to load and was 3mb. Now
-my home page takes 1.22 seconds to load and is 1.2mb in size. If you look at the 
+my home page takes 1.22 seconds to load and is only 1.2mb in size. If you look at the 
 waterfall for my home page, most of the time is a result of the youtube embedded
 videos loading. 
 
@@ -24,7 +24,7 @@ Since images are the largest portion of a website's size, optimizing and
 reducing the size of images will decrease load time. In a perfect web
 development world, everyone would use SVG images which are extremely small and
 don't need compression. I wrote a script to automatically optimize JPEG and PNG
-images for the web since most people don’t use SVG images.
+images for websites since most people don’t use SVG images.
 
 ```bash
 #!/bin/bash
@@ -52,9 +52,9 @@ for folder in "${folders[@]}"; do
 done
 ```
 
-When ran, this script will go through the ‘img, and ‘entries’ folder recursively
+This script will go through the ‘img', and ‘entries’ folders recursively
 and optimize all the images in there. If an image is more than 690px wide, it
-will scale it down to save size. In most cases it is useless to have images with
+will get scaled down. In most cases it is useless to have images with
 a width greater than 690px because it will just get scaled by the client's web
 browser.
 
@@ -64,6 +64,8 @@ dependencies for this script with the following commands:
 ```bash
 apt-get install jpegoptim
 apt-get install optipng
+apt-get install convert
+
 ```
 
 The goal of this script is to make most of the images under 100kb for the web.
@@ -73,31 +75,16 @@ having images above 200kb.
 2: Take advantage of Async calls
 --------------------------------
 
-One of the largest benefits of Node is its Async abilities where code is
-executed in a multi-threaded fashion. This can become a callback hell if not
-handled correctly, but, with good code structure it can become very useful. When
+One of the largest benefits of Node is its Async abilities: code is
+executed in a multi-threaded fashion. This can become a "callback hell" if not
+handled correctly, but, with good code structure it can become very useful and easy to manage. When
 code is executed in parallel, you can decrease run time by doing other stuff
 while waiting on costly file IO and database calls.
 
-The problem with async code is that it is hard to coordinate. Node has a lot of
-ways to handel synchronization, but, I prefer to use
+The problem with Async code is that it is hard to coordinate. Node has a lot of
+ways to handel synchronization; I prefer to use
 [Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise).
-Here is a simple example where Async code can be misused
-
-Good Code Async:
-
-```javascript
-Promise.all([includes.printHeader(),
-    require(file).main(filename, request),
-    includes.printFooter()]).then(function(content)
-{
-    res.write(content.join(''));
-    res.end();
-}).catch(function(err)
-{
-    console.log(err);
-});
-```
+Here is a simple example where Async code can be misused.
 
 Bad Async Code:
 
@@ -114,16 +101,31 @@ includes.printHeader(res).then(function()
 })
 ```
 
-In the first example three blocks of async code are executed in parallel and in
-the second example three blocks of async code are executed one after another.
-Many people may initially do the second option because it may seem like you must
+Good Code Async:
+
+```javascript
+Promise.all([includes.printHeader(),
+    require(file).main(filename, request),
+    includes.printFooter()]).then(function(content)
+{
+    res.write(content.join(''));
+    res.end();
+}).catch(function(err)
+{
+    console.log(err);
+});
+```
+
+In the second example, three blocks of Async code are executed in parallel and in
+the first example three blocks of async code are executed one after another.
+Many people may initially do the first option because it may seem like you must
 create and render the footer after you render the header and body of the page.
 
 A great way to handel async calls is by having most of your methods returning
 promises which resolve to the HTML or DB information that they produce. When you
-run Promise.all, it returns an array of the objects which enables you to
+run Promise.all, it returns an array of the results of the promises which enables you to
 preserve the order ie header, body, footer. After you do this for all your code,
-it creates a "perfect" async tree which actually runs very fast.
+it creates a async tree which runs very fast.
 
 Another Good Async Example:
 
@@ -162,10 +164,10 @@ don't change. It is a good idea to set the expiration date of the cache to be
 something longer than a week, I typically set mine for a month.
 
 For a web browser to accept and cache files, you must set some tags in the HTTP
-header. In the HTTP header you must specify the content type, cache variables
+header. In the HTTP header you must specify the content type and cache variables
 like max age. You also must assign a ETag to the header to give the client a way
 to verify the content of the cache. This enables the client to detect if there
-was a change to the file and download it again. Some people set the ETag equal
+was a change to the file and that they should download it again. Some people set the ETag equal
 to the version of the stylesheet or JavaScript, but, it is far easier to just
 set it equal to the hash of the file. I use md5 to hash the files since it is
 fast and I'm not worried about hash collisions for this application.
@@ -201,7 +203,7 @@ result.end();
 Even with the best async server, there are still ways to improve performance. If
 you cache all the static pages that you generate in a HashMap, you can quickly
 access it for the next web user without ever having to query the database or
-read files.
+do file IO.
 
 #### Ex:
 
@@ -231,11 +233,11 @@ else
 I found that it is the fastest to cache everything from static html pages, CSS,
 JavaScript, and images. For a larger site this may consume a boat load of ram,
 but, storing images in a HashMap reduces load time since you don't need to read
-the file from a disk. For my blog, server-side caching nearly cut my load time
+the image file from the disk. For my blog, server-side caching nearly cut my load time
 in half.
 
 Make sure that you don't accidentally cache a dynamic page like the CMS page in
-your admin section—hard to realize while debugging.
+your admin section — really hard to realize while debugging.
 
 To demonstrate the performance increase of this method, I restarted my web
 server (clearing the cache) and ran a speed test which ran three trials. The
@@ -277,7 +279,7 @@ classes which go unused. The standard BootStrap CSS file is around 210kb. After
 I removed unused CSS definitions the size of the BootStrap file was only 16kb
 for my website.
 
-For my blog I used PurgeCSS which is a node library.
+For my blog I used the node dependency PurgeCSS to remove unused CSS.
 
 This command will install PurgeCSS for CLI (command line interface).
 
