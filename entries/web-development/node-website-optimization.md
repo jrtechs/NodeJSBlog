@@ -2,22 +2,20 @@ It is a well-known fact that a fast website is critical towards having high user
 retention. Google looks favorable upon websites which are well optimized and
 fast. If you are using a CMS like WordPress or Wix, a lot of optimization is
 done automatically. If you like to build stuff from scratch like me, there is a
-ton of work required to optimize a website.
+ton of work required to optimize a website. This post will cover the 8 things that 
+I did to decrease the load time of this node blog by two seconds.
 
-This post will cover the 8 things that I did to decrease the load time of this
-node blog by two seconds.
+#### Final Results
 
-#### After Optimization
+![Final Website Speed Test](media/websiteOptimization/finalResults.png)
+ 
+This is testing on a single blog post.
+ 
+Before the improvements my home page took 3.14 seconds to load and was 3mb. Now
+my home page takes 1.22 seconds to load and is 1.2mb in size. If you look at the 
+waterfall for my home page, most of the time is a result of the youtube embedded
+videos loading. 
 
-![Website Speed After Improvements](media/a6594f978c7925bcf3194a1c97029bd3.png)
-
-Website Speed After Improvements
-
-#### Before Optimization
-
-![Website Speed After Improvements](media/a6594f978c7925bcf3194a1c97029bd3.png)
-
-Website Speed Before Improvements
 
 1: Optimize Images
 ------------------
@@ -28,7 +26,7 @@ development world, everyone would use SVG images which are extremely small and
 don't need compression. I wrote a script to automatically optimize JPEG and PNG
 images for the web since most people don’t use SVG images.
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```bash
 #!/bin/bash
 
 # Simple script for optimizing all images for a website
@@ -52,7 +50,7 @@ for folder in "${folders[@]}"; do
         optipng -o7 -preserve "$f"
     done
 done
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```
 
 When ran, this script will go through the ‘img, and ‘entries’ folder recursively
 and optimize all the images in there. If an image is more than 690px wide, it
@@ -63,10 +61,10 @@ browser.
 If you are running a Debian based linux distro, you can download the
 dependencies for this script with the following commands:
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```bash
 apt-get install jpegoptim
 apt-get install optipng
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```
 
 The goal of this script is to make most of the images under 100kb for the web.
 It is ok to have a few images above 100kb; however, you should really avoid
@@ -88,7 +86,7 @@ Here is a simple example where Async code can be misused
 
 Good Code Async:
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```javascript
 Promise.all([includes.printHeader(),
     require(file).main(filename, request),
     includes.printFooter()]).then(function(content)
@@ -99,11 +97,11 @@ Promise.all([includes.printHeader(),
 {
     console.log(err);
 });
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```
 
 Bad Async Code:
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```javascript
 includes.printHeader(res).then(function()
 {
     return require(file).main(res, filename, request);
@@ -114,7 +112,7 @@ includes.printHeader(res).then(function()
 {
     console.log(err);
 })
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```
 
 In the first example three blocks of async code are executed in parallel and in
 the second example three blocks of async code are executed one after another.
@@ -129,7 +127,7 @@ it creates a "perfect" async tree which actually runs very fast.
 
 Another Good Async Example:
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```javascript
 /**
  * Calls posts and sidebar modules to render blog contents in order
  *
@@ -150,7 +148,7 @@ main: function(requestURL)
         })
     });
 }
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```
 
 3: Client-Side Caching
 ----------------------
@@ -177,25 +175,25 @@ do it directly in Node.
 
 #### Caching CSS
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```javascript
 var eTag = crypto.createHash('md5').update(content).digest('hex');
 result.writeHead(200, {'Content-Type': 'text/css', 'Cache-Control': 
                         'public, max-age=2678400', 'ETag': '"' + eTag + '"', 
                         'Vary': 'Accept-Encoding'});
 result.write(content);
 result.end();
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```
 
 #### Caching Images
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```javascript
 var eTag = crypto.createHash('md5').update(content).digest('hex');
 result.writeHead(200, {'Content-Type': 'image/png', 
                         'Cache-Control': 'public, max-age=2678400', 
                         'ETag': '"' + eTag + '"'});
 result.write(content);
 result.end();
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```
 
 4: Server-Side Caching
 ----------------------
@@ -207,7 +205,7 @@ read files.
 
 #### Ex:
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```javascript
 const cache = require('memory-cache');
 
 var html = cache.get(filename);
@@ -228,7 +226,7 @@ else
     res.write(html);
     res.end();
 }
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```
 
 I found that it is the fastest to cache everything from static html pages, CSS,
 JavaScript, and images. For a larger site this may consume a boat load of ram,
@@ -241,11 +239,11 @@ your admin section—hard to realize while debugging.
 
 To demonstrate the performance increase of this method, I restarted my web
 server (clearing the cache) and ran a speed test which ran three trials. The
-first two trials were slow since the server didn't have anything in its cache.
-However, the third trial ran extreamly fast since all the contents were in the
+first two trials were slow since the server did not have anything in its cache.
+However, the third trial ran extremely fast since all the contents were in the
 server's cache.
 
-![Server Cache Example](media/3e2e138f85024c1a96ba0ad55bc5d2ed.png)
+![Server Cache Example](media/websiteOptimization/serverCache.png)
 
 Server Cache Example
 
@@ -262,12 +260,14 @@ simple node module which will use Gzip compression on an Express app.
 
 #### Gzip on Express App
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```bash
 npm install compression
+```
 
+```javascript
 var compression = require('compression')
 app.use(compression());
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```
 
 6: Remove Unused CSS Definitions
 --------------------------------
@@ -281,20 +281,20 @@ For my blog I used PurgeCSS which is a node library.
 
 This command will install PurgeCSS for CLI (command line interface).
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```bash
 npm i -g purgecss
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```
 
 This is an example of how you could use PurgeCSS to remove unused css
 definitions.
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```bash
 purgecss --css css/app.css --content src/index.html --out build/css/
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```
 
 PurgeCSS CLI options.
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```bash
 purgecss --css <css> --content <content> [option]
 
 Options:
@@ -305,7 +305,7 @@ Options:
                                                            [array] [default: []]
   -h, --help        Show help                                          [boolean]
   -v, --version     Show version number                                [boolean]
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```
 
 This is not the ideal solution since some CSS definitions may be used on some
 pages yet unused on other pages. When running this command be sure to select a
@@ -340,7 +340,7 @@ minimize the amount of dependencies the client needs. I completely removed
 BootStrap's JavaScript and jQuery from my blog by simply writing a javascript
 function for my nav bar. This reduced the size of my website by 100kb.
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```javascript
 const e = document.querySelector(".navbar-toggler");
 const t = document.querySelector(".navbar-collapse");
 
@@ -357,7 +357,7 @@ e.onclick = function()
         t.classList.add('collapse');
     }
 }
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```
 
 You should debate how much you need 3rd party scripts like Google Analytics. In
 most cases people don't full take advantage of Google Analytics, a simple
