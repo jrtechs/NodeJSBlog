@@ -101,3 +101,58 @@ apt-get install optipng
 optipng *.png
 
 ```
+
+```
+server {
+    listen 80;
+    server_name www.jrtechs.net jrtechs.net;
+
+    # redirect http requests to https
+    return 301 https://jrtechs.net$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+
+    server_name jrtechs.net;
+
+    ssl_certificate /etc/letsencrypt/live/jrtechs.net/cert.pem;
+    ssl_certificate_key /etc/letsencrypt/live/jrtechs.net/privkey.pem;
+
+    location / {
+        proxy_pass http://localhost:8000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+
+
+server {
+    listen 80;
+    server_name www.admin.jrtechs.net admin.jrtechs.net;
+
+    # redirect http requests to https
+    return 301 https://admin.jrtechs.net$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+
+    server_name admin.jrtechs.net;
+
+    ssl_certificate /etc/letsencrypt/live/admin.jrtechs.net/cert.pem;
+    ssl_certificate_key /etc/letsencrypt/live/admin.jrtechs.net/privkey.pem;
+
+    location / {
+        proxy_pass http://localhost:8001;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+```

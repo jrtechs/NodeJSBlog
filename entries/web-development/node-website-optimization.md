@@ -247,8 +247,6 @@ server's cache.
 
 ![Server Cache Example](media/websiteOptimization/serverCache.png)
 
-Server Cache Example
-
 5: Enable Compression
 ---------------------
 
