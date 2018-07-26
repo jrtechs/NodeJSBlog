@@ -9575,7 +9575,7 @@ a
 
 a:hover
 {
-    color: #D2C0FF;
+    color: #18BC9C;
     text-decoration: underline;
 }
 
@@ -9594,8 +9594,8 @@ a:hover
 .list-group-item:hover, .list-group-item:focus {
     z-index: 1;
     text-decoration: none;
-    color: #2c3e50;
-    background-color: #D2C0FF;
+    color: white;
+    background-color: #18BC9C;
 }
 
 
@@ -9605,14 +9605,14 @@ a:hover
     padding: 0.75rem 1.25rem;
     margin-bottom: -1px;
     color: #fff;
-    background-color: #8767D1;
+    background-color: #498FBE;
     border-color: #DFD7CA;
 }
 
 .list-group-item-action:hover, .list-group-item-action:focus {
     color: #fff;
     text-decoration: none;
-    background-color: #8767D1;
+    background-color: #498FBE;
 }
 
 .list-group-item-action:active {
@@ -9622,12 +9622,12 @@ a:hover
 
 .btn-secondary {
     color: #fff;
-    background-color: #8767D1;
+    background-color: #498FBE;
 }
 
 .btn-secondary:hover {
-    color: #2c3e50;
-    background-color: #D2C0FF;
+    color: white;
+    background-color: #18BC9C;
 }
 
 
@@ -9656,7 +9656,7 @@ a:hover
 }
 #mainNav .navbar-nav li.nav-item a.nav-link:hover
 {
-    color: #D2C0FF;
+    color: #18BC9C;
     outline: none;
 }
 
@@ -9682,7 +9682,7 @@ a:hover
 
 .table .thead-dark{
     color: #fff;
-    background-color: #513E7D;
+    background-color: #498FBE;
     border-color: #32383e;
 }
 

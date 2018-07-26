@@ -93,6 +93,14 @@ Purple:
 - Primary: #513E7D
 - Secondary: #D2C0FF
 
+
+8767D1
+
+top blue: 3B536B
+Secondary Blue: 498FBE
+highlight blue: 18BC9C
+
+
 Stuff for automated image compression
 ```
 apt-get install jpegoptim
