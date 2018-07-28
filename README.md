@@ -35,7 +35,7 @@ unless otherwise stated.
 
 ![](blogSql.svg)
 
-```SQL
+```mysql
 create database jrtechs_blog;
 
 use jrtechs_blog;
@@ -105,7 +105,7 @@ npm install memory-cache --save
 
 The color scheme has been changing a lot recently. 
 
-[Adobe Color Wheel](https://color.adobe.com/create/color-wheel/?copy=true&base=2&rule=Custom&selected=3&name=Copy%20of%20Site&mode=rgb&rgbvalues=0.231,0.325499999999957,0.42,0,0.7450980392156863,0.6980392156862745,0.10196078431372549,0.36470588235294116,0.38823529411764707,0.8235294117647058,0.7529411764705882,1,0.3165071770335184,0.24148325358851674,0.49&swatchOrder=0,1,2,3,4)
+[Adobe Color Wheel](https://color.adobe.com/create/color-wheel/?copy=true&base=2&rule=Custom&selected=4&name=Copy%20of%20Site&mode=cmyk&rgbvalues=0.17254901960784313,0.24313725490196078,0.3137254901960784,0.28627450980392155,0.5607843137254902,0.7450980392156863,0.5329137283008958,0.7301501780381741,1,0.8235294117647058,0.7529411764705882,1,0.042420144797897574,0,0.17000000000000004&swatchOrder=0,1,2,3,4)
 
 current:
 top 2C3E50
