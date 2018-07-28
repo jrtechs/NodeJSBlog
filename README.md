@@ -10,7 +10,28 @@ because you can't run a node application as port 80 unless you are root, which w
 security vulnerability. 
 
 
-## MYSQL Information
+## Legal
+
+**Unless otherwise stated**, everything in this repository can be 
+assumed to fall under these two licenses depending on what type of file it is.
+
+#### Code, scripts
+
+All code, scripts, or other technical / programmatic items in this repo are 
+assumed fall under the [Mozilla Public License 2.0](https://www.mozilla.org/en-US/MPL/) 
+unless otherwise stated.
+
+#### Guides, articles, posts, misc. content
+
+![Creative Commons Attribution-ShareAlike 4.0 International License](https://i.creativecommons.org/l/by-sa/4.0/88x31.png)
+
+All guides, scripts, posts, or otherwise non-programmatic content in this 
+repo is assumed to fall under 
+the [Creative Commons Attribution-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/) 
+unless otherwise stated.
+
+
+## MYSQL Schema
 
 ![](blogSql.svg)
 
@@ -60,8 +81,8 @@ primary key(popular_post_id)
 );
 
 grant all on jrtechs_blog.* to blog_user@localhost identified by "password";
-
 ```
+
 
 ## Node Dependencies
 ```bash
@@ -76,12 +97,13 @@ npm install remarkable
 npm install markdown
 npm install highlight.js
 npm install compression
-
 npm install memory-cache --save
 ```
 
 
 ## Color scheme
+
+The color scheme has been changing a lot recently. 
 
 [Adobe Color Wheel](https://color.adobe.com/create/color-wheel/?copy=true&base=2&rule=Custom&selected=3&name=Copy%20of%20Site&mode=rgb&rgbvalues=0.231,0.325499999999957,0.42,0,0.7450980392156863,0.6980392156862745,0.10196078431372549,0.36470588235294116,0.38823529411764707,0.8235294117647058,0.7529411764705882,1,0.3165071770335184,0.24148325358851674,0.49&swatchOrder=0,1,2,3,4)
 
@@ -101,16 +123,18 @@ Secondary Blue: 498FBE
 highlight blue: 18BC9C
 
 
+## Image Optimization
 Stuff for automated image compression
 ```
 apt-get install jpegoptim
-jpegoptim --size=500k *.jpg
 apt-get install optipng
-optipng *.png
 
+./optimizeImages.sh
 ```
 
+## NGINX Configuration
 ```
+#jrtechs.net.conf
 server {
     listen 80;
     server_name www.jrtechs.net jrtechs.net;
@@ -138,6 +162,7 @@ server {
 }
 
 
+#admin.jrtechs.net.con
 server {
     listen 80;
     server_name www.admin.jrtechs.net admin.jrtechs.net;
