@@ -107,20 +107,10 @@ The color scheme has been changing a lot recently.
 
 [Adobe Color Wheel](https://color.adobe.com/create/color-wheel/?copy=true&base=2&rule=Custom&selected=3&name=Copy%20of%20Site&mode=rgb&rgbvalues=0.231,0.325499999999957,0.42,0,0.7450980392156863,0.6980392156862745,0.10196078431372549,0.36470588235294116,0.38823529411764707,0.8235294117647058,0.7529411764705882,1,0.3165071770335184,0.24148325358851674,0.49&swatchOrder=0,1,2,3,4)
 
-Blue:
-- Primary: #3B536B
-- Secondary: #00BEB2
-
-Purple:
-- Primary: #513E7D
-- Secondary: #D2C0FF
-
-
-8767D1
-
-top blue: 3B536B
-Secondary Blue: 498FBE
-highlight blue: 18BC9C
+current:
+top 2C3E50
+secondary 498FBE
+highlight:00F0E1, 88BAFF
 
 
 ## Image Optimization

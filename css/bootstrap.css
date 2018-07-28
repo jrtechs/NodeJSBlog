@@ -9594,8 +9594,8 @@ a:hover
 .list-group-item:hover, .list-group-item:focus {
     z-index: 1;
     text-decoration: none;
-    color: white;
-    background-color: #18BC9C;
+    color: #3E3F3A;
+    background-color: #88BAFF;
 }
 
 
@@ -9626,14 +9626,14 @@ a:hover
 }
 
 .btn-secondary:hover {
-    color: white;
-    background-color: #18BC9C;
+    color: #3E3F3A;
+    background-color: #88BAFF;
 }
 
 
 .bg-primary
 {
-    background-color: #3B536B !important;
+    background-color: #2C3E50 !important;
 }
 
 #mainNav
@@ -9641,8 +9641,8 @@ a:hover
     font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 700;
     text-transform: uppercase;
-    padding-top: 15px;
-    padding-bottom: 15px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 
@@ -9656,7 +9656,7 @@ a:hover
 }
 #mainNav .navbar-nav li.nav-item a.nav-link:hover
 {
-    color: #18BC9C;
+    color: #82E9FF;
     outline: none;
 }
 
@@ -9697,7 +9697,7 @@ footer h3
 footer .footer-above
 {
     padding-top: 50px;
-    background-color: #3B536B;
+    background-color: #2C3E50;
 }
 footer .footer-col
 {
@@ -9706,5 +9706,5 @@ footer .footer-col
 footer .footer-below
 {
     padding: 25px 0;
-    background-color: #3B536B;
+    background-color: #2C3E50;
 }
