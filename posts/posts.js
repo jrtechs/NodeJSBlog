@@ -1,6 +1,5 @@
 const utils = require('../utils/utils.js');
 const sql = require('../utils/sql');
-const Promise = require('promise');
 
 
 /**

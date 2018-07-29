@@ -15,6 +15,8 @@ const express = require("express");
 
 const includes = require('./includes/includes.js');
 
+const sql = require('./utils/sql');
+
 
 const map = require('./utils/generateSiteMap.js');
 map.main();
@@ -44,7 +46,7 @@ app.use(function(request, res)
         const filename = url.parse(request.url, true).pathname;
 
         //handles image requests
-        if(filename.includes("/img/") || filename.includes(".jpg") || filename.includes(".png"))
+        if(filename.includes("/img/") || filename.includes(".jpg") || filename.includes(".png") || filename.includes(".ico"))
         {
             require("./img/image.js").main(res, filename, cache);
         }
@@ -59,25 +61,6 @@ app.use(function(request, res)
         else if(filename.includes("/downloads/"))
         {
             require("./downloads/downloads.js").main(res, filename, request);
-        }
-        else if(filename.includes("/admin"))
-        {
-            res.writeHead(200, {'Content-Type': 'text/html'});
-
-            file = "./admin/admin.js";
-
-            Promise.all([includes.printHeader(),
-                require(file).main(filename, request),
-                includes.printFooter()]).then(function(content)
-            {
-                res.write(content.join(''));
-                res.end();
-
-            }).catch(function(err)
-            {
-                console.log(err);
-                throw err;
-            });
         }
         else
         {
@@ -122,6 +105,20 @@ app.use(function(request, res)
                 res.write(html);
                 res.end();
             }
+
+            try
+            {
+                var ip = (request.headers['x-forwarded-for'] || '').split(',').pop() ||
+                    request.connection.remoteAddress ||
+                    request.socket.remoteAddress ||
+                    request.connection.socket.remoteAddress;
+                sql.logTraffic(ip, filename);
+            }
+            catch (e)
+            {
+
+            }
+
         }
     }
     else

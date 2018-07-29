@@ -11,7 +11,7 @@ I did to decrease the load time of this blog written in node by two seconds.
  
 This is the result for a single blog post.
  
-Before the improvements my home page took 3.14 seconds to load and was 3mb. Now
+Before the improvements, my home page took 3.14 seconds to load and was 3mb. Now
 my home page takes 1.22 seconds to load and is only 1.2mb in size. If you look at the 
 waterfall for my home page, most of the time is a result of the youtube embedded
 videos loading. 

@@ -1,4 +1,3 @@
-const Promise = require('promise');
 const sql = require('../utils/sql');
 
 module.exports=

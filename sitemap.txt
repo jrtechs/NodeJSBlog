@@ -13,6 +13,7 @@ http://jrtechs.net/projects/java-fibonacci-solver
 http://jrtechs.net/projects/musical-floppy-drive-build-log
 http://jrtechs.net/java/gremlin-in-10-minutes
 http://jrtechs.net/java/top-three-recommended-java-ides
+http://jrtechs.net/other/my-college-essay
 http://jrtechs.net/web-development/node-website-optimization
 http://jrtechs.net/web-development/node-website-optimization
 http://jrtechs.net/programming/gremlin-in-10-minutes

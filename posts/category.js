@@ -1,4 +1,3 @@
-var Promise = require('promise');
 const sql = require('../utils/sql');
 const utils = require('../utils/utils.js');
 

@@ -1,9 +1,5 @@
 const sql = require('../utils/sql');
 
-const utils = require('../utils/utils.js');
-
-const Promise = require('promise');
-
 const postRenderer = require('../posts/singlePost.js');
 
 /**Renders each recent post for the homepage of the website

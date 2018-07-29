@@ -1,5 +1,4 @@
 const utils = require('../utils/utils.js');
-const Promise = require('promise');
 
 module.exports=
     {

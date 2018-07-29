@@ -1,27 +1,32 @@
 const utils = require('../utils/utils.js');
 
-var Promise = require('promise');
-
-var markdown = require( "markdown" ).markdown;
+const markdown = require( "markdown" ).markdown;
 
 const sql = require('../utils/sql');
 
 var Remarkable = require('remarkable');
-var hljs       = require('highlight.js') // https://highlightjs.org/
+var hljs       = require('highlight.js');
 
 // Actual default values
-var md = new Remarkable({
+var md = new Remarkable(
+{
     html:         true,
-    highlight: function (str, lang) {
-        if (lang && hljs.getLanguage(lang)) {
-            try {
+    highlight: function (str, lang)
+    {
+        if (lang && hljs.getLanguage(lang))
+        {
+            try
+            {
                 return hljs.highlight(lang, str).value;
-            } catch (err) {}
+            }
+            catch (err) {}
         }
 
-        try {
+        try
+        {
             return hljs.highlightAuto(str).value;
-        } catch (err) {}
+        }
+        catch (err) {}
 
         return ''; // use external default escaping
     }

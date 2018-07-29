@@ -10,8 +10,6 @@ const FOOTER_FILE = "includes/footer.html";
 
 const ADMIN_HEADER = "includes/adminHeader.html";
 
-const Promise = require('promise');
-
 const crypto = require('crypto');
 
 module.exports =

@@ -65,7 +65,7 @@ module.exports=
                 if (err)
                 {
                     console.log(err);
-                    resolve(0);
+                    reject();
                 }
                 resolve(result.insertId);
             });
@@ -465,5 +465,31 @@ module.exports=
             });
 
         });
+    },
+
+
+    /**
+     * Logs visited page for backend server analytics.
+     *
+     * @param ip
+     * @param page
+     */
+    logTraffic: function(ip, page)
+    {
+        if(page.length > 40)
+        {
+            console.log("Error, request too long to log ip:"
+                + ip + " page: " + page);
+            return;
+        }
+
+        if(ip.length > 20)
+        {
+            ip = "";
+        }
+
+        const q = "insert into traffic_log (url, ip, date) values " +
+            "('" + page + "', '" + ip + "', now())";
+        module.exports.insert(q);
     }
 };
