@@ -1,4 +1,4 @@
-<iframe width="560" height="315" src="https://www.youtube.com/embed/KC9zrgMt1FA" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<iframe width="100%" height="315" src="https://www.youtube.com/embed/KC9zrgMt1FA" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 This is a simple zombie shooter game that I made in visual basics. The graphics
 are very basic due to copyrights that I wanted to avoid – and lack of artistic
