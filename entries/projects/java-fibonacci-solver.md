@@ -32,7 +32,7 @@ class Fibonacci
 }
 ```
 
-![](media/088cc48e754c1b99e0fcd5a5eddb9d64.png)
+![Output in terminal](media/088cc48e754c1b99e0fcd5a5eddb9d64.png)
 
 I would like to note that solving each Fibonacci number recursively is not
 efficient due to the enormous stack it creates for higher elements. A more

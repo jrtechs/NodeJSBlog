@@ -13,8 +13,6 @@ Downloads:
 
 ![](media/d3f05acc1973ea938920407511c28bff.png)
 
-[Zombie Game YouTube demo](http://jrtechs.net/download/214/)
+[Zombie Game YouTube demo](https://jrtechs.net/download/ZombieGameYoutube/)
 
 ![](media/09d34d523359111041accf89c82fd6c2.png)
-
-[Demo source code](http://jrtechs.net/download/211/)

@@ -58,15 +58,15 @@ Assembly
 
 The first thing you should do is secure your floppy drives.
 
-![](media/f8802f1f71cb433274d265fc81e36fc6.jpg)
+![Floppy Drives](media/f8802f1f71cb433274d265fc81e36fc6.jpg)
 
 Now, it is time to power the floppy drives and turn them on. To make the floppy
 drives turn on, you need to connect pins 11 and 12 on your floppy drives
 together. You can easily do this with a single ribbon cable.
 
-![](media/5b7a15fd7b5da2939f4e27eae4ceada3.jpg)
+![Floppy Drives pin configuration](media/5b7a15fd7b5da2939f4e27eae4ceada3.jpg)
 
-![](media/09bce0ed13f28db38a141bd10bb096c8.jpg)
+![Floppy drives connected together](media/09bce0ed13f28db38a141bd10bb096c8.jpg)
 
 You can use an old power supply for this project. Since we are only using the
 stepper motor in the floppy drives, you only need to supply 5v. Each floppy
@@ -86,7 +86,7 @@ high wattages. It is good idea to use multiple 5v lines from your power supply
 and make sure that nowhere in your wiring is all the voltage going through a
 single ribbon cable.
 
-![](media/5ebac37ad45784c31219451d6e4c4504.jpg)
+![Musical floppy drives wired together](media/5ebac37ad45784c31219451d6e4c4504.jpg)
 
 If you have done everything correct up to this point, you will see the green
 lights on the floppy drives turn on when the power supply is running.
@@ -96,14 +96,14 @@ Now we need to connect the pins of the floppy drive to the Arduino.
 Personally, I started by connecting pin 19 on the floppy drive to the ground pin
 on the Arduino. Again, I used a bread board to make the connections easier.
 
-![](media/d0888a3222fa328c291629fac491e268.jpg)
+![Floppy drives pin io](media/d0888a3222fa328c291629fac491e268.jpg)
 
-![](media/463f2aa188466da8f47309235039250c.jpg)
+![Floppy drives connected to uno](media/463f2aa188466da8f47309235039250c.jpg)
 
 Next, we need to wire the step and direction pins of the floppy drives to the
 Arduino.
 
-![](media/81ffef0249da3c1fc077d114fb6beecb.jpg)
+![Floppy drives pin diagram](media/81ffef0249da3c1fc077d114fb6beecb.jpg)
 
 Connect direction pin 18 on the floppy drive to pin 3 of the Arduino and step
 pin 20 to pin 2 of the Arduino. For additional floppy drives you follow the same
@@ -112,7 +112,7 @@ floppy pin 20 to Arduino pin 4. If you are using something other than an Arduino
 Uno board this will potentially be different. We are using these specific pins
 on the Arduino because they correspond to this specific program.
 
-![](media/50dc96254f26b730e842134db98c9966.jpg)
+![Floppy drives wired together with power supply](media/50dc96254f26b730e842134db98c9966.jpg)
 
 While making this, I had 4 sets of pins (8 total) connected to the Arduino,
 however, I have 10 floppy drives in total. I wired two sets of three drives and
@@ -397,11 +397,11 @@ void resetAll(){
 
 ```
 
-![](media/23c6ad380e3224fbcd0c8d28cbecac23.png)
+![Arduino program screenshot](media/23c6ad380e3224fbcd0c8d28cbecac23.png)
 
 Now you can upload this script to your Arduino.
 
-![](media/0b9d25d56269d39f60177b6b29a882da.png)
+![Arduino Uno serial COM settings](media/0b9d25d56269d39f60177b6b29a882da.png)
 
 If you get any errors about your COM port, make sure that your Arduino is set to
 listen on COM1 under the Device manager –Windows only.
@@ -409,7 +409,7 @@ listen on COM1 under the Device manager –Windows only.
 If that works, you can now open Moppy through Netbeans and start playing with
 your musical floppy drives.
 
-![](media/161edc628257e8a2f92086c5987dcf0f.png)
+![Moppy control application](media/161edc628257e8a2f92086c5987dcf0f.png)
 
 For a great package of MIDI music to use check out
 [MrSolidSnake](https://github.com/coon42/Floppy-Music--midis-). Not all MIDI

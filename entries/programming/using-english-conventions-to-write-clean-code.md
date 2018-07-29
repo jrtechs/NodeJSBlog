@@ -174,4 +174,4 @@ treated similarly to composition. The computer does not care what you write;
 however, it is critical that your audience is able to understand what you are
 saying with clarity and precision.
 
-![](media/90703af9527d8d4aecc7eefbda5f049a.png)
+![Descriptive variable name meme](media/90703af9527d8d4aecc7eefbda5f049a.png)

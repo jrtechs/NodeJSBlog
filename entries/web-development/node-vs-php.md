@@ -1,4 +1,4 @@
-![](media/fa157040d5849cc48de1cbec2c67ef69.jpg)
+![PHP vs Node meme](media/fa157040d5849cc48de1cbec2c67ef69.jpg)
 
 It used to be the case that you wrote PHP for the backend and JavaScript on the
 front end. However, that has all changed with the invention of Node.js. Some kid
@@ -60,4 +60,4 @@ dependent on HTML - like a blog- I would urge you to use PHP.
 If you are still undecided, just learn Node.js. It pains me to say it but,
 Node.js is slowly taking over PHP.
 
-![](media/422d949d18969b9b2b8cf754ddc1e779.jpg)
+![PHP developer meme](media/422d949d18969b9b2b8cf754ddc1e779.jpg)
