@@ -108,11 +108,11 @@ app.use(function(request, res)
 
             try
             {
-                var ip = (request.headers['x-forwarded-for'] || '').split(',').pop() ||
-                    request.connection.remoteAddress ||
-                    request.socket.remoteAddress ||
-                    request.connection.socket.remoteAddress;
-                sql.logTraffic(ip, filename);
+                var getClientAddress = (request.headers['x-forwarded-for'] || '').split(',')[0]
+                    || request.connection.remoteAddress;
+                console.log(getClientAddress);
+
+                sql.logTraffic(getClientAddress, filename);
             }
             catch (e)
             {
