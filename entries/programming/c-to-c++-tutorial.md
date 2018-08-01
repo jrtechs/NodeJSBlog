@@ -1,20 +1,86 @@
-## Namespaces
-
+This post aims to cover all the major topics that C programmers need to know before
+they start writing C++ programs. I kept this post as short and concise as possible to 
+enable people to use this as a quick reference to jump into C++. This post assumes
+that you have prior knowledge of both C and object oriented programming concepts. 
 
 ## Input/Output
 
-```
-using namespace std;
-#include <iostream>
+Input and output in C++ is pretty easy, you just use "cout" and "cin". When printing with
+"cout", you separate what your printing with "<<", the "endl" at the end prints a new line.
+
+```c++
+using namespace std;                        //namespaces talked about below
+#include <iostream>                         //Include statement for terminal IO.
 
 int main()
 {
-    cout << "Hello World" << endl;   
+    cout << "Hello World" << endl;          // HELLO WORLD!
     
     int a;
-    cin << a;
+    cin << a;                               //inputs an int into a
     
-    cout << "You entered: << a << endl;
+    cout << "You entered: << a << endl;     //prints what you entered
+    
+    return 0;                               // return sucess code
+}
+```
+
+
+If you wish to run a C++ program simply save it with the extension ".cpp", you then
+can compile and run it with g++. Compiling a C++ program with g++ is nearly the same
+as compiling a C program with gcc.
+
+ex:
+
+```bash
+g++ helloWorld.cpp -o hello
+./hello
+```
+
+
+## Namespaces
+
+Name spaces are used to enable you to have multiple functions/methods called the
+same thing and not conflict with one another. You use "namespacename::function/variable"
+to access something inside of a namespace. To prevent you from always having to type 
+"namespacename::", you can use a namespace which makes that namespace "default".
+
+```c++
+using namespace std;                //tells compiler we want to use std namespace
+
+namespace foo                       //declares a namespece named foo
+{
+    int a, b;
+    
+    void fun()
+    {
+        cout << "Inside foo namespace" << endl;
+    }
+}
+
+
+namespace bar               
+{
+    void fun()                      //declares a function with the same name as another function
+    {
+        cout << "Inside bar namespace" << endl;
+    }
+}
+
+
+using namespace foo;                //start useing foo instead of std as selected namespace
+int main()
+{
+    fun();
+    
+    bar::fun();
+    
+    int a = 5;
+    
+    foo::a = 12;
+    
+    std::cout << "a: " << a << endl;    //had to use std::cout since the default namespace is foo
+    std::cout << "foo::a: " << foo::a << endl;
     
     return 0;
 }
@@ -22,6 +88,9 @@ int main()
 
 
 ## Global Variable
+
+Similar to C, however, you can now reference a global variable with the "::"
+accessor.
 
 ```c++
 using namespace std;
@@ -33,14 +102,18 @@ int main ()
 {
    double bar = 12;
 
-   cout << "Local bar:  " << bar << endl;
-   cout << "Global bar: " << ::bar << endl;
+   cout << "Local bar:  " << bar << endl;       //prints 12
+   cout << "Global bar: " << ::bar << endl;     //prints 64
 
    return 0;
 }
 ```
 
 ## Multiple Names for a Variable/Aliasing
+
+This is simply NOT a pointer. In the following example pi, and x now are treated as
+the same exact variable. You cannot later change the pointer destination for x.
+
 
 ```c++
 double pi = 3.145;
@@ -54,9 +127,13 @@ cout << "pi: " << pi << " x: " << x << endl; // prints pi: 2.1 x: 2.1
 
 ## Passing Variables by Reference
 
+In C, everything was passed by value -- only way to get around this was by passing
+pointers. C++ now allows us to pass variables by reference. This is very powerful, in
+languages like Java, only Objects are passed by reference. C++ lets you decide exactly
+what gets passed by reference or by value. 
 
 ```c++
-void change (double &r, double s)
+void change (double &r, double s)       //r is passed by reference
 {
    r = 100;
    s = 200;
@@ -74,7 +151,8 @@ int main()
 }
 ```
 
-Same code in C.
+Same code in C. This method still works in C++.
+
 ```c
 void change(double *r, double s)
 {
@@ -86,7 +164,7 @@ int main()
 {
     int x = 1;
     int y = 2;
-    printf("%d, %d", x, y);
+    printf("%d, %d", x, y);         //printf doesn't exist in c++.
     change(&x, y);
     printf("%d, %d", x, y);
     
@@ -97,13 +175,14 @@ int main()
 
 ## Functions Returning Variables not Values
 
-A reference can be used to have a function return a variable -- not a value.
+A function can return a variable -- not a value. In the following example, a function
+returns the reference to the variable which is the smallest.
 
 ```c++
 using namespace std;
 #include <iostream>
 
-int &smallest (int &x, int &y)
+int &smallest (int &x, int &y)          //smallest returns a reference to a variable
 {
     if (x < y) 
         return x;
@@ -118,27 +197,9 @@ int main ()
     
     cout << "k: " << k << " m: " << m << endl; // prints k: 33 m: 2
     
-    smallest (k, m) = 10;
+    smallest (k, m) = 10;                      // MAGIC!
     
     cout << "k: " << k << " m: " << m << endl; // prints k: 33 m: 10
-    
-    return 0;
-}
-```
-
-
-## Namespaces
-
-```c++
-namespace foo
-{
-    int a, b;
-}
-
-
-int main()
-{
-    first::a = 2;
     
     return 0;
 }
@@ -170,6 +231,9 @@ int main()
 
 ## Exceptions
 
+Exceptions might help you stop segmentation faulting. The important thing to notice 
+is that you can throw just about any type in a try block.
+
 ```c++
 int x;
 cout << "Type a number: ";
@@ -193,6 +257,9 @@ catch(int result)
 
 ## Default Parameters for Functions
 
+This is exactly like default parameters in Python. If a function is called without
+the parameter, it is assumed to be that value.
+
 ```c++
 double multiply(double x, double y = 5)
 {
@@ -210,6 +277,8 @@ int main()
 
 
 ## Function Overloading
+
+
 
 ```c++
 double add(double x)
@@ -498,7 +567,7 @@ public:
     {
         cout << "Meow" << endl;
     } 
-} 
+};
 ```
 
 ## Method Prototypes for Classes
@@ -513,7 +582,7 @@ public:
     }
     
     int fly(); //method prototype 
-} 
+};
 
 
 // Off in a header file or something
