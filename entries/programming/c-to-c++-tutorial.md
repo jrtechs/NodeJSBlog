@@ -1,12 +1,13 @@
 This post aims to cover all the major topics that C programmers need to know before
 they start writing C++ programs. I kept this post as short and concise as possible to 
-enable people to use this as a quick reference to jump into C++. This post assumes
-that you have prior knowledge of both C and object oriented programming concepts. 
+enable people to use this as a quick reference to quickly jump into C++. This post assumes
+that you have prior knowledge of both C and object oriented-programming concepts. Each topic
+is quickly covered in a code snippet and some additional explanation is provided if necessary. 
 
 ## Input/Output
 
-Input and output in C++ is pretty easy, you just use "cout" and "cin". When printing with
-"cout", you separate what your printing with "<<", the "endl" at the end prints a new line.
+Input and output in C++ is easy, you use "cout" and "cin". When printing with
+"cout", you separate what your printing with "<<"; "endl" prints a new line.
 
 ```c++
 using namespace std;                        //namespaces talked about below
@@ -17,7 +18,7 @@ int main()
     cout << "Hello World" << endl;          // HELLO WORLD!
     
     int a;
-    cin >> a;                               //inputs an int into a
+    cin >> a;                               //inputs an int into a -- notice how arrows face the direction of IO
     
     cout << "You entered: " << a << endl;   //prints what you entered
     
@@ -26,9 +27,9 @@ int main()
 ```
 
 
-If you wish to run a C++ program simply save it with the extension ".cpp", you then
+Save your C++ programs with the extension ".cpp", you then
 can compile and run it with g++. Compiling a C++ program with g++ is nearly the same
-as compiling a C program with gcc.
+as compiling a C program with GCC.
 
 ex:
 
@@ -42,8 +43,8 @@ g++ helloWorld.cpp -o hello
 
 Name spaces are used to enable you to have multiple functions/methods called the
 same thing and not conflict with one another. You use "namespacename::function/variable"
-to access something inside of a namespace. To prevent you from always having to type 
-"namespacename::", you can use a namespace which makes that namespace "default".
+to access something inside of a specific namespace. To prevent you from always having to type 
+"namespacename::", you can use a namespace which makes that namespace default.
 
 ```c++
 using namespace std;                //tells compiler we want to use std namespace
@@ -91,7 +92,7 @@ int main()
 
 ## Global Variable
 
-Similar to C, however, you can now reference a global variable with the "::"
+Global variables are similar to C, however, you can now reference a global members with the "::"
 accessor.
 
 ```c++
@@ -113,7 +114,7 @@ int main ()
 
 ## Multiple Names for a Variable/Aliasing
 
-This is simply NOT a pointer. In the following example pi, and x now are treated as
+This is NOT simply a pointer. In the following example pi, and x now are treated as
 the same exact variable. You cannot later change the pointer destination for x.
 
 
@@ -129,16 +130,15 @@ cout << "pi: " << pi << " x: " << x << endl; // prints pi: 2.1 x: 2.1
 
 ## Passing Variables by Reference
 
-In C, everything was passed by value -- only way to get around this was by passing
-pointers. C++ now allows us to pass variables by reference. This is very powerful, in
+In C, everything was passed by value; C++ allows us to pass variables by reference. This is very powerful, in
 languages like Java, only Objects are passed by reference. C++ lets you decide exactly
-what gets passed by reference or by value. 
+what gets passed by reference or by value -- even primitives. 
 
 ```c++
 using namespace std;
 #include <iostream>
 
-void change (int &r, int s)       //r is passed by reference
+void change (int &r, int s)       //& infront of variable means that it will get passed by reference
 {
    r = 100;
    s = 200;
@@ -169,7 +169,7 @@ int main()
 {
     int x = 1;
     int y = 2;
-    printf("%d, %d", x, y);         //printf doesn't exist in c++.
+    printf("%d, %d", x, y);
     change(&x, y);
     printf("%d, %d", x, y);
     
@@ -178,9 +178,9 @@ int main()
 ```
 
 
-## Functions Returning Variables not Values
+## Functions Returning Variables References
 
-A function can return a variable -- not a value. In the following example, a function
+A function can return a value reference which can be treated as a variable. In the following example, a function
 returns the reference to the variable which is the smallest.
 
 ```c++
@@ -211,11 +211,11 @@ int main ()
 ```
 
 
-## Inline -- similar to Macros
+## Inline
 
 Inline can be used to replace a function which contains very simple logic -- no
 for loops, etc. Like a macro, this will be inserted everywhere the code is used; a
-draw back to inline methods is that the compiled source will be larger. But, they
+drawback to inline methods is that the compiled source will be larger. But, they
 typically run faster.
 
 ```c++
@@ -240,7 +240,7 @@ int main()
 ## Exceptions
 
 Exceptions might help you stop segmentation faulting. The important thing to notice 
-is that you can throw just about any type in a try block.
+is that you can throw about any type in a try block.
 
 ```c++
 int x;
@@ -269,7 +269,7 @@ This is exactly like default parameters in Python. If a function is called witho
 the parameter, it is assumed to be that value.
 
 ```c++
-double multiply(double x, double y = 5)
+double multiply(double x, double y = 5)     // y has the default value of 5
 {
     return x * y;
 }
@@ -439,9 +439,9 @@ struct pair
 The syntax of a class is similar to a struct.
 
 ```c++
-class Pair
+class Pair             
 {
-public:
+public:                 // encapsulation covered in 2 sections
     int i;
     int x;
 
@@ -454,9 +454,9 @@ public:
 
 ## Class Constructor and De-constructor
 
-Class constructors are similar to constructors in java. Class de-constructors
+Class constructors are similar to constructors in Java. Class destructor
 are simply the name of the class with a "~" sign in front of it. It is important to
-free any allocated memory in the class deconstruct. 
+free any allocated memory in the class deconstruct since C++ does not have a garbage collector. 
 
 ```c++
 class Pair
@@ -558,9 +558,9 @@ private:
 
 ## Class Inheritance
 
-Classes can inherit variables and methods from other classes. The major thing to
-remember is that if you ever want to override a method in a child class, you have
-to declare the method as "virtual".
+Classes can inherit variables and methods from other classes. The most important thing to
+remember is that if you ever want to override a method in a child class, you must
+ declare the method as "virtual".
 
 ```c++
 class Pair
@@ -588,7 +588,7 @@ protected:
     int z;
     
 public:
-    Triple(int i1, int i2, int i3): Pair(i1, i2)  //calls the parent classes constructor
+    Triple(int i1, int i2, int i3): Pair(i1, i2)  //calls the parent's constructor
     {
         z = i3;
     }
@@ -600,9 +600,9 @@ public:
 };
 ```
 
-## "Abstract" Classes
+## Abstract Classes
 
-Abstract classes are simply classes which can not be instantiated. To do this in C++
+Abstract classes are simply classes which cannot be instantiated. To do this in C++
 you simply set a virtual function equal to zero.
 
 ```c++
@@ -625,8 +625,8 @@ public:
 
 ## Method Prototypes for Classes
 
-If you wish to have a method prototype in a class, you have to use namespace
-syntax to define it elsewhere. This is particularly useful for breaking a class
+If you wish to use a method prototype in a class, you must use namespace
+syntax to define the method elsewhere. This is particularly useful for breaking classes
 into multiple files. It is common to declare the class in a header file and then 
 implement the functions in a cpp file.
 
@@ -657,7 +657,7 @@ int Cat::fly()
 
 ## Strings
 
-Since C++ has classes, it can now work with strings in a more pleasant way. 
+Since C++ has classes, you can work with strings in a pleasant way. 
 
 ```c++
 using namespace std;
@@ -671,10 +671,10 @@ int main()
     string str1Copy(str1);          // string "Hello" 
     
     
-    //initalizes string by a character and number of occurances 
+    //initializes  string by a character and number of occurrences  
     string str4(5, '$');            // string "$$$$$$"
     
-    //string contatination
+    //string concatenation
     string greeting = str1 + " " + str2;
     cout << greeting << endl;
     
@@ -695,9 +695,9 @@ int main()
     //returns last character in string
     char back = numbers.back();
     
-    //gets character at a certain position
+    //gets a character at a certain position
     char second = numbers.at(1);
-    char secondAlt = numbers[1];
+    char secondAlt = numbers[1];                //array syntax still works on strings
     
     cout << "first: " << first << endl;
     cout << "back: " << back << endl;
@@ -705,7 +705,7 @@ int main()
     
     
     //substr(a, b) function returns a substring of b length
-    //starting from index a. if there is no second argument, it 
+    //starting from index a. If there is no second argument, it 
     //goes to the end.
     cout << numbers.substr(2, 7) << endl;
     
@@ -722,10 +722,10 @@ int main()
 
 # File IO
 
-File IO is significantly different in C++. I will quickly glance over
-a few examples which should give you most of what you need to start writing some programs.
+File IO is significantly different from C. I will quickly glance over
+a few examples which should give you most of what you need to start writing basic programs.
 
-## Reading From File
+## Reading from File
 
 Reading a file example by character.
 
@@ -733,7 +733,7 @@ Reading a file example by character.
 using namespace std;
 
 #include <iostream>
-#include <fstream>      // Header for files
+#include <fstream>      // header for files
 
 int main()
 {
@@ -763,7 +763,7 @@ int main ()
 {
     string line;
     ifstream myfile ("example.txt");
-    if(myfile.is_open())                //checks to see if file open sucessfully
+    if(myfile.is_open())                //checks to see if file open successfully
     {
         while(getline(myfile,line))     //gets contents of file and puts them in a string
         {
@@ -808,10 +808,10 @@ int main()
 
 ## Resources
 
-You should now know enough C++ to start developing with it. If you want to take your C++
+You now know enough C++ to start programming with it. If you want to take your
 skills to the next level, I would recommend start working on a few projects in C++ and get
 a comprehensive C++ book.
 
 - [Online C++ Guide](https://www.programiz.com/cpp-programming)
-- Kochan: Programming in C _p4 (4th Edition) (Developer's Library) 4th Edition -- Really good book if you don't know C that good.
+- Kochan: Programming in C _p4 (4th Edition) (Developer's Library) 4th Edition -- Really good book if you don't know C yet.
 - [Tutorials Point C++](https://www.tutorialspoint.com/cplusplus/index.htm)
