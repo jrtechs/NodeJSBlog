@@ -17,9 +17,9 @@ int main()
     cout << "Hello World" << endl;          // HELLO WORLD!
     
     int a;
-    cin << a;                               //inputs an int into a
+    cin >> a;                               //inputs an int into a
     
-    cout << "You entered: << a << endl;     //prints what you entered
+    cout << "You entered: " << a << endl;   //prints what you entered
     
     return 0;                               // return sucess code
 }
@@ -47,6 +47,8 @@ to access something inside of a namespace. To prevent you from always having to 
 
 ```c++
 using namespace std;                //tells compiler we want to use std namespace
+
+#include <iostream>    
 
 namespace foo                       //declares a namespece named foo
 {
@@ -133,7 +135,10 @@ languages like Java, only Objects are passed by reference. C++ lets you decide e
 what gets passed by reference or by value. 
 
 ```c++
-void change (double &r, double s)       //r is passed by reference
+using namespace std;
+#include <iostream>
+
+void change (int &r, int s)       //r is passed by reference
 {
    r = 100;
    s = 200;
@@ -214,16 +219,19 @@ draw back to inline methods is that the compiled source will be larger. But, the
 typically run faster.
 
 ```c++
+using namespace std;
+#include <iostream>
+
 inline int square(int x)        //macro like method
 {
-    return x * y;
+    return x * x;
 }
 
 int main()
 {
     int k = 4;
     
-    cout << square(k) << endl; //prints 4
+    cout << square(k) << endl;  //prints 16
     
     return 0;
 }
@@ -269,7 +277,7 @@ double multiply(double x, double y = 5)
 int main()
 {
     cout << multiply(4) << endl; // 20
-    cout << multiply(4, 4) endl; // 15
+    cout << multiply(4, 4) endl; // 16
     
     return 0;
 }
@@ -301,7 +309,7 @@ int add(int x, int y)
 int main()
 {
     cout << add(4) << endl; // 4
-    cout << add(4.0, 4.0) endl; // 8
+    cout << add(4.0, 4.0) << endl; // 8
     return 0;
 }
 ```
@@ -316,15 +324,15 @@ operator overloading.
 using namespace std;
 #include <iostream>
 
-struct tuple
+struct tuple                //since tuple is defined elsewhere, we need to use :: to access it
 {
    int x;
    int y;
 };
 
-tuple operator + (int a, vector b)
+::tuple operator + (int a, ::tuple b)
 {
-   vector r;
+   ::tuple r;               //creates the tuple from our file -- tuple is defined elsewhere
 
    r.x = a + b.x;
    r.y = a + b.y;
@@ -332,14 +340,26 @@ tuple operator + (int a, vector b)
    return r;
 }
 
+
+::tuple operator * (int a, ::tuple b)
+{
+   ::tuple r;               //creates the tuple from our file -- tuple is defined elsewhere
+
+   r.x = a * b.x;
+   r.y = a * b.y;
+
+   return r;
+}
+
 int main ()
 {
-   tuple k, m;              // No need to type "struct tuple"
-                            // also no need to typedef
-   k.x = 3;
-   k.y = 6;
+   ::tuple k, m;             // No need to type "struct vector"
 
-   m = 2 + k;               // Voodoo witchcraft
+   k.x =  2;                 // To be able to write
+   k.y = -1;                 // k = vector (2, -1)
+                             // see chapter 19.
+
+   m = 3 +  k;               // Magic!
 
    cout << "(" << m.x << ", " << m.y << ")" << endl;
 
@@ -388,7 +408,7 @@ use "new" and "delete" instead because it is cleaner.
 ```c++
 int *i = new int;        //i = malloc(sizeof(int)); //c code
 *i = 55;
-delete i;               //free(i); // c code
+delete i;                //free(i); // c code
 
 i = new int[15];
 i[0] = 99;
@@ -401,7 +421,7 @@ delete i;
 You can now add functions to structs.
 
 ```c++
-struct tuple
+struct pair
 {
     int i;
     int x;
@@ -419,7 +439,7 @@ struct tuple
 The syntax of a class is similar to a struct.
 
 ```c++
-class Tuple
+class Pair
 {
 public:
     int i;
@@ -439,19 +459,19 @@ are simply the name of the class with a "~" sign in front of it. It is important
 free any allocated memory in the class deconstruct. 
 
 ```c++
-class Tuple
+class Pair
 {
 public:
     int i;
     int x;
     
-    Tuple(int i1, int i2)               //constructor
+    Pair(int i1, int i2)               //constructor
     {
         i = i1;
         x = i2;
     }
     
-    ~Tuple()                            //class deconstructor
+    ~Pair()                            //class deconstructor
     {
         //delete any memory you have!
     }
@@ -464,12 +484,12 @@ public:
 
 
 // in main or somewhere
-Tuple t (12, 14);                   //creates a tuple on the stack
+Pair t (12, 14);                   //creates a tuple on the stack
 
-Tuple* tt = new Tuple(12, 15);       //allocates memory for the tuple on the heap
+Pair* tt = new Pair(12, 15);      //allocates memory for the tuple on the heap
 
-cout << t.sum() << endl;
-cout << tt->sum() << endl;    
+cout << t.sum() << endl;            //prints 26
+cout << tt->sum() << endl;          //prints 27
 ```
 
 ## Encapsulation
@@ -501,7 +521,7 @@ private:
     {
         age++;
     }
-}
+};
 ```
 
 ## This keyword
@@ -520,7 +540,7 @@ public:
     Person(int age, string name)
     {
         this->age = age;
-        strcpy(this->name, name);
+        this->name = name;
     }
     
     ~Person()
@@ -532,7 +552,7 @@ private:
     {
         age++;
     }
-}
+};
 ```
 
 
@@ -543,14 +563,14 @@ remember is that if you ever want to override a method in a child class, you hav
 to declare the method as "virtual".
 
 ```c++
-class Tuple
+class Pair
 {
 protected:
     int x;
     int y;
     
 public:
-    Tuple(int i1, int i2)
+    Pair(int i1, int i2)
     {
         x = i1;
         y = i2;
@@ -558,17 +578,17 @@ public:
 
     virtual int sum()
     {
-        return i + x;
+        return x + x;
     }
 };
 
-class Triple: public Tuple
+class Triple: public Pair
 {
 protected:
     int z;
     
 public:
-    Triple(int i1, int i2, i3): Tuple(i1, i2)  //calls the parent classes constructor
+    Triple(int i1, int i2, int i3): Pair(i1, i2)  //calls the parent classes constructor
     {
         z = i3;
     }
@@ -590,7 +610,7 @@ class Animal
 {
 public:
     virtual void speak()=0;
-}
+};
 
 
 class Cat: public Animal
@@ -611,6 +631,12 @@ into multiple files. It is common to declare the class in a header file and then
 implement the functions in a cpp file.
 
 ```c++
+class Animal
+{
+public:
+    virtual void speak()=0;
+};
+
 class Cat: public Animal
 {
 public:
@@ -637,13 +663,16 @@ Since C++ has classes, it can now work with strings in a more pleasant way.
 using namespace std;
 
 #include <iostream>
-#include <string>       // header for strings
 
 int main()
 {
-    string str1 = "Hello";
-    string str2 = "World";
+    string str1 = "Hello";          // string "Hello"
+    string str2("World");           // string "World"
+    string str1Copy(str1);          // string "Hello" 
     
+    
+    //initalizes string by a character and number of occurances 
+    string str4(5, '$');            // string "$$$$$$"
     
     //string contatination
     string greeting = str1 + " " + str2;
@@ -658,10 +687,32 @@ int main()
     cout <<"Greeting: "<< greeting << endl;
     
     
-    str6 = "This is a examples";
+    string numbers = "0123456789";
+    
+    //returns first character in string
+    char first = numbers.front();
+    
+    //returns last character in string
+    char back = numbers.back();
+    
+    //gets character at a certain position
+    char second = numbers.at(1);
+    char secondAlt = numbers[1];
+    
+    cout << "first: " << first << endl;
+    cout << "back: " << back << endl;
+    cout << "second: " << second << endl;
+    
+    
+    //substr(a, b) function returns a substring of b length
+    //starting from index a. if there is no second argument, it 
+    //goes to the end.
+    cout << numbers.substr(2, 7) << endl;
+    
+
     //replace(a, b, str)  replaces b character from a index by str
+    string str6 = "This is a examples";
     str6.replace(2, 7, "ese are test");
- 
     cout << str6 << endl;
     
     return 0;
@@ -714,7 +765,7 @@ int main ()
     ifstream myfile ("example.txt");
     if(myfile.is_open())                //checks to see if file open sucessfully
     {
-        while(getline(myfile,line))
+        while(getline(myfile,line))     //gets contents of file and puts them in a string
         {
             cout << line << '\n';
         }
@@ -754,3 +805,13 @@ int main()
     f.close();
 }
 ```
+
+## Resources
+
+You should now know enough C++ to start developing with it. If you want to take your C++
+skills to the next level, I would recommend start working on a few projects in C++ and get
+a comprehensive C++ book.
+
+- [Online C++ Guide](https://www.programiz.com/cpp-programming)
+- Kochan: Programming in C _p4 (4th Edition) (Developer's Library) 4th Edition -- Really good book if you don't know C that good.
+- [Tutorials Point C++](https://www.tutorialspoint.com/cplusplus/index.htm)
