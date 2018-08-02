@@ -187,7 +187,7 @@ int &smallest (int &x, int &y)          //smallest returns a reference to a vari
     if (x < y) 
         return x;
     else
-        return y;
+        return y;       
 }
 
 int main ()
@@ -214,7 +214,7 @@ draw back to inline methods is that the compiled source will be larger. But, the
 typically run faster.
 
 ```c++
-inline int square(int x)
+inline int square(int x)        //macro like method
 {
     return x * y;
 }
@@ -278,12 +278,14 @@ int main()
 
 ## Function Overloading
 
+Like Java and Python, you can overload methods in C++. Not only can you overload the
+methods, but, the return type of the methods which are overloaded don't have to match.
 
 
 ```c++
 double add(double x)
 {
-    return x + x;
+    return x;
 }
 
 double add(double x, double y)
@@ -298,15 +300,17 @@ int add(int x, int y)
 
 int main()
 {
-    cout << multiply(4) << endl; // 20
-    cout << multiply(4, 4) endl; // 15
-    
+    cout << add(4) << endl; // 4
+    cout << add(4.0, 4.0) endl; // 8
     return 0;
 }
 ```
 
 
 ## Operator Overloading
+
+You can redefine basic operators like (+,/,-,<<,>>, +=) for certain data types by using
+operator overloading. 
 
 ```c++
 using namespace std;
@@ -345,21 +349,25 @@ int main ()
 
 ## Functions with Generic Parameter Types
 
+In C++ you can use a template class to create a method which has generic
+ return and parameter types.
+
 ```c++
-template <class ttype>
+template <class ttype>                  //function with 1 generic type
 ttype max (ttype a, ttype b)
 {
-   ttype r;
-
-   r = a;
-   if (b < a) r = b;
-
-   return r;
+    ttype r;
+    
+    r = a;
+    if (b < a) 
+        r = b;
+    
+    return r;
 }
 
 
 
-template <class type1, class type2>
+template <class type1, class type2>     //function with 2 generic types
 type1 maximum (type1 a, type2 b)
 {
     type1 r, b_converted;
@@ -374,11 +382,13 @@ type1 maximum (type1 a, type2 b)
 
 ## Replacement for malloc and free
 
+Malloc and free still exists in C++, however, people typically
+use "new" and "delete" instead because it is cleaner.
+
 ```c++
-int i*;
-i = new int;
+int *i = new int;        //i = malloc(sizeof(int)); //c code
 *i = 55;
-delete i;
+delete i;               //free(i); // c code
 
 i = new int[15];
 i[0] = 99;
@@ -387,6 +397,8 @@ delete i;
 
 
 ## Struct Functions
+
+You can now add functions to structs.
 
 ```c++
 struct tuple
@@ -404,6 +416,7 @@ struct tuple
 
 # Classes
 
+The syntax of a class is similar to a struct.
 
 ```c++
 class Tuple
@@ -421,6 +434,10 @@ public:
 
 ## Class Constructor and De-constructor
 
+Class constructors are similar to constructors in java. Class de-constructors
+are simply the name of the class with a "~" sign in front of it. It is important to
+free any allocated memory in the class deconstruct. 
+
 ```c++
 class Tuple
 {
@@ -428,13 +445,13 @@ public:
     int i;
     int x;
     
-    Tuple(int i1, int i2)
+    Tuple(int i1, int i2)               //constructor
     {
         i = i1;
         x = i2;
     }
     
-    ~Tuple()
+    ~Tuple()                            //class deconstructor
     {
         //delete any memory you have!
     }
@@ -446,15 +463,22 @@ public:
 };
 
 
-// in main
+// in main or somewhere
+Tuple t (12, 14);                   //creates a tuple on the stack
 
+Tuple* tt = new Tuple(12, 15);       //allocates memory for the tuple on the heap
 
-Tuple t (12, 14);
-
-Tuple tt = new Tuple(12, 15);
+cout << t.sum() << endl;
+cout << tt->sum() << endl;    
 ```
 
-## Scope
+## Encapsulation
+
+Like Java, you can declare who can view access certain members of a class.
+
+- protected: Only members of the class and children can view the variables/methods.
+- public: Everyone has access to the variables/methods.
+- private: Only this class can access the variables/methods.
 
 ```c++
 class Person
@@ -481,6 +505,10 @@ private:
 ```
 
 ## This keyword
+
+When you use the "this" key word, you are getting the pointer to the class that you are
+in.
+
 ```c++
 class Person
 {
@@ -510,6 +538,10 @@ private:
 
 ## Class Inheritance
 
+Classes can inherit variables and methods from other classes. The major thing to
+remember is that if you ever want to override a method in a child class, you have
+to declare the method as "virtual".
+
 ```c++
 class Tuple
 {
@@ -533,12 +565,10 @@ public:
 class Triple: public Tuple
 {
 protected:
-    int x;
-    int y;
     int z;
     
 public:
-    Triple(int i1, int i2, i3): Tuple(i1, i2)
+    Triple(int i1, int i2, i3): Tuple(i1, i2)  //calls the parent classes constructor
     {
         z = i3;
     }
@@ -551,6 +581,9 @@ public:
 ```
 
 ## "Abstract" Classes
+
+Abstract classes are simply classes which can not be instantiated. To do this in C++
+you simply set a virtual function equal to zero.
 
 ```c++
 class Animal
@@ -572,6 +605,11 @@ public:
 
 ## Method Prototypes for Classes
 
+If you wish to have a method prototype in a class, you have to use namespace
+syntax to define it elsewhere. This is particularly useful for breaking a class
+into multiple files. It is common to declare the class in a header file and then 
+implement the functions in a cpp file.
+
 ```c++
 class Cat: public Animal
 {
@@ -581,55 +619,138 @@ public:
         cout << "Meow" << endl;
     }
     
-    int fly(); //method prototype 
+    int fly();          //method prototype
 };
 
 
-// Off in a header file or something
 int Cat::fly()
 {
     return 42;
 }
 ```
 
+## Strings
+
+Since C++ has classes, it can now work with strings in a more pleasant way. 
+
+```c++
+using namespace std;
+
+#include <iostream>
+#include <string>       // header for strings
+
+int main()
+{
+    string str1 = "Hello";
+    string str2 = "World";
+    
+    
+    //string contatination
+    string greeting = str1 + " " + str2;
+    cout << greeting << endl;
+    
+    //length of a string
+    int len = str1.size();
+    cout << "str1.size(): " << len << endl;
+    
+    //clear all characters from a string
+    greeting.clear();
+    cout <<"Greeting: "<< greeting << endl;
+    
+    
+    str6 = "This is a examples";
+    //replace(a, b, str)  replaces b character from a index by str
+    str6.replace(2, 7, "ese are test");
+ 
+    cout << str6 << endl;
+    
+    return 0;
+}
+```
+
+
 # File IO
+
+File IO is significantly different in C++. I will quickly glance over
+a few examples which should give you most of what you need to start writing some programs.
 
 ## Reading From File
 
+Reading a file example by character.
+
 ```c++
-#include <fstream>
+using namespace std;
 
+#include <iostream>
+#include <fstream>      // Header for files
 
-//in main or somewhere
-fstream f;
-char c;
-f.open("p022_names.txt", ios::in);
-
-
-while(!f.eof())
+int main()
 {
-    f.get(c);
-    cout << c;
+    fstream f;
+    char c;
+    f.open("p022_names.txt", ios::in);
+    
+    while(!f.eof())
+    {
+        f.get(c);
+        cout << c;
+    }
+    f.close();
 }
-f.close();
+```
+
+Reading lines from a file using strings.
+
+```c++
+using namespace std;
+
+#include <iostream>
+#include <fstream>
+#include <string>
+
+int main () 
+{
+    string line;
+    ifstream myfile ("example.txt");
+    if(myfile.is_open())                //checks to see if file open sucessfully
+    {
+        while(getline(myfile,line))
+        {
+            cout << line << '\n';
+        }
+        myfile.close();
+    }
+    else
+    {
+        cout << "Unable to open file"; 
+    }
+    
+    return 0;
+}
 ```
 
 ## Writing to File
 
+Writing to a file example.
+
 ```c++
-#include <fstream>
+using namespace std;
 
+#include <iostream>
+#include <fstream>      // Header for files
 
-//in main or somewhere
-fstream f;
-char c;
-f.open("p022_names.txt", ios::out);
-
-f << "stuff in the file " << endl;
-
-int i = 4;
-
-f << i << " this is also in the text file" << endl;
-
-f.close();
+int main()
+{
+    fstream f;
+    char c;
+    f.open("p022_names.txt", ios::out);
+    
+    f << "stuff in the file " << endl;
+    
+    int i = 4;
+    
+    f << i << " this is also in the text file" << endl;
+    
+    f.close();
+}
 ```
