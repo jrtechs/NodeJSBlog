@@ -55,9 +55,7 @@ module.exports =
      */
     sendCSS: function(result, path, cache)
     {
-
-
-        var css = cache.get(path);
+        const css = cache.get(path);
 
         if(css == null)
         {
@@ -77,8 +75,11 @@ module.exports =
         }
         else
         {
-            var eTag = crypto.createHash('md5').update(css).digest('hex');
-            result.writeHead(200, {'Content-Type': 'text/css', 'Cache-Control': 'public, max-age=2678400', 'ETag': '"' + eTag + '"', 'Vary': 'Accept-Encoding'});
+            const eTag = crypto.createHash('md5').update(css).digest('hex');
+            result.writeHead(200, {'Content-Type': 'text/css',
+                'Cache-Control': 'public, max-age=2678400',
+                'ETag': '"' + eTag + '"',
+                'Vary': 'Accept-Encoding'});
             result.write(css);
             result.end();
         }

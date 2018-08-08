@@ -27,7 +27,7 @@ const app = express();
 
 //compresses the site
 
-var compression = require('compression')
+const compression = require('compression')
 app.use(compression());
 
 const port = 8000;
@@ -50,7 +50,7 @@ app.use(function(request, res)
         {
             require("./img/image.js").main(res, filename, cache);
         }
-        else if(filename.includes("/css/") || filename.includes(".woff2"))
+        else if(filename.includes("/css/") || filename.includes(".woff2") || filename.includes(".txt"))
         {
             includes.sendCSS(res, filename, cache)
         }
