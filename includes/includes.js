@@ -83,5 +83,35 @@ module.exports =
             result.write(css);
             result.end();
         }
+    },
+
+
+    /**Sends the user an image from the specified fileName.
+     *
+     * @param result
+     * @param fileName
+     */
+    sendImage: function(result, fileName, cache)
+    {
+        const img = cache.get(fileName);
+        if(img == null)
+        {
+            utils.include("." + fileName).then(function(content)
+            {
+                const eTag = crypto.createHash('md5').update(content).digest('hex');
+                console.log(eTag);
+                result.writeHead(200, {'Content-Type': 'image/png', 'Cache-Control': 'public, max-age=2678400', 'ETag': '"' + eTag + '"'});
+                result.write(content);
+                result.end();
+                cache.put(content);
+            });
+        }
+        else
+        {
+            const eTag = crypto.createHash('md5').update(img).digest('hex');
+            result.writeHead(200, {'Content-Type': 'image/png', 'Cache-Control': 'public, max-age=2678400', 'ETag': '"' + eTag + '"'});
+            result.write(img);
+            result.end();
+        }
     }
 };

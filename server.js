@@ -48,11 +48,11 @@ app.use(function(request, res)
         //handles image requests
         if(filename.includes("/img/") || filename.includes(".jpg") || filename.includes(".png") || filename.includes(".ico"))
         {
-            require("./img/image.js").main(res, filename, cache);
+            includes.sendImage(res, filename, cache);
         }
         else if(filename.includes("/css/") || filename.includes(".woff2") || filename.includes(".txt"))
         {
-            includes.sendCSS(res, filename, cache)
+            includes.sendCSS(res, filename, cache);
         }
         else if(filename.includes("/js/") || filename.includes(".js"))
         {
@@ -66,7 +66,7 @@ app.use(function(request, res)
         {
             var file = "";
 
-            var html = cache.get(filename);
+            const html = cache.get(filename);
 
             res.writeHead(200, {'Content-Type': 'text/html'});
             if(html == null)
