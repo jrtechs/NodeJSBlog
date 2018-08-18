@@ -1,16 +1,69 @@
 /**
- Includes.js
- File used for getting the header and footer
+ * File: Includes.js
+ *
+ * Module used for fetching static content for the website
+ * like js, css, images, and other static html pages
+ *
+ * @author Jeffery Russell
  */
+
+//used for file IO
 const utils = require('../utils/utils.js');
 
+//name of header file
 const HEADER_FILE = "includes/header.html";
 
+//path of footer file
 const FOOTER_FILE = "includes/footer.html";
 
+//admin header path
 const ADMIN_HEADER = "includes/adminHeader.html";
 
+//used for hashing stuff for the header's e-tag for clients cache
 const crypto = require('crypto');
+
+
+/**
+ * Sends a static file to the client in a way which the web browser
+ * caches the contents sent.
+ *
+ * @param cache -- server's hashmap which reduces file io
+ * @param path -- file requested by user
+ * @param type -- type of file for the header
+ * @param result -- sent to client
+ */
+const sendCachedContent = function(cache, path, type, result)
+{
+    const goods = cache.get(path);
+
+    if(goods == null)
+    {
+        utils.include("." + path).then(function(content)
+        {
+            const eTag = crypto.createHash('md5').update(content).digest('hex');
+            result.writeHead(200, {'Content-Type': type, 'Cache-Control':
+                    'public, max-age=2678400', 'ETag': '"' + eTag + '"',
+                'Vary': 'Accept-Encoding'});
+            result.write(content);
+            result.end();
+            cache.put(path, content);
+        }).catch(function(error)
+        {
+            console.log(error);
+        });
+    }
+    else
+    {
+        const eTag = crypto.createHash('md5').update(goods).digest('hex');
+        result.writeHead(200, {'Content-Type': type,
+            'Cache-Control': 'public, max-age=2678400',
+            'ETag': '"' + eTag + '"',
+            'Vary': 'Accept-Encoding'});
+        result.write(goods);
+        result.end();
+    }
+};
+
 
 module.exports =
 {
@@ -55,34 +108,7 @@ module.exports =
      */
     sendCSS: function(result, path, cache)
     {
-        const css = cache.get(path);
-
-        if(css == null)
-        {
-            utils.include("./" + path).then(function(content)
-            {
-                var eTag = crypto.createHash('md5').update(content).digest('hex');
-                result.writeHead(200, {'Content-Type': 'text/css', 'Cache-Control':
-                                        'public, max-age=2678400', 'ETag': '"' + eTag + '"',
-                                        'Vary': 'Accept-Encoding'});
-                result.write(content);
-                result.end();
-                cache.put(path, content);
-            }).catch(function(error)
-            {
-                console.log(error);
-            });
-        }
-        else
-        {
-            const eTag = crypto.createHash('md5').update(css).digest('hex');
-            result.writeHead(200, {'Content-Type': 'text/css',
-                'Cache-Control': 'public, max-age=2678400',
-                'ETag': '"' + eTag + '"',
-                'Vary': 'Accept-Encoding'});
-            result.write(css);
-            result.end();
-        }
+        sendCachedContent(cache, "/" + path, 'text/css', result);
     },
 
 
@@ -93,25 +119,17 @@ module.exports =
      */
     sendImage: function(result, fileName, cache)
     {
-        const img = cache.get(fileName);
-        if(img == null)
-        {
-            utils.include("." + fileName).then(function(content)
-            {
-                const eTag = crypto.createHash('md5').update(content).digest('hex');
-                console.log(eTag);
-                result.writeHead(200, {'Content-Type': 'image/png', 'Cache-Control': 'public, max-age=2678400', 'ETag': '"' + eTag + '"'});
-                result.write(content);
-                result.end();
-                cache.put(content);
-            });
-        }
-        else
-        {
-            const eTag = crypto.createHash('md5').update(img).digest('hex');
-            result.writeHead(200, {'Content-Type': 'image/png', 'Cache-Control': 'public, max-age=2678400', 'ETag': '"' + eTag + '"'});
-            result.write(img);
-            result.end();
-        }
+        sendCachedContent(cache, fileName, 'image/png', result);
+    },
+
+
+    /**Sends the user an image from the specified fileName.
+     *
+     * @param result
+     * @param fileName
+     */
+    sendJS: function(result, fileName, cache)
+    {
+        sendCachedContent(cache, fileName, 'application/javascript', result);
     }
 };

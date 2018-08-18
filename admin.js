@@ -7,33 +7,41 @@
  * @author Jeffery Russell 7-21-18
  */
 
+//http server
 const http = require('http');
 
+//parsing request url
 const url = require('url');
 
+//express app
 const express = require("express");
-
-const session = require('express-session');
-
-const includes = require('./includes/includes.js');
-
 const app = express();
 
+//session data for login
+const session = require('express-session');
+
+//sending static content
+const includes = require('./includes/includes.js');
+
+//used for file io
 const utils = require('./utils/utils.js');
 
-const port = 8001;
-
+//cache -- only used for static contents
 const cache = require('memory-cache');
 
 /** Initializes sessions for login */
 app.use(session({ secret: utils.getFileLine('../session_secret'), cookie: { maxAge: 6000000 }}));
 
+//port to listen for the admin server on
+const port = 8001;
+
 
 /**
  * Parses the request url and calls correct JS files
  */
-app.use(function(request, res)
+app.use(function(request, result)
 {
+    //prevents people from pointing their dns at my IP:port for my site
     if(request.headers.host.includes("localhost:" + port) ||
         request.headers.host.includes("jrtechs.net"))
     {
@@ -42,28 +50,28 @@ app.use(function(request, res)
         //handles image requests
         if(filename.includes("/img/") || filename.includes(".jpg") || filename.includes(".png"))
         {
-            require("./img/image.js").main(res, filename, cache);
+            includes.sendJS(result, filename, cache);
         }
         else if(filename.includes("/css/") || filename.includes(".woff2"))
         {
-            includes.sendCSS(res, filename, cache)
+            includes.sendCSS(result, filename, cache)
         }
         else if(filename.includes("/js/") || filename.includes(".js"))
         {
-            require("./js/js.js").main(res, filename, cache);
+            includes.sendJS(result, filename, cache);
         }
         else
         {
-            res.writeHead(200, {'Content-Type': 'text/html'});
+            result.writeHead(200, {'Content-Type': 'text/html'});
 
-            file = "./admin/admin.js";
+            const file = "./admin/admin.js";
 
             Promise.all([includes.printAdminHeader(),
                 require(file).main(filename, request),
                 includes.printFooter()]).then(function(content)
             {
-                res.write(content.join(''));
-                res.end();
+                result.write(content.join(''));
+                result.end();
 
             }).catch(function(err)
             {
@@ -74,12 +82,10 @@ app.use(function(request, res)
     }
     else
     {
-        // utils.printWrongHost(res);
-        res.writeHead(418, {});
-        res.end();
+        // utils.printWrongHost(result);
+        result.writeHead(418, {});
+        result.end();
     }
 });
 
 http.createServer(app).listen(port);
-
-

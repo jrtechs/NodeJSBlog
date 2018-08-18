@@ -5,72 +5,81 @@
  * appropriate pages.
  */
 
+//http server
 const http = require('http');
 
+//used to parse the request URL
 const url = require('url');
 
+//express app
 const express = require("express");
 
-//const session = require('express-session');
+//express app
+const app = express();
 
+//used to append static content to result
 const includes = require('./includes/includes.js');
 
+//server side logging
 const sql = require('./utils/sql');
 
+//Used for gzip compression
+const compression = require('compression')
 
+//caching program to make the application run faster
+const cache = require('memory-cache');
+
+//Updates the site map whenever the server is started
 const map = require('./utils/generateSiteMap.js');
 map.main();
 
-const app = express();
 
-//app.use(session({ secret: utils.getFileLine('../session_secret'), cookie: { maxAge: 6000000 }}));
-
-//compresses the site
-
-const compression = require('compression')
-app.use(compression());
-
+//port for the server to run on
 const port = 8000;
-
-const cache = require('memory-cache');
 
 
 /**
  * Parses the request url and calls correct JS files
  */
-app.use(function(request, res)
+app.use(function(request, result)
 {
+    //prevents people from pointing their dns at my IP:port for my site
     if(request.headers.host.includes("localhost:" + port) ||
         request.headers.host.includes("jrtechs.net"))
     {
         const filename = url.parse(request.url, true).pathname;
 
         //handles image requests
-        if(filename.includes("/img/") || filename.includes(".jpg") || filename.includes(".png") || filename.includes(".ico"))
+        if(filename.includes("/img/") || filename.includes(".jpg") ||
+            filename.includes(".png") || filename.includes(".ico"))
         {
-            includes.sendImage(res, filename, cache);
+            includes.sendImage(result, filename, cache);
         }
-        else if(filename.includes("/css/") || filename.includes(".woff2") || filename.includes(".txt"))
+        //css and font files
+        else if(filename.includes("/css/") || filename.includes(".woff2") ||
+            filename.includes(".txt"))
         {
-            includes.sendCSS(res, filename, cache);
+            includes.sendCSS(result, filename, cache);
         }
+        //scripts
         else if(filename.includes("/js/") || filename.includes(".js"))
         {
-            require("./js/js.js").main(res, filename, cache);
+            includes.sendJS(result, filename, cache);
         }
+        //downloads
         else if(filename.includes("/downloads/"))
         {
-            require("./downloads/downloads.js").main(res, filename, request);
+            require("./downloads/downloads.js").main(result, filename, request);
         }
         else
         {
-            var file = "";
-
             const html = cache.get(filename);
 
-            res.writeHead(200, {'Content-Type': 'text/html'});
+            result.writeHead(200, {'Content-Type': 'text/html'});
             if(html == null)
             {
+                var file = "";
+
                 if(filename === '' || filename === '/')
                 {
                     file="./posts/homePage.js";
@@ -90,8 +99,8 @@ app.use(function(request, res)
                     require(file).main(filename, request),
                     includes.printFooter()]).then(function(content)
                 {
-                    res.write(content.join(''));
-                    res.end();
+                    result.write(content.join(''));
+                    result.end();
                     cache.put(filename, content.join(''));
 
                 }).catch(function(err)
@@ -102,8 +111,8 @@ app.use(function(request, res)
             }
             else
             {
-                res.write(html);
-                res.end();
+                result.write(html);
+                result.end();
             }
 
             try
@@ -118,16 +127,20 @@ app.use(function(request, res)
             {
 
             }
-
         }
     }
     else
     {
-        // utils.printWrongHost(res);
-        res.writeHead(418, {});
-        res.end();
+        // utils.printWrongHost(result);
+        result.writeHead(418, {});
+        result.end();
     }
 });
+
+
+//enables gzip compression for the site
+app.use(compression());
+
 
 http.createServer(app).listen(port);
 
