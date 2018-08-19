@@ -43,7 +43,7 @@ const sendCachedContent = function(cache, path, type, result)
             const eTag = crypto.createHash('md5').update(content).digest('hex');
             result.writeHead(200, {'Content-Type': type, 'Cache-Control':
                     'public, max-age=2678400', 'ETag': '"' + eTag + '"',
-                'Vary': 'Accept-Encoding'});
+                    'Vary': 'Accept-Encoding'});
             result.write(content);
             result.end();
             cache.put(path, content);

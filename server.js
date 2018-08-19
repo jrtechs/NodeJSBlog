@@ -69,7 +69,11 @@ app.use(function(request, result)
         //downloads
         else if(filename.includes("/downloads/"))
         {
-            require("./downloads/downloads.js").main(result, filename, request);
+            require("./downloads/downloads.js").main(result, filename);
+        }
+        else if(filename.includes("/contact"))
+        {
+            require("./includes/contact.js").main(request, result);
         }
         else
         {
@@ -117,7 +121,7 @@ app.use(function(request, result)
 
             try
             {
-                var getClientAddress = (request.headers['x-forwarded-for'] || '').split(',')[0]
+                const getClientAddress = (request.headers['x-forwarded-for'] || '').split(',')[0]
                     || request.connection.remoteAddress;
                 console.log(getClientAddress);
 

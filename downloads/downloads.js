@@ -12,17 +12,17 @@ const sql = require('../utils/sql');
 module.exports=
     {
         /**
-         * TODO
+         *
          * @param res
          * @param requestURL
          * @param request
          * @returns {*|Promise}
          */
-        main: function(res, requestURL, request)
+        main: function(res, requestURL)
         {
             return new Promise(function(resolve, reject)
             {
-                var urlSplit = requestURL.split("/");
+                const urlSplit = requestURL.split("/");
                 console.log(urlSplit);
                 if(urlSplit.length == 3 || urlSplit.length == 4)
                 {
