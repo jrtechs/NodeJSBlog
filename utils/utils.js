@@ -47,7 +47,7 @@ module.exports=
         {
             console.log("Could not find " + fileName);
         }
-        return 0;
+        return '';
     },
 
 
@@ -66,7 +66,7 @@ module.exports=
         {
             console.log("Could not find " + fileName);
         }
-        return 0;
+        return '';
     },
 
 

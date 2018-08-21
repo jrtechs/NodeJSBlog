@@ -107,6 +107,9 @@ npm install markdown
 npm install highlight.js
 npm install compression
 npm install memory-cache --save
+npm install request
+npm install nodemailer
+npm install nodemailer-smtp-transport
 ```
 
 

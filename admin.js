@@ -29,7 +29,7 @@ const utils = require('./utils/utils.js');
 //cache -- only used for static contents
 const cache = require('memory-cache');
 
-/** Initializes sessions for login */
+//Initializes sessions for login
 app.use(session({ secret: utils.getFileLine('../session_secret'), cookie: { maxAge: 6000000 }}));
 
 //port to listen for the admin server on
