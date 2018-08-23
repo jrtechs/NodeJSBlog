@@ -21,7 +21,7 @@ module.exports=
                     Promise.all([require("../admin/newPost.js").main(postData),
                         require("../admin/addCategory.js").main(postData),
                         require("../admin/editPost.js").main(postData),
-                        require("../admin/addDownload.js").main(postData)])
+                        require("./manageDownloads.js").main(postData)])
                             .then(function(content)
                     {
                         resolve(content.join(''));
@@ -43,7 +43,6 @@ module.exports=
                     console.log(err);
                 })
             }
-
         });
     }
 };

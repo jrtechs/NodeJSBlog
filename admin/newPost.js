@@ -60,7 +60,6 @@ module.exports=
                     resolve(html.join(''));
                 }).catch(function(error)
                 {
-                    console.log(error);
                     reject(error);
                 })
             });

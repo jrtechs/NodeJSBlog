@@ -94,6 +94,7 @@ module.exports=
         });
     },
 
+
     /**
      * Not to be mistaken for getPostData() in @file utils/utils.js,
      * this function extracts a post entry from the sql server
@@ -137,6 +138,8 @@ module.exports=
 
         });
     },
+
+
     /**
      * Function used to retrieve all categories when making the sidebar
      *
@@ -147,6 +150,7 @@ module.exports=
         var q = "select * from categories";
         return fetch(q);
     },
+
 
     /**
      * Function which currently returns all posts of a particular
@@ -184,6 +188,7 @@ module.exports=
     {
         return fetch("select * from posts order by post_id desc limit 10");
     },
+
 
     /**
      * Helper method which returns a list of objects which contains the url
@@ -242,6 +247,8 @@ module.exports=
             });
         });
     },
+
+
     /**
      * Function which checks to see if a user successfully logged in based on
      * the post data which they sent
@@ -298,6 +305,7 @@ module.exports=
             }
         });
     },
+
 
     /**
      * Fetches a promise containing every post in the database
@@ -398,11 +406,24 @@ module.exports=
      */
     addDownload: function(name, file)
     {
-        var q = "insert into downloads (name, file, download_count) " +
+        const q = "insert into downloads (name, file, download_count) " +
             "values('" + name + "', '" + file + "', '0')";
 
         return module.exports.insert(q);
     },
+
+
+    /**
+     *
+     * @param id
+     */
+    removeDownload: function(id)
+    {
+        const q = "delete from downloads where download_id='" + id + "'";
+
+        return module.exports.insert(q);
+    },
+
 
     /**
      * Based on the post data submitted by the user this function updates
@@ -422,6 +443,7 @@ module.exports=
         q+= " where post_id='" + postData.edit_post_2 + "'";
         return module.exports.insert(q);
     },
+
 
     /**
      * Function which returns a promise which contains the string of the

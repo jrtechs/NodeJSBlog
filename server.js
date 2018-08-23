@@ -128,9 +128,7 @@ app.use(function(request, result)
                 sql.logTraffic(getClientAddress, filename);
             }
             catch (e)
-            {
-
-            }
+            { }
         }
     }
     else
