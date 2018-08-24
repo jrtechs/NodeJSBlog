@@ -1,16 +1,20 @@
+/**
+ * Renders the admin page contents
+ */
+
+//file IO
 const utils = require('../utils/utils.js');
-const Promise = require('promise');
+
 
 module.exports=
 {
     /**
      * Method calls the admin widgets it correct order
      *
-     * @param fileName
      * @param request
      * @return {*|Promise}
      */
-    main: function(fileName, request)
+    main: function(request)
     {
         return new Promise(function(resolve, reject)
         {
@@ -18,10 +22,10 @@ module.exports=
             {
                 utils.getPostData(request).then(function (postData)
                 {
-                    Promise.all([require("../admin/newPost.js").main(postData),
-                        require("../admin/addCategory.js").main(postData),
-                        require("../admin/editPost.js").main(postData),
-                        require("./manageDownloads.js").main(postData)])
+                    Promise.all([require("./posts/newPost.js").main(postData),
+                        require("./category/addCategory.js").main(postData),
+                        require("./posts/editPost.js").main(postData),
+                        require("./downloads/manageDownloads.js").main(postData)])
                             .then(function(content)
                     {
                         resolve(content.join(''));
@@ -33,14 +37,13 @@ module.exports=
             }
             else
             {
-                //login page
-                console.log("login page");
-                require("../admin/login.js").main(request).then(function(html)
+                require("./login/login.js").main(request).then(function(html)
                 {
                     resolve(html);
                 }).catch(function(err)
                 {
                     console.log(err);
+                    reject(err);
                 })
             }
         });

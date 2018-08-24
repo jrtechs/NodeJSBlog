@@ -117,7 +117,6 @@ const sendEmail = function(name, email, message)
             console.log("Message sent: " + response);
         }
 
-        // if you don't want to use this transport object anymore, uncomment following line
         transporter.close(); // shut down the connection pool, no more messages
     });
 };
@@ -139,10 +138,14 @@ const processContactPage = function(request)
         {
             const data = qs.parse(postData);
 
-            if(data.name && data.email && data["g-recaptcha-response"] && data.message)
+            if(data.name &&
+                data.email &&
+                data["g-recaptcha-response"] &&
+                data.message)
             {
 
-                verifyCapcha(sanitizer.sanitize(data["g-recaptcha-response"])).then(function(valid)
+                verifyCapcha(sanitizer.sanitize(data["g-recaptcha-response"]))
+                    .then(function(valid)
                 {
                     if(valid)
                     {

@@ -433,14 +433,16 @@ module.exports=
      */
     editPost: function(postData)
     {
-        var url = postData.edit_name_new.split(" ").join("-").toLowerCase();
-        var q = "update posts ";
-        q+= "set category_id='" + postData.edit_cat_num + "' ";
-        q+= ",name='" + postData.edit_name_new + "' ";
-        q+= ",url='" + url + "' ";
-        q+= ",picture_url='" + postData.edit_pic + "' ";
-        q+= ",published='" + postData.edit_date + "' ";
-        q+= " where post_id='" + postData.edit_post_2 + "'";
+        const url = postData.edit_name_new.split(" ").join("-").toLowerCase();
+
+        const q = "update posts " +
+                    "set category_id='" + postData.edit_cat_num + "' " +
+                    ",name='" + postData.edit_name_new + "' " +
+                    ",url='" + url + "' " +
+                    ",picture_url='" + postData.edit_pic + "' " +
+                    ",published='" + postData.edit_date + "' " +
+                    " where post_id='" + postData.edit_post_2 + "'";
+
         return module.exports.insert(q);
     },
 
@@ -454,7 +456,8 @@ module.exports=
     {
         return new Promise(function(resolve, reject)
         {
-            var base = "http://jrtechs.net/";
+            const base = "http://jrtechs.net/";
+
             var sm = base + "\n";
             var promises = [];
             module.exports.getCategories().then(function(categories)
@@ -512,6 +515,7 @@ module.exports=
 
         const q = "insert into traffic_log (url, ip, date) values " +
             "('" + page + "', '" + ip + "', now())";
+
         module.exports.insert(q);
     }
 };

@@ -11,13 +11,13 @@
 const utils = require('../utils/utils.js');
 
 //name of header file
-const HEADER_FILE = "includes/header.html";
+const HEADER_FILE = "includes/html/header.html";
 
 //path of footer file
-const FOOTER_FILE = "includes/footer.html";
+const FOOTER_FILE = "includes/html/footer.html";
 
 //admin header path
-const ADMIN_HEADER = "includes/adminHeader.html";
+const ADMIN_HEADER = "includes/html/adminHeader.html";
 
 //used for hashing stuff for the header's e-tag for clients cache
 const crypto = require('crypto');

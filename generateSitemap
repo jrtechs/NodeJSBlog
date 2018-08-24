@@ -1,5 +1,0 @@
-#!/bin/bash
-#
-# 2/21/18 Jeffery Russell
-
-nodejs ./utils/generateSiteMap.js

@@ -1,4 +1,7 @@
+//DB query
 const sql = require('../utils/sql');
+
+//file IO
 const utils = require('../utils/utils.js');
 
 
@@ -8,9 +11,9 @@ const utils = require('../utils/utils.js');
  * @param resultURL
  * @returns {*}
  */
-var renderPosts = function(resultURL)
+const renderPosts = function(resultURL)
 {
-    var splitURL = resultURL.split("/");
+    const splitURL = resultURL.split("/");
     if(splitURL.length >= 3)
     {
         return new Promise(function(resolve, reject)

@@ -3,9 +3,9 @@
  including html files easier for me programming.
  */
 
+//used for file io
 const fs = require('fs');
 
-const Promise = require('promise');
 
 module.exports=
 {
@@ -52,6 +52,8 @@ module.exports=
 
 
     /**
+     * Returns all the contents of a file as a single line
+     * with no break lines.
      *
      * @param fileName
      * @return {*}
@@ -118,7 +120,7 @@ module.exports=
      */
     print404: function()
     {
-        return this.include("includes/404.html");
+        return this.include("includes/html/404.html");
     },
 
 
@@ -130,6 +132,6 @@ module.exports=
      */
     printWrongHost: function()
     {
-        return this.include("includes/incorrectHost.html");
+        return this.include("includes/html/incorrectHost.html");
     }
 };

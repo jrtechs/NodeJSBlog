@@ -69,7 +69,7 @@ app.use(function(request, result)
         //downloads
         else if(filename.includes("/downloads/"))
         {
-            require("./downloads/downloads.js").main(result, filename);
+            require("./includes/downloads.js").main(result, filename);
         }
         else if(filename.includes("/contact"))
         {

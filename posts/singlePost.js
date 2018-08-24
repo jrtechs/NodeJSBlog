@@ -1,14 +1,12 @@
 const utils = require('../utils/utils.js');
 
-const markdown = require( "markdown" ).markdown;
-
 const sql = require('../utils/sql');
 
-var Remarkable = require('remarkable');
-var hljs       = require('highlight.js');
+const Remarkable = require('remarkable');
+const hljs       = require('highlight.js');
 
-// Actual default values
-var md = new Remarkable(
+
+const md = new Remarkable(
 {
     html:         true,
     highlight: function (str, lang)
@@ -52,7 +50,7 @@ module.exports=
            //image
            if(!(post.picture_url === "n/a"))
            {
-               html +="<img src=\"/img/posts/" + post.picture_url +
+               html +="<img src=\"/blogContent/headerImages/" + post.picture_url +
                    "\" alt=\"\" style=\"width:100%; height:10%\">";
            }
 
@@ -70,11 +68,11 @@ module.exports=
            {
                sql.getCategory(post.category_id).then(function(category)
                {
-                   var pathName =  "entries/" + category[0].url + "/"
+                   var pathName =  "blogContent/posts/" + category[0].url + "/"
                        + post.url + ".md";
                    var markDown = utils.getFileContents(pathName).toString();
 
-                   markDown = markDown.split("(media/").join("(" + "../entries/"
+                   markDown = markDown.split("(media/").join("(" + "../blogContent/posts/"
                        + category[0].url + "/media/");
                    var htmlPost = md.render(markDown).split("<p>");
 
@@ -123,7 +121,7 @@ module.exports=
             //image
             if(!(post.picture_url === "n/a"))
             {
-                htmlHead +="<img src=\"/img/posts/" + post.picture_url +
+                htmlHead +="<img src=\"/blogContent/headerImages/" + post.picture_url +
                     "\" alt=\"\" style=\"width:100%; height:10%\">";
             }
 
@@ -140,10 +138,10 @@ module.exports=
             {
                 sql.getCategory(post.category_id).then(function(category)
                 {
-                    var pathName =  "entries/" + category[0].url + "/"
+                    const pathName =  "blogContent/posts/" + category[0].url + "/"
                         + post.url + ".md";
                     var markDown = utils.getFileContents(pathName).toString();
-                    markDown = markDown.split("(media/").join("(" + "../entries/"
+                    markDown = markDown.split("(media/").join("(" + "../blogContent/posts/"
                         + category[0].url + "/media/");
                     html += md.render(markDown);
 

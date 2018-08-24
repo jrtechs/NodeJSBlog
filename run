@@ -5,5 +5,5 @@
 # 2/13/18 Jeffery Russell
 
 while true
-do nodejs server.js
+do node server.js
 done

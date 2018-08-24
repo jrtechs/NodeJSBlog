@@ -162,9 +162,10 @@ server {
         proxy_cache_bypass $http_upgrade;
     }
 }
+```
 
-
-#admin.jrtechs.net.con
+```
+#admin.jrtechs.net.conf
 server {
     listen 80;
     server_name www.admin.jrtechs.net admin.jrtechs.net;

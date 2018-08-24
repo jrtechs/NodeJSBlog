@@ -3,19 +3,22 @@
  including html files easier for me programming.
  */
 
-const Promise = require('promise');
 
+//file IO
 const utils = require('../utils/utils.js');
 
+//DB query
 const sql = require('../utils/sql');
+
 
 module.exports=
     {
         /**
+         * Processes download url and sends download to user if it
+         * exists in the database.
          *
          * @param res
          * @param requestURL
-         * @param request
          * @returns {*|Promise}
          */
         main: function(res, requestURL)
@@ -32,7 +35,8 @@ module.exports=
                         console.log(result);
                         if(result.length == 1)
                         {
-                            const file = './downloads/content/' + result[0].file;
+                            const file = './blogContent/downloads/' +
+                                result[0].file;
                             res.download(file);
                         }
                         else

@@ -7,10 +7,10 @@
 
 
 //file IO
-const utils = require('../utils/utils.js');
+const utils = require('../../utils/utils.js');
 
 //updates db
-const sql = require('../utils/sql');
+const sql = require('../../utils/sql');
 
 //parses post data
 const qs = require('querystring');
@@ -109,7 +109,7 @@ const renderDownloadRow = function(download)
         "<td>" + download.name + "</td>" +
         "<td>" + download.file + "</td>" +
         "<td>" + download.download_count + "</td>" +
-        "<td><form action=\"/admin/\" method =\"post\" >\n" +
+        "<td><form action=\"/admin\" method =\"post\" >\n" +
             "    <input type=\"submit\" name=\"submit\" value=\"Delete\"\n" +
             "              class=\"btn btn-secondary\"/>\n" +
             "<input type='hidden' name='delete_download' value='" +

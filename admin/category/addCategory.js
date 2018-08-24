@@ -1,8 +1,11 @@
-const utils = require('../utils/utils.js');
-const sql = require('../utils/sql');
+//file io
+const utils = require('../../utils/utils.js');
 
+//update db
+const sql = require('../../utils/sql');
+
+//parse post data
 const qs = require('querystring');
-const Promise = require('promise');
 
 
 /**
@@ -52,11 +55,11 @@ const processPost = function(postData)
 {
     return new Promise(function(resolve, reject)
     {
-        var post = qs.parse(postData);
+        const post = qs.parse(postData);
         if(post.add_category)
         {
-            var url = post.add_category.split(" ").join("-").toLowerCase();
-            var q = "insert into categories (name, url) values " +
+            const url = post.add_category.split(" ").join("-").toLowerCase();
+            const q = "insert into categories (name, url) values " +
                 "('" + post.add_category + "','" + url + "')";
             if(sql.insert(q) != 0)
             {
@@ -78,12 +81,16 @@ module.exports=
     {
         return new Promise(function(resolve, reject)
         {
-            Promise.all([utils.include("./admin/addCategory.html"), printCategories(), processPost(postData)]).then(function(html)
+            Promise.all([utils.include("./admin/addCategory.html"),
+                printCategories(),
+                processPost(postData)]).then(function(html)
             {
-                resolve("<div class=\"col-md-6\">" + html.join('') + "</div></div>");
+                resolve("<div class=\"col-md-6\">" +
+                    html.join('') +
+                    "</div></div>");
             }).catch(function(error)
             {
-                console.log("error in cat.js");
+                console.log("error in addCategory.js");
                 reject(error);
             })
         });

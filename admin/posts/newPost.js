@@ -1,5 +1,5 @@
-const utils = require('../utils/utils.js');
-const sql = require('../utils/sql');
+const utils = require('../../utils/utils.js');
+const sql = require('../../utils/sql');
 
 const qs = require('querystring');
 const Promise = require('promise');
@@ -28,7 +28,7 @@ const processPost = function(postData)
                 "', '" + post.add_post_date + "', '" + post.add_post_name + "', '" + urls + "')";
             sql.insert(q).then(function()
             {
-                var map = require('../utils/generateSiteMap');
+                var map = require('../../utils/generateSiteMap');
                 map.main();
                 resolve("");
             }).catch(function(error)

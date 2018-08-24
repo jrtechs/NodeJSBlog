@@ -1,4 +1,7 @@
+//file io
 const utils = require('../utils/utils.js');
+
+//DB queries
 const sql = require('../utils/sql');
 
 
@@ -14,7 +17,7 @@ const renderPost = function(requestURL)
 {
     return new Promise(function(resolve, reject)
     {
-        var splitURL = requestURL.split("/");
+        const splitURL = requestURL.split("/");
 
         //user entered /category/name/ or /category/name
         if(splitURL.length == 3 || splitURL.length == 4)
