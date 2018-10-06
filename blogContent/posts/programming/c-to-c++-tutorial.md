@@ -4,7 +4,7 @@ enable people to use this as a quick reference to quickly jump into C++. This po
 that you have prior knowledge of both C and object oriented-programming concepts. Each topic
 is quickly covered in a code snippet and some additional explanation is provided if necessary. 
 
-## Input/Output
+# Input/Output
 
 Input and output in C++ is easy, you use "cout" and "cin". When printing with
 "cout", you separate what your printing with "<<"; "endl" prints a new line.
@@ -39,7 +39,7 @@ g++ helloWorld.cpp -o hello
 ```
 
 
-## Namespaces
+# Namespaces
 
 Name spaces are used to enable you to have multiple functions/methods called the
 same thing and not conflict with one another. You use "namespacename::function/variable"
@@ -90,7 +90,7 @@ int main()
 ```
 
 
-## Global Variable
+# Global Variable
 
 Global variables are similar to C, however, you can now reference a global members with the "::"
 accessor.
@@ -112,7 +112,7 @@ int main ()
 }
 ```
 
-## Multiple Names for a Variable/Aliasing
+# Multiple Names for a Variable/Aliasing
 
 This is NOT simply a pointer. In the following example pi, and x now are treated as
 the same exact variable. You cannot later change the pointer destination for x.
@@ -128,7 +128,7 @@ cout << "pi: " << pi << " x: " << x << endl; // prints pi: 2.1 x: 2.1
 ```
 
 
-## Passing Variables by Reference
+# Passing Variables by Reference
 
 In C, everything was passed by value; C++ allows us to pass variables by reference. This is very powerful, in
 languages like Java, only Objects are passed by reference. C++ lets you decide exactly
@@ -178,7 +178,7 @@ int main()
 ```
 
 
-## Functions Returning Variables References
+# Functions Returning Variables References
 
 A function can return a value reference which can be treated as a variable. In the following example, a function
 returns the reference to the variable which is the smallest.
@@ -211,7 +211,7 @@ int main ()
 ```
 
 
-## Inline
+# Inline
 
 Inline can be used to replace a function which contains very simple logic -- no
 for loops, etc. Like a macro, this will be inserted everywhere the code is used; a
@@ -237,7 +237,7 @@ int main()
 }
 ```
 
-## Exceptions
+# Exceptions
 
 Exceptions might help you stop segmentation faulting. The important thing to notice 
 is that you can throw about any type in a try block.
@@ -263,7 +263,7 @@ catch(int result)
 ```
 
 
-## Default Parameters for Functions
+# Default Parameters for Functions
 
 This is exactly like default parameters in Python. If a function is called without
 the parameter, it is assumed to be that value.
@@ -284,7 +284,7 @@ int main()
 ```
 
 
-## Function Overloading
+# Function Overloading
 
 Like Java and Python, you can overload methods in C++. Not only can you overload the
 methods, but, the return type of the methods which are overloaded don't have to match.
@@ -315,7 +315,7 @@ int main()
 ```
 
 
-## Operator Overloading
+# Operator Overloading
 
 You can redefine basic operators like (+,/,-,<<,>>, +=) for certain data types by using
 operator overloading. 
@@ -367,7 +367,7 @@ int main ()
 }
 ```
 
-## Functions with Generic Parameter Types
+# Functions with Generic Parameter Types
 
 In C++ you can use a template class to create a method which has generic
  return and parameter types.
@@ -400,7 +400,7 @@ type1 maximum (type1 a, type2 b)
 ```
 
 
-## Replacement for malloc and free
+# Replacement for malloc and free
 
 Malloc and free still exists in C++, however, people typically
 use "new" and "delete" instead because it is cleaner.
@@ -416,7 +416,7 @@ delete i;
 ```
 
 
-## Struct Functions
+# Struct Functions
 
 You can now add functions to structs.
 
@@ -655,7 +655,7 @@ int Cat::fly()
 }
 ```
 
-## Strings
+# Strings
 
 Since C++ has classes, you can work with strings in a pleasant way. 
 
@@ -806,7 +806,7 @@ int main()
 }
 ```
 
-## Resources
+# Resources
 
 You now know enough C++ to start programming with it. If you want to take your
 skills to the next level, I would recommend start working on a few projects in C++ and get
