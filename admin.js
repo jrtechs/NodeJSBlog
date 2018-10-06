@@ -67,7 +67,7 @@ app.use(function(request, result)
             const file = "./admin/admin.js";
 
             Promise.all([includes.printAdminHeader(),
-                require(file).main(filename, request),
+                require(file).main(request),
                 includes.printFooter()]).then(function(content)
             {
                 result.write(content.join(''));

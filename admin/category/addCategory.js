@@ -81,7 +81,7 @@ module.exports=
     {
         return new Promise(function(resolve, reject)
         {
-            Promise.all([utils.include("./admin/addCategory.html"),
+            Promise.all([utils.include("./admin/category/addCategory.html"),
                 printCategories(),
                 processPost(postData)]).then(function(html)
             {

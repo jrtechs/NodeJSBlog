@@ -5,6 +5,8 @@ const sql = require('../utils/sql');
 const Remarkable = require('remarkable');
 const hljs       = require('highlight.js');
 
+const pandoc = require('../utils/markdownToHTML.js');
+
 
 const md = new Remarkable(
 {
@@ -143,13 +145,22 @@ module.exports=
                     var markDown = utils.getFileContents(pathName).toString();
                     markDown = markDown.split("(media/").join("(" + "../blogContent/posts/"
                         + category[0].url + "/media/");
-                    html += md.render(markDown);
+                    //html += md.render(markDown);
 
-                    html = html.split("<img").join("<img style=\"max-width: 100%;\" ");
-                    html = html.split("<code>").join("<code class='hljs cpp'>");
-                    html += "</div></div></div><br><br>";
+                    pandoc.convertToHTML(markDown).then(function(result)
+                    {
+                        html +=result;
 
-                    resolve(htmlHead + html);
+                        html = html.split("<img").join("<img style=\"max-width: 100%;\" ");
+                        html = html.split("<code>").join("<code class='hljs cpp'>");
+                        html += "</div></div></div><br><br>";
+
+                        resolve(htmlHead + html);
+                    }).catch(function(error)
+                    {
+                        reject(error);
+                    })
+
                 });
             }
             catch(ex)
