@@ -7,8 +7,8 @@ highlighting which makes the code easier to read and error highlighting which
 makes finding that missing semi colon easier. Here is a list of three IDEs that
 work well for me.
 
-NetBeans
---------
+# NetBeans
+
 
 NetBeans is the most productive IDE for large java projects. NetBeans is great
 at detecting errors in your code. You can also have multiple projects open in
@@ -19,8 +19,8 @@ JavaScript and C/C++.
 
 ![NetBeans IDE](media/2a20326e77c3f67aa3753401ba4bc612.png)
 
-Eclipse
--------
+# Eclipse
+
 
 Eclipse is a very popular programming IDE; however, it is harder to use than
 NetBeans. The largest benefit of Eclipse is that it has tons of templates for
@@ -28,8 +28,8 @@ you to use. Eclipse also has a better GUI creation tool than NetBeans has.
 
 ![Eclipse](media/f5cb2682e219549cb07acd1d01c2ccb1.png)
 
-JCreator
---------
+# JCreator
+
 
 I want to warn you that this is a old IDE. You hate yourself if you decide to
 use this program. The only reason I am putting this on my list is because I
@@ -43,8 +43,8 @@ Science students who have to memorize/learn what certain errors mean.
 
 ![JCreator](media/c1e712bdead908ebd72921ec2d1cbd5e.png)
 
-Intellij
---------
+# Intellij
+
 
 \*Update 2018
 
