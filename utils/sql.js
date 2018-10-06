@@ -268,16 +268,16 @@ module.exports=
 
             if(post.username && post.password)
             {
-                var cleanName = sanitizer.sanitize(post.username);
-                var cleanPassword = sanitizer.sanitize(post.password);
+                const cleanName = sanitizer.sanitize(post.username);
+                const cleanPassword = sanitizer.sanitize(post.password);
 
-                var getSalt = "select * from users where user_name='" +
+                const getSalt = "select * from users where user_name='" +
                     cleanName + "'";
                 fetch(getSalt).then(function(saltResult)
                 {
                     if(saltResult.length == 1)
                     {
-                        var hashedPassword = crypto.createHash('sha256')
+                        const hashedPassword = crypto.createHash('sha256')
                             .update(cleanPassword + saltResult[0].salt)
                             .digest('hex');
                         if(saltResult[0].password === hashedPassword)

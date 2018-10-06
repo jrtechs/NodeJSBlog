@@ -22,6 +22,7 @@ const processLogin = function(request)
             return sql.checkLogin(postData);
         }).then(function(loginResult)
         {
+
             if(loginResult.pass)
             {
                 request.session.user = loginResult.user;
@@ -30,7 +31,8 @@ const processLogin = function(request)
             }
             else
             {
-                resolve("");
+                console.log("password incorrect");
+                resolve("Password incorrect");
             }
         }).catch(function(err)
         {
@@ -52,7 +54,7 @@ module.exports=
         {
             return new Promise(function(resolve, reject)
             {
-                Promise.all([utils.include('./admin/login.html'),
+                Promise.all([utils.include("./admin/login/login.html"),
                     require("../../sidebar/sidebar.js").main(),
                     processLogin(request)]).then(function(html)
                 {

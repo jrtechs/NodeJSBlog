@@ -57,7 +57,7 @@ const addDownload = function(postData)
     return new Promise(function(resolve, reject)
     {
         Promise.all([addDownloadPostData(postData),
-            utils.include("./admin/addDownload.html")]).then(function(html)
+            utils.include("./admin/downloads/addDownload.html")]).then(function(html)
         {
             resolve("<div class=\"col-md-6\">" + html.join('') + "</div>");
         }).catch(function(error)

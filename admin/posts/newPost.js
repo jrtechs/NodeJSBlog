@@ -55,7 +55,7 @@ module.exports=
         {
             return new Promise(function(resolve, reject)
             {
-                Promise.all([utils.include("./admin/newPost.html"), processPost(postData)]).then(function(html)
+                Promise.all([utils.include("./admin/posts/newPost.html"), processPost(postData)]).then(function(html)
                 {
                     resolve(html.join(''));
                 }).catch(function(error)

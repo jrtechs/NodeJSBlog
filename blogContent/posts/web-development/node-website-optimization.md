@@ -5,7 +5,7 @@ done automatically. If you like to build stuff from scratch like me, there is a
 ton of work required to optimize a website. This post will cover the 8 things that 
 I did to decrease the load time of this blog written in node by two seconds.
 
-#### Final Results
+# Final Results
 
 ![Final Website Speed Test](media/websiteOptimization/finalResults.png)
  
@@ -17,8 +17,8 @@ waterfall for my home page, most of the time is a result of the youtube embedded
 videos loading. 
 
 
-1: Optimize Images
-------------------
+# Optimize Images
+
 
 Since images are the largest portion of a website's size, optimizing and
 reducing the size of images will decrease load time. In a perfect web
@@ -72,8 +72,8 @@ The goal of this script is to make most of the images under 100kb for the web.
 It is ok to have a few images above 100kb; however, you should really avoid
 having images above 200kb.
 
-2: Take advantage of Async calls
---------------------------------
+# Take advantage of Async calls
+
 
 One of the largest benefits of Node is its Async abilities: code is
 executed in a multi-threaded fashion. This can become a "callback hell" if not
@@ -152,8 +152,8 @@ main: function(requestURL)
 }
 ```
 
-3: Client-Side Caching
-----------------------
+# Client-Side Caching
+
 
 Client-side caching is where the client's web browser stores static content they
 download from your website. For example, if a client caches a CSS style sheet,
@@ -175,7 +175,7 @@ fast and I'm not worried about hash collisions for this application.
 You can do this in NGINX if you use it to serve static files, but, you can also
 do it directly in Node.
 
-#### Caching CSS
+## Caching CSS
 
 ```javascript
 var eTag = crypto.createHash('md5').update(content).digest('hex');
@@ -186,7 +186,7 @@ result.write(content);
 result.end();
 ```
 
-#### Caching Images
+## Caching Images
 
 ```javascript
 var eTag = crypto.createHash('md5').update(content).digest('hex');
@@ -197,15 +197,15 @@ result.write(content);
 result.end();
 ```
 
-4: Server-Side Caching
-----------------------
+# Server-Side Caching
+
 
 Even with the best async server, there are still ways to improve performance. If
 you cache all the static pages that you generate in a HashMap, you can quickly
 access it for the next web user without ever having to query the database or
 do file IO.
 
-#### Ex:
+## Ex:
 
 ```javascript
 const cache = require('memory-cache');
@@ -247,8 +247,8 @@ server's cache.
 
 ![Server Cache Example](media/websiteOptimization/serverCache.png)
 
-5: Enable Compression
----------------------
+# Enable Compression
+
 
 Compressing content before it is transferred over the internet can significantly
 decrease the loading time of your website. The only trade off from this approach
@@ -258,7 +258,7 @@ performance gains. Using Gzip on CSS and HTML can reduce the size by 60-70%.
 If you are running an NGINX server, you can enable Gzip there. There is also a
 simple node module which will use Gzip compression on an Express app.
 
-#### Gzip on Express App
+## Gzip on Express App
 
 ```bash
 npm install compression
@@ -269,8 +269,8 @@ var compression = require('compression')
 app.use(compression());
 ```
 
-6: Remove Unused CSS Definitions
---------------------------------
+# Remove Unused CSS Definitions
+
 
 If you use a CSS library like Bootstrap or W3-CSS, you will have a ton of css
 classes which go unused. The standard BootStrap CSS file is around 210kb. After
@@ -316,8 +316,8 @@ You don't have to use this through the command line, you can run this directly
 in your node app to make it automated. Check out their
 [documentation](https://www.purgecss.com/) to learn more.
 
-7: Minify CSS and Javascript
-----------------------------
+# Minify CSS and Javascript
+
 
 This is the easiest thing you can do to reduce the size of your website. You
 just run your CSS and JavaScript through a program which strips out all
@@ -332,8 +332,8 @@ Ex of Minified CSS:
 There are Node libraries which can minify CSS and Javascript, however, if you
 are lazy, just use a website like [this](https://cssminifier.com/).
 
-8: Keep Minimal JavaScript
---------------------------
+# Keep Minimal JavaScript
+
 
 Ignoring the gross amount of Node dependencies you have, it is critical to
 minimize the amount of dependencies the client needs. I completely removed
@@ -364,8 +364,8 @@ most cases people don't full take advantage of Google Analytics, a simple
 backend analytics service would work just as good while saving the client load
 time.
 
-Resources
----------
+# Resources
+
 
 -   [Pingdom Speed Test](https://tools.pingdom.com/)
 
