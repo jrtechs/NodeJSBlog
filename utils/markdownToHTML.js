@@ -19,7 +19,6 @@ module.exports=
                     }
                     resolve(result);
                 };
-                console.log(markdownContents);
                 pandoc(markdownContents, args, callback);
             });
         },
