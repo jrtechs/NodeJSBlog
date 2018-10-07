@@ -1,5 +1,4 @@
-const postGenerator = require('../utils/markdownToHTML.js');
-
+const postGenerator = require('../utils/renderBlogPost.js');
 
 
 module.exports=
