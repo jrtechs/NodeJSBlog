@@ -3,11 +3,11 @@ know what the fibonacci sequence is and how to calculate it.
 For those who don't know: [Fibonacci](https://en.wikipedia.org/wiki/Fibonacci)
 is a sequence of numbers starting with 0,1 whose next number is the sum
 of the two previous numbers. After having multiple of my CS classes
-gave lectures and multiple homework on the Fibonacci sequence; I decided
-that it would be a great idea to write a blog post going over
+give lectures and homeworks on the Fibonacci sequence; I decided
+ to write a blog post going over
 the 4 main ways of calculating the nth term of the Fibonacci sequence.
-In addition to providing python code for calculating the nth perm of the sequence, a proof for their validity
-and analysis of their time complexities both mathematically and empirically will
+In addition to providing the python code for calculating the nth perm of the sequence, a proof for their validity
+and an analysis of their time complexities both mathematically and empirically will
 be examined.
 
 # Slow Recursive Definition
@@ -25,28 +25,26 @@ def fib(n):
 ##Time Complexity
 
 Observing that each call has two recursive calls we can place an upper bound on this 
-function as $O(2^n)$. However, if we solve this recurrence we can compute the exact value
-and place a tight bound for time complexity.
+function as $O(2^n)$. However, if we solve this recurrence we can place a tight bound for time complexity.
 
 We can write a recurrence for the number of times fib is called:
 
 $$
-    F(0) = 0\\
     F(1) = 1\\
     F(n) = F(n-1) + F(n-2)\\
 $$
 
-Next we replace each instance of F(n) with $a^n$ since we want to solve for the roots since that
-will allow us to put a tight asymptotic limit on the growth.
+Next, we replace F(n) with $a^n$ since we want to find rate of exponential growth.
 
 $$
     a^n = a^{n-1} + a^{n-2}\\
     \frac{a^n}{a^{n-2}} = \frac{a^{n-1} + a^{n-2}}{a^{n-2}}\\
     a^2 = a + 1\\
-    a = \frac{1 + sqrt(5)}{2}\\
+    a = \frac{1 \pm sqrt(5)}{2}\\
 $$
 
-From this calculation we can conclude that F(n) $\in \Theta 1.681^n$
+From this calculation we can conclude that F(n) $\in \Theta 1.681^n$. We don't have to worry about 
+the negative root since it would not be asymptotically relevant by the definition of $\Theta$. 
 
 
 
@@ -57,14 +55,13 @@ Here is a graph of the actual performance that I observed from this recursive de
 ![Recursive Definition](media/fibonacci/RecursiveDefinition.png)
 
 
-
-
 # Accumulation Solution
 
 The problem with the previous recursive solution is that you had to recalculate certain 
 terms of fibonacci a ton of times. A summation variable would help us avoid this problem.
-You could write this using a simple loop, however, it is still possible to do this with
-recursion.
+You could write this solution using a simple loop or dynamic programming
+, however, I chose to use recursion to demonstrate that it's recursion which made the first
+problem slow. 
 
 
 ```Python
@@ -80,9 +77,11 @@ def fibIterative(n):
     return fibHelper(n, 0, 1)
 ```
 
-In this code example fibHelper is a method which accumulates the previous two terms. 
+In this code example, fibHelper is a method which accumulates the previous two terms. 
 The fibIterative is a wrapper method which sets the two initial terms equal to 0 and 1 
-representing the fibonacci sequence.
+representing the fibonacci sequence. At first it may not be obvious that fibIterative(n)
+is equivalent to fib(n). To demonstrate that these two are in fact equivalent, I broke this 
+into two inductive proofs. 
 
 ## Proof for Fib Helper
 **Lemma:** For any n $\epsilon$ N if n $>$ 1 then 
@@ -90,7 +89,7 @@ representing the fibonacci sequence.
            
 **Proof via Induction**
 
-Base Case: n = 2:
+**Base Case**: n = 2:
 $$
     LHS = fibHelper(2, a, b)\\
     = fibHelper(1, b, a + b) = a + b\\ 
@@ -98,7 +97,7 @@ $$
     = a + b\\
 $$
 
-Inductive Step:
+**Inductive Step:**
 
 Assume proposition is true for all n and show n+1 follows.
 
@@ -118,19 +117,19 @@ $\Box$
            
 **Proof via Strong Induction**
 
-Base Case: n = 0:
+**Base Case**: n = 0:
 $$
     fibIterative(0, 0, 0) = 0\\
     = fib(0)
 $$
 
-Base Case: n = 1:
+**Base Case**: n = 1:
 $$
     fibIterative(1, 0, 0) = 1\\
     = fib(1)
 $$
 
-Inductive Step:
+**Inductive Step:**
 
 Assume proposition is true for all n and show n+1 follows.
 
@@ -145,9 +144,9 @@ $\Box$
 
 ## Time Complexity
 
-Suppose that we wish to solve for time complexity in terms of the number of additions needed to be
-computed. By observing the algorithm for fibHelper we can see that we perform one addition every time
-which we have a recursive call. We can now form a recurrence for time complexity and solve for it. 
+Suppose that we wish to solve for the time complexity in terms of the number of additions needed to be
+computed. Based on fibHelper we can see that it performs one addition every recursive call. 
+We can now form a recurrence for time complexity. 
 
 $$
     T(0) = 0\\
@@ -169,8 +168,8 @@ Fibonacci.
 
 # Matrix Solution
 
-We can actually get better than linear time for performance while calculating 
-the Fibonacci sequence recursively using this fact:
+We can actually get better than linear for performance for Fibonacci while still using
+recursion. However, to do so we need to know this fact:
 
 $$  
 \begin{bmatrix}
@@ -183,10 +182,11 @@ F_n & F{n-1}
 \end{bmatrix}^n
 $$
 
-Without any other tricks, raising a matrix to a power n times would not get
+Without any tricks, raising a matrix to a power n times would not get
 us better than linear performance. However, if we use the [Exponentiation by Squaring](https://en.wikipedia.org/wiki/Exponentiation_by_squaring)
 method, we can expect to see logarithmic time. Since two spots in the matrix are always equal,
-I represented the matrix as an array with only three elements. 
+I represented the matrix as an array with only three elements to reduce the space and 
+computations required. 
 
 
 ```Python
@@ -216,9 +216,9 @@ def fibPower(n):
 
 ## Time Complexity
 
-For this algorythem lets solve for the time complexity as the number of additions and multiplications.
+For this algorithm, lets solve for the time complexity as the number of additions and multiplications required.
 
-Since we are always multiplying two 2x2 matrices, that is constant time.
+Since we are always multiplying two 2x2 matrices, that operation is constant time.
 
 $$
     T_{multiply} = 9
@@ -246,10 +246,13 @@ $$
     T_{fibPower}(n) = T_{power}(n)\\
 $$
 
+Now we can state that $fibPower(n) \in \Theta(log(n))$.
 
 
 
 ## Inductive Proof for Matrix Method
+
+I would like to now prove that this matrix identity is valid since it is not at first obvious.
 
 **Lemma:** For any n $\epsilon$ N if n $>$ 0 then 
            $$  
@@ -314,20 +317,20 @@ $\Box$
 
 ![FibPower Performance](media/fibonacci/FibPower.png)
 
-As expected by our mathmatical calcuations, the algorthem appears to be running in
+As expected by our mathematical calculations, the algorithm appears to be running in
 logarithmic time. 
 
 ## Measured Performance With Large Numbers
 
 ![FibPower Performance](media/fibonacci/FibPowerBigPicture.png)
 
-When calculating the fibonacci term for extremely large numbers dispite having a polynomial
-time complexity, the space required to compute Fibonacci grows exponentially. Since our
+When calculating the fibonacci term for extremely large numbers despite having a polynomial
+time complexity, the space required to compute each Fibonacci term grows exponentially. Since our
 performance is only pseudo-polynomial we see a degrade in our performance when calculating 
 large terms of the fibonacci sequence.
 
 The one amazing thing to point out here is that despite calculating the 10,000 term of Fibonacci,
-this algorithm is nearly 400 times faster than the recursive algorithm when it was calculating 
+this algorithm is nearly 400 times faster than the recursive algorithm when calculating 
 the 30th term of Fibonacci.
 
 
@@ -346,10 +349,10 @@ def fibClosedFormula(n):
     return (p-v)/math.sqrt(5)
 ```
 
-## Derivation of Formula
+## Derivation of Binet's Formula
 
-Similar to when we were calculating for the time complexity, we want to start by finding the
-two roots of the equation.
+Similar to when we were calculating the time complexity of the basic recursive definition
+, we want to start by finding the two roots of the equation in terms of exponents.
 
 $$
     a^n = a^{n-1} + a^{n-2}\\
@@ -384,7 +387,6 @@ $$
 $$
 
 ## Time Complexity
-
 
 Since we managed to find the closed form of the fibonacci sequence we can expect to see constant performance.
 
