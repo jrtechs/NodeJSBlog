@@ -22,6 +22,7 @@ module.exports=
             {
                 utils.getPostData(request).then(function (postData)
                 {
+                    console.log(postData);
                     Promise.all([require("./posts/newPost.js").main(postData),
                         require("./category/addCategory.js").main(postData),
                         require("./posts/editPost.js").main(postData),

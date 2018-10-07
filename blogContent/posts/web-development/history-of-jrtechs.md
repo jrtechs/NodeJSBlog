@@ -1,5 +1,4 @@
-Original Site
--------------
+# Original Site
 
 Jrtechs initially started as a static HTML site that I created early 2014 to
 build my HTML skills. I initially chose the name Jrtech, but that name was taken
@@ -13,21 +12,19 @@ was working on.
 
 ![Original edgy site](media/fbd5a1128549b4feb5bafe3595ac1989.png)
 
-Move to WordPress
------------------
+# Move to WordPress
 
 In 2015 I moved my website to the cloud and started a WordPress site. The
 website was focused on turorial like blog posts.
 
 ![Initial wordpress theme](media/4fcc3a9fe52f7b2e8bc1bfb164846073.png)
 
-New Theme
----------
+# New Theme
 
 ![Second wordpress theme](media/55ad5b49fe28c6374968b0f8a5b3e48b.png)
 
-Rebirth in Nodejs
------------------
+# Rebirth in Nodejs
+
 
 If you want to read about why I created a new content management system and left
 WordPress read

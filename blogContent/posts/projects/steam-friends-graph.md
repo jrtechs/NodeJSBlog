@@ -1,11 +1,11 @@
 <iframe width="100%" height="315" src="https://www.youtube.com/embed/DoDaHmyIPvQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
-### Links
+# Links
 
 - [GitHub](https://github.com/jrtechs/SteamFriendsGraph)
 - [Live Site](http://steam.jrtechs.net/)
 
-### Project Description
+# Project Description
 
 This project utilizes the steam API and graph databases to create friend graphs for clients in a 
 web browser. Currently there are two types of graphs available:
@@ -15,7 +15,7 @@ web browser. Currently there are two types of graphs available:
      This graph will only display your friends; however, it will draw edges between your friends’ if 
      they are friends with each other. 
 
-### Motivation
+# Motivation
 
 While learning about graph databases I thought that it would be awesome to create a massive graph
 database with steam friends in it. After a quick google search, I realized that some other people have 
@@ -29,7 +29,7 @@ in the future.
 
 ![Lucid chart diagram](media/steam/diagram.png)
 
-### Technical Details
+# Technical Details
 
 At the core of this project there is a java backend and a JavaScript frontend. I needed a backend for
 this project because you cannot distribute your steam API key, plus, this allows me to cache everything
@@ -47,7 +47,7 @@ start applying a force to shake the graph until all the nodes are added to the g
 
 ![Steam friends graph](media/steam/jrtechs1.png)
 
- ### Uses of Friends Graph Data Base
+# Uses of Friends Graph Data Base
  
 There are tons of [academic papers](http://infolab.stanford.edu/~ullman/mmds/ch10.pdf) 
 written on the usages of friends’ graphs. What you may be able to do with friends 
@@ -67,7 +67,7 @@ already does this to a certain extent when they recommend you games that are pop
 
 ![Steam friends graph](media/steam/ben2.png)
 
-### Hosting the Project
+# Hosting the Project
 
 Hosting the front end of this project is easy, it is just thrown on an apache server. The backend
 is trickier since it needs to run both a java app and a gremlin server. Currently I am hosting this
@@ -76,7 +76,7 @@ loads it uses around 2 GB of ram and saturates my CPU.
 
 ![Steam friends graph](media/steam/jrtechs2.png)
 
-### Future Plans for the Project
+# Future Plans for the Project
 
 In the future I would love to add more graphs to this website. Instead of just displaying graphs it would
 also be cool to create pages which tries to identify friends’ groups, people you may know, and best

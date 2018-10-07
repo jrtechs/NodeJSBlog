@@ -110,6 +110,9 @@ npm install memory-cache --save
 npm install request
 npm install nodemailer
 npm install nodemailer-smtp-transport
+
+
+npm install node-pandoc
 ```
 
 

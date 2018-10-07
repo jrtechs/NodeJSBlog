@@ -1,4 +1,4 @@
-## What is Gremlin?
+# What is Gremlin?
 
 Gremlin is a graph traversal language: think of Gremlin as the SQL for graph databases. Gremlin is not
 a graph database server, it is a language; but, there is a Gremlin Server and a Gremlin Console available for 
@@ -7,7 +7,7 @@ like [Titan](https://www.digitalocean.com/community/tutorials/how-to-set-up-the-
  and [HBase](https://docs.janusgraph.org/latest/hbase.html). 
 
 
-## Graph Data Base Basics
+# Graph Data Base Basics
 
 A graph database is based on graph theory. A graph is composed of nodes, edges, and properties. A key
 object/component in a graph database is stored as a node. Nodes are connected via edges representing
@@ -54,11 +54,11 @@ gremlin> g = graph.traversal().withRemote(DriverRemoteConnection.using(cluster, 
 ```
 
 
-## Gremlin Syntax
+# Gremlin Syntax
 
 Now that you have your gremlin server and console set up, you are ready to start executing Gremlin queries.
 
-### Adding a Vertex
+## Adding a Vertex
 
 In Gremlin nodes are referred to as "Vertexes". To add a node/vertex to the graph, you simply use the 
 command addV() on your graph traversal source. For consistency, most people
@@ -70,7 +70,7 @@ EX:
 g.addV('student').property('name', 'Jeffery').property('GPA', 4.0);
 ```
 
-### Updating a Property
+## Updating a Property
 
 Unlike SQL, you are not limited to a specific schema in a graph database. If you want to add or change 
 a property on a vertex or edge, you simply use the property command again.
@@ -81,7 +81,7 @@ You can replace "g.V(1)" with a command to select a specific vertex or edge.
 g.V(1).property('name', 'Jeffery R');
 ```
 
-### Selection
+## Selection
 
 Selecting nodes and edges is the most complicated part of Gremlin. The concept is not particularly hard, but, there
 are dozens of ways to do graph traversals and selections. I will cover the most common aways to traverse a graph.
@@ -111,7 +111,7 @@ g.V().hasLabel('student').order().by('gpa', decr).value('name')
 ```
 
 
-### Adding Edges
+## Adding Edges
 
 The easiest way (my opinion) to add edges in Gremlin is by
 using aliasing. In this example we select two nodes and assign them a name: in this case it is "a", and "b".
@@ -124,14 +124,14 @@ g.V(0).as('a').V(1).as('b').addE('knows')
 ```
 
 
-## Using Gremlin with Java
+# Using Gremlin with Java
 
 Now that you know the basic syntax of Gremlin, you are ready to use it somewhere other than the Gremlin console. If you
 are trying to use Gremlin with Java, there is a great Maven dependency for TinkerPop and Gremlin. If you want to quickly 
 connect to your Gremlin server with Java, make sure your server is set up exactly as it was before this tutorial started discussing
 Gremlin syntax. 
 
-#### Maven dependency for Java:
+## Maven dependency for Java:
 ```html
 <!-- https://mvnrepository.com/artifact/com.tinkerpop/gremlin-core -->
 <dependency>
@@ -187,7 +187,7 @@ public class GraphConnection
 }
 ```
 
-#### Basic GraphConnection.java Usage:
+## Basic GraphConnection.java Usage:
 ```java
 RemoteConnection con = new RemoteConnection()
 String query = "g.V().hasLabel('player')" +
@@ -201,7 +201,7 @@ String query = "g.V().hasLabel('player')" +
 this.con.queryGraph(query);
 ```
 
-#### Overly complex usage with a lambda statement
+## Overly complex usage with a lambda statement
 ```java
 /**
  * Fetches the list of a player's friends.
@@ -255,7 +255,7 @@ I highly suggest that you look at the tutorial [SQL 2 Gremlin](http://sql2gremli
 If you plan on deploying this to production, it is recommended that you use HBase for a persistent back end storage
 server.
 
-## Resources
+# Resources
 
 - [SQL 2 Gremlin](http://sql2gremlin.com/)
 - [Practical Gremlin](http://kelvinlawrence.net/book/Gremlin-Graph-Guide.html)
