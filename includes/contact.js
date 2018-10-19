@@ -149,19 +149,19 @@ const processContactPage = function(request)
                 {
                     if(valid)
                     {
-                        resolve(utils.include("includes/messageSent.html"));
+                        resolve(utils.include("includes/html/messageSent.html"));
 
                         sendEmail(data.name, data.email, data.message);
                     }
                     else
                     {
-                        resolve(utils.include("includes/invalidCaptcha.html"));
+                        resolve(utils.include("includes/html/invalidCaptcha.html"));
                     }
                 });
             }
             else
             {
-                resolve(utils.include("includes/contact.html"));
+                resolve(utils.include("includes/html/contact.html"));
             }
 
         }).catch(function(err)
@@ -185,6 +185,7 @@ module.exports =
          */
         main: function(request, result)
         {
+            console.log("fuck me");
             result.writeHead(200, {'Content-Type': 'text/html'});
             Promise.all([includes.printAdminHeader(),
                 processContactPage(request),
