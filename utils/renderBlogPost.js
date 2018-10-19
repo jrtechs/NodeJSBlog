@@ -90,6 +90,9 @@ module.exports=
 
                         result = result.split("<figcaption>").join("<figcaption style=\"visibility: hidden;\">");
 
+                        //this line prevents older versions of pandoc from including invalid cdm scripts
+                        result = result.split("<script src=\"https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML-full\" type=\"text/javascript\"></script>").join("");
+
                         if(blocks == -1)
                             resolve(result);
 
@@ -100,7 +103,7 @@ module.exports=
                             html += "<p>" + htmlBlocks[i];
                         }
 
-                        html += "      <div class=\"\">\n" +
+                        html += "      <div style=\"\">\n" +
                             "          <p class='text-center'><button class=\"btn btn-secondary btn-lg " +
                             "w3-padding-large w3-white w3-border\"  onclick=\"location.href='" +
                             "http://jrtechs.net/" + category[0].url + "/" + post.url +

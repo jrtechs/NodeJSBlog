@@ -185,7 +185,6 @@ module.exports =
          */
         main: function(request, result)
         {
-            console.log("fuck me");
             result.writeHead(200, {'Content-Type': 'text/html'});
             Promise.all([includes.printAdminHeader(),
                 processContactPage(request),
