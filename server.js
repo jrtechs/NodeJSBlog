@@ -49,8 +49,14 @@ app.use(function(request, result)
     {
         const filename = url.parse(request.url, true).pathname;
 
+
+        if (filename.includes("/steam/"))
+        {
+            require("./includes/projects.js").main(request, result);
+        }
+
         //handles image requests
-        if(filename.includes("/img/") || filename.includes(".jpg") ||
+        else if(filename.includes("/img/") || filename.includes(".jpg") ||
             filename.includes(".png") || filename.includes(".ico"))
         {
             includes.sendImage(result, filename, cache);
