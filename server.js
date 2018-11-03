@@ -37,6 +37,7 @@ map.main();
 //port for the server to run on
 const port = 8000;
 
+const projects = ["/steam/"];
 
 /**
  * Parses the request url and calls correct JS files
@@ -49,15 +50,26 @@ app.use(function(request, result)
     {
         const filename = url.parse(request.url, true).pathname;
 
-
-        if (filename.includes("/steam/"))
+        var project = false;
+        projects.forEach(function(projectName)
         {
-            require("./includes/projects.js").main(request, result);
+            if(filename.includes(projectName))
+            {
+                require("./includes/projects.js").main(request, result, projectName);
+                project = true;
+            }
+        });
+
+
+        if(project)
+        {
+              //don't do blog stuff
         }
 
         //handles image requests
         else if(filename.includes("/img/") || filename.includes(".jpg") ||
-            filename.includes(".png") || filename.includes(".ico"))
+            filename.includes(".png") || filename.includes(".ico")
+            || filename.includes(".svg"))
         {
             includes.sendImage(result, filename, cache);
         }

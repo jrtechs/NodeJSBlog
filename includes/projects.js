@@ -1,9 +1,6 @@
 //file io
 const utils = require('../utils/utils.js');
 
-//DB queries
-const sql = require('../utils/sql');
-
 //used to parse the request URL
 const url = require('url');
 
@@ -21,13 +18,17 @@ module.exports=
          * @param requestURL
          * @returns {Promise|*}
          */
-        main: function(request, result)
+        main: function(request, result, baseURL)
         {
             //const filename = url.parse(request.url, true).pathname
 
             var filename = url.parse(request.url, true).pathname;
 
-            if(filename.includes("/img/") || filename.includes(".jpg") ||
+            if(filename.includes(".svg") || filename.includes(".svg"))
+            {
+                result.writeHead(200, {'Content-Type': 'image/svg+xml'});
+            }
+            else if(filename.includes("/img/") || filename.includes(".jpg") ||
                 filename.includes(".png") || filename.includes(".ico"))
             {
                 result.writeHead(200, {'Content-Type': 'image/png'});
@@ -46,9 +47,9 @@ module.exports=
                 result.writeHead(200, {'Content-Type': 'text/html'});
             }
 
-            if(filename == "/steam" || filename == "/steam/")
+            if(filename == baseURL || filename == baseURL.substring(0, baseURL.length - 1))
             {
-                filename = "/steam/index.html";
+                filename = baseURL + "index.html";
             }
 
             utils.include("./blogContent/projects" + filename).then(function(content)
