@@ -23,7 +23,6 @@ module.exports=
             else if (filename.includes(".jpg") ||
                 filename.includes(".png") || filename.includes(".ico"))
             {
-                console.log("Da fuck");
                 includes.sendImage(result, baseURL + filename);
                 return true;
             }
@@ -35,7 +34,7 @@ module.exports=
                 return true;
             }
             //scripts
-            else if (filename.includes("/js/") || filename.includes(".js"))
+            else if (filename.includes(".js"))
             {
                 includes.sendJS(result, baseURL + filename);
                 return true;

@@ -49,7 +49,6 @@ const sendCachedContent = function(path, type, result)
                     'public, max-age=2678400', 'ETag': '"' + eTag + '"',
                     'Vary': 'Accept-Encoding'});
             result.write(content);
-            console.log(content);
             result.end();
             cache.put(path, content);
         }).catch(function(error)
@@ -124,7 +123,6 @@ module.exports =
      */
     sendImage: function(result, fileName)
     {
-        console.log(fileName);
         sendCachedContent(fileName, 'image/png', result);
     },
 
@@ -149,8 +147,6 @@ module.exports =
     {
         utils.include("." + fileName).then(function(content)
         {
-            console.log(fileName);
-            console.log(content);
             result.writeHead(200, {'Content-Type': 'text/html'});
             result.write(content);
             result.end();

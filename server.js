@@ -23,7 +23,8 @@ const sql = require('./utils/sql');
 //Used for gzip compression
 const compression = require('compression');
 
-
+//used for file io
+const utils = require('./utils/utils.js');
 
 //Updates the site map whenever the server is started
 const map = require('./utils/generateSiteMap.js');
@@ -32,6 +33,13 @@ map.main();
 
 //port for the server to run on
 const port = 8000;
+
+//session data for login
+const session = require('express-session');
+
+//Initializes sessions for login
+app.use(session({ secret: utils.getFileLine('../session_secret'), cookie: { maxAge: 6000000 }}));
+
 
 const projects = ["/steam/"];
 
@@ -46,7 +54,6 @@ app.use(function(request, result)
     {
         const filename = url.parse(request.url, true).pathname;
 
-        console.log("main main" + filename)
         var project = false;
         projects.forEach(function(projectName)
         {
@@ -56,6 +63,13 @@ app.use(function(request, result)
                 project = true;
             }
         });
+
+        if(filename.startsWith("/admin"))
+        {
+            require("./sites/admin.js").main(request, result, filename);
+            project = true;
+        }
+
         if(!project)
         {
             require("./sites/blog.js").main(request, result, filename);

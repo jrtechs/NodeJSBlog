@@ -31,7 +31,6 @@ module.exports=
             {
                 filename = baseURL + "index.html";
             }
-            console.log("main " + filename)
 
 
             if (!contentLoader.serveStaticContent(request, result, filename, "/blogContent/projects"))
