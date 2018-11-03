@@ -21,10 +21,10 @@ const app = express();
 const session = require('express-session');
 
 //sending static content
-const includes = require('./includes/includes.js');
+const includes = require('../includes/includes.js');
 
 //used for file io
-const utils = require('./utils/utils.js');
+const utils = require('../utils/utils.js');
 
 //cache -- only used for static contents
 const cache = require('memory-cache');

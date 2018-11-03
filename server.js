@@ -17,17 +17,13 @@ const express = require("express");
 //express app
 const app = express();
 
-//used to append static content to result
-const includes = require('./includes/includes.js');
-
 //server side logging
 const sql = require('./utils/sql');
 
 //Used for gzip compression
-const compression = require('compression')
+const compression = require('compression');
 
-//caching program to make the application run faster
-const cache = require('memory-cache');
+
 
 //Updates the site map whenever the server is started
 const map = require('./utils/generateSiteMap.js');
@@ -50,107 +46,31 @@ app.use(function(request, result)
     {
         const filename = url.parse(request.url, true).pathname;
 
+        console.log("main main" + filename)
         var project = false;
         projects.forEach(function(projectName)
         {
             if(filename.startsWith(projectName))
             {
-                require("./includes/projects.js").main(request, result, projectName);
+                require("./sites/projects.js").main(request, result, projectName);
                 project = true;
             }
         });
-
-
-        if(project)
+        if(!project)
         {
-              //don't do blog stuff
+            require("./sites/blog.js").main(request, result, filename);
         }
 
-        else if(filename.includes(".svg") || filename.includes(".svg"))
+        try
         {
-            result.writeHead(200, {'Content-Type': 'image/svg+xml'});
+            const getClientAddress = (request.headers['x-forwarded-for'] || '').split(',')[0]
+                || request.connection.remoteAddress;
+            console.log(getClientAddress);
+
+            sql.logTraffic(getClientAddress, filename);
         }
-        //handles image requests
-        else if(filename.includes("/img/") || filename.includes(".jpg") ||
-            filename.includes(".png") || filename.includes(".ico"))
-        {
-            includes.sendImage(result, filename, cache);
-        }
-        //css and font files
-        else if(filename.includes("/css/") || filename.includes(".woff2") ||
-            filename.includes(".txt"))
-        {
-            includes.sendCSS(result, filename, cache);
-        }
-        //scripts
-        else if(filename.includes("/js/") || filename.includes(".js"))
-        {
-            includes.sendJS(result, filename, cache);
-        }
-        //downloads
-        else if(filename.includes("/downloads/"))
-        {
-            require("./includes/downloads.js").main(result, filename);
-        }
-        else if(filename.includes("/contact"))
-        {
-            require("./includes/contact.js").main(request, result);
-        }
-        else
-        {
-            const html = cache.get(filename);
-
-            result.writeHead(200, {'Content-Type': 'text/html'});
-            if(html == null)
-            {
-                var file = "";
-
-                if(filename === '' || filename === '/')
-                {
-                    file="./posts/homePage.js";
-                }
-                else
-                {
-                    var urlSplit = filename.split("/");
-
-                    if(urlSplit.length >= 2 && urlSplit[1] === 'category') //single category page
-                        file = "./posts/category.js";
-
-                    else
-                        file = "./posts/posts.js";
-                }
-
-                Promise.all([includes.printHeader(),
-                    require(file).main(filename, request),
-                    includes.printFooter()]).then(function(content)
-                {
-                    result.write(content.join(''));
-                    result.end();
-                    cache.put(filename, content.join(''));
-
-                }).catch(function(err)
-                {
-                    console.log(err);
-                    throw err;
-                });
-            }
-            else
-            {
-                result.write(html);
-                result.end();
-            }
-
-            try
-            {
-                const getClientAddress = (request.headers['x-forwarded-for'] || '').split(',')[0]
-                    || request.connection.remoteAddress;
-                console.log(getClientAddress);
-
-                sql.logTraffic(getClientAddress, filename);
-            }
-            catch (e)
-            { }
-        }
+        catch (e)
+        { }
     }
     else
     {

@@ -33,7 +33,7 @@ unless otherwise stated.
 
 ## MYSQL Schema
 
-![](blogSql.svg)
+![](docs/blogSql.svg)
 
 ```mysql
 create database jrtechs_blog;
