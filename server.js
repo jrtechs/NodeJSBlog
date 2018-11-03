@@ -53,7 +53,7 @@ app.use(function(request, result)
         var project = false;
         projects.forEach(function(projectName)
         {
-            if(filename.includes(projectName))
+            if(filename.startsWith(projectName))
             {
                 require("./includes/projects.js").main(request, result, projectName);
                 project = true;
@@ -66,10 +66,13 @@ app.use(function(request, result)
               //don't do blog stuff
         }
 
+        else if(filename.includes(".svg") || filename.includes(".svg"))
+        {
+            result.writeHead(200, {'Content-Type': 'image/svg+xml'});
+        }
         //handles image requests
         else if(filename.includes("/img/") || filename.includes(".jpg") ||
-            filename.includes(".png") || filename.includes(".ico")
-            || filename.includes(".svg"))
+            filename.includes(".png") || filename.includes(".ico"))
         {
             includes.sendImage(result, filename, cache);
         }
