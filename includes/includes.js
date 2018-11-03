@@ -23,6 +23,10 @@ const ADMIN_HEADER = "includes/html/adminHeader.html";
 const crypto = require('crypto');
 
 
+//caching program to make the application run faster
+const cache = require('memory-cache');
+
+
 /**
  * Sends a static file to the client in a way which the web browser
  * caches the contents sent.
@@ -32,7 +36,7 @@ const crypto = require('crypto');
  * @param type -- type of file for the header
  * @param result -- sent to client
  */
-const sendCachedContent = function(cache, path, type, result)
+const sendCachedContent = function(path, type, result)
 {
     const goods = cache.get(path);
 
@@ -108,7 +112,7 @@ module.exports =
      */
     sendCSS: function(result, path, cache)
     {
-        sendCachedContent(cache, "/" + path, 'text/css', result);
+        sendCachedContent(path, 'text/css', result);
     },
 
 
@@ -117,9 +121,9 @@ module.exports =
      * @param result
      * @param fileName
      */
-    sendImage: function(result, fileName, cache)
+    sendImage: function(result, fileName)
     {
-        sendCachedContent(cache, fileName, 'image/png', result);
+        sendCachedContent(fileName, 'image/png', result);
     },
 
 
@@ -128,8 +132,39 @@ module.exports =
      * @param result
      * @param fileName
      */
-    sendJS: function(result, fileName, cache)
+    sendJS: function(result, fileName)
     {
-        sendCachedContent(cache, fileName, 'application/javascript', result);
+        sendCachedContent(fileName, 'application/javascript', result);
+    },
+
+
+    /**Sends the user an image from the specified fileName.
+     *
+     * @param result
+     * @param fileName
+     */
+    sendHTML: function(result, fileName)
+    {
+        utils.include("." + fileName).then(function(content)
+        {
+            result.writeHead(200, {'Content-Type': 'text/html'});
+            result.write(content);
+            result.end();
+        }).catch(function(error)
+        {
+            console.log(error);
+        });
+    },
+
+
+    /**
+     * Sends a svg file to the client.
+     *
+     * @param result
+     * @param fileName
+     */
+    sendSVG: function(result, fileName)
+    {
+        sendCachedContent(fileName, 'image/svg+xml', result);
     }
 };
