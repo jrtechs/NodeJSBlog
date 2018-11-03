@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Jrtechs Steam Friend Graph Project</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" href="css/bootstrap.css" media="screen">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <script src="src/sigma.core.js"></script>
+    <script src="src/conrad.js"></script>
+    <script src="src/utils/sigma.utils.js"></script>
+    <script src="src/utils/sigma.polyfills.js"></script>
+    <script src="src/sigma.settings.js"></script>
+    <script src="src/classes/sigma.classes.dispatcher.js"></script>
+    <script src="src/classes/sigma.classes.configurable.js"></script>
+    <script src="src/classes/sigma.classes.graph.js"></script>
+    <script src="src/classes/sigma.classes.camera.js"></script>
+    <script src="src/classes/sigma.classes.quad.js"></script>
+    <script src="src/classes/sigma.classes.edgequad.js"></script>
+    <script src="src/captors/sigma.captors.mouse.js"></script>
+    <script src="src/captors/sigma.captors.touch.js"></script>
+    <script src="src/renderers/sigma.renderers.canvas.js"></script>
+    <script src="src/renderers/sigma.renderers.webgl.js"></script>
+    <script src="src/renderers/sigma.renderers.svg.js"></script>
+    <script src="src/renderers/sigma.renderers.def.js"></script>
+    <script src="src/renderers/webgl/sigma.webgl.nodes.def.js"></script>
+    <script src="src/renderers/webgl/sigma.webgl.nodes.fast.js"></script>
+    <script src="src/renderers/webgl/sigma.webgl.edges.def.js"></script>
+    <script src="src/renderers/webgl/sigma.webgl.edges.fast.js"></script>
+    <script src="src/renderers/webgl/sigma.webgl.edges.arrow.js"></script>
+    <script src="src/renderers/canvas/sigma.canvas.labels.def.js"></script>
+    <script src="src/renderers/canvas/sigma.canvas.hovers.def.js"></script>
+    <script src="src/renderers/canvas/sigma.canvas.nodes.def.js"></script>
+    <script src="src/renderers/canvas/sigma.canvas.edges.def.js"></script>
+    <script src="src/renderers/canvas/sigma.canvas.edges.curve.js"></script>
+    <script src="src/renderers/canvas/sigma.canvas.edges.arrow.js"></script>
+    <script src="src/renderers/canvas/sigma.canvas.edges.curvedArrow.js"></script>
+    <script src="src/renderers/canvas/sigma.canvas.edgehovers.def.js"></script>
+    <script src="src/renderers/canvas/sigma.canvas.edgehovers.curve.js"></script>
+    <script src="src/renderers/canvas/sigma.canvas.edgehovers.arrow.js"></script>
+    <script src="src/renderers/canvas/sigma.canvas.edgehovers.curvedArrow.js"></script>
+    <script src="src/renderers/canvas/sigma.canvas.extremities.def.js"></script>
+    <script src="src/renderers/svg/sigma.svg.utils.js"></script>
+    <script src="src/renderers/svg/sigma.svg.nodes.def.js"></script>
+    <script src="src/renderers/svg/sigma.svg.edges.def.js"></script>
+    <script src="src/renderers/svg/sigma.svg.edges.curve.js"></script>
+    <script src="src/renderers/svg/sigma.svg.labels.def.js"></script>
+    <script src="src/renderers/svg/sigma.svg.hovers.def.js"></script>
+    <script src="src/middlewares/sigma.middlewares.rescale.js"></script>
+    <script src="src/middlewares/sigma.middlewares.copy.js"></script>
+    <script src="src/misc/sigma.misc.animation.js"></script>
+    <script src="src/misc/sigma.misc.bindEvents.js"></script>
+    <script src="src/misc/sigma.misc.bindDOMEvents.js"></script>
+    <script src="src/misc/sigma.misc.drawHovers.js"></script>
+
+
+
+    <script src="src/plugins/sigma.plugins.neighborhoods/sigma.plugins.neighborhoods.js"></script>
+    <script src="src/plugins/sigma.layout.forceAtlas2/supervisor.js"></script>
+    <script src="src/plugins/sigma.layout.forceAtlas2/worker.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<div class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="#">Steam Graph Project</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="graphs.html">Graphs<span class="sr-only">(current)</span></a>
+                </li>
+                <!--<li class="nav-item">-->
+                    <!--<a class="nav-link" href="profile.html">Profile Look-Up</a>-->
+                <!--</li>-->
+                <li class="nav-item">
+                    <a class="nav-link" href="faq.html">FAQ</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a class="nav-link" href="https://jrtechs.net">Blog</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="https://jrtechs.me">Resume</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="https://github.com/jrtechs">Github</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<!-- END SIGMA IMPORTS -->
+<div id="container">
+    <style>
+        #graph-container {
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            position: absolute;
+            background-color: #455660;
+        }
+        .sigma-edge {
+            stroke: #14191C;
+            fill-opacity: 0.7;
+            stroke-opacity: 0.7;
+        }
+        .sigma-node {
+            fill: #008080;
+            stroke: #14191C;
+            stroke-width: 2px;
+        }
+        .sigma-node:hover {
+            fill: blue;
+        }
+        .sigma-label
+        {
+            fill: #00CED1 !important;
+        }
+        .muted {
+            fill-opacity: 0.1;
+            stroke-opacity: 0.1;
+        }
+    </style>
+    <div id="graph-container" style="width:100%; height:100%"></div>
+</div>
+
+<script>
+
+    var s;
+
+    var g = {
+            nodes: [],
+            edges: []
+        };
+
+
+    /**
+     * Creates a new sigma graph
+     */
+    s = new sigma({
+        graph: g,
+        settings: {
+            enableHovering: false
+        }
+    });
+
+
+    /**
+     * Sets the sigma graph to render using svg
+     */
+    s.addRenderer({
+        id: 'main',
+        type: 'svg',
+        container: document.getElementById('graph-container'),
+        freeStyle: true
+    });
+
+
+    /**
+     * Simple function to get the get data from the url
+     */
+    function getUrlVars()
+    {
+        var vars = {};
+        window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,
+            function(m,key,value) {
+            vars[key] = value;
+        });
+        return vars;
+    }
+
+
+    /** Web socket to communicate with the steam friend java server */
+    connection = new WebSocket('ws://steam.student.rit.edu:4444');
+
+
+    setTimeout(function()
+    {
+        if (this.connection.readyState != 1)
+        {
+            document.location.href = "error.html";
+        }
+    }, 6000);
+
+
+    /**
+     * When the web socket is opened, this function
+     * fetches the get data and requests the server
+     * to start giving it graph information
+     */
+    connection.onopen = function ()
+    {
+        var getData = getUrlVars();
+        if(getData["id"] != undefined && getData["id"] != "")
+        {
+            connection.send("{id:'" + getData["id"] + "', graph:" +
+                getData["graph"] + "}");
+            connection.send("{go:1}");
+        }
+        else
+        {
+            connection.close();
+        }
+
+    };
+
+    /**
+     * Logs any errors with the web socket -- usually error
+     * connecting to the server
+     * @param error
+     */
+    connection.onerror = function (error)
+    {
+        console.log('WebSocket Error ' + error);
+    };
+
+
+    /**
+     * Helper function to add a new node to the sigma graph
+     *
+     * @param request
+     */
+    function addNodeToGraph(request)
+    {
+        if(s.graph.nodes(request.id) == undefined)
+        {
+            s.graph.addNode({
+                id: request.id,
+                label: request.name,
+                x: request.x,
+                y: request.y,
+                size: request.size
+            });
+            s.refresh();
+        }
+    }
+
+    /**
+     * Helper function to add an edge between two nodes on the
+     * sigma graph
+     *
+     * @param request
+     */
+    function addEdgeToGraph(request)
+    {
+        s.graph.addEdge({
+            id: request.id,
+            source: request.p1,
+            target: request.p2,
+            size: 1
+        });
+        s.refresh();
+    }
+
+
+    /**
+     * Parses any events from the server
+     * action 1: add a new node to the graph
+     * action 2: add a new edge to the graph
+     * action 3: start applying forces to the graph
+     *
+     * @param e
+     */
+    connection.onmessage = function (e)
+    {
+        var request = JSON.parse(e.data);
+
+        if(request.action == 1)
+        {
+            setTimeout(function()
+            {
+                addNodeToGraph(request);
+                connection.send("{go:1}");
+            }, 0);
+
+        }
+        else if(request.action == 2)
+        {
+            setTimeout(function()
+            {
+                addEdgeToGraph(request);
+                connection.send("{go:1}");
+            }, 0);
+
+        }
+        else if(request.action == 3)
+        {
+            var getData = getUrlVars();
+            if(getData["graph"] == 2)
+            {
+                s.startForceAtlas2({worker: true, barnesHutOptimize: false,
+                    scalingRatio: 3, slowDown: 5, gravity: 10});
+
+                setTimeout(function () {
+                    s.stopForceAtlas2();
+                }, 15000);
+            }
+            else
+            {
+                s.startForceAtlas2({worker: true, barnesHutOptimize: false,
+                    scalingRatio: 6, slowDown: 4, gravity: 40});
+
+                setTimeout(function () {
+                    s.stopForceAtlas2();
+                }, 30000);
+            }
+
+        }
+        else if(request.action == -1)
+        {
+            alert("The provided steamID was invalid.");
+
+        }
+    };
+
+
+    // Binding silly interactions
+    function mute(node)
+    {
+        if (!~node.getAttribute('class').search(/muted/))
+            node.setAttributeNS(null, 'class',
+                node.getAttribute('class') + ' muted');
+    }
+
+    function unmute(node)
+    {
+        node.setAttributeNS(null, 'class',
+            node.getAttribute('class').replace(/(\s|^)muted(\s|$)/g, '$2'));
+    }
+
+
+    /**
+     * jquery stuff for hiding and displaying users when clicked
+     */
+    s.bind('clickNode doubleClickNode rightClickNode', function(e)
+    {
+        $('.sigma-node, .sigma-edge, .sigma-label').each(function()
+        {
+            mute(this);
+        });
+
+        var neighbors = s.graph.neighborhood(e.data.node.id);
+        neighbors.nodes.forEach(function(node)
+        {
+            unmute($('[data-node-id="' + node.id + '"]')[0]);
+            unmute($('[data-label-target="' + node.id + '"]')[0]);
+        });
+
+        neighbors.edges.forEach(function(edge) {
+            unmute($('[data-edge-id="' + edge.id + '"]')[0]);
+        });
+    });
+
+
+    $('.sigma-node').click(function()
+    {
+        $('.sigma-node, .sigma-edge').each(function()
+        {
+            mute(this);
+        });
+
+        // Unmuting neighbors
+        var neighbors = s.graph.neighborhood($(this).attr('data-node-id'));
+        neighbors.nodes.forEach(function(node)
+        {
+            unmute($('[data-node-id="' + node.id + '"]')[0]);
+            unmute($('[data-label-target="' + node.id + '"]')[0]);
+        });
+
+        neighbors.edges.forEach(function(edge)
+        {
+            unmute($('[data-edge-id="' + edge.id + '"]')[0]);
+        });
+    });
+
+    s.bind('clickStage', function()
+    {
+        $('.sigma-node, .sigma-edge, .sigma-label').each(function()
+        {
+            unmute(this);
+        });
+    });
+
+
+</script>
+
+
+<!-
+┈┈╱▔▔▔▔▔╲┈┈┈HM┈HM
+┈╱┈┈╱▔╲╲╲▏┈┈┈HMMM
+╱┈┈╱━╱▔▔▔▔▔╲━╮┈┈
+▏┈▕┃▕╱▔╲╱▔╲▕╮┃┈┈
+▏┈▕╰━▏▊▕▕▋▕▕━╯┈┈
+╲┈┈╲╱▔╭╮▔▔┳╲╲┈┈┈
+┈╲┈┈▏╭━━━━╯▕▕┈┈┈
+┈┈╲┈╲▂▂▂▂▂▂╱╱┈┈┈
+┈┈┈┈▏┊┈┈┈┈┊┈┈┈╲┈
+┈┈┈┈▏┊┈┈┈┈┊▕╲┈┈╲
+┈╱▔╲▏┊┈┈┈┈┊▕╱▔╲▕
+┈▏ ┈┈┈╰┈┈┈┈╯┈┈┈▕▕
+┈╲┈┈┈╲┈┈┈┈╱┈┈┈╱┈╲
+┈┈╲┈┈▕▔▔▔▔▏┈┈╱╲╲╲▏
+┈╱▔┈┈▕┈┈┈┈▏┈┈▔╲▔▔
+┈╲▂▂▂╱┈┈┈┈╲▂▂▂╱┈
+
+If you are seeing this monkey that means that you are interested in my
+code. Yay!! If you are not here to hack me ... you should really consider
+contributing to some of my public projects on github.
+
+https://github.com/jrtechs
+
+-->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+</body>
+</html>
+

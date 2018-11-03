@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Jrtechs Steam Friend Graph Project</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" href="css/bootstrap.css" media="screen">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="#">Steam Graph Project</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Home</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="graphs.html">Graphs<span class="sr-only">(current)</span></a>
+                </li>
+                <!--<li class="nav-item">-->
+                    <!--<a class="nav-link" href="profile.html">Profile Look-Up</a>-->
+                <!--</li>-->
+                <li class="nav-item">
+                    <a class="nav-link" href="faq.html">FAQ</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a class="nav-link" href="https://jrtechs.net">Blog</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="https://jrtechs.me">Resume</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="https://github.com/jrtechs">Github</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <br><br><br>
+
+    <div class="row">
+
+        <div class="col-8">
+            <div class="card mb-3">
+                <div class="card-header"><h2>How To Make a Graph</h2></div>
+                <div class="card-body">
+                    <h4>Overview</h4>
+                    <p class="card-text">Using the form on this page, you enter your steamID and select the
+                    graph type you wish to use and then press generate. This will take you to a
+                    new page where your graph will render. Rendering will take between 1-4 minutes depending
+                    on how many friends you have on your graph. Once all the friends are on the graph, it will
+                    shake bringing it to its "final form".</p>
+                    <h4>SteamID</h4>
+                    <p>
+                        Every steam user has an unique ID. This is NOT your username.
+                        If you have steam open, simply click on the profile which you would like to view
+                        from your friends list. The steam ID will be in the url that appears in the steam
+                        browser.
+                        <br>
+                        <img src="img/faq/steamIdOption2.png" alt="Steam id in steam browser">
+                    </p>
+                    <h4>Graph Types</h4>
+                    <ul>
+                        <li>
+                            <h5>Friends of Friends Graph</h5>
+                            <p>
+                                This graph will display all of your friends in addition to all of their friends.
+                                <br>ex:<br>
+                                <img src="img/jrtechs1.png" alt="friends of friends steam graph" width="100%">
+                            </p>
+
+                        </li>
+                        <li>
+                            <h5>Common Friends Graph</h5>
+                            <p>
+                                This graph will only display your friends, however, it will draw edges between your friends
+                                if they are friends with each other.
+                                <br>ex:<br>
+                                <img src="img/jrtechs2.png" alt="Common friends steam graph" width="100%">
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-4">
+            <div class="card w-100" style="width: 18rem; background-color:#455660;">
+                <img class="card-img-top" src="img/banner2.png">
+                <div class="card-body">
+                    <form action="graph.html" method="get">
+                        <div class="form-group row">
+                            <!--<label for="idID" class="col-sm-2 col-form-label">Steam ID</label>-->
+                            <div class="col">
+                                <input type="text" class="form-control" id="idID" placeholder="Steam ID" name="id">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <!--<label for="graphId" class="col-sm-2 col-form-label">Graph Type</label>-->
+                            <div class="col">
+                                <select class="custom-select mb-3" id="graphId" name="graph">
+                                    <option value="1">Friends of Friends Graph</option>
+                                    <option value="2">Common Friends Graph</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row w-100">
+                            <div class="col text-center">
+                                <button type="submit" class="btn btn-light btn-lg">Generate Steam Graph</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+</div>
+
+
+<!-
+┈┈╱▔▔▔▔▔╲┈┈┈HM┈HM
+┈╱┈┈╱▔╲╲╲▏┈┈┈HMMM
+╱┈┈╱━╱▔▔▔▔▔╲━╮┈┈
+▏┈▕┃▕╱▔╲╱▔╲▕╮┃┈┈
+▏┈▕╰━▏▊▕▕▋▕▕━╯┈┈
+╲┈┈╲╱▔╭╮▔▔┳╲╲┈┈┈
+┈╲┈┈▏╭━━━━╯▕▕┈┈┈
+┈┈╲┈╲▂▂▂▂▂▂╱╱┈┈┈
+┈┈┈┈▏┊┈┈┈┈┊┈┈┈╲┈
+┈┈┈┈▏┊┈┈┈┈┊▕╲┈┈╲
+┈╱▔╲▏┊┈┈┈┈┊▕╱▔╲▕
+┈▏ ┈┈┈╰┈┈┈┈╯┈┈┈▕▕
+┈╲┈┈┈╲┈┈┈┈╱┈┈┈╱┈╲
+┈┈╲┈┈▕▔▔▔▔▏┈┈╱╲╲╲▏
+┈╱▔┈┈▕┈┈┈┈▏┈┈▔╲▔▔
+┈╲▂▂▂╱┈┈┈┈╲▂▂▂╱┈
+
+If you are seeing this monkey that means that you are interested in my
+code. Yay!! If you are not here to hack me ... you should really consider
+contributing to some of my public projects on github.
+
+https://github.com/jrtechs
+
+-->
+
+<!-- Footer -->
+<footer class="text-center">
+    <div class="footer-above">
+        <div class="container">
+            <div class="row">
+                <div class="footer-col col-md-4">
+                    <h3>Location</h3>
+                    <p>Rochester Institute of Technology
+                        <br>1 Lomb Memorial Dr, Rochester, NY 14623</p>
+                </div>
+                <div class="footer-col col-md-4">
+                    <h3>Around the Web</h3>
+                    <ul class="list-inline">
+                        <li class="list-inline-item">
+                            <a class="btn-social btn-outline" href="https://www.youtube.com/c/JrtechsNet">
+                                <i class="fa fa-fw fa-youtube"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a class="btn-social btn-outline" href="https://github.com/jrtechs">
+                                <i class="fa fa-fw fa-github"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a class="btn-social btn-outline" href="http://jrtechs.net">
+                                <i class="fa fa-fw fa-wordpress"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="footer-col col-md-4">
+                    <h3>About This Website</h3>
+                    <p>Check out the source code for this website on my
+                        <a href="https://github.com/jrtechs">github</a>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-below">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <p class="m-0 text-center text-white"><a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC-BY-SA 4.0</a> <script type="text/javascript">
+                        document.write(new Date().getFullYear());
+                    </script> Jrtechs</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+</body>
+</html>
