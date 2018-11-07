@@ -1,21 +1,21 @@
-This a very high level review post that I am making for myself and other people taking CS Theory.
-If you want to lean about the theory behind the content in this blog post I recommed looking else where.
-This post will cover how to solve typical problems relating to topics covered by my second CS Theory exam.
+This a very high level review post that I am making for myself and other people reviewing CS Theory.
+If you want to lean more about content in this blog post I recommend cracking open a text book-- I know, gross.
+This hastily thrown together post will cover how to solve typical problems relating to topics covered by my second CS Theory exam.
 
 # Myhill-Nerode Theorem
 
 ## Definition
-L is regular if and only if it has a finite index. The index is the maximum number of elements thar are pairwise distibguishable.
+L is regular if and only if it has a finite index. The index is the maximum number of elements that are pairwise distinguishable.
 Two strings are said to be pairwise distinguishable if you can append something to both of the strings and it makes one string
-accepted by the language and the other string non-accepting. 
-The size of an index set X equals the number of equivalence classes it has. Each element in the language is accepted by only
-one equivalence class.
+accepted by the language and the other string rejected. 
+The size of an index set X equals the number of equivalence classes it has and the minimum number of states required to represent it
+using a DFA. Each element in the language is accepted by only one equivalence class.
 
 ## Problem Approach
 
 Prove that language L is regular.
 
-1) Define a set X which is infinite in size - this doesn;t necesarrily need to be in the language.
+1) Define a set X which is infinite in size - this doesn't have to be in the language.
 
 2) Make a general argument that show that each element in X is pairwise distinguishable.
 Pick any two elements x, y in X and show that if you append z to them one is accepted by the language and 
@@ -64,7 +64,7 @@ pairwise distinguishable, then the DFA is minimal with that many states.
 
 ## Prove DFA is minimal
 
-For these types of problems you simply construct a table and show that each state is pairwise distinguishable.
+For these types of problems you construct a table and show that each state is pairwise distinguishable.
 To show pairwise distinguishably you have to show that there exists a string where if appended to one element 
 makes it accepted by the language but pushes the other string out of the language.
 
@@ -87,7 +87,7 @@ Show that each state is pairwise distinguishable.
 
 ## Minimize the DFA
 
-To use this concept of being indistinguishable to minimize a DFA, you can use a table to keep track which
+To use the concept of being indistinguishable to minimize a DFA, you can use a table to keep track which
 states are distinguishable from each other. The states which are not indistinguishable can 
 be combined. To solve one of these problems you start by creating a table which compares each of the 
 states in the DFA. You then go through and mark the states which are indistinguishable -- start with 
@@ -136,7 +136,7 @@ The accepted strings can be divided into three parts:
 
 To Show that a language L is not regular using pumping lemma:
 
-- Proof by Contradiction
+- Use a proof by contradiction
 - Assume L is regular
 - Choose a representative string S which is just barely in the language and is represented in terms of p. 
 - Express S = xyz such that |xy| < p and y > 0
@@ -189,9 +189,9 @@ language is regular is false.
 
 # Context-free grammars, closure properties for CFLs
 
-The context-free grammars are a superset of the regular languages. This means that CFG's can represent 
-some non-regular languages and every regular language is also a CFL. Contest-free Languages are defined by Context-Free Grammars and accepted using
-Pushdown Automata machines.
+The context-free grammars are a super-set of the regular languages. This means that CFG's can represent 
+some non-regular languages and every regular language. Contest-free Languages are defined by Context-Free Grammars and accepted using
+Push-down Automata machines.
 
 Context Free Grammars are Represented using:
 
@@ -227,7 +227,7 @@ X \rightarrow aX | bX | a | b \\
 $$
 
 
-In this example, the S rule states in that recursive state until something that is not a palindrome is found.
+In this example, the S rule recursively applies itself until something that is not a palindrome is added.
 Once you exit the S state, you can finish by appending anything to the middle of the string. 
 
 
@@ -250,8 +250,8 @@ $$
 
 CFLs are closed under union, concatenation, and Kleene star.
 - Union: Create a new starting variable which goes to either branch.
--Kleene Star: We can repeatedly concate the derivations of the string. However, we also need to make sure that epsilon occurs in the string. 
-- Concatenation: From start variable we force the concatenation of two variables representing each state.
+-Kleene Star: We can repeatedly concat the derivations of the string. However, we also need to make sure that epsilon occurs in the string. 
+- Concatenation: From start variable we force the concatenation of two variables representing each state sub CFG
 
 # Parse trees, ambiguity
 
@@ -352,9 +352,9 @@ A \rightarrow b | ASA | aB | SA | AS | a\\
 B \rightarrow b
 $$
 
-# Pushdown automata
+# Push-Down automata
 
-These are NFAs plus a stack. This allows us to solve any problem which
+These are NFAs but they also have a stack. This allows us to solve any problem which
 can be represented with a CFG.
 
 The stack has it's own alphabet. The dollar symbol typically represents the empty stack.
@@ -386,4 +386,3 @@ S \rightarrow aTb | b \\
 T \rightarrow Ta | \epsilon
 $$
 ![](media/CSTHEORY/PDAConstruction.svg)
-
