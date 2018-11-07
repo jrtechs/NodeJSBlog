@@ -246,11 +246,144 @@ Y \rightarrow bYc | \epsilon\\
 Z \rightarrow cZd | \epsilon
 $$
 
+## Closure
+
+CFLs are closed under union, concatenation, and Kleene star.
+- Union: Create a new starting variable which goes to either branch.
+-Kleene Star: We can repeatedly concate the derivations of the string. However, we also need to make sure that epsilon occurs in the string. 
+- Concatenation: From start variable we force the concatenation of two variables representing each state.
+
 # Parse trees, ambiguity
+
+Parse Trees are simply graphical means to illustrate a deviation of a string from a grammar.
+The root of the tree will be the start variable, interior nodes are other variables. Leaf nodes are 
+terminal symbols. 
+
+A CFG is said to be ambiguous if there is at least one string with two or more distinct derivations.
+Leftmost and rightmost derivations are not ambiguous. 
+
+To remove ambiguity try to force order or break CFG into cases.
+
 
 # Chomsky Normal Form
 
+Useful form for CFGs since they allow you to easily identify if a string is in a language.
+
+Form:
+
+$$
+A \rightarrow BC\\
+A \rightarrow a\\
+S \rightarrow \epsilon
+$$
+
+Convert CFG to CNF (Chomsky Normal Form).   
+
+- Add new start variable   
+
+- Remove Epsilon rules (multi-step process)   
+
+- Remove unit rules    
+
+- Convert to A -> BC, A -> a 
+
+## Example
+
+Convert the following CFG to a CNF
+
+$$
+S \rightarrow ASA | aB\\
+A \rightarrow B | S\\
+B \rightarrow b | \epsilon
+$$
+
+Step 1: Add new start variable.
+
+$$
+S_0 \rightarrow S\\
+S \rightarrow ASA | aB\\
+A \rightarrow B | S\\
+B \rightarrow b | \epsilon
+$$
+
+Step 2: Remove epsilon rules.
+
+$$
+S_0 \rightarrow S\\
+S \rightarrow ASA | aB | a\\
+A \rightarrow B | S | \epsilon\\
+B \rightarrow b
+$$
+
+
+$$
+S_0 \rightarrow S\\
+S \rightarrow ASA | aB | SA | AS | S | a\\
+A \rightarrow B | S\\
+B \rightarrow b
+$$
+
+Step 3: Remove unit rules
+
+(Remove A -> B)
+
+$$
+S_0 \rightarrow S\\
+S \rightarrow ASA | aB | SA | AS | a\\
+A \rightarrow b | S\\
+B \rightarrow b
+$$
+
+(Remove A -> S)
+
+$$
+S_0 \rightarrow S\\
+S \rightarrow ASA | aB | SA | AS | a\\
+A \rightarrow b | ASA | aB | SA | AS | a\\
+B \rightarrow b
+$$
+
+(Remove S0-> S)
+
+$$
+S_0 \rightarrow ASA | aB | SA | AS | a\\
+S \rightarrow ASA | aB | SA | AS | a\\
+A \rightarrow b | ASA | aB | SA | AS | a\\
+B \rightarrow b
+$$
+
 # Pushdown automata
 
+These are NFAs plus a stack. This allows us to solve any problem which
+can be represented with a CFG.
+
+The stack has it's own alphabet. The dollar symbol typically represents the empty stack.
+
+With each transition you can examine the stack, push to the stack and move to a new state.
+
+## Example
+
+
+$$
+L = \{a^n\#b^n\}
+$$
+
+![](media/CSTHEORY/PDAExample.svg)
+
+
 # Construction to convert CFG to a PDA
+
+Basic idea: use stack to hold progressive derivations of a string using rules of grammar.
+
+
+
+## Example
+
+Convert the following CFG to a PDA:
+
+$$
+S \rightarrow aTb | b \\
+T \rightarrow Ta | \epsilon
+$$
+![](media/CSTHEORY/PDAConstruction.svg)
 
