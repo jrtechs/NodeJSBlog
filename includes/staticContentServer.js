@@ -13,7 +13,6 @@ module.exports=
 
         serveStaticContent: function(request, result, filename, baseURL)
         {
-            console.log(filename);
             if (filename.includes(".svg") || filename.includes(".svg"))
             {
                 includes.sendSVG(result, baseURL + filename);
