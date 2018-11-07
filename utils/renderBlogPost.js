@@ -69,7 +69,7 @@ module.exports=
          * Method which renders the body of the blog post. This is responsible for getting
          * the contents of the markdown/latex file and rendering it into beautiful html.
          *
-         * @param post
+         * @param post stuff from the SQL table
          * @param blocks
          * @returns {Promise}
          */
@@ -79,45 +79,91 @@ module.exports=
             {
                 sql.getCategory(post.category_id).then(function(category)
                 {
-                    const pathName =  "blogContent/posts/" + category[0].url + "/"
-                        + post.url + ".md";
-                    var markDown = utils.getFileContents(pathName).toString();
-                    markDown = markDown.split("(media/").join("(" + "../blogContent/posts/"
-                        + category[0].url + "/media/");
-
-                    module.exports.convertToHTML(markDown, blocks).then(function(result)
-                    {
-
-                        result = result.split("<figcaption>").join("<figcaption style=\"visibility: hidden;\">");
-
-                        //this line prevents older versions of pandoc from including invalid cdm scripts
-                        result = result.split("<script src=\"https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML-full\" type=\"text/javascript\"></script>").join("");
-
-                        if(blocks == -1)
-                            resolve(result);
-
-                        const htmlBlocks = result.split("<p>");
-                        var html = "";
-                        for(var i = 0; i < blocks; i++)
-                        {
-                            html += "<p>" + htmlBlocks[i];
-                        }
-
-                        html += "      <div style=\"\">\n" +
-                            "          <p class='text-center'><button class=\"btn btn-secondary btn-lg " +
-                            "w3-padding-large w3-white w3-border\"  onclick=\"location.href='" +
-                            "http://jrtechs.net/" + category[0].url + "/" + post.url +
-                            "'\"><b>READ MORE &raquo;</b></button></p>\n" +
-                            "      </div>\n";
-
-                        resolve(html);
-
-                    }).catch(function(error)
-                    {
-                        reject(error);
-                    })
+                    resolve(module.exports.generateBlogPost(post.url, category[0].url, blocks));
+                    // const pathName =  "blogContent/posts/" + category[0].url + "/"
+                    //     + post.url + ".md";
+                    // var markDown = utils.getFileContents(pathName).toString();
+                    // markDown = markDown.split("(media/").join("(" + "../blogContent/posts/"
+                    //     + category[0].url + "/media/");
+                    //
+                    // module.exports.convertToHTML(markDown, blocks).then(function(result)
+                    // {
+                    //
+                    //     result = result.split("<figcaption>").join("<figcaption style=\"visibility: hidden;\">");
+                    //
+                    //     //this line prevents older versions of pandoc from including invalid cdm scripts
+                    //     result = result.split("<script src=\"https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML-full\" type=\"text/javascript\"></script>").join("");
+                    //
+                    //     if(blocks == -1)
+                    //         resolve(result);
+                    //
+                    //     const htmlBlocks = result.split("<p>");
+                    //     var html = "";
+                    //     for(var i = 0; i < blocks; i++)
+                    //     {
+                    //         html += "<p>" + htmlBlocks[i];
+                    //     }
+                    //
+                    //     html += "      <div style=\"\">\n" +
+                    //         "          <p class='text-center'><button class=\"btn btn-secondary btn-lg " +
+                    //         "w3-padding-large w3-white w3-border\"  onclick=\"location.href='" +
+                    //         "http://jrtechs.net/" + category[0].url + "/" + post.url +
+                    //         "'\"><b>READ MORE &raquo;</b></button></p>\n" +
+                    //         "      </div>\n";
+                    //
+                    //     resolve(html);
+                    //
+                    // }).catch(function(error)
+                    // {
+                    //     reject(error);
+                    // })
 
                 });
+            })
+        },
+
+
+        generateBlogPostComponent: function(categoryURL, postURL, blocks)
+        {
+            return new Promise(function(resolve, reject)
+            {
+                const pathName =  "blogContent/posts/" + categoryURL + "/"
+                    + postURL + ".md";
+                var markDown = utils.getFileContents(pathName).toString();
+                markDown = markDown.split("(media/").join("(" + "../blogContent/posts/"
+                    + categoryURL + "/media/");
+
+                module.exports.convertToHTML(markDown, blocks).then(function(result)
+                {
+
+                    result = result.split("<figcaption>").join("<figcaption style=\"visibility: hidden;\">");
+
+                    //this line prevents older versions of pandoc from including invalid cdm scripts
+                    result = result.split("<script src=\"https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML-full\" type=\"text/javascript\"></script>").join("");
+
+                    if(blocks == -1)
+                        resolve(result);
+
+                    const htmlBlocks = result.split("<p>");
+                    var html = "";
+                    for(var i = 0; i < blocks; i++)
+                    {
+                        html += "<p>" + htmlBlocks[i];
+                    }
+
+                    html += "      <div style=\"\">\n" +
+                        "          <p class='text-center'><button class=\"btn btn-secondary btn-lg " +
+                        "w3-padding-large w3-white w3-border\"  onclick=\"location.href='" +
+                        "http://jrtechs.net/" + categoryURL + "/" + postURL +
+                        "'\"><b>READ MORE &raquo;</b></button></p>\n" +
+                        "      </div>\n";
+
+                    resolve(html);
+
+                }).catch(function(error)
+                {
+                    reject(error);
+                })
             })
         },
 
@@ -130,6 +176,7 @@ module.exports=
         {
             return "</div></div></div><br><br>";
         },
+
 
         /**
          * Converts markdown into html.
