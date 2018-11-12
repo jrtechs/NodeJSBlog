@@ -25,21 +25,26 @@ const processLogin = function(request, clientAddress)
             if(!post.username && !post.password)
             {
                 resolve("");
+                return(false); // no login attempted
             }
             return sql.checkLogin(postData);
         }).then(function(loginResult)
         {
-            if(loginResult.pass)
+            if(loginResult !== false)
             {
-                request.session.user = loginResult.user;
-                console.log("user has logged in");
-                resolve("<meta http-equiv=\"refresh\" content=\"0\">");
-            }
-            else
-            {
-                banIP(clientAddress);
-                console.log("Invader!");
-                resolve("Wrong!");
+                if(loginResult.pass)
+                {
+                    //what actually logs in the user
+                    request.session.user = loginResult.user;
+                    console.log("user has logged in");
+                    resolve("<meta http-equiv=\"refresh\" content=\"0\">");
+                }
+                else
+                {
+                    banIP(clientAddress);
+                    console.log("Invader!");
+                    resolve("Wrong!");
+                }
             }
         }).catch(function(err)
         {
