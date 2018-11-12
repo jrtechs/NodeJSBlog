@@ -26,12 +26,16 @@ module.exports=
             }
             else
             {
+                const clientAddress = (request.headers['x-forwarded-for'] || '').split(',')[0]
+                    || request.connection.remoteAddress;
+
+
                 result.writeHead(200, {'Content-Type': 'text/html'});
 
                 const file = "../admin/admin.js";
 
                 Promise.all([includes.printAdminHeader(),
-                    require(file).main(request),
+                    require(file).main(request, clientAddress),
                     includes.printFooter()]).then(function(content)
                 {
                     result.write(content.join(''));

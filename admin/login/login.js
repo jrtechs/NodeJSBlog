@@ -4,6 +4,8 @@ const utils = require('../../utils/utils.js');
 //update db
 const sql = require('../../utils/sql');
 
+const qs = require('querystring');
+
 
 /**
  * Processes post data to see if the user has successfully
@@ -13,16 +15,20 @@ const sql = require('../../utils/sql');
  * @param request
  * @returns {Promise}
  */
-const processLogin = function(request)
+const processLogin = function(request, clientAddress)
 {
     return new Promise(function(resolve, reject)
     {
         utils.getPostData(request).then(function(postData)
         {
+            const post = qs.parse(postData);
+            if(!post.username && !post.password)
+            {
+                resolve("");
+            }
             return sql.checkLogin(postData);
         }).then(function(loginResult)
         {
-
             if(loginResult.pass)
             {
                 request.session.user = loginResult.user;
@@ -31,14 +37,63 @@ const processLogin = function(request)
             }
             else
             {
-                console.log("password incorrect");
-                resolve("Password incorrect");
+                banIP(clientAddress);
+                console.log("Invader!");
+                resolve("Wrong!");
             }
         }).catch(function(err)
         {
             reject(err);
         })
     });
+};
+
+
+/** Global Containing Ban Data **/
+var banData = {};
+
+/** Number of incorrect login attempts permitted per ip */
+const LOGIN_LIMIT = 5;
+
+
+/**
+ * Determines if a client is banned from the server
+ * or not.
+ *
+ * @param clientAddress
+ */
+const isBanned = function(clientAddress)
+{
+    if(clientAddress in banData)
+    {
+        user = banData[clientAddress];
+
+        return user.incorrectLogins > LOGIN_LIMIT;
+    }
+    return false;
+
+};
+
+
+/**
+ * Increments the user's incorrect login attempt
+ * counter.
+ *
+ * @param clientAddress
+ */
+const banIP = function(clientAddress)
+{
+    if(clientAddress in banData)
+    {
+        user = banData[clientAddress];
+        user.incorrectLogins++;
+    }
+    else
+    {
+        var newUser = new Object();
+        newUser.incorrectLogins = 1;
+        banData[clientAddress] = newUser;
+    }
 };
 
 
@@ -50,19 +105,27 @@ module.exports=
          * @param request express request containing post data
          * @returns {Promise} resolves html of login page
          */
-        main: function(request)
+        main: function(request, clientAddress)
         {
-            return new Promise(function(resolve, reject)
+            if(isBanned(clientAddress))
             {
-                Promise.all([utils.include("./admin/login/login.html"),
-                    require("../../sidebar/sidebar.js").main(),
-                    processLogin(request)]).then(function(html)
+                return utils.printBannedPage();
+            }
+            else
+            {
+                return new Promise(function(resolve, reject)
                 {
-                    resolve(html.join('') + "</div>");
-                }).catch(function(err)
-                {
-                    reject(err);
-                })
-            });
+                    Promise.all([utils.include("./admin/login/login.html"),
+                        require("../../sidebar/sidebar.js").main(),
+                        processLogin(request, clientAddress)]).then(function(html)
+                    {
+                        resolve(html.join('') + "</div>");
+                    }).catch(function(err)
+                    {
+                        reject(err);
+                    })
+                });
+            }
+
         },
     };
