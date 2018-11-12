@@ -133,5 +133,17 @@ module.exports=
     printWrongHost: function()
     {
         return this.include("includes/html/incorrectHost.html");
+    },
+
+
+    /**
+     * Displays 404 error to user
+     *
+     * @param result
+     * @returns {*}
+     */
+    printBannedPage: function()
+    {
+        return this.include("includes/html/banHammer.html");
     }
 };

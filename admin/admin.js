@@ -14,7 +14,7 @@ module.exports=
      * @param request
      * @return {*|Promise}
      */
-    main: function(request)
+    main: function(request, clientAddress)
     {
         return new Promise(function(resolve, reject)
         {
