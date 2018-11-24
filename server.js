@@ -5,39 +5,40 @@
  * appropriate pages.
  */
 
-// Stores the configuration for the server
+/** Stores the configuration for the server */
 const config = require('./utils/configLoader').getConfig();
 
-//http server
+/** Port for the server to run on */
+const port = config.PORT;
+
+/** http server */
 const http = require('http');
 
-//used to parse the request URL
+/** used to parse the request URL */
 const url = require('url');
 
-//express app
+/** express app */
 const express = require("express");
 
-//express app
+/** express app */
 const app = express();
 
-//server side logging
+/** server side logging */
 const sql = require('./utils/sql');
 
-//Used for gzip compression
+/** Used for gzip compression */
 const compression = require('compression');
 
-//used for file io
-const utils = require('./utils/utils.js');
 
-//Updates the site map whenever the server is started
+/**Updates the site map whenever the server is started */
 const map = require('./utils/generateSiteMap.js');
 map.main();
 
 
-//session data for login
+/**session data for login */
 const session = require('express-session');
 
-//Initializes sessions for login
+/**Initializes sessions for login */
 app.use(session({ secret: config.SESSION_SECRET, cookie: { maxAge: 6000000 }}));
 
 
@@ -99,4 +100,4 @@ app.use(function(request, result)
 app.use(compression());
 
 
-http.createServer(app).listen(config.PORT);
+http.createServer(app).listen(port);

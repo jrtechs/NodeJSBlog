@@ -27,7 +27,6 @@ const con = mysql.createConnection({
     database: config.SQL_DATABASE
 });
 
-
 con.connect(function(err) {
     if (err)
         console.log(err);
