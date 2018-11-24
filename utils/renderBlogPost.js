@@ -111,7 +111,7 @@ module.exports=
 
                     //this line prevents older versions of pandoc from including invalid cdm scripts
                     result = result.split("<script src=\"https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML-full\" type=\"text/javascript\"></script>").join("");
-
+                    result = result.split("<script src=\"https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML\" type=\"text/javascript\"></script>").join("");
                     if(blocks == -1)
                         resolve(result);
 
