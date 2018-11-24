@@ -1,0 +1,10 @@
+{
+  "PORT": 8000,
+
+  "SESSION_SECRET": "random-data-to-seed-session-data",
+
+  "SQL_HOST": "sql-hostname",
+  "SQL_DATABASE": "sql-database-name",
+  "SQL_USER": "sql-user",
+  "SQL_PASSWORD": "sql-password"
+}

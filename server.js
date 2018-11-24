@@ -5,6 +5,9 @@
  * appropriate pages.
  */
 
+// Stores the configuration for the server
+const config = require('./utils/configLoader').getConfig();
+
 //http server
 const http = require('http');
 
@@ -31,14 +34,11 @@ const map = require('./utils/generateSiteMap.js');
 map.main();
 
 
-//port for the server to run on
-const port = 8000;
-
 //session data for login
 const session = require('express-session');
 
 //Initializes sessions for login
-app.use(session({ secret: utils.getFileLine('../session_secret'), cookie: { maxAge: 6000000 }}));
+app.use(session({ secret: config.SESSION_SECRET, cookie: { maxAge: 6000000 }}));
 
 
 const projects = ["/steam/"];
@@ -99,6 +99,4 @@ app.use(function(request, result)
 app.use(compression());
 
 
-http.createServer(app).listen(port);
-
-
+http.createServer(app).listen(config.PORT);
