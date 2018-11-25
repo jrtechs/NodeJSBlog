@@ -137,7 +137,7 @@ module.exports=
 
 
     /**
-     * Displays 404 error to user
+     * Displays a ban message to the user
      *
      * @param result
      * @returns {*}
