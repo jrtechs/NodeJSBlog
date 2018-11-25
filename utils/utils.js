@@ -52,6 +52,17 @@ module.exports=
 
 
     /**
+     *
+     * @param fileName
+     * @returns {any}
+     */
+    getFileAsJSON: function(fileName)
+    {
+        return JSON.parse(fs.readFileSync(fileName, 'utf8'));
+    },
+
+
+    /**
      * Returns all the contents of a file as a single line
      * with no break lines.
      *

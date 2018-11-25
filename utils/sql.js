@@ -1,22 +1,31 @@
+/**
+ * Boated file which handles all the SQL
+ * queries ran by the server
+ *
+ * @author Jeffery Russell
+ */
+
 const mysql = require('mysql');
 
+/** Sanitizer to clean user inputs and prevent SQL injections */
 const sanitizer = require('sanitizer');
 
-const Promise = require('promise');
-
+/** Crypto package used for hashing */
 const crypto = require('crypto');
 
+/** Used to parse post data */
 const qs = require('querystring');
 
-const utils = require('../utils/utils.js');
+/** Used to load the config file from the disk */
+const config = require('../utils/configLoader').getConfig();
 
+/** SQL connection */
 const con = mysql.createConnection({
-    host: "localhost",
-    user: "blog_user",
-    password: utils.getFileLine('../sql_secret'),
-    database: "jrtechs_blog"
+    host: config.SQL_HOST,
+    user: config.SQL_USER,
+    password: config.SQL_PASSWORD,
+    database: config.SQL_DATABASE
 });
-
 
 con.connect(function(err) {
     if (err)
