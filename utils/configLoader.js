@@ -10,13 +10,18 @@ module.exports=
     {
 
         /**
+         * Verifies the contents of the config file
+         * and returns it. If the config is incomplete,
+         * it terminates the program.
          *
          * @returns {*|any}
          */
         getConfig: function()
         {
             const configContents = ["PORT", "SESSION_SECRET",
-                "SQL_HOST", "SQL_DATABASE", "SQL_PASSWORD"];
+                "SQL_HOST", "SQL_DATABASE", "SQL_PASSWORD",
+                "CAPTCHA_SECRET", "GMAIL_ACCOUNT", "EMAIL_PASSWORD",
+                "DESTINATION_EMAIL"];
 
             var config = utils.getFileAsJSON("./config.json");
 

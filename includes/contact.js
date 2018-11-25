@@ -6,33 +6,36 @@
  * @author Jeffery Russell 8-19-18
  */
 
-//used for file IO
+/** used for file IO */
 const utils = require('../utils/utils.js');
 
-//used for static files
+/** used for static files */
 const includes = require('../includes/includes');
 
-//for parsing post data
+/** for parsing post data */
 const qs = require('querystring');
 
-//cleans form submission
+/** cleans form submission */
 const sanitizer = require('sanitizer');
 
-//used to send post data for the captcha
+/** used to send post data for the captcha */
 const Request = require('request');
 
-//sends the email using a throw away gmail account
+/** sends the email using a throw away gmail account */
 const nodemailer = require("nodemailer");
 
-//agent for sending the email
+/** agent for sending the email */
 const smtpTransport = require('nodemailer-smtp-transport');
+
+/** Used to load the config file from the disk */
+const config = require('../utils/configLoader').getConfig();
 
 
 //captcha secret
-const CAPTCHA_SECRET = utils.getFileLine("../captcha_secret");
+const CAPTCHA_SECRET = config.CAPTCHA_SECRET;
 
 //password to gmail account
-const EMAIL_PASSWORD = utils.getFileLine("../email_password");
+const EMAIL_PASSWORD = config.EMAIL_PASSWORD;
 
 
 /**
@@ -92,14 +95,14 @@ const sendEmail = function(name, email, message)
         service: 'gmail',
         host: 'smtp.gmail.com',
         auth: {
-            user: 'jrtechswebsite@gmail.com',
+            user: config.GMAIL_ACCOUNT,
             pass: EMAIL_PASSWORD
         }
     }));
 
     const mailOptions =
     {
-        to: "jeffery@jrtechs.net", // list of receivers
+        to: config.DESTINATION_EMAIL, // list of receivers
         subject: "Jrtechs.net form submission", // Subject line
         text: message, // plaintext body
         html: message

@@ -6,5 +6,11 @@
   "SQL_HOST": "sql-hostname",
   "SQL_DATABASE": "sql-database-name",
   "SQL_USER": "sql-user",
-  "SQL_PASSWORD": "sql-password"
+  "SQL_PASSWORD": "sql-password",
+
+
+  "CAPTCHA_SECRET": "captcha-secret",
+  "GMAIL_ACCOUNT": "email@gmail.com",
+  "EMAIL_PASSWORD": "email-password",
+  "DESTINATION_EMAIL": "destination email address"
 }
