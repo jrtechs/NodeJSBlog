@@ -100,12 +100,21 @@ const sendEmail = function(name, email, message)
         }
     }));
 
+    const email_message_html = "<h2><b>email:</b> " + email + "</h2><br>" +
+        "<h2><b>name:</b> " + name + "</h2><br>" +
+        "<h2>message:</h2><br><p>" + message +  "</p>";
+
+    const email_message_text = "email: " + email + "\n" +
+        "name: " + name + "\n" +
+        "message: \n" + message;
+
+
     const mailOptions =
     {
         to: config.DESTINATION_EMAIL, // list of receivers
         subject: "Jrtechs.net form submission", // Subject line
-        text: message, // plaintext body
-        html: message
+        text: email_message_text, // plaintext body
+        html: email_message_html
     };
 
     // send mail with defined transport object
