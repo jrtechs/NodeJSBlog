@@ -197,7 +197,7 @@ server {
 ```
 
 ## Projects Sites
-As I develope more projects I would like an easy way to add and host them on my website without having to create another subdomain and generate more ssl certs. I simply want the project site to be accessible under https://jrtechs.net/project_name.
+As I develop more projects I would like an easy way to add and host them on my website without having to create another subdomain and generate more ssl certs. I simply want the project site to be accessible under https://jrtechs.net/project_name.
 
 ### State Diagrm of Plan
 
