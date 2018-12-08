@@ -1,68 +1,132 @@
+Inspired by [Justin Flory](https://justinwflory.com/) and [Dan Schneiderman](http://www.schneidy.com),
+I decided to make a 2018 review post. I believe that it would be a good way to reflect upon what I did
+in 2018 and make plans for 2019. This post will be a very high level overview of the projects and
+activities that I did in 2018 -- nothing personal. Pictures say a thousand words, so, I will include a lot.
+
 # January:
 
-- Received Eagle Award
-- Started Second Semester of College
-- Started work on my new blogging platform
-- Brick hack 4
+**Eagle Ceremony**
+
+![Eagle Ceremony Picture](media/2018-review/EagleCeremony.jpg)
+
+**Started Second Semester of College**
+
+Classes:
+
+- Mechanics of Programming
+- Statistics
+- Discrete Math
+- Communications
+- Moral Issues
+
+**Brick hack 4**
+
 ![Sleep Deprived me at BrickHack 4](media/2018-review/BrickHack.jpg)
 
 # February:
 
-- RIT career faire
-![Overview Picture of the Career Faire](media/2018-review/CareerFaire.jpg)
-- New version of website goes live
+**RIT Career Fair**
+
+![Overview Picture of the Career Fair](media/2018-review/CareerFaire.jpg)
+
+**Build my Blog in Node.js**
+
+![What original website looked like](media/2018-review/newWebsite.png)
 
 # March:
 
-- Upgrading Floppy drive Project to tower structure
+**Upgrading Floppy Drive Project**
+
 ![Floppy drive project under construction](media/2018-review/FloppyDiveProject.jpg)
-- Made a new website for Hoffends
+
+**Designed Website for Hoffends**
+
+![Hoffends Website](media/2018-review/hoffends.png)
 
 # April:
 
-- Imagine RIT
+**Imagine RIT**
+
 ![RITlug imagine rit table](media/2018-review/ImagineRIT.jpg)
 
 ![RITlug imagine rit table](media/2018-review/ImagineRIT2.jpg)
 
 # May:
 
-- End of second semester
-- Started SSA research job.
+**End of Second Semester**
+
+![RIT Tiger during the summer](media/2018-review/RITSummer.jpg)
+
+**Started SSA Research Job**
+
+![Erie cannale](media/2018-review/RITSummer2.jpg)
+
 
 # June:
 
-- Steam graph project
+**Steam Graph Project**
+
 <iframe width="100%" height="315" src="https://www.youtube.com/embed/DoDaHmyIPvQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+![Steam graph project example showing 3 friend clusters](media/2018-review/steamGraph.png)
 
 # July
 
-- Summer!
+**Summer!**
 <iframe width="100%" height="315" src="https://www.youtube.com/embed/t7s2alt0sQ8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ![Taughannock Falls](media/2018-review/TaughannockFalls.jpg)
+
+![Erie cannale](media/2018-review/BikeRide2.jpg)
+
+**Updated UI for the Blog**
+
+![New theme of website](media/2018-review/newTheme.png)
 
 # August:
 
-- Presented at RIT's undergraduate research symposium.
+**Presented at RIT's Undergraduate Research Symposium**
+
 ![Poster at the undergraduate research symposium](media/2018-review/researchSymposium.jpg)
-- Second year of college starts!
-    - First year on Eboard of RITlug
+
+**Second Year of College**
+
+First year on the Eboard of RITlug as Vice President.
+
+Classes:
+
+- Linear Algebra
+- Analysis Of Algorithms
+- CS Theory
+- SWEN
+- Public Policy
 
 # September:
 
-- End of Summer :(
+**End of Summer :(**
+
 ![Biking path](media/2018-review/BikeRides.jpg)
 
 
 # October:
 
-- Hacktoberfest
+**Hacktoberfest**
+
+![Github hacktoberfest colors](media/2018-review/halloween.png)
 
 # November:
 
-- Foss [Election Night Hackathon](https://www.hackathon.com/event/8th-annual-election-night-hackathon---2018-midterms-51634099983))
+**Foss [Election Night Hackathon](https://www.hackathon.com/event/8th-annual-election-night-hackathon---2018-midterms-51634099983)**
+
 ![FOSS Election Night Hackathon](media/2018-review/electionNightHackathon.jpg)
+
+**Rochester Maker Fair**
+
+![RITlug booth at the maker faire](media/2018-review/makerFaire.jpg)
+
 
 # December:
 
-- End of Fall semester
+**End of Fall Semester**
+
+![Biking path](media/2018-review/RITSnow.jpg)
