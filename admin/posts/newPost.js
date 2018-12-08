@@ -36,6 +36,16 @@ const processPost = function(postData)
                 reject(error);
             })
         }
+        else if(post.clear_cache)
+        {
+            require("../../sites/blog.js").clearCache();
+            require("../../includes/includes.js").clearCache();
+        }
+        else if(post.git_pull)
+        {
+            const execSync = require('child_process').execSync;
+            code = execSync('git pull')
+        }
         else
         {
             resolve("");

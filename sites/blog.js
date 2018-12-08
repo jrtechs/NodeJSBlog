@@ -79,5 +79,14 @@ module.exports=
                     result.end();
                 }
             }
+        },
+
+        /**
+         * Clears the memory cache.
+         */
+        clearCache: function()
+        {
+            console.log("Blog cache cleared");
+            cache.clear();
         }
     };

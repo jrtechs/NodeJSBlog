@@ -166,5 +166,14 @@ module.exports =
     sendSVG: function(result, fileName)
     {
         sendCachedContent(fileName, 'image/svg+xml', result);
+    },
+
+    /**
+     * Clears the cache
+     */
+    clearCache: function()
+    {
+        console.log("Includes cache cleared");
+        cache.clear();
     }
 };
