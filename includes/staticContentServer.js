@@ -35,8 +35,11 @@ module.exports=
             //scripts
             else if (filename.includes(".js"))
             {
-                includes.sendJS(result, baseURL + filename);
-                return true;
+                if(baseURL.includes("includes/") || baseURL.includes("blogContent"))
+                {
+                    includes.sendJS(result, baseURL + filename);
+                    return true;
+                }
             }
             //html
             else if (filename.includes(".html"))
