@@ -17,9 +17,9 @@ module.exports=
             {
                 currentPage = Number(currentPage);
             }
+
             return new Promise(function(resolve, reject)
             {
-
                 const promises = [];
                 for(var i = (currentPage-1) * numOfPosts; i < (currentPage-1) * numOfPosts + numOfPosts; i++)
                 {
@@ -33,7 +33,7 @@ module.exports=
                                 res(html);
                             }).catch(function(error)
                             {
-                                rej(error);
+                                reject(error)
                             })
                         }));
                     }

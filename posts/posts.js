@@ -30,7 +30,7 @@ const renderPost = function(requestURL)
                 }
                 else
                 {
-                    return utils.print404();
+                    reject("Page Not Found");
                 }
             }).then(function(html)
             {
@@ -42,10 +42,7 @@ const renderPost = function(requestURL)
         }
         else
         {
-            utils.print404().then(function(html)
-            {
-               resolve("<div class='col-md-8'>" + html + "</div>");
-            });
+            reject("Page Not Found");
         }
     });
 };

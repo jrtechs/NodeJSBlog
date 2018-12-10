@@ -1,6 +1,3 @@
-//file io
-const utils = require('../utils/utils.js');
-
 //used to parse the request URL
 const url = require('url');
 

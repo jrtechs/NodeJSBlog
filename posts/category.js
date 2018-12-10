@@ -31,7 +31,7 @@ const renderPosts = function(resultURL, page)
     }
     else
     {
-        return utils.print404();
+        reject("Page Not Found");
     }
 };
 

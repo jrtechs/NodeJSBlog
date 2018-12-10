@@ -8,6 +8,9 @@ const contentLoader = require('../includes/staticContentServer.js');
 //caching program to make the application run faster
 const cache = require('memory-cache');
 
+//file io
+const utils = require('../utils/utils.js');
+
 /**
  * @author Jeffery Russell 11-3-18
  *
@@ -59,11 +62,13 @@ module.exports=
 
                         if (urlSplit.length >= 2 && urlSplit[1] === 'category') //single category page
                             file = "../posts/category.js";
-
                         else
+                        {
                             file = "../posts/posts.js";
+                            page = 1; // all posts are single page, everyone must be one to ensure
+                            // cache is not tricked into storing same blog post a ton of times
+                        }
                     }
-
 
                     Promise.all([includes.printHeader(),
                         require(file).main(filename, request),
@@ -72,11 +77,14 @@ module.exports=
                         result.write(content.join(''));
                         result.end();
                         cache.put(filename + "?page=" + page, content.join(''));
-
                     }).catch(function (err)
                     {
-                        console.log(err);
-                        throw err;
+                        cache.del(filename + "?page=" + page);
+                        utils.print404().then(function(content)
+                        {
+                            result.write(content);
+                            result.end();
+                        })
                     });
                 }
                 else
