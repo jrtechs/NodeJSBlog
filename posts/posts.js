@@ -1,7 +1,4 @@
-//file io
-const utils = require('../utils/utils.js');
-
-//DB queries
+/** DB queries */
 const sql = require('../utils/sql');
 
 
@@ -9,7 +6,6 @@ const sql = require('../utils/sql');
  * Function responsible for calling the appropriate sql requests to query
  * database and serve correct blog post
  *
- * @param res the result sent to the client
  * @param requestURL url requested from client
  * @return {*|Promise} returns a resolved promise to preserve execution order
  */
@@ -59,7 +55,8 @@ module.exports=
     {
         return new Promise(function(resolve, reject)
         {
-            Promise.all([renderPost(requestURL), require("../sidebar/sidebar.js").main()]).then(function(content)
+            Promise.all([renderPost(requestURL),
+                require("../sidebar/sidebar.js").main()]).then(function(content)
             {
                 resolve(content.join(''));
             }).catch(function(error)

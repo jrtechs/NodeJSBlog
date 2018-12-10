@@ -1,11 +1,13 @@
-
 module.exports=
     {
         /**
-         * Calls posts and sidebar modules to render blog contents in order
+         * Renders a bunch of blog post  previews to the user
          *
-         * @param res
-         * @param fileName request url
+         * @param baseURL-- url of the page
+         * @param posts -- sql data about the posts to render
+         * @param currentPage -- the current page to render
+         * @param numOfPosts -- number of posts to render
+         * @returns {Promise} renders the html of the posts
          */
         main: function(baseURL, posts, currentPage, numOfPosts)
         {

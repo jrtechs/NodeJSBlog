@@ -1,11 +1,8 @@
-//DB query
+/** DB query */
 const sql = require('../utils/sql');
 
-//file IO
-const utils = require('../utils/utils.js');
-
+/** Object used to render blog post previews */
 const batchPreview = require('../posts/renderBatchOfPreviewes');
-
 
 /**
  * Renders all posts in a single category
@@ -40,8 +37,9 @@ module.exports=
         /**
          * Calls posts and sidebar modules to render blog contents in order
          *
-         * @param res
-         * @param fileName request url
+         * @param requestURL
+         * @param request
+         * @returns {Promise}
          */
         main: function(requestURL, request)
         {
