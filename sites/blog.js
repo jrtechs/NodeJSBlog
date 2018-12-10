@@ -38,7 +38,12 @@ module.exports=
             }
             else
             {
-                const html = cache.get(filename);
+                var page = request.query.page;
+                if(typeof page == "undefined")
+                    page = 1;
+                page = Number(page);
+
+                const html = cache.get(filename + "?page=" + page);
 
                 result.writeHead(200, {'Content-Type': 'text/html'});
                 if (html == null) {
@@ -59,13 +64,14 @@ module.exports=
                             file = "../posts/posts.js";
                     }
 
+
                     Promise.all([includes.printHeader(),
                         require(file).main(filename, request),
                         includes.printFooter()]).then(function (content)
                     {
                         result.write(content.join(''));
                         result.end();
-                        cache.put(filename, content.join(''));
+                        cache.put(filename + "?page=" + page, content.join(''));
 
                     }).catch(function (err)
                     {

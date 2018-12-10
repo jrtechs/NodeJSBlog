@@ -196,7 +196,7 @@ module.exports=
      */
     getRecentPostSQL: function()
     {
-        return fetch("select * from posts order by post_id desc limit 10");
+        return fetch("select * from posts order by post_id desc");
     },
 
 
