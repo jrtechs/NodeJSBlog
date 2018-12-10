@@ -1,9 +1,8 @@
-//DB query
+/** DB query */
 const sql = require('../utils/sql');
 
-//file IO
-const utils = require('../utils/utils.js');
-
+/** Object used to render blog post previews */
+const batchPreview = require('../posts/renderBatchOfPreviewes');
 
 /**
  * Renders all posts in a single category
@@ -11,7 +10,7 @@ const utils = require('../utils/utils.js');
  * @param resultURL
  * @returns {*}
  */
-const renderPosts = function(resultURL)
+const renderPosts = function(resultURL, page)
 {
     const splitURL = resultURL.split("/");
     if(splitURL.length >= 3)
@@ -20,38 +19,16 @@ const renderPosts = function(resultURL)
         {
             sql.getPostsFromCategory(splitURL[2]).then(function(posts)
             {
-                var promises = [];
-                posts.forEach(function(p)
-                {
-                    promises.push(new Promise(function(res, rej)
-                    {
-                        require("../posts/singlePost.js")
-                            .renderPreview(p).then(function(html)
-                        {
-                            res(html);
-                        }).catch(function(error)
-                        {
-                            rej(error);
-                        })
-                    }));
-                });
-
-                Promise.all(promises).then(function(content)
-                {
-                    resolve("<div class='col-md-8'>" + content.join('') + "</div>");
-                }).catch(function(error)
-                {
-                    reject(error);
-                });
-            }).catch(function(err)
+                resolve(batchPreview.main(resultURL, posts, page, 5));
+            }).catch(function(error)
             {
-                reject(err);
+                reject(error);
             })
         });
     }
     else
     {
-        return utils.print404();
+        reject("Page Not Found");
     }
 };
 
@@ -60,14 +37,16 @@ module.exports=
         /**
          * Calls posts and sidebar modules to render blog contents in order
          *
-         * @param res
-         * @param fileName request url
+         * @param requestURL
+         * @param request
+         * @returns {Promise}
          */
         main: function(requestURL, request)
         {
             return new Promise(function(resolve, reject)
             {
-                Promise.all([renderPosts(requestURL),
+                var page = request.query.page;
+                Promise.all([renderPosts(requestURL, page),
                     require("../sidebar/sidebar.js").main()]).then(function(content)
                 {
                     resolve(content.join(''));

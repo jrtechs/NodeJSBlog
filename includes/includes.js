@@ -50,9 +50,9 @@ const sendCachedContent = function(path, type, result)
                     'Vary': 'Accept-Encoding'});
             result.write(content);
             result.end();
-            cache.put(path, content);
         }).catch(function(error)
         {
+            cache.del(path);
             console.log(error);
         });
     }
