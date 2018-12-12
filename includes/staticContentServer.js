@@ -32,10 +32,18 @@ module.exports=
                 includes.sendCSS(result, baseURL + filename);
                 return true;
             }
+            else if (filename.includes(".json"))
+            {
+                if(filename.includes("includes/") || filename.includes("blogContent"))
+                {
+                    includes.sendHTML(result, baseURL + filename);
+                    return true;
+                }
+            }
             //scripts
             else if (filename.includes(".js"))
             {
-                if(baseURL.includes("includes/") || baseURL.includes("blogContent"))
+                if(filename.includes("includes/") || filename.includes("blogContent"))
                 {
                     includes.sendJS(result, baseURL + filename);
                     return true;
