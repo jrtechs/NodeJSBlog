@@ -1,5 +1,8 @@
-
 # Insertion Sort
+
+Selection sort although not very efficient is often used when the arrays you are sorting are very small.
+Another benefit of insertion sort is that it is very easy to program.
+Essentially, this algorithm has a sorted section which slowly grows as it pull in new elements to their sorted position.
 
 ## Functional Notation
 
@@ -14,6 +17,13 @@ i(x,y::ys) = x::y::ys, if x \leq y\\
 i(x,y::yx) = y::i(x, ys) otherwise
 $$
 
+If you are not familiar with functional programming, this way of writing insertion sort may scare you.
+Essentially the 's' stands for sort and the 'i' stands for insert.
+For the sort section you are taking off the first element and inserting it into the rest of the sorted array.
+For the insert section you are placing the element in its sorted position.
+
+
+## Imperative Notation
 ```Python
 def insertionSort(alist):
     for index in range(1,len(alist)):
@@ -26,7 +36,13 @@ def insertionSort(alist):
     return alist
 ```
 
+This notation will make python programmers feel a lot more comfortable.
+
 # Merge Sort
+
+Merge sort is a classic example of a divide and conquer algorithm.
+Each iteration, the problem is cut in half making sorting it easier.
+Once you have your array divided into sorted sections, it is easy to combine into a larger sorted array.
 
 ## Functional Notation
 
@@ -76,6 +92,12 @@ def merge(a, b):
 
 # Quick Sort
 
+This sorting algorithm asymptotically is the same as merge sort: $O(nlog(n))$.
+However, in practice this algorithm is actually faster than merge sort due to constant factors.
+The general premise of this algorithm is that each iteration you will divide your array into three sections : less, equal, greater.
+The items in each section are based on a random element in the array.
+You will continue this process until you get every element by itself which makes it trivial to sort.
+
 ## Functional Notation
 
 $$
@@ -83,6 +105,7 @@ qSort([]) = []\\
 qSort(x::xs) = qSort([y \in xs | y < x]) + [y \in x:xs | y = x] + qSort([y \in xs | y > x])\\
 $$
 
+This functional notation heavily uses the notion of array comprehensions.
 
 ## Memory Greedy Solution
 
@@ -178,6 +201,8 @@ def iterative_quick_sort_helper(data, left, right):
 
 
 # Time Complexities Overview
+
+
 
 |   Algorithm  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;    |    Worst    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |     Average     &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  |     Best   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;   |
 |---    |:---    |:---    |:---    |
