@@ -1,14 +1,87 @@
 
 # Insertion Sort
 
+## Functional Notation
 
-# Heap Sort
+$$
+s([]) = []\\
+s(x::xs) = i(x, s(xs))
+$$
 
+$$
+i(x, []) = [x]\\
+i(x,y::ys) = x::y::ys, if x \leq y\\
+i(x,y::yx) = y::i(x, ys) otherwise
+$$
+
+```Python
+def insertionSort(alist):
+    for index in range(1,len(alist)):
+        currentvalue = alist[index]
+        position = index
+        while position > 0 and alist[position-1] > currentvalue:
+            alist[position] = alist[position-1]
+            position = position-1
+        alist[position] = currentvalue
+    return alist
+```
 
 # Merge Sort
 
+## Functional Notation
 
-#Quick Sort
+$$
+d([]) = ([],[])\\
+d([x]) = ([x],[])\\
+d(x_1::x_2::xs) = let (b_1, b_2) = d(xs) in (x_1::b_1, x_2::b_2)\\
+$$
+
+$$
+mSort([]) = []\\
+mSort([x]) = [x]\\
+mSort(xs) = let(b_1, b_2) = d(xs) in mSort(b_1) combine mSort(b_2)\\
+$$
+
+## Python Implementation
+
+```Python
+def merge_sort(a):
+    if len(a) < 2:
+        return a
+    l = a[0:len(a)//2]
+    r = a[len(a)//2:]
+    return merge(merge_sort(l), merge_sort(r))
+
+
+def merge(a, b):
+    out = []
+    i = 0
+    j = 0
+    while i < len(a) or j < len(b):
+        if i >= len(a):
+            out.append(b[j])
+            j += 1
+        elif j >= len(b):
+            out.append(a[i])
+            i += 1
+        else:
+            if a[i] <= b[j]:
+                out.append(a[i])
+                i += 1
+            else:
+                out.append(b[j])
+                j += 1
+    return out
+```
+
+# Quick Sort
+
+## Functional Notation
+
+$$
+qSort([]) = []\\
+qSort(x::xs) = qSort([y \in xs | y < x]) + [y \in x:xs | y = x] + qSort([y \in xs | y > x])\\
+$$
 
 
 ## Memory Greedy Solution
@@ -102,3 +175,12 @@ def iterative_quick_sort_helper(data, left, right):
         iterative_quick_sort_helper(data, left, pivot -1)
         iterative_quick_sort_helper(data, pivot+1, right)
 ```
+
+
+# Time Complexities Overview
+
+|   Algorithm  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;    |    Worst    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |     Average     &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  |     Best   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;   |
+|---    |:---    |:---    |:---    |
+| Insertion |  $0(n^2)$ | $0(n^2)$ | $0(n^2)$ |
+| Merge     | $0(nlog(n))$ | $0(nlog(n))$ | $0(nlog(n))$ |
+| Quick      | $0(nlog(n))$ | $0(nlog(n))$ | $0(n^2)$ |
