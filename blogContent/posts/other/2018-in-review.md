@@ -66,14 +66,15 @@ Classes:
 
 **Steam Graph Project**
 
-<iframe width="100%" height="315" src="https://www.youtube.com/embed/DoDaHmyIPvQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<youtube src="DoDaHmyIPvQ" />
 
 ![Steam graph project example showing 3 friend clusters](media/2018-review/steamGraph.png)
 
 # July
 
 **Summer!**
-<iframe width="100%" height="315" src="https://www.youtube.com/embed/t7s2alt0sQ8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<youtube src="t7s2alt0sQ8" />
 
 ![Taughannock Falls](media/2018-review/TaughannockFalls.jpg)
 

@@ -23,7 +23,7 @@ with the Arduino allows the songs to be loaded via a MIDI file.
 
 That brings us up to the present. My previous 8 floppy drive orchestra was not
 transportable and took up a ton of space. When I decided to present this project
-at Imagine RIT with RITLUG, I knew I had to rebuild my orchestra to be portable
+at Imagine RIT with RITlug, I knew I had to rebuild my orchestra to be portable
 and compact.
 
 There are plenty of tutorials online demonstrating how to build floppy
