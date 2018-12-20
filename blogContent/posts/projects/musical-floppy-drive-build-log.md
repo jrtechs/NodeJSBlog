@@ -6,9 +6,6 @@ floppy drives, however, there are thousands of videos on YouTube.
 This project first started over a year ago when I connected two floppy drives to
 a Raspberry Pi to play the Star Wars theme.
 
-<iframe width="100%" height="315" src="https://www.youtube.com/embed/wcnUvPMpqjA" frameborder="0" allow="autoplay;
-encrypted-media" allowfullscreen></iframe>
-
 <youtube src="wcnUvPMpqjA" />
 
 Although this was fun, there was hardly any software for playing different music
@@ -18,9 +15,7 @@ however, that took hours to input just a single song.
 A half a year ago I got an Arduino board and built a new and improved floppy
 drive orchestra.
 
-<iframe width="100%" height="315"
-src="https://www.youtube.com/embed/qwbcrR-6dTU" frameborder="0" allow="autoplay;
-encrypted-media" allowfullscreen></iframe>
+<youtube src="qwbcrR-6dTU" />
 
 What is nice about using an Arduino, is that the software used is more
 developed. Unlike the program I used with the Raspberry Pi, the software used
@@ -423,4 +418,4 @@ bunch of MIDI files that work’s well with floppy drives.
 
 I hope that this tutorial was helpful.
 
-<iframe width="100%" height="315" src="https://www.youtube.com/embed/X0FeJPFKpQw" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<youtube src="X0FeJPFKpQw" />

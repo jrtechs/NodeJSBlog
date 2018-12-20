@@ -17,7 +17,7 @@ for giving me the opportunity to present at the Maker Faire.
 Musical floppy drives are floppy drives wired to an Arduino to play music. I initially started with two floppy drives;
 however, that grew to 8 drives very fast. 
 
-<iframe width="100%" height="315" src="https://www.youtube.com/embed/Y5msiFa54Ug" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<youtube src="Y5msiFa54Ug" />
 
 I currently have 10 floppy drives stacked together in a tower like structure to make it easier to take to places
 like the Maker Faire and [Imagine RIT](https://www.rit.edu/imagine/). 

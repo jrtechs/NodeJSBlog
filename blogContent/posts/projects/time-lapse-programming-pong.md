@@ -1,4 +1,4 @@
-<iframe width="100%" height="315" src="https://www.youtube.com/embed/5OZfKYzYHPM" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<youtube src="5OZfKYzYHPM" />
 
 Downloads:
 
