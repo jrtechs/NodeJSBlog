@@ -112,6 +112,28 @@ module.exports=
                     //this line prevents older versions of pandoc from including invalid cdm scripts
                     result = result.split("<script src=\"https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML-full\" type=\"text/javascript\"></script>").join("");
                     result = result.split("<script src=\"https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML\" type=\"text/javascript\"></script>").join("");
+
+                    //stuff for youtube videos
+                    var re = /\<youtube .*?>/;
+
+                    //<youtube src="" />
+                    while (result.search(re) != -1)
+                    {
+                        var ytid = result.substring(result.search(re) + 14, result.search(re)+ 11 + 14);
+                        var youtubeHTML = "<div class=\"wrapper\">\n" +
+                            "\t<div class=\"youtube\" data-embed=\"" +
+                             ytid +
+                            "\" />\n" +
+                            "\t\t<div class=\"play-button\"></div>\n" +
+                            "\t</div>\n" +
+                            "</div>\n";
+
+                        var original = "<youtube src=\"" + ytid + "\" />";
+
+                        result = result.split(original).join(youtubeHTML);
+                    }
+
+
                     if(blocks == -1)
                         resolve(result);
 
