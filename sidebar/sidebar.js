@@ -12,7 +12,7 @@ module.exports=
         {
             return new Promise(function(resolve, reject)
             {
-                Promise.all([utils.include("sidebar/sidebar.html"),
+                Promise.all([utils.include("sidebar/projectSidebar.html"),
                     require("../sidebar/recentPosts.js").main(),
                     require("../sidebar/categoriesSideBar.js").main()]).then(function(content)
                 {
