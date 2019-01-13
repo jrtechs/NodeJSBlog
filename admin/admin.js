@@ -1,20 +1,29 @@
 /**
- * Renders the admin page contents
+ * Determines what template and controls that will be
+ * displayed based on the url such as
+ *  /
+ *  /posts
+ *  /downloads
+ *
+ *  For each controls it calls that "pages" associated javascript file
+ *  which fetches the template, deals with post data and gathers context
+ *  for the template engine.
  */
 
 //file IO
 const utils = require('../utils/utils.js');
 
 
-
-
 module.exports=
 {
     /**
-     * Method calls the admin widgets it correct order
      *
-     * @param request
-     * @return {*|Promise}
+     * @param request -- used to get post data
+     * @param clientAddress -- used to see if user is banned for login
+     * @param templateContext -- used by whiskers for information to plug
+     * in the template
+     * @param filename -- specific admin page requested
+     * @returns {Promise} resolves once everything has been added to the template context
      */
     main: function(request, clientAddress, templateContext, filename)
     {
@@ -48,19 +57,6 @@ module.exports=
                     {
                         console.log(error);
                     });
-
-                    // console.log(postData);
-                    // Promise.all([require("./posts/newPost.js").main(postData),
-                    //     require("./category/addCategory.js").main(postData),
-                    //     require("./posts/editPost.js").main(postData),
-                    //     require("./downloads/adminDownloads.js").main(postData)])
-                    //         .then(function(content)
-                    // {
-                    //     resolve(content.join(''));
-                    // }).catch(function(error)
-                    // {
-                    //     reject(error);
-                    // });
                 });
             }
             else

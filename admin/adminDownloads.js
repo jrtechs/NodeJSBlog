@@ -5,10 +5,9 @@
  * @author Jeffery Russell 6-30-18
  */
 
+/** Whiskers template file */
 const TEMPLATE_FILE = "admin/adminDownloads.html";
 
-//file IO
-const utils = require('../utils/utils.js');
 
 const includes = require('../includes/includes.js');
 
@@ -50,12 +49,9 @@ const addDownloadPostData = function(postData)
 
 
 
-
 /**
- * Handel form requests from the downloads table
- *
- * @param postData
- * @returns {*|Promise}
+ * Removes a download if requested by the
+ * post data from an admin.
  */
 const removeDownloads = function(postData)
 {
@@ -81,11 +77,14 @@ const removeDownloads = function(postData)
 
 
 /**
- * Displays all the download information in a table
- * @param postData
- * @returns {*|Promise}
+ * Fetches the download items in the database so that
+ * the template engine can use it to display them in
+ * a table.
+ *
+ * @param templateContext-- context item used by whiskers
+ * @returns {Promise}
  */
-const displayDownloads = function(postData, templateContext)
+const displayDownloads = function(templateContext)
 {
     return new Promise(function(resolve, reject)
     {
@@ -103,22 +102,21 @@ const displayDownloads = function(postData, templateContext)
 
 module.exports=
 {
-    /**
-     * Renders tha download section of the admin page
+    /** Fetches context information for the template and handles
+     * post data for the downloads.
      *
-     * @param postData
-     * @returns {Promise}
+     * @param postData posted by user
+     * @param templateContext json object used as the template context
+     * @returns {Promise} renders the template used for this page
      */
     main: function(postData, templateContext)
     {
-        console.log(postData);
-        console.log("downloads page called");
         return new Promise(function(resolve, reject)
         {
             Promise.all([includes.fetchTemplate(TEMPLATE_FILE),
                 addDownloadPostData(postData),
                 removeDownloads(postData),
-                displayDownloads(postData, templateContext)]).then(function(template)
+                displayDownloads(templateContext)]).then(function(template)
             {
                 resolve(template[0]);
             }).catch(function(error)

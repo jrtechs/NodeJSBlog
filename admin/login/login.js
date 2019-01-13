@@ -6,7 +6,7 @@ const sql = require('../../utils/sql');
 
 const qs = require('querystring');
 
-const DEBUG = true;
+const DEBUG = false;
 
 
 /**

@@ -1,0 +1,68 @@
+<div class="row">
+    <div class="col-12">
+        {if editPost}
+            <div class='blogPost'>
+                <h1 class="text-center">Edit Post</h1>
+                <form action="/admin/posts" method ="post" >
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="edit_cat_num" value='{post.category_id}' required>
+                        <label class="w3-label w3-validate">Category Number</label>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="edit_name_new" value='{post.name}' required>
+                        <label class="w3-label w3-validate">Post Title</label>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="edit_pic" value='{post.picture_url}' required>
+                        <label class="w3-label w3-validate">Picture URL</label>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="date" name="edit_date" value='{post.published}' required>
+                        <label class="w3-label w3-validate">Published Date</label>
+                    </div>
+                    <div>
+                        <input type="submit" name="submit" value="Edit" class="btn btn-lg btn-secondary"/>
+                    </div>
+                    <input type='hidden' name='edit_post_2' value='{post.post_id}'/>
+                </form>
+            </div>
+            <br>
+        {/if}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class='blogPost p-2'>
+            <h1 class="text-center">Posts</h1>
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <td>Category #</td>
+                        <td>Name</td>
+                        <td>Header Picture</td>
+                        <td>Date</td>
+                        <td>Edit</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {for post in posts}
+                        <tr>
+                            <td>{post.category_id}</td>
+                            <td>{post.name}</td>
+                            <td>{post.picture_url}</td>
+                            <td>{post.published}</td>
+                            <td>
+                                <form action="/admin/posts" method ="post" >
+                                    <input type="submit" name="submit" value="Edit" class="btn btn-secondary"/>
+                                    <input type='hidden' name='edit_post' value='{post.post_id}' />
+                                </form>
+                            </td>
+                        </tr>
+                    {/for}
+                </tbody>
+            </table>
+        </div>
+        <br>
+    </div>
+</div>
