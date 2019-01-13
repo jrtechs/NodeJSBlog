@@ -4,6 +4,10 @@ const includes = require('../includes/includes.js');
 //used to append static content to result
 const contentLoader = require('../includes/staticContentServer.js');
 
+const whiskers = require('whiskers');
+
+const TEMPLATE_FILE="blog/blogMain.html";
+
 
 //caching program to make the application run faster
 const cache = require('memory-cache');
@@ -49,7 +53,8 @@ module.exports=
                 const html = cache.get(filename + "?page=" + page);
 
                 result.writeHead(200, {'Content-Type': 'text/html'});
-                if (html == null) {
+                if (html == null)
+                {
                     var file = "";
 
                     if (filename === '' || filename === '/')
@@ -69,16 +74,19 @@ module.exports=
                             // cache is not tricked into storing same blog post a ton of times
                         }
                     }
-
-                    Promise.all([includes.printHeader(),
-                        require(file).main(filename, request),
-                        includes.printFooter()]).then(function (content)
+                    var templateContext = Object();
+                    Promise.all([includes.fetchTemplate(TEMPLATE_FILE),
+                        includes.printHeader(templateContext),
+                        includes.printFooter(templateContext),
+                        require("../sidebar/sidebar.js").main(templateContext)])
+                            .then(function (content)
                     {
-                        result.write(content.join(''));
+                        result.write(whiskers.render(content[0], templateContext));
                         result.end();
                         cache.put(filename + "?page=" + page, content.join(''));
                     }).catch(function (err)
                     {
+                        console.log(err);
                         cache.del(filename + "?page=" + page);
                         utils.print404().then(function(content)
                         {
