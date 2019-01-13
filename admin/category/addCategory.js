@@ -8,71 +8,10 @@ const sql = require('../../utils/sql');
 const qs = require('querystring');
 
 
-/**
- * Displays all the categories in the database
- * @return {*|Promise}
- */
-const printCategories = function()
-{
-    var html = "<div class=\"blogPost\">" +
-        "<h1 class=\"text-center\">Categories</h1>" +
-        "<div class=\"\"><table class=\"table table-striped\">" +
-        "<thead class=\"thead-dark\">" +
-        "<tr>" +
-        "<td>Name</td><td>URL</td><td>Edit</td>" +
-        "</tr></thead><tbody>";
-
-    return new Promise(function(resolve, reject)
-    {
-        sql.getCategories().then(function(categories)
-        {
-            categories.forEach(function(c)
-            {
-                html +="<tr>" +
-                    "<td>" + c.name + "</td>" +
-                    "<td>" + c.url + "</td>" +
-                    "<td>" + c.category_id + "</td>" +
-                    "</tr>";
-            });
-            resolve(html + "</tbody></table></div></div>");
-        }).catch(function(error)
-        {
-            reject(error);
-        })
-    });
-};
 
 
-/**
- * Checks for post data regarding adding a new category.
- * If a post is made with add_category, it parses the url-- replaces spaces
- * with dashes -- and calls a insert method on the database
- *
- * @param postData
- * @return {*|Promise}
- */
-const processPost = function(postData)
-{
-    return new Promise(function(resolve, reject)
-    {
-        const post = qs.parse(postData);
-        if(post.add_category)
-        {
-            const url = post.add_category.split(" ").join("-").toLowerCase();
-            const q = "insert into categories (name, url) values " +
-                "('" + post.add_category + "','" + url + "')";
-            if(sql.insert(q) != 0)
-            {
-                console.log("category added");
-            }
-            else
-            {
-                console.log("error adding category");
-            }
-        }
-        resolve("");
-    });
-};
+
+
 
 
 module.exports=

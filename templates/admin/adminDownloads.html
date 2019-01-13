@@ -5,7 +5,7 @@
         <div class="blogPost">
             <h1 class="text-center">Add Download</h1>
 
-            <form action="/admin" method ="post" class="p-2">
+            <form action="/admin/downloads/" method ="post" class="p-2">
                 <div class="form-group">
                     <input class="form-control" type="text" name="add_download_name" required>
                     <label>Download Name</label>
@@ -51,9 +51,9 @@
                                     {download.download_count}
                                 </td>
                                 <td>
-                                    <form action="/admin/downloads" method ="post" >
+                                    <form action="/admin/downloads/" method ="post" >
                                         <input type="submit" name="submit" value="Delete" class="btn btn-secondary"/>
-                                        <input type='hidden' name='delete_download' value='{download_id}' />
+                                        <input type='hidden' name='delete_download' value='{download.download_id}' />
                                     </form>
                                 </td>
                             </tr>

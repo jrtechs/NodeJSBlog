@@ -41,11 +41,10 @@ module.exports=
 
                 var templateContext = Object();
                 Promise.all([includes.printAdminHeader(templateContext),
-                    require(file).main(request, clientAddress, templateContext),
+                    require(file).main(request, clientAddress, templateContext, filename),
                     includes.printFooter(templateContext),
                     includes.fetchTemplate("admin/adminMain.html")]).then(function(content)
                 {
-
                     result.write(whiskers.render(content.join(''), templateContext));
                     result.end();
 
