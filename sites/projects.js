@@ -32,6 +32,7 @@ module.exports=
 
             if (!contentLoader.serveStaticContent(request, result, filename, "/blogContent/projects"))
             {
+                console.log(filename);
                 //do something?
             }
         }

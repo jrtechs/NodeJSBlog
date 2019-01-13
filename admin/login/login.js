@@ -15,7 +15,7 @@ const qs = require('querystring');
  * @param request
  * @returns {Promise}
  */
-const processLogin = function(request, clientAddress)
+const processLogin = function(request, clientAddress, templateContext)
 {
     return new Promise(function(resolve, reject)
     {
@@ -37,10 +37,12 @@ const processLogin = function(request, clientAddress)
                     //what actually logs in the user
                     request.session.user = loginResult.user;
                     console.log("user has logged in");
-                    resolve("<meta http-equiv=\"refresh\" content=\"0\">");
+                    templateContext.goodLoginAttempt = true;
+                    resolve();
                 }
                 else
                 {
+                    templateContext.invalid = true;
                     banIP(clientAddress);
                     console.log("Invader!");
                     resolve("Wrong!");
@@ -110,27 +112,26 @@ module.exports=
          * @param request express request containing post data
          * @returns {Promise} resolves html of login page
          */
-        main: function(request, clientAddress)
+        main: function(request, clientAddress, templateContext)
         {
-            if(isBanned(clientAddress))
+            return new Promise(function(resolve, reject)
             {
-                return utils.printBannedPage();
-            }
-            else
-            {
-                return new Promise(function(resolve, reject)
+                if(isBanned(clientAddress))
                 {
-                    Promise.all([utils.include("./admin/login/login.html"),
-                        require("../../sidebar/sidebar.js").main(),
-                        processLogin(request, clientAddress)]).then(function(html)
+                    templateContext.banned = true;
+                    resolve();
+                }
+                else
+                {
+                    processLogin(request, clientAddress, templateContext).then(function()
                     {
-                        resolve(html.join('') + "</div>");
+                        resolve();
                     }).catch(function(err)
                     {
                         reject(err);
                     })
-                });
-            }
+                }
+            });
 
         },
     };

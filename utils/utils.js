@@ -31,6 +31,23 @@ module.exports=
         });
     },
 
+    includeInObject: function(key, context, fileName)
+    {
+        return new Promise(function(resolve, reject)
+        {
+            module.exports.include(fileName).then(function(result)
+            {
+                context[key] = result;
+                resolve();
+            }).catch(function(error)
+            {
+                context[key] = "File Not Found";
+                reject(error);
+                console.log(error);
+            })
+        })
+    },
+
 
     /**
      * Method which return the contents of a file as a string
