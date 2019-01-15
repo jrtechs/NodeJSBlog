@@ -69,7 +69,7 @@ module.exports=
                             file = "../blog/category.js";
                         else
                         {
-                            file = "../blog/blog.js";
+                            file = "../blog/posts.js";
                             page = 1; // all blog are single page, everyone must be one to ensure
                             // cache is not tricked into storing same blog post a ton of times
                         }
@@ -82,10 +82,10 @@ module.exports=
                         require("../sidebar/sidebar.js").main(templateContext)])
                             .then(function (content)
                     {
-                        console.log(templateContext);
-                        result.write(whiskers.render(content[0], templateContext));
+                        var html = whiskers.render(content[0], templateContext);
+                        result.write(html);
                         result.end();
-                        cache.put(filename + "?page=" + page, content.join(''));
+                        cache.put(filename + "?page=" + page, html);
                     }).catch(function (err)
                     {
                         console.log(err);

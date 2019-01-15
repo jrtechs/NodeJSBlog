@@ -1,0 +1,41 @@
+{header}
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-8 col-12">
+            {for post in posts}
+                <div class="blogPost">
+                    {if post.hasPicture}
+                        <img src="/blogContent/headerImages/{post.picture_url}" style="width:100%;">
+                    {/if}
+
+                    <div class="p-4">
+                        <h3><b>{post.name}</b></h3>
+                        <h5>
+                            <span class="w3-opacity">{post.published}</span>
+                        </h5>
+
+                        {post.blogBody}
+                    </div>
+
+                </div>
+                <br><br>
+            {else}
+                <div class="row p-lg-0">
+                    <h1 class="align-content-center">Page Not Found</h1>
+                    <div class="align-content-center">
+                        <img src="/includes/img/404.jpg" alt="Page not found" width="70%" />
+                    </div>
+                </div>
+                <br><br>
+            {/for}
+        </div>
+        <div class="col-md-4 col-4">
+            {>sideBar}
+        </div>
+    </div>
+
+</div>
+
+{footer}

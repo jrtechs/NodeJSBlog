@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="list-group">
+        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+            <h5 class="mb-1">Project Sites</h5>
+        </a>
+        <a class="list-group-item" href='https://jrtechs.net/steam/'>Steam Graph Analysis<br></a>
+        <a class="list-group-item" href='https://jrtechs.me/'>Portfolio<br></a>
+        <a class="list-group-item" href='https://clubpanda.jrtechs.net/'>Club Panda<br></a>
+    </div>
+</div>
+<br>
+
+<div class="container">
+    <div class="list-group">
+        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+            <h5 class="mb-1">Recent Posts</h5>
+        </a>
+        {for recentPost in recentPosts}
+            <a class="list-group-item" href='{recentPost.url}'>{recentPost.name}<br></a>
+        {/for}
+    </div>
+</div>
+<br>
+
+<div class="container">
+    <div class="list-group">
+        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+            <h5 class="mb-1">Categories</h5>
+        </a>
+        {for cat in categories}
+            <a class="list-group-item" href='{cat.url}'>{cat.name}<br></a>
+        {/for}
+    </div>
+</div>
+<br>
+

@@ -28,7 +28,6 @@ module.exports=
                     {
                         blogBodyRenderer.renderBatchOfPosts(requestURL, posts, page, 5, templateContext).then(function()
                         {
-                            console.log("good");
                             resolve();
                         });
                     }).catch(function()

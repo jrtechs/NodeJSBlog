@@ -94,9 +94,6 @@ module.exports=
                     + postURL + ".md";
                 var markDown = utils.getFileContents(pathName).toString();
 
-                console.log(pathName);
-                // console.log(markDown);
-
                 markDown = markDown.split("(media/").join("(" + "../blogContent/posts/"
                     + categoryURL + "/media/");
 
@@ -223,7 +220,7 @@ module.exports=
                     {
                         promises.push(new Promise(function(res, rej)
                         {
-                            module.exports.generateBlogPost(posts[i], 3).then(function(tempContext)
+                            module.exports.generateBlogPost(posts[i], posts.length === 1 ? -1: 3).then(function(tempContext)
                             {
                                 res(tempContext);
                             }).catch(function(error)

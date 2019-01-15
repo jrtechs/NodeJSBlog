@@ -130,14 +130,7 @@ module.exports=
 
                     fetch(q2).then(function (result_posts)
                     {
-                        if(result_posts != 0)
-                        {
-                            resolve(result_posts[0]);
-                        }
-                        else
-                        {
-                            resolve(0);
-                        }
+                        resolve(result_posts);
                     });
                 }
                 else

@@ -1,48 +1,8 @@
 /** DB queries */
 const sql = require('../utils/sql');
 
-
-/**
- * Function responsible for calling the appropriate sql requests to query
- * database and serve correct blog post
- *
- * @param requestURL url requested from client
- * @return {*|Promise} returns a resolved promise to preserve execution order
- */
-const renderPost = function(requestURL)
-{
-    return new Promise(function(resolve, reject)
-    {
-        const splitURL = requestURL.split("/");
-
-        //user entered /category/name/ or /category/name
-        if(splitURL.length == 3 || splitURL.length == 4)
-        {
-            sql.getPost(requestURL).then(function(post)
-            {
-                if(post != 0)
-                {
-                    return require(".//singlePost.js").renderPost(post);
-                }
-                else
-                {
-                    reject("Page Not Found");
-                }
-            }).then(function(html)
-            {
-                resolve("<div class='col-md-8'>" + html + "</div>");
-            }).catch(function(error)
-            {
-                reject(error);
-            })
-        }
-        else
-        {
-            reject("Page Not Found");
-        }
-    });
-};
-
+/** Object used to render blog post previews */
+const blogBodyRenderer = require('./renderBlogPost');
 
 module.exports=
 {
@@ -52,18 +12,36 @@ module.exports=
      * @param requestURL
      * @returns {Promise|*}
      */
-    main: function(requestURL, request)
+    main: function(requestURL, request, templateContext)
     {
         return new Promise(function(resolve, reject)
         {
-            Promise.all([renderPost(requestURL),
-                require("../sidebar/sidebar.js").main()]).then(function(content)
+            const splitURL = requestURL.split("/");
+
+            //user entered /category/name/ or /category/name
+            if(splitURL.length == 3 || splitURL.length == 4)
             {
-                resolve(content.join(''));
-            }).catch(function(error)
+                sql.getPost(requestURL).then(function(posts)
+                {
+                    if(posts.length != 0)
+                    {
+                        blogBodyRenderer.renderBatchOfPosts(requestURL, posts, 1, 1, templateContext).then(function()
+                        {
+                            resolve();
+                        });
+                    }
+                    else
+                    {
+                        resolve();
+                    }
+
+                })
+            }
+            else
             {
-                reject(error);
-            })
+                //404 will print
+                resolve();
+            }
         });
     }
 };
