@@ -24,43 +24,29 @@ module.exports=
          * @param totalPosts -- total amount of blog in the category
          * @returns {Promise} promise which renders the buttons
          */
-        main: function(baseURL, currentPage, postsPerPage, totalPosts)
+        main: function(baseURL, currentPage, postsPerPage, totalPosts, templateContext)
         {
-            return new Promise(function(resolve, reject)
+            if(typeof currentPage == "undefined")
+                currentPage = 1;
+            currentPage = Number(currentPage);
+
+            if(!isValidPage(currentPage, postsPerPage, totalPosts))
             {
+                reject("Invalid Page");
+            }
 
-                if(!isValidPage(currentPage, postsPerPage, totalPosts))
-                {
-                    reject("Invalid Page");
-                }
+            var nextPage = currentPage + 1;
+            var previousPage = currentPage - 1;
 
-                var nextPage = currentPage + 1;
-                var previousPage = currentPage - 1;
+            if (isValidPage(previousPage, postsPerPage, totalPosts))
+            {
+                templateContext.newPostsURL = baseURL + "?page=" + previousPage;
+            }
 
-                var olderPosts = "";
-                var newerPosts = "";
-
-                if (isValidPage(previousPage, postsPerPage, totalPosts))
-                {
-                    newerPosts = "<button class=\"btn btn-secondary btn-lg " +
-                        "w3-padding-large w3-white w3-border\"  onclick=\"location.href='" +
-                        baseURL + "?page=" + previousPage +
-                        "'\"><b>Newer Posts &raquo;</b></button>";
-                }
-
-                if (isValidPage(nextPage, postsPerPage, totalPosts))
-                {
-                    olderPosts = "<button class=\"btn btn-secondary btn-lg " +
-                        "w3-padding-large w3-white w3-border\"  onclick=\"location.href='" +
-                        baseURL + "?page=" + nextPage +
-                        "'\"><b>Older Posts &raquo;</b></button>";
-                }
-
-                resolve("    <div class=\"row\">\n" +
-                    "        <div class=\"col-6\">" + newerPosts + "</div>\n" +
-                    "        <div class=\"col-6\"><span class=\"float-right\">" + olderPosts + "</span></div>\n" +
-                    "    <br><br></div>");
-            })
+            if (isValidPage(nextPage, postsPerPage, totalPosts))
+            {
+                templateContext.oldPostsURL = baseURL + "?page=" + nextPage
+            }
 
         }
     };

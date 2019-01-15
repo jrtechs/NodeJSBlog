@@ -44,9 +44,9 @@ module.exports=
                         page = "./adminDownloads.js";
                         console.log("downloads time")
                     }
-                    else if(filename.includes("/blog"))
+                    else if(filename.includes("/posts"))
                     {
-                        page = "./blog.js";
+                        page = "./posts.js";
                     }
 
                     require(page).main(postData, templateContext).then(function(template)

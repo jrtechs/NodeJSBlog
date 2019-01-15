@@ -20,7 +20,8 @@
                     </div>
 
                 </div>
-                <br><br>
+                <br>
+                <br>
             {else}
                 <div class="row p-lg-0">
                     <h1 class="align-content-center">Page Not Found</h1>
@@ -30,6 +31,26 @@
                 </div>
                 <br><br>
             {/for}
+            <div class="row">
+                <div class="col-6">
+                    {if newPostsURL}
+                    <button class="btn btn-secondary btn-l" onclick="location.href='{newPostsURL}'">
+                        <b>Older Posts &raquo;</b>
+                    </button>
+                    {/if}
+                </div>
+
+                <div class="col-6">
+                    {if oldPostsURL}
+                        <span class="float-right">
+                            <button class="btn btn-secondary btn-l" onclick="location.href='{oldPostsURL}'">
+                                <b>Older Posts &raquo;</b>
+                            </button>
+                        </span>
+                    {/if}
+                </div>
+            </div>
+            <br>
         </div>
         <div class="col-md-4 col-4">
             {>sideBar}

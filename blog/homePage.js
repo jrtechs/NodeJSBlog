@@ -13,11 +13,16 @@ module.exports=
         main: function(requestURL, request, templateContext)
         {
             var page = request.query.page;
+
             return new Promise(function(resolve, reject)
             {
-                sql.getRecentPostSQL().then(function(posts)
+                sql.getAllPosts().then(function(posts)
                 {
-                    resolve(blogPostRenderer.renderBatchOfPosts(requestURL, posts, page, 5, templateContext));
+                    Promise.all([blogPostRenderer.renderBatchOfPosts(requestURL, posts, page, 5, templateContext),
+                        require('./renderNextBar').main(requestURL, page, 5, posts.length, templateContext)]).then(function()
+                    {
+                        resolve();
+                    });
                 }).catch(function(error)
                 {
                     reject(error);
