@@ -1,5 +1,5 @@
 /** Whiskers template file
- * this has stuff for both editing posts and viewing a list of posts*/
+ * this has stuff for both editing blog and viewing a list of blog*/
 const TEMPLATE_FILE = "admin/adminPosts.html";
 
 const includes = require('../includes/includes.js');
@@ -11,7 +11,7 @@ const qs = require('querystring');
 
 
 /**
- * Detects if the post data came from the edit form in posts table or edit post
+ * Detects if the post data came from the edit form in blog table or edit post
  * in the edit post form.
  *
  * @param postData
@@ -53,7 +53,7 @@ const processPostData = function(postData, renderContext)
 
 
 /**
- * Grabs and appends the list of posts from the SQL database to
+ * Grabs and appends the list of blog from the SQL database to
  * the template context for the template renderer.
  *
  * @param templateContext
@@ -77,8 +77,8 @@ const fetchPostsInformation = function(templateContext)
 module.exports=
     {
         /**
-         * Fetches context information for the admin posts page and handles post
-         * data sent regarding editing posts.
+         * Fetches context information for the admin blog page and handles post
+         * data sent regarding editing blog.
          *
          * @param postData posted by user
          * @param templateContext json object used as the template context
@@ -95,7 +95,7 @@ module.exports=
                     resolve(template[0]);
                 }).catch(function(error)
                 {
-                    console.log("error in add admin posts.js");
+                    console.log("error in add admin blog.js");
                     reject(error);
                 });
             });

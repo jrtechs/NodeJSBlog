@@ -22,7 +22,7 @@ const renderPost = function(requestURL)
             {
                 if(post != 0)
                 {
-                    return require("../posts/singlePost.js").renderPost(post);
+                    return require(".//singlePost.js").renderPost(post);
                 }
                 else
                 {
@@ -43,10 +43,11 @@ const renderPost = function(requestURL)
     });
 };
 
+
 module.exports=
 {
     /**
-     * Calls posts and sidebar modules to render blog contents in order
+     * Calls blog and sidebar modules to render blog contents in order
      *
      * @param requestURL
      * @returns {Promise|*}

@@ -131,7 +131,7 @@ Another Good Async Example:
 
 ```javascript
 /**
- * Calls posts and sidebar modules to render blog contents in order
+ * Calls blog and sidebar modules to render blog contents in order
  *
  * @param requestURL
  * @returns {Promise|*}

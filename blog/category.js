@@ -2,10 +2,10 @@
 const sql = require('../utils/sql');
 
 /** Object used to render blog post previews */
-const batchPreview = require('../posts/renderBatchOfPreviewes');
+const batchPreview = require('.//renderBatchOfPreviewes');
 
 /**
- * Renders all posts in a single category
+ * Renders all blog in a single category
  *
  * @param resultURL
  * @returns {*}
@@ -35,7 +35,7 @@ const renderPosts = function(resultURL, page)
 module.exports=
     {
         /**
-         * Calls posts and sidebar modules to render blog contents in order
+         * Calls blog and sidebar modules to render blog contents in order
          *
          * @param requestURL
          * @param request

@@ -2,7 +2,7 @@
  * Determines what template and controls that will be
  * displayed based on the url such as
  *  /
- *  /posts
+ *  /blog
  *  /downloads
  *
  *  For each controls it calls that "pages" associated javascript file
@@ -44,9 +44,9 @@ module.exports=
                         page = "./adminDownloads.js";
                         console.log("downloads time")
                     }
-                    else if(filename.includes("/posts"))
+                    else if(filename.includes("/blog"))
                     {
-                        page = "./posts.js";
+                        page = "./blog.js";
                     }
 
                     require(page).main(postData, templateContext).then(function(template)

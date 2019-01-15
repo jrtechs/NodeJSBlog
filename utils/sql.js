@@ -163,7 +163,7 @@ module.exports=
 
 
     /**
-     * Function which currently returns all posts of a particular
+     * Function which currently returns all blog of a particular
      * category from the database
      * @param requestURL
      * @return {*|Promise}

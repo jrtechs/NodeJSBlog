@@ -18,7 +18,7 @@ const whiskers = require('whiskers');
 module.exports=
     {
         /**
-         * Calls posts and sidebar modules to render blog contents in order
+         * Calls blog and sidebar modules to render blog contents in order
          *
          * @param requestURL
          * @returns {Promise|*}

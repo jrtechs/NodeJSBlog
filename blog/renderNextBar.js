@@ -2,8 +2,8 @@
  * Determines if the requested page is out of bounds
  *
  * @param page current page
- * @param postsPerPage - number of posts rendered on each page
- * @param totalPosts - total posts in this category/total
+ * @param postsPerPage - number of blog rendered on each page
+ * @param totalPosts - total blog in this category/total
  * @returns {boolean} if this is a valid page
  */
 const isValidPage = function(page, postsPerPage, totalPosts)
@@ -20,8 +20,8 @@ module.exports=
          * Used by the home page and categories pages
          * @param baseURL -- base url of page being rendered
          * @param currentPage -- current page being rendered
-         * @param postsPerPage -- number of posts on each page
-         * @param totalPosts -- total amount of posts in the category
+         * @param postsPerPage -- number of blog on each page
+         * @param totalPosts -- total amount of blog in the category
          * @returns {Promise} promise which renders the buttons
          */
         main: function(baseURL, currentPage, postsPerPage, totalPosts)

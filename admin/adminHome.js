@@ -75,7 +75,7 @@ const processPost = function(postData)
             urls =urls.toLowerCase();
 
 
-            var q = "insert into posts (category_id, picture_url, published, name, url)  values ";
+            var q = "insert into blog (category_id, picture_url, published, name, url)  values ";
 
             q += "('" + post.add_post_category + "', '" +  post.add_post_picture +
                 "', '" + post.add_post_date + "', '" + post.add_post_name + "', '" + urls + "')";
