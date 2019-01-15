@@ -95,7 +95,7 @@ module.exports=
                 var markDown = utils.getFileContents(pathName).toString();
 
                 console.log(pathName);
-                console.log(markDown);
+                // console.log(markDown);
 
                 markDown = markDown.split("(media/").join("(" + "../blogContent/posts/"
                     + categoryURL + "/media/");
