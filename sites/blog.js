@@ -4,6 +4,10 @@ const includes = require('../includes/includes.js');
 //used to append static content to result
 const contentLoader = require('../includes/staticContentServer.js');
 
+const whiskers = require('whiskers');
+
+const TEMPLATE_FILE="blog/blogMain.html";
+
 
 //caching program to make the application run faster
 const cache = require('memory-cache');
@@ -49,36 +53,42 @@ module.exports=
                 const html = cache.get(filename + "?page=" + page);
 
                 result.writeHead(200, {'Content-Type': 'text/html'});
-                if (html == null) {
+                if (html == null)
+                {
                     var file = "";
 
                     if (filename === '' || filename === '/')
                     {
-                        file = "../posts/homePage.js";
+                        file = "../blog/homePage.js";
                     }
                     else
                     {
                         var urlSplit = filename.split("/");
 
                         if (urlSplit.length >= 2 && urlSplit[1] === 'category') //single category page
-                            file = "../posts/category.js";
+                            file = "../blog/category.js";
                         else
                         {
-                            file = "../posts/posts.js";
-                            page = 1; // all posts are single page, everyone must be one to ensure
+                            file = "../blog/posts.js";
+                            page = 1; // all blog are single page, everyone must be one to ensure
                             // cache is not tricked into storing same blog post a ton of times
                         }
                     }
-
-                    Promise.all([includes.printHeader(),
-                        require(file).main(filename, request),
-                        includes.printFooter()]).then(function (content)
+                    var templateContext = Object();
+                    Promise.all([includes.fetchTemplate(TEMPLATE_FILE),
+                        includes.printHeader(templateContext),
+                        includes.printFooter(templateContext),
+                        require(file).main(filename, request, templateContext),
+                        require("../sidebar/sidebar.js").main(templateContext)])
+                            .then(function (content)
                     {
-                        result.write(content.join(''));
+                        var html = whiskers.render(content[0], templateContext);
+                        result.write(html);
                         result.end();
-                        cache.put(filename + "?page=" + page, content.join(''));
+                        cache.put(filename + "?page=" + page, html);
                     }).catch(function (err)
                     {
+                        console.log(err);
                         cache.del(filename + "?page=" + page);
                         utils.print404().then(function(content)
                         {

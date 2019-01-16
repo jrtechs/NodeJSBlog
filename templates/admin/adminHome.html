@@ -1,0 +1,103 @@
+<div class="row">
+    <div class="col-md-6">
+        <div class="blogPost">
+            <h1 class="text-center">Server Controls</h1>
+
+            <div class="text-center">
+
+                <form action="/admin" method="post">
+                    <input type="submit" name="clearCache" value="Clear Cache" class="btn btn-lg btn-secondary" />
+                    <input type="hidden" name="clear_cache" value="true">
+                </form>
+
+                <br>
+
+                <form action="/admin" method="post">
+                    <input type="submit" name="gitPull" value="Pull from Git" class="btn btn-lg btn-secondary" />
+                    <input type="hidden" name="git_pull" value="true">
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="blogPost">
+            <h1 class="text-center">Add Category</h1>
+
+            <form action="/admin" method ="post" class="p-2">
+                <div class="form-group">
+                    <input class="form-control" type="text" name="add_category" required>
+                    <label>Category</label>
+                </div>
+                <div class="text-center">
+                    <input type="submit" name="submit" value="Add"
+                           class="btn btn-lg btn-secondary"/>
+                </div>
+            </form>
+        </div>
+        <br>
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="col-md-6">
+        <div class="blogPost">
+            <h1 class="text-center">New Post</h1>
+
+            <form action="/admin" method ="post" class="p-2">
+                <!-- Post category -->
+                <div class="form-group">
+                    <input class="form-control" type="text" name="add_post_category" required>
+                    <label class="w3-label w3-validate">Category</label>
+                </div>
+                <!-- Post name -->
+                <div class="form-group">
+                    <input class="form-control" type="text" name="add_post_name" required>
+                    <label class="w3-label w3-validate">Name</label>
+                </div>
+                <!-- Post header picture -->
+                <div class="form-group">
+                    <input class="form-control" type="text" name="add_post_picture" value="n/a" required>
+                    <label class="w3-label w3-validate">Picture</label>
+                </div>
+
+                <!-- Post date -->
+                <div class="form-group">
+                    <input class="w3-input" type="date" name="add_post_date" required>
+                    <label class="w3-label w3-validate">Date</label>
+                </div>
+                <div class="text-center">
+                    <input type="submit" name="submit" value="Add"
+                           class="btn btn-lg btn-secondary"/>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <h1 class="text-center">Categories</h1>
+        <div class="blogPost">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <td>Name</td>
+                        <td>URL</td>
+                        <td>Edit</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {for cat in categories}
+                        <tr>
+                            <td>{cat.name}</td>
+                            <td>{cat.url}</td>
+                            <td>{cat.category_id}</td>
+                        </tr>>
+                    {/for}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

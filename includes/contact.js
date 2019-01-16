@@ -190,7 +190,7 @@ module.exports =
          * Displays the contact page along with the header, sidebar, and footer.
          * This uses the admin header because it doesn't need any minified css
          * which has been purged of some css classes which are not used in any
-         * of the blog posts.
+         * of the blog blog.
          *
          * @param request -- main express request
          * @param result -- renders the html of the contact page

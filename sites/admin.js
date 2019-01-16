@@ -1,9 +1,14 @@
 //sending static content
 const includes = require('../includes/includes.js');
 
+//used for file IO
+const utils = require('../utils/utils.js');
+
 
 //used to append static content to result
 const contentLoader = require('../includes/staticContentServer.js');
+
+const whiskers = require('whiskers');
 
 /**
  * @author Jeffery Russell 11-3-18
@@ -13,7 +18,7 @@ const contentLoader = require('../includes/staticContentServer.js');
 module.exports=
     {
         /**
-         * Calls posts and sidebar modules to render blog contents in order
+         * Calls blog and sidebar modules to render blog contents in order
          *
          * @param requestURL
          * @returns {Promise|*}
@@ -34,11 +39,13 @@ module.exports=
 
                 const file = "../admin/admin.js";
 
-                Promise.all([includes.printAdminHeader(),
-                    require(file).main(request, clientAddress),
-                    includes.printFooter()]).then(function(content)
+                var templateContext = Object();
+                Promise.all([includes.printAdminHeader(templateContext),
+                    require(file).main(request, clientAddress, templateContext, filename),
+                    includes.printFooter(templateContext),
+                    includes.fetchTemplate("admin/adminMain.html")]).then(function(content)
                 {
-                    result.write(content.join(''));
+                    result.write(whiskers.render(content.join(''), templateContext));
                     result.end();
 
                 }).catch(function(err)
@@ -47,6 +54,5 @@ module.exports=
                     throw err;
                 });
             }
-
         }
     };

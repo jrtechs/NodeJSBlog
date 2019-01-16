@@ -1,0 +1,66 @@
+<div class="row">
+
+    <!-- Add Download -->
+    <div class="col-md-6">
+        <div class="blogPost">
+            <h1 class="text-center">Add Download</h1>
+
+            <form action="/admin/downloads/" method ="post" class="p-2">
+                <div class="form-group">
+                    <input class="form-control" type="text" name="add_download_name" required>
+                    <label>Download Name</label>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" name="add_download_file" required>
+                    <label>File name</label>
+                </div>
+                <div class="text-center">
+                    <input type="submit" name="add_download" value="Add Download"
+                           class="btn btn-lg btn-secondary"/>
+                </div>
+            </form>
+        </div>
+        <br>
+    </div>
+
+    <!-- Downloads -->
+    <div class="col-md-6">
+        <div class='blogPost'>
+            <h1 class="text-center">Downloads</h1>
+            <div class="">
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <td>Download Name</td>
+                            <td>File</td>
+                            <td>Download Count</td>
+                            <td>Delete</td>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {for download in downloads}
+                            <tr>
+                                <td>
+                                    {download.name}
+                                </td>
+                                <td>
+                                    {download.file}
+                                </td>
+                                <td>
+                                    {download.download_count}
+                                </td>
+                                <td>
+                                    <form action="/admin/downloads/" method ="post" >
+                                        <input type="submit" name="submit" value="Delete" class="btn btn-secondary"/>
+                                        <input type='hidden' name='delete_download' value='{download.download_id}' />
+                                    </form>
+                                </td>
+                            </tr>
+                        {/for}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -130,14 +130,7 @@ module.exports=
 
                     fetch(q2).then(function (result_posts)
                     {
-                        if(result_posts != 0)
-                        {
-                            resolve(result_posts[0]);
-                        }
-                        else
-                        {
-                            resolve(0);
-                        }
+                        resolve(result_posts);
                     });
                 }
                 else
@@ -163,7 +156,7 @@ module.exports=
 
 
     /**
-     * Function which currently returns all posts of a particular
+     * Function which currently returns all blog of a particular
      * category from the database
      * @param requestURL
      * @return {*|Promise}

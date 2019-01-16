@@ -10,6 +10,10 @@
 //used for file IO
 const utils = require('../utils/utils.js');
 
+const HEADER_KEY = "header";
+
+const FOOTER_KEY = "footer";
+
 //name of header file
 const HEADER_FILE = "includes/html/header.html";
 
@@ -77,9 +81,9 @@ module.exports =
      * @param result
      * @return {*} a promise retrieved from the utils.include function
      */
-    printHeader: function()
+    printHeader: function(templateContext)
     {
-        return utils.include(HEADER_FILE);
+        return utils.includeInObject(HEADER_KEY, templateContext, HEADER_FILE);
     },
 
 
@@ -88,9 +92,9 @@ module.exports =
      *
      * @return {*|Promise}
      */
-    printFooter: function()
+    printFooter: function(templateContext)
     {
-        return utils.include(FOOTER_FILE);
+        return utils.includeInObject(FOOTER_KEY, templateContext, FOOTER_FILE);
     },
 
     /**
@@ -98,9 +102,9 @@ module.exports =
      *
      * @returns {*|Promise}
      */
-    printAdminHeader()
+    printAdminHeader(templateContext)
     {
-        return utils.include(ADMIN_HEADER);
+        return utils.includeInObject(HEADER_KEY, templateContext, ADMIN_HEADER);
     },
 
 
@@ -135,6 +139,12 @@ module.exports =
     sendJS: function(result, fileName)
     {
         sendCachedContent(fileName, 'application/javascript', result);
+    },
+
+
+    fetchTemplate: function(templateName)
+    {
+        return utils.include("templates/" + templateName);
     },
 
 

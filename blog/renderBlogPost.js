@@ -25,10 +25,10 @@ module.exports=
             return new Promise(function(resolve, reject)
             {
                 Promise.all([module.exports.generateBlogPostHeader(post),
-                    module.exports.generateBlogPostBody(post, blocks),
-                    module.exports.generateBlogPostFooter()]).then(function(content)
+                    module.exports.generateBlogPostBody(post, blocks)])
+                        .then(function()
                 {
-                    resolve(content.join(''));
+                    resolve(post);
                 }).catch(function(error)
                 {
                     reject(error);
@@ -45,23 +45,11 @@ module.exports=
          */
         generateBlogPostHeader: function(post)
         {
-            var htmlHead = "<div class=\"blogPost\">";
-            //image
-            if(!(post.picture_url === "n/a"))
-            {
-                htmlHead +="<img src=\"/blogContent/headerImages/" + post.picture_url +
-                    "\" alt=\"\" style=\"width:100%; height:10%\">";
-            }
+            if(post.picture_url !== "n/a")
+                post. hasPicture = true;
 
-            htmlHead += "<div class=\"p-4\"><div class=\"\">";
-            //title
-            htmlHead += "<h3><b>" + post.name + "</b></h3>";
-            //date
-            htmlHead += "<h5><span class=\"w3-opacity\">" +
-                post.published.toDateString() + "</span></h5>";
-            htmlHead +="</div>" + "<div class=\"\">";
-
-            return htmlHead;
+            post.published = post.published.toDateString();
+            return;
         },
 
 
@@ -79,7 +67,11 @@ module.exports=
             {
                 sql.getCategory(post.category_id).then(function(category)
                 {
-                    resolve(module.exports.generateBlogPostComponent(category[0].url, post.url, blocks));
+                    module.exports.generateBlogPostComponent(category[0].url, post.url, blocks).then(function(html)
+                    {
+                       post.blogBody = html;
+                       resolve();
+                    });
                 });
             })
         },
@@ -101,6 +93,7 @@ module.exports=
                 const pathName =  "blogContent/posts/" + categoryURL + "/"
                     + postURL + ".md";
                 var markDown = utils.getFileContents(pathName).toString();
+
                 markDown = markDown.split("(media/").join("(" + "../blogContent/posts/"
                     + categoryURL + "/media/");
 
@@ -160,17 +153,6 @@ module.exports=
             })
         },
 
-
-        /** Method to return the footer of the html blog post.
-         *
-         * @returns {string}
-         */
-        generateBlogPostFooter: function()
-        {
-            return "</div></div></div><br><br>";
-        },
-
-
         /**
          * Converts markdown into html.
          *
@@ -207,4 +189,58 @@ module.exports=
                 }
             });
         },
+
+
+        /**
+         * Renders a bunch of blog post  previews to the user
+         *
+         * @param baseURL-- url of the page
+         * @param posts -- sql data about the blog to render
+         * @param currentPage -- the current page to render
+         * @param numOfPosts -- number of blog to render
+         * @returns {Promise} renders the html of the blog
+         */
+        renderBatchOfPosts: function(baseURL, posts, currentPage, numOfPosts, templateContext)
+        {
+            if(typeof currentPage == "undefined")
+            {
+                currentPage = 1;
+            }
+            else
+            {
+                currentPage = Number(currentPage);
+            }
+
+            return new Promise(function(resolve, reject)
+            {
+                const promises = [];
+                for(var i = (currentPage-1) * numOfPosts; i < (currentPage-1) * numOfPosts + numOfPosts; i++)
+                {
+                    if(i < posts.length)
+                    {
+                        promises.push(new Promise(function(res, rej)
+                        {
+                            module.exports.generateBlogPost(posts[i], posts.length === 1 ? -1: 3).then(function(tempContext)
+                            {
+                                res(tempContext);
+                            }).catch(function(error)
+                            {
+                                rej();
+                            })
+                        }));
+                    }
+                }
+
+                //promises.push(require('../blog/renderNextBar').main(baseURL, currentPage, numOfPosts, blog.length));
+
+                Promise.all(promises).then(function(posts)
+                {
+                    templateContext.posts = posts;
+                    resolve();
+                }).catch(function(error)
+                {
+                    reject(error);
+                });
+            });
+        }
     }

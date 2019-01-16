@@ -14,7 +14,7 @@ const contentLoader = require('../includes/staticContentServer.js');
 module.exports=
     {
         /**
-         * Calls posts and sidebar modules to render blog contents in order
+         * Calls blog and sidebar modules to render blog contents in order
          *
          * @param requestURL
          * @returns {Promise|*}
@@ -32,6 +32,7 @@ module.exports=
 
             if (!contentLoader.serveStaticContent(request, result, filename, "/blogContent/projects"))
             {
+                console.log(filename);
                 //do something?
             }
         }

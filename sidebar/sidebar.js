@@ -1,22 +1,63 @@
-const utils = require('../utils/utils.js');
+const sql = require('../utils/sql');
+
+const TEMPLATE_FILE = "blog/sideBar.html";
+
+const includes = require('../includes/includes.js');
+
+
+const getInformationForRecentPosts = function(templateContext)
+{
+    return new Promise(function(resolve, reject)
+    {
+        sql.getRecentPosts().then(function(posts)
+        {
+            posts.forEach(function(p)
+            {
+                p.url = '/' +  p.category + '/' + p.url;
+            });
+            templateContext.recentPosts = posts;
+            resolve();
+        }).catch(function(error)
+        {
+            reject(error);
+        })
+    });
+};
+
+const getInformationForCategories = function(templateContext)
+{
+    return new Promise(function(resolve, reject)
+    {
+        sql.getCategories().then(function(categories)
+        {
+            categories.forEach(function(cat)
+            {
+                cat.url = "/category/" + cat.url;
+            });
+
+            templateContext.categories = categories;
+            resolve();
+        }).catch(function(error)
+        {
+            reject(error);
+        });
+    });
+};
+
 
 module.exports=
     {
-        /** Method which renders the entire sidebar through calling
-         * appropriate widget js files.
-         *
-         * @param res
-         * @returns {*|Promise}
-         */
-        main: function()
+        main: function(templateContext)
         {
             return new Promise(function(resolve, reject)
             {
-                Promise.all([utils.include("sidebar/projectSidebar.html"),
-                    require("../sidebar/recentPosts.js").main(),
-                    require("../sidebar/categoriesSideBar.js").main()]).then(function(content)
+                Promise.all([includes.fetchTemplate(TEMPLATE_FILE),
+                    getInformationForRecentPosts(templateContext),
+                    getInformationForCategories(templateContext)])
+                        .then(function(content)
                 {
-                    resolve("<div class=\"col-md-4\">" + content.join('') + "</div>");
+                    templateContext.sideBar = content[0];
+                    resolve();
                 }).catch(function(error)
                 {
                     reject(error);

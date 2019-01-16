@@ -1,0 +1,65 @@
+{header}
+
+<div class="container">
+
+    {if loggedIn}
+        {>adminPage}
+    {else}
+
+        {if goodLoginAttempt}
+            <meta http-equiv="refresh" content="0">
+        {/if}
+
+        <div class="row">
+            {if banned}
+                <div class="align-content-center">
+                    <br>
+                    <h1>Yikes</h1>
+                    <br>
+                    <img src="/includes/img/404.jpg" alt="Page not found meme" width="70%" />
+                    <br><br><br><br>
+                </div>
+            {else}
+                <div class="col-md-8">
+                    <div class="blogPost">
+                        <div class="text-center">
+                            <h2>Login</h2>
+                        </div>
+
+                        <form action="/admin/" method ="post" class="p-2">
+                            <div class="form-group">
+                                <label for="username1">User Name</label>
+                                <input class="form-control" type="text" id="username1" name="username" placeholder="Enter username" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password1">Password</label>
+                                <input class="form-control" type="password" name="password" id="password1" placeholder="Password" required>
+                            </div>
+                            <div class="text-center">
+                                <button class="btn btn-lg btn-secondary">Login</button>
+                            </div>
+                            <br>
+                        </form>
+
+                        {if invalid}
+                            <p>
+                                Invalid login attempt.
+                            </p>
+                        {/if}
+
+                        <!--
+                            /\_/\           ___
+                           = o_o =_______    \ \
+                            __^      __(  \.__) )
+                        (@)<_____>__(_____)____/
+                        -->
+                    </div>
+                    <br /><br />
+                </div>
+            {/if}
+        </div>
+    {/if}
+
+</div>
+
+{footer}
