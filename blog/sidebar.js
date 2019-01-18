@@ -45,6 +45,26 @@ const getInformationForCategories = function(templateContext)
 };
 
 
+const getInformationForPinnedPosts = function(templateContext)
+{
+    return new Promise(function(resolve, reject)
+    {
+        sql.getPinnedPosts().then(function(posts)
+        {
+            posts.forEach(function(p)
+            {
+                p.url = '/' +  p.category + '/' + p.url;
+            });
+            templateContext.pinnedPosts = posts;
+            resolve();
+        }).catch(function(error)
+        {
+            reject(error);
+        })
+    });
+};
+
+
 module.exports=
     {
         main: function(templateContext)
@@ -53,6 +73,7 @@ module.exports=
             {
                 Promise.all([includes.fetchTemplate(TEMPLATE_FILE),
                     getInformationForRecentPosts(templateContext),
+                    getInformationForPinnedPosts(templateContext),
                     getInformationForCategories(templateContext)])
                         .then(function(content)
                 {

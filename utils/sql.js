@@ -235,6 +235,36 @@ module.exports=
     },
 
 
+    getPinnedPosts: function()
+    {
+        return new Promise(function(resolve, reject)
+        {
+            var q = "select name,url, category_id from posts where pinned=1 order " +
+                "by post_id desc limit 10";
+            console.log(q);
+            fetch(q).then(function (sqlPosts) {
+                var promises = [];
+                sqlPosts.forEach(function (post) {
+                    promises.push(new Promise(function (res, rej) {
+                        var getCategory = "select url from categories where " +
+                            "category_id='" + post.category_id + "'";
+                        fetch(getCategory).then(function (urls) {
+                            var obj = new Object();
+                            obj.name = post.name;
+                            obj.url = post.url;
+                            obj.category = urls[0].url;
+                            res(obj);
+                        });
+                    }));
+                });
+                Promise.all(promises).then(function (goodies) {
+                    resolve(goodies);
+                });
+            });
+        });
+    },
+
+
     /**
      * TODO
      * @returns {*|Promise}

@@ -34,3 +34,15 @@
 </div>
 <br>
 
+<div class="container">
+    <div class="list-group">
+        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+            <h5 class="mb-1">Pinned Posts</h5>
+        </a>
+        {for pinnedPost in pinnedPosts}
+            <a class="list-group-item" href='{pinnedPost.url}'>{pinnedPost.name}<br></a>
+        {/for}
+    </div>
+</div>
+<br>
+
