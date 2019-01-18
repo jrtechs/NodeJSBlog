@@ -41,7 +41,7 @@ module.exports=
             }
             else if (filename.includes("/contact"))
             {
-                require("../includes/contact.js").main(request, result);
+                require("../blog/contact.js").main(request, result);
             }
             else
             {
@@ -79,7 +79,7 @@ module.exports=
                         includes.printHeader(templateContext),
                         includes.printFooter(templateContext),
                         require(file).main(filename, request, templateContext),
-                        require("../sidebar/sidebar.js").main(templateContext)])
+                        require("../blog/sidebar.js").main(templateContext)])
                             .then(function (content)
                     {
                         var html = whiskers.render(content[0], templateContext);

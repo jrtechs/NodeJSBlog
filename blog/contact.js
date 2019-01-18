@@ -38,6 +38,10 @@ const CAPTCHA_SECRET = config.CAPTCHA_SECRET;
 const EMAIL_PASSWORD = config.EMAIL_PASSWORD;
 
 
+const TEMPLATE_FILE = "blog/contact.html";
+const whiskers = require('whiskers');
+
+
 /**
  * Verifies if the captcha response recieved from the post data was
  * valid, or are bots trying to get around the captcha
@@ -142,7 +146,7 @@ const sendEmail = function(name, email, message)
  * @param request -- main express request
  * @returns {Promise} renders the html of the contact widget
  */
-const processContactPage = function(request)
+const processContactPage = function(request, templateContext)
 {
     return new Promise(function(resolve, reject)
     {
@@ -161,20 +165,21 @@ const processContactPage = function(request)
                 {
                     if(valid)
                     {
-                        resolve(utils.include("includes/html/messageSent.html"));
-
+                        templateContext.messageSent = true;
+                        resolve();
                         sendEmail(data.name, data.email, data.message);
                     }
                     else
                     {
-                        resolve(utils.include("includes/html/invalidCaptcha.html"));
+                        resolve();
                     }
                 });
             }
             else
             {
-                resolve(utils.include("includes/html/contact.html"));
+                resolve();
             }
+
 
         }).catch(function(err)
         {
@@ -198,12 +203,18 @@ module.exports =
         main: function(request, result)
         {
             result.writeHead(200, {'Content-Type': 'text/html'});
-            Promise.all([includes.printAdminHeader(),
+
+            console.log("eh");
+            var templateContext = Object();
+            Promise.all([includes.fetchTemplate(TEMPLATE_FILE),
                 processContactPage(request),
-                require("../sidebar/sidebar.js").main(),
-                includes.printFooter()]).then(function(content)
+                includes.printHeader(templateContext),
+                includes.printFooter(templateContext),
+                require("./sidebar.js").main(templateContext)])
+                .then(function (content)
             {
-                result.write(content.join(''));
+                const html = whiskers.render(content[0], templateContext);
+                result.write(html);
                 result.end();
 
             }).catch(function(err)
