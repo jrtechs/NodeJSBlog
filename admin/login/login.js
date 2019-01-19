@@ -23,7 +23,7 @@ const processLogin = function(request, clientAddress, templateContext)
     {
         if(DEBUG)
         {
-            //what actually logs in the user
+            //logs in as first user in DB
             request.session.user = 1;
             console.log("user has logged in");
             templateContext.goodLoginAttempt = true;
