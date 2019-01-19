@@ -204,10 +204,9 @@ module.exports =
         {
             result.writeHead(200, {'Content-Type': 'text/html'});
 
-            console.log("eh");
             var templateContext = Object();
             Promise.all([includes.fetchTemplate(TEMPLATE_FILE),
-                processContactPage(request),
+                processContactPage(request, templateContext),
                 includes.printHeader(templateContext),
                 includes.printFooter(templateContext),
                 require("./sidebar.js").main(templateContext)])
