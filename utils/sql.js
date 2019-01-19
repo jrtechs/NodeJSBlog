@@ -57,6 +57,60 @@ const fetch = function(sqlStatement)
 
 
 /**
+ * Function used to use insert statements into the database
+ *
+ * Don't worry, the input gets sanitized
+ *
+ * @param sqlStatement
+ * @return the id of the new record - if there is one
+ */
+const insert = function(sqlStatement)
+{
+    return new Promise(function(resolve, reject)
+    {
+        con.query(sanitizer.sanitize(sqlStatement), function (err, result)
+        {
+            if (err)
+            {
+                console.log(err);
+                reject();
+            }
+            resolve(result.insertId);
+        });
+    })
+};
+
+
+/**
+ * Helper function to generate a hashed password
+ * from a given plain text password.
+ *
+ * This uses 64 bits of entropy as the random salt
+ * and uses sha256 hashing method to hash the password
+ * combined with the salt.
+ *
+ * @param password
+ * @returns {Object pass: hashedPassword, salt: salt used to hash}
+ */
+const createHashedPassword = function(password)
+{
+    const randBuff = crypto.randomBytes(64);
+
+    const salt = crypto.createHash('sha256').update(randBuff).digest('hex');
+
+    const hashPass = crypto.createHash('sha256')
+        .update(password + salt)
+        .digest('hex');
+
+    var hashPassObject = new Object();
+    hashPassObject.pass = hashPass;
+    hashPassObject.salt = salt;
+
+    return hashPassObject;
+};
+
+
+/**
  * Helper function which fetches the category url for all the
  * posts returned in the posts table and appends them to the
  * posts json objects.
@@ -95,30 +149,6 @@ const fetchWithCategoryInformation = function(sqlPosts)
 
 module.exports=
 {
-    /**
-     * Function used to use insert statements into the database
-     *
-     * Don't worry, the input gets sanitized
-     *
-     * @param sqlStatement
-     * @return the id of the new record - if there is one
-     */
-    insert : function(sqlStatement)
-    {
-        return new Promise(function(resolve, reject)
-        {
-            con.query(sanitizer.sanitize(sqlStatement), function (err, result)
-            {
-                if (err)
-                {
-                    console.log(err);
-                    reject();
-                }
-                resolve(result.insertId);
-            });
-        })
-    },
-
     /**
      * function which fetches the sql info on a post based on it's sql id
      * @param id
@@ -187,7 +217,7 @@ module.exports=
      */
     getCategories : function()
     {
-        var q = "select * from categories";
+        const q = "select * from categories";
         return fetch(q);
     },
 
@@ -343,6 +373,58 @@ module.exports=
         return fetch("select * from posts order by published desc");
     },
 
+    getAllUsers: function()
+    {
+        return fetch("select * from users");
+    },
+
+    getUserByID: function(userID)
+    {
+        const cleanID = sanitizer.sanitize(userID);
+
+        const q = "select * from users where user_id='" + cleanID + "'";
+
+        return fetch(q);
+    },
+
+
+
+    removeUser: function(user_id)
+    {
+        const cleanID = sanitizer.sanitize(user_id);
+
+        return insert("delete from users where user_id='" + cleanID + "'");
+    },
+
+    addUser: function(username, password)
+    {
+        const cleanName = sanitizer.sanitize(username);
+        const cleanPassword = sanitizer.sanitize(password);
+        const hashedPassword = createHashedPassword(cleanPassword);
+
+        const q = "insert into users(user_name, password, salt) values('" + cleanName + "'," +
+            "'" + hashedPassword.pass +  "','" + hashedPassword.salt + "')";
+
+        return insert(q);
+    },
+
+
+    updateUser: function(userID, username, password)
+    {
+        const cleanID = sanitizer.sanitize(userID);
+        const cleanName = sanitizer.sanitize(username);
+        const cleanPassword = sanitizer.sanitize(password);
+        const hashedPassword = createHashedPassword(cleanPassword);
+
+        const q = "update users " +
+                "set user_name='" + cleanName + "'" +
+                ",password='" + hashedPassword.pass + "'" +
+                ",salt='" + hashedPassword.salt + "'" +
+                " where user_id='" + cleanID + "'";
+
+        return insert(q);
+    },
+
 
     /**
      * Fetches the sql category information based on it's id
@@ -397,7 +479,7 @@ module.exports=
                     (sqlRow[0].download_count + 1) + "' where download_id='" +
                     sqlRow[0].download_id + "'";
                 console.log(q);
-                module.exports.insert(q).then(function(r)
+                insert(q).then(function(r)
                 {
                     resolve(sqlRow);
                 }).catch(function(err)
@@ -436,7 +518,7 @@ module.exports=
         const q = "insert into downloads (name, file, download_count) " +
             "values('" + name + "', '" + file + "', '0')";
 
-        return module.exports.insert(q);
+        return insert(q);
     },
 
 
@@ -448,7 +530,7 @@ module.exports=
     {
         const q = "delete from downloads where download_id='" + id + "'";
 
-        return module.exports.insert(q);
+        return insert(q);
     },
 
 
@@ -478,7 +560,7 @@ module.exports=
 
         console.log(q);
 
-        return module.exports.insert(q);
+        return insert(q);
     },
 
 
@@ -551,6 +633,6 @@ module.exports=
         const q = "insert into traffic_log (url, ip, date) values " +
             "('" + page + "', '" + ip + "', now())";
 
-        module.exports.insert(q);
+        insert(q);
     }
 };

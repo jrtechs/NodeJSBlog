@@ -1,9 +1,6 @@
 //sending static content
 const includes = require('../includes/includes.js');
 
-//used for file IO
-const utils = require('../utils/utils.js');
-
 
 //used to append static content to result
 const contentLoader = require('../includes/staticContentServer.js');
@@ -40,12 +37,13 @@ module.exports=
                 const file = "../admin/admin.js";
 
                 var templateContext = Object();
-                Promise.all([includes.printAdminHeader(templateContext),
+                Promise.all([includes.fetchTemplate("admin/adminMain.html"),
+                    includes.printAdminHeader(templateContext),
                     require(file).main(request, clientAddress, templateContext, filename),
                     includes.printFooter(templateContext),
-                    includes.fetchTemplate("admin/adminMain.html")]).then(function(content)
+                    ]).then(function(content)
                 {
-                    result.write(whiskers.render(content.join(''), templateContext));
+                    result.write(whiskers.render(content[0], templateContext));
                     result.end();
 
                 }).catch(function(err)
