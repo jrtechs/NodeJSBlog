@@ -56,6 +56,43 @@ const fetch = function(sqlStatement)
 };
 
 
+/**
+ * Helper function which fetches the category url for all the
+ * posts returned in the posts table and appends them to the
+ * posts json objects.
+ *
+ * @param sqlPosts
+ * @returns {Promise}
+ */
+const fetchWithCategoryInformation = function(sqlPosts)
+{
+    return new Promise(function(resolve, reject)
+    {
+        var promises = [];
+        sqlPosts.forEach(function(post)
+        {
+            promises.push(new Promise(function(res, rej)
+            {
+                var getCategory = "select url from categories where " +
+                    "category_id='" + post.category_id + "'";
+                fetch(getCategory).then(function(urls)
+                {
+                    var obj = new Object();
+                    obj.name = post.name;
+                    obj.url = post.url;
+                    obj.category = urls[0].url;
+                    res(obj);
+                });
+            }));
+        });
+        Promise.all(promises).then(function(goodies)
+        {
+            resolve(goodies);
+        });
+    });
+};
+
+
 module.exports=
 {
     /**
@@ -192,7 +229,6 @@ module.exports=
         return fetch("select * from posts order by post_id desc");
     },
 
-
     /**
      * Helper method which returns a list of objects which contains the url
      * and name of thee ten most recent posts
@@ -209,74 +245,32 @@ module.exports=
                 "by post_id desc limit 10";
             fetch(q).then(function(sqlPosts)
             {
-                var promises = [];
-                sqlPosts.forEach(function(post)
+                fetchWithCategoryInformation(sqlPosts).then(function(data)
                 {
-                    promises.push(new Promise(function(res, rej)
-                    {
-                        var getCategory = "select url from categories where " +
-                            "category_id='" + post.category_id + "'";
-                        fetch(getCategory).then(function(urls)
-                        {
-                            var obj = new Object();
-                            obj.name = post.name;
-                            obj.url = post.url;
-                            obj.category = urls[0].url;
-                            res(obj);
-                        });
-                    }));
-                });
-                Promise.all(promises).then(function(goodies)
-                {
-                    resolve(goodies);
-                });
-            });
-        });
-    },
-
-
-    getPinnedPosts: function()
-    {
-        return new Promise(function(resolve, reject)
-        {
-            var q = "select name,url, category_id from posts where pinned=1 order " +
-                "by post_id desc limit 10";
-            console.log(q);
-            fetch(q).then(function (sqlPosts) {
-                var promises = [];
-                sqlPosts.forEach(function (post) {
-                    promises.push(new Promise(function (res, rej) {
-                        var getCategory = "select url from categories where " +
-                            "category_id='" + post.category_id + "'";
-                        fetch(getCategory).then(function (urls) {
-                            var obj = new Object();
-                            obj.name = post.name;
-                            obj.url = post.url;
-                            obj.category = urls[0].url;
-                            res(obj);
-                        });
-                    }));
-                });
-                Promise.all(promises).then(function (goodies) {
-                    resolve(goodies);
-                });
+                    resolve(data);
+                })
             });
         });
     },
 
 
     /**
-     * TODO
-     * @returns {*|Promise}
+     * Returns a list of all the pinned posts in the database.
+     *
+     * @returns {Promise}
      */
-    getPopularPosts: function()
+    getPinnedPosts: function()
     {
         return new Promise(function(resolve, reject)
         {
-            var q = "select * from popular_posts";
+            var q = "select name,url, category_id from posts where pinned=1 order " +
+                "by post_id desc limit 10";
             fetch(q).then(function(sqlPosts)
             {
-
+                fetchWithCategoryInformation(sqlPosts).then(function(data)
+                {
+                    resolve(data);
+                })
             });
         });
     },
@@ -468,13 +462,21 @@ module.exports=
     {
         const url = postData.edit_name_new.split(" ").join("-").toLowerCase();
 
+        console.log(postData);
+
+        var pinned = ("pinned_checkbox" in postData) == false ? "NULL": "1";
+        console.log(pinned);
+
         const q = "update posts " +
                     "set category_id='" + postData.edit_cat_num + "' " +
                     ",name='" + postData.edit_name_new + "' " +
                     ",url='" + url + "' " +
                     ",picture_url='" + postData.edit_pic + "' " +
                     ",published='" + postData.edit_date + "' " +
+                    ",pinned=" + pinned+
                     " where post_id='" + postData.edit_post_2 + "'";
+
+        console.log(q);
 
         return module.exports.insert(q);
     },
