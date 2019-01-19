@@ -405,7 +405,6 @@ module.exports=
         const q = "insert into users(user_name, password, salt) values('" + cleanName + "'," +
             "'" + hashedPassword.pass +  "','" + hashedPassword.salt + "')";
 
-
         return insert(q);
     },
 
