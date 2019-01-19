@@ -20,6 +20,12 @@
                         <input class="form-control" type="date" name="edit_date" value='{post.published}' required>
                         <label class="w3-label w3-validate">Published Date</label>
                     </div>
+                    <div class="form-group">
+                        <input class="" type="checkbox" value="" name="pinned_checkbox" id="pinnedCheckBox" {if post.pinned}checked{/if}>
+                        <label class="form-check-label" for="pinnedCheckBox">
+                            Pinned
+                        </label>
+                    </div>
                     <div>
                         <input type="submit" name="submit" value="Edit" class="btn btn-lg btn-secondary"/>
                     </div>
@@ -42,6 +48,7 @@
                         <td>Name</td>
                         <td>Header Picture</td>
                         <td>Date</td>
+                        <td>Pinned</td>
                         <td>Edit</td>
                     </tr>
                 </thead>
@@ -52,6 +59,13 @@
                             <td>{post.name}</td>
                             <td>{post.picture_url}</td>
                             <td>{post.published}</td>
+                            <td>
+                                {if post.pinned}
+                                    True
+                                {else}
+                                    False
+                                {/if}
+                            </td>
                             <td>
                                 <form action="/admin/posts" method ="post" >
                                     <input type="submit" name="submit" value="Edit" class="btn btn-secondary"/>

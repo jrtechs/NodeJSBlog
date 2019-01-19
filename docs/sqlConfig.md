@@ -29,9 +29,11 @@ picture_url varchar(100) not null,
 published datetime not null,
 name varchar(100) not null,
 url varchar(100) not null,
+pinned BIT,
 primary key(post_id)
 );
 
+ALTER TABLE posts ADD pinned BIT;
 
 create table downloads(
 download_id mediumint unsigned not null AUTO_INCREMENT,
