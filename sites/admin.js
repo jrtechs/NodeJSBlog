@@ -31,7 +31,6 @@ module.exports=
                 const clientAddress = (request.headers['x-forwarded-for'] || '').split(',')[0]
                     || request.connection.remoteAddress;
 
-
                 result.writeHead(200, {'Content-Type': 'text/html'});
 
                 const file = "../admin/admin.js";

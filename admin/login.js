@@ -1,8 +1,8 @@
 //file io
-const utils = require('../../utils/utils.js');
+const utils = require('../utils/utils.js');
 
 //update db
-const sql = require('../../utils/sql');
+const sql = require('../utils/sql');
 
 const qs = require('querystring');
 
