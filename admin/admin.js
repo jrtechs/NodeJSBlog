@@ -48,6 +48,10 @@ module.exports=
                     {
                         page = "./users.js";
                     }
+                    else if(filename.includes("/analytics"))
+                    {
+                        page = "./analytics.js"
+                    }
 
                     require(page).main(postData, templateContext).then(function(template)
                     {
@@ -61,7 +65,7 @@ module.exports=
             }
             else
             {
-                require("./login/login.js").main(request, clientAddress, templateContext)
+                require("./login.js").main(request, clientAddress, templateContext)
                     .then(function()
                 {
                     resolve();

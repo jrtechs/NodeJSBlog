@@ -634,5 +634,10 @@ module.exports=
             "('" + page + "', '" + ip + "', now())";
 
         insert(q);
+    },
+
+    getTraffic: function()
+    {
+        return fetch("select * from traffic_log");
     }
 };

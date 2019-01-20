@@ -1,0 +1,20 @@
+<h4 class="text-center">Traffic Graph</h4>
+<div class="row">
+    <div class="col-12">
+        <div id="visualization"></div>
+    </div>
+    <br><br>
+
+    <script type="text/javascript">
+        var container = document.getElementById('visualization');
+        var items = {dataset};
+
+        var dataset = new vis.DataSet(items);
+        var options = {
+            start: {start},
+            end: {finish},
+        };
+        var graph2d = new vis.Graph2d(container, dataset, options);
+    </script>
+
+</div>
