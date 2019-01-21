@@ -1,8 +1,8 @@
 //file io
-const utils = require('../../utils/utils.js');
+const utils = require('../utils/utils.js');
 
 //update db
-const sql = require('../../utils/sql');
+const sql = require('../utils/sql');
 
 const qs = require('querystring');
 
@@ -23,7 +23,7 @@ const processLogin = function(request, clientAddress, templateContext)
     {
         if(DEBUG)
         {
-            //what actually logs in the user
+            //logs in as first user in DB
             request.session.user = 1;
             console.log("user has logged in");
             templateContext.goodLoginAttempt = true;

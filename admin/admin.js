@@ -27,26 +27,30 @@ module.exports=
      */
     main: function(request, clientAddress, templateContext, filename)
     {
-        console.log("admin main called");
         return new Promise(function(resolve, reject)
         {
             //if logged in
             if(request.session && request.session.user)
             {
-                console.log(filename);
                 templateContext.loggedIn = true;
                 utils.getPostData(request).then(function (postData)
                 {
-                    console.log("temp 1");
                     var page = "./adminHome.js";
                     if(filename.includes('/downloads'))
                     {
                         page = "./adminDownloads.js";
-                        console.log("downloads time")
                     }
                     else if(filename.includes("/posts"))
                     {
                         page = "./posts.js";
+                    }
+                    else if(filename.includes("/users"))
+                    {
+                        page = "./users.js";
+                    }
+                    else if(filename.includes("/analytics"))
+                    {
+                        page = "./analytics.js"
                     }
 
                     require(page).main(postData, templateContext).then(function(template)
@@ -61,7 +65,8 @@ module.exports=
             }
             else
             {
-                require("./login/login.js").main(request, clientAddress, templateContext).then(function()
+                require("./login.js").main(request, clientAddress, templateContext)
+                    .then(function()
                 {
                     resolve();
                 }).catch(function(err)
