@@ -133,12 +133,86 @@ If you are really cheap, you can make this with hot dogs rather than pre-cooked 
 - Cheeses
 
 
-# Level 3 Cooking with Free Time
+# Level 3 Cooking
+
+Once you master the art of sauteing onions and making soups, you are ready to advance to level three.
+Nothing I will present is incredibly difficult, but, there is more room for mistakes. 
 
 ## Fried Rice
 
+The challenging part of this recipe is getting the correct timing if you are short on time.
+To finish this dish in 40 minutes, you want to cook 2 cups of rice, brown ground beef with onions and cook 3 scrambled eggs all simultaneously.
+You then combine all these ingredients in a large fry pan with vegetables, worshire, and soy sauce.
+If you want to prevent the dish from turning out sticky, you should use left over rice. 
+Or, cook the rice first and then let if cool in the fridge for a few hours.
+
+### Ingredients
+- 1-2 Cups of Rice
+- 1/2 lbs of Ground Beef
+- 1 Onion
+- Broccoli or Peas
+- Soy Sauce
+- Worshire Sauce
+
 ## Chicken
+
+Cooking raw chicken is definitely not on the agenda for most college students.
+When cooking the chicken I would recommend using a meat thermometer to make sure that the chicken reaches 165 degrease.
+Either buy chicken breasts or cut a whole chicken and save the spine and wings for a chicken stock.
+On a baking pan lather the chicken in the marinara sauce that you just mixed (ingredients below) and sprinkle some salt and pepper on the chicken.
+Let the chicken cook for around 30 minutes in a oven that is 400 degrease (until the chicken reaches 165).
+After the chicken comes out of the oven sear it on a ripping hot skillet with some more of the marinara sauce.
+Cooking the chicken this way will keep the chicken juicy and the skin crispy. 
+
+### Marinara Sauce Ingredients
+- 4 TBSP oil
+- 3 TBSP Honey
+- Minced Garlic
+- 2 TBSP lemon juice
+- 1/2 TSP Paprika
 
 ## Chicken Stock
 
+If you happen to use a full chicken and end up with some bones you are in the perfect position to make chicken stock.
+Essentially all you need to do is put your chicken bones, onions, carrots, basil, and water in a crock pot for 8-12 hours. 
+Periodically you should skim off the fat that surfaces to the top. 
+At the end of the 12 hours you use a fine mesh skimmer to filter out all the chicken and vegetables.
+If you want a darker flavor to the stock, roast the chicken parts and vegetables in the oven to start to brown them.
+
+### Ingredients
+- Chicken Bones
+- 1-2 Quartered onions
+- 2-3 Carrots
+**Optional**
+- Celery
+- 1 TBSP Soy Sauce
+- Basil
+
 ## Home Made Pizza
+
+I don't think this requires any explanation.
+Make pizza dough (with a bread maker if you are lazy), add sauce, throw in oven.
+
+
+## Chicken and Rice
+
+My version of chicken and rice may not be orthodox. 
+This recipe came into existence because I needed something which had ingredients which overlapped with with the ingredients of the other things I was cooking that week.
+
+Essentially, you make rice and put a thick red sauce with chicken, onions, corn, peppers over it.
+You prepare the rice like normal.
+In a large sauce pan you saute onions and peppers.
+Once the onions start to turn brown, you add 1 can of diced tomatoes, 1 can of corn, minced garlic, basil, brown sugar, frozen chicken strips and mustard.
+Once the chicken has thawed, you are ready to serve this dish.
+
+### Ingredients
+- 2 Cups Rice
+- Bag of Grilled Chicken Strips
+- 1-2 Onions
+- 1-2 Peppers
+- 1 Can Diced Tomatoes
+- 1 Jar Pasta Sauce
+- 1 Can Corn
+- Minced Garlic
+- Brown Sugar
+- Basil
