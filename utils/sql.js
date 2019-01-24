@@ -171,6 +171,11 @@ module.exports=
         });
     },
 
+    insert: function(sqlStatement)
+    {
+        return insert(sqlStatement);
+    },
+
 
     /**
      * Not to be mistaken for getPostData() in @file utils/utils.js,

@@ -1,11 +1,11 @@
 //sending static content
 const includes = require('../includes/includes.js');
 
-
 //used to append static content to result
 const contentLoader = require('../includes/staticContentServer.js');
 
 const whiskers = require('whiskers');
+
 
 /**
  * @author Jeffery Russell 11-3-18
