@@ -43,12 +43,6 @@ download_count mediumint not null,
 primary key(download_id)
 );
 
-create table popular_posts(
-popular_post_id mediumint unsigned not null AUTO_INCREMENT,
-post_id mediumint unsigned not null,
-primary key(popular_post_id)
-);
-
 create table traffic_log(
 log_id mediumint unsigned not null AUTO_INCREMENT,
 url varchar(60) not null,
