@@ -4907,6 +4907,7 @@ input[type="button"].btn-block {
     padding-left: 0;
     list-style: none;
     border-radius: 0.25rem;
+    font-size: 0.75rem;
 }
 
 .page-link {
@@ -4915,17 +4916,17 @@ input[type="button"].btn-block {
     padding: 0.5rem 0.75rem;
     margin-left: -1px;
     line-height: 1.25;
-    color: #8E8C84;
-    background-color: #F8F5F0;
-    border: 1px solid #DFD7CA;
+    color: #ffffff;
+    background-color: #498FBE;
+    border: 1px solid #000000;
 }
 
 .page-link:hover {
     z-index: 2;
-    color: #8E8C84;
+    color: #ffffff;
     text-decoration: none;
-    background-color: #F8F5F0;
-    border-color: #DFD7CA;
+    background-color: #2C3E50;
+    border-color: #000000;
 }
 
 .page-link:focus {
@@ -4952,33 +4953,34 @@ input[type="button"].btn-block {
 
 .page-item.active .page-link {
     z-index: 1;
-    color: #8E8C84;
-    background-color: #DFD7CA;
-    border-color: #DFD7CA;
+    color: #ffffff;
+    text-decoration: none;
+    background-color: #2C3E50;
+    border-color: #000000;
 }
 
 .page-item.disabled .page-link {
-    color: #DFD7CA;
     pointer-events: none;
     cursor: auto;
-    background-color: #F8F5F0;
-    border-color: #DFD7CA;
+    color: #ffffff;
+    background-color: #67aebe;
+    border: 1px solid #000000;
 }
 
 .pagination-lg .page-link {
-    padding: 0.75rem 1.5rem;
-    font-size: 1.09375rem;
+    padding: 0.5rem 1.0rem;
+    font-size: 0.75rem;
     line-height: 1.5;
 }
 
 .pagination-lg .page-item:first-child .page-link {
-    border-top-left-radius: 0.3rem;
-    border-bottom-left-radius: 0.3rem;
+    border-top-left-radius: 0.2rem;
+    border-bottom-left-radius: 0.2rem;
 }
 
 .pagination-lg .page-item:last-child .page-link {
-    border-top-right-radius: 0.3rem;
-    border-bottom-right-radius: 0.3rem;
+    border-top-right-radius: 0.2rem;
+    border-bottom-right-radius: 0.2rem;
 }
 
 .pagination-sm .page-link {
