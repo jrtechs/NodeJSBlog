@@ -4,7 +4,7 @@ const utils = require('../utils/utils.js');
 
 const sql = require('../utils/sql');
 
-const argsFull = '-S --base-header-level=1 --toc --toc-depth=3 -N --normalize -s --mathjax -t html5';
+const argsFull = '--from markdown-markdown_in_html_blocks+raw_html -S --base-header-level=1 --toc --toc-depth=3 -N --normalize -s --mathjax -t html5';
 const argsPreview = '-S --normalize -s --mathjax -t html5';
 
 
