@@ -127,6 +127,19 @@ module.exports=
                     }
 
 
+                    var regExp = /\<customHTML .*?>/;
+                    while (result.search(regExp) != -1)
+                    {
+                        const pathName =  "blogContent/posts/" + categoryURL + "/html/"
+                            + postURL + ".html";
+
+                        var htmlContent = utils.getFileContents(pathName).toString();
+                        console.log(htmlContent);
+
+                        result = result.split("<customHTML />").join(htmlContent);
+                    }
+
+
                     if(blocks == -1)
                         resolve(result);
 
