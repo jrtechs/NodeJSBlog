@@ -5,34 +5,32 @@
 # Background and Theory
 
 Since you stumbled upon this article, you might be wondering what the heck genetic algorithms are.
-To put it simply: genetic algorithms employ the same tactics used in natural selection to find an optimal solution to a problem.
-Genetic algorithms are often used in high dimensional problems where the optimal solution is not apparent.
-A common use case of genetic algorithms are to tune [hyper-parameters](https://en.wikipedia.org/wiki/Hyperparameter) in a program.
-However, this algorithm can be used in any scenario where you have a function which defines how well something performed and you would
-like to find the absolute minimum.
+To put it simply: genetic algorithms employ the same tactics used in natural selection to find an optimal solution to an optimization problem.
+Genetic algorithms are often used in high dimensional problems where the optimal solutions are not apparent.
+Genetic algorithms are commonly used to tune the [hyper-parameters](https://en.wikipedia.org/wiki/Hyperparameter) of a program.
+However, this algorithm can be used in any scenario where you have a function which defines how well a solution is.
 Many people have used genetic algorithms in video games to auto learn the weaknesses of players.
 
 The beautiful part about Genetic Algorithms are their simplicity; you need absolutely no knowledge of linear algebra or calculus.
-To implement one all you need to know is **very basic** algebra and a general grasp of evolution.
+To implement a genetic algorithm from scratch you only need **very basic** algebra and a general grasp of evolution.
 
 # Genetic Algorithm
 
-All genetic algorithms typically follow the pattern of evaluation mating, mutation, and selection.
-I will dive into each section of this algorithm using JavaScript code snippets.
-The algorithm which I present is very generic and modular so it should be easy to port into other applications and programming languages. 
+All genetic algorithms typically have a single cycle where you continuously mutate, breed, and select the most optimal solutions.
+I will dive into each section of this algorithm using simple JavaScript code snippets.
+The algorithm which I present is very generic and modular so it should be easy to port into other programming languages and applications. 
 
 ![Genetic Algorithms Flow Chart](media/GA/GAFlowChart.svg)
 
 
-## Create Initial Population
+## Population Creation
 
 The very first thing we need to do is specify a data-structure for storing our genetic information.
-In biology chromosomes are composed of sequences of genes.
+In biology, chromosomes are composed of sequences of genes.
 Many people run genetic algorithms on binary arrays since they more closely represent DNA.
-However, as computer scientists, it is often easier to model things as continuous numbers.
-In this approach, every Gene will be a single floating point number ranging between zero and one.
-This keeps things really easy because it is very simple perform any genetic "operation".
-Every type of Gene will have a max and min value which represents the absolute extremes of that gene.
+However, as computer scientists, it is often easier to model problems using continuous numbers.
+In this approach, every gene will be a single floating point number ranging between zero and one.
+Every type of gene will have a max and min value which represents the absolute extremes of that gene.
 This works well for optimization because it allows us to easily limit our search space. 
 For example, we can specify that "height" gene can only vary between 0 and 90.
 To get the actual value of the gene from its \[0-1] value we simple de-normalize it.
@@ -89,16 +87,17 @@ class Gene
 ```
 
 
-Now that we have genes, we can create Chromosomes. 
+Now that we have genes, we can create chromosomes. 
 Chromosomes are simply collections of genes.
-Whatever language you make this in, make sure that when you create a new Chromosome it 
-is has a [deep copy](https://en.wikipedia.org/wiki/Object_copying) of the genetic information rather than a shallow copy.
-A shallow copy is when you simple copy the object pointer where a deep copy is actually creating a full new object.
-If you fail to do a deep copy, you will have weird issues where multiple Chromosomes will share the same DNA.
+Whatever language you make this in, make sure that when you create a new chromosome it 
+is has a [deep copy](https://en.wikipedia.org/wiki/Object_copying) of the original genetic information rather than a shallow copy.
+A shallow copy is when you simple copy the object pointer where a deep copy is actually creating a new object.
+If you fail to do a deep copy, you will have weird issues where multiple chromosomes will share the same DNA.
 
-In this class I added helper functions to clone and create a new Chromosome.
+In this class I added helper functions to clone the chromosome as a random copy. 
 You can only create a new chromosome by cloning because I wanted to keep the program generic and make no assumptions about the domain.
-Since you only provide the min/max information for the genes once, cloning an existing chromosome is the easy way of ensuring that all chromosomes contain similarly behaved genes.
+Since you only provide the min/max information for the genes once, cloning an existing chromosome is the easiest way of
+ ensuring that all corresponding chromosomes contain genes with identical extrema. 
 
 
 ```javascript
@@ -149,7 +148,7 @@ class Chromosome
 }
 ```
 
-Creating a random population is pretty straight forward if implemented this method of random cloning in the Chromosome and Gene class.
+Creating a random population is pretty straight forward if implemented a method to create a random clone of a chromosome. 
 
 ```javascript
 /**
@@ -172,7 +171,7 @@ const createRandomPopulation = function(geneticChromosome, populationSize)
 ```
 
 This is where nearly all the domain information is introduced. 
-To create an entire population, you simply need to define what types of genes are found on each chromosome.
+After you define what types of genes are found on each chromosome, you can create an entire population.
 In this example all genes contain values ranging between one and ten. 
 
 ```javascript
@@ -189,9 +188,9 @@ let population = createRandomPopulation(genericChromosome, 100);
 ## Evaluate Fitness
 
 Like all optimization problems, you need a way to evaluate the performance of a particular solution.
-Essentially you have to create a function which takes in a chromosome and compute the "badness" of it.
-For this particular example it is just computing the [Manhattan Distance](https://en.wiktionary.org/wiki/Manhattan_distance) to a random 2D point.
-I chose two dimensions because it is easy to graph, however, a real application may have dozens of chromosomes. 
+The cost function takes in a chromosome and evaluates how close it got to the ideal solution. 
+This particular example it is just computing the [Manhattan Distance](https://en.wiktionary.org/wiki/Manhattan_distance) to a random 2D point.
+I chose two dimensions because it is easy to graph, however, real applications may have dozens of genes on each chromosome. 
 
 ```javascript
 let costx = Math.random() * 10;
@@ -211,8 +210,8 @@ const basicCostFunction = function(chromosome)
 ## Selection
 
 Selecting the best performing chromosomes is straightforward after you have a function for evaluating the performance.
-This code snippet also computes the average, and best chromosome of the population to make it easier to graph and define
-the stopping point for the generations. 
+This code snippet also computes the average and best chromosome of the population to make it easier to graph and define
+the stopping point for the algorithm's main loop. 
 
 ```javascript
 /**
@@ -233,7 +232,6 @@ const naturalSelection = function(population, keepNumber, fitnessFunction)
     for(let i = 0; i < population.length; i++)
     {
         const fitness = fitnessFunction(population[i]);
-        console.log(fitness);
         fitnessArray.push({fit:fitness, chrom: population[i]});
         total+= fitness;
     }
@@ -254,7 +252,7 @@ const naturalSelection = function(population, keepNumber, fitnessFunction)
 You might be wondering how I sorted the list of JSON objects - not a numerical array.
 I used the following function as a comparator for JavaScript's built in sort function.
 This comparator will compare objects based on a specific attribute that you give it.
-This is a very handy function to include in all of your JavaScript projects. 
+This is a very handy function to include in all of your JavaScript projects for easy sorting. 
 
 ```javascript
 /**
@@ -287,7 +285,7 @@ The process of reproduction can be broken down into Pairing and Mating.
 
 ### Pairing
 
-Pairing is the process of selecting who mates together to produce offspring.
+Pairing is the process of selecting mates to produce offspring.
 A typical approach will separate the population into two segments of mothers and fathers.
 You then randomly pick pairs of mothers and fathers to produce offspring.
 It is ok if one chromosome mates more than once.
