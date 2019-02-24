@@ -134,7 +134,6 @@ module.exports=
                             + postURL + ".html";
 
                         var htmlContent = utils.getFileContents(pathName).toString();
-                        console.log(htmlContent);
 
                         result = result.split("<customHTML />").join(htmlContent);
                     }

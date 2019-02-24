@@ -38,7 +38,7 @@ For example, we can specify that "height" gene can only vary between 0 and 90.
 To get the actual value of the gene from its \[0-1] value we simple de-normalize it.
 
 $$
-g_{real ralue} = (g_{high}- g_{low})g_{norm} + g_{low}
+g_{real value} = (g_{high}- g_{low})g_{norm} + g_{low}
 $$
 
 ```javascript
@@ -188,6 +188,11 @@ let population = createRandomPopulation(genericChromosome, 100);
 
 ## Evaluate Fitness
 
+Like all optimization problems, you need a way to evaluate the performance of a particular solution.
+Essentially you have to create a function which takes in a chromosome and compute the "badness" of it.
+For this particular example it is just computing the [Manhattan Distance](https://en.wiktionary.org/wiki/Manhattan_distance) to a random 2D point.
+I chose two dimensions because it is easy to graph, however, a real application may have dozens of chromosomes. 
+
 ```javascript
 let costx = Math.random() * 10;
 let costy = Math.random() * 10;
@@ -204,6 +209,10 @@ const basicCostFunction = function(chromosome)
 ```
 
 ## Selection
+
+Selecting the best performing chromosomes is straightforward after you have a function for evaluating the performance.
+This code snippet also computes the average, and best chromosome of the population to make it easier to graph and define
+the stopping point for the generations. 
 
 ```javascript
 /**
@@ -242,6 +251,10 @@ const naturalSelection = function(population, keepNumber, fitnessFunction)
 };
 ```
 
+You might be wondering how I sorted the list of JSON objects - not a numerical array.
+I used the following function as a comparator for JavaScript's built in sort function.
+This comparator will compare objects based on a specific attribute that you give it.
+This is a very handy function to include in all of your JavaScript projects. 
 
 ```javascript
 /**
@@ -268,7 +281,17 @@ function predicateBy(prop)
 }
 ```
 
-## Mating
+## Reproduction
+
+The process of reproduction can be broken down into Pairing and Mating. 
+
+### Pairing
+
+Pairing is the process of selecting who mates together to produce offspring.
+A typical approach will separate the population into two segments of mothers and fathers.
+You then randomly pick pairs of mothers and fathers to produce offspring.
+It is ok if one chromosome mates more than once.
+It is just important that you keep this process random. 
 
 ```javascript
 /**
@@ -292,8 +315,28 @@ const matePopulation = function(population, desiredPopulationSize)
         }
     }
 };
+```
 
+### Mating
 
+Mating is the actual act of forming new chromosomes/organisms based on your previously selected pairs.
+From my research, there are two major forms of mating: blending, crossover.
+
+Blending is typically the most preferred approach to mating when dealing with continuous variables.
+In this approach you combine the genes of both parents based on a random factor.
+
+$$
+c_{new} = r * c_{mother} + (1-r) * c_{father}
+$$
+
+The second offspring simply uses (1-r) for their random factor to adjust the chromosomes. 
+
+Crossover is the simplest approach to mating.
+In this process you clone the parents and then you randomly swap *n* of their genes.
+This works fine in some scenarios; however, this severely lacks the genetic diversity of the genes because you now have to solely
+rely on mutations for changes. 
+
+```javascript
 /**
  * Mates two chromosomes using the blending method
  * and returns a list of 2 offspring.
@@ -332,6 +375,16 @@ const blendGene = function(gene1, gene2, blendCoef)
 
 ## Mutation
 
+Mutations are random changes to an organisms DNA.
+In the scope of genetic algorithms, it helps our population converge on the correct solution.
+
+You can either adjust genes by a factor resulting in a smaller change or, you can
+change the value of the gene to be something completely random.
+Since we are using the blending technique for reproduction, we already have small incremental changes.
+I prefer to use mutations to randomly change the entire gene since it helps prevent the algorithm 
+from settling on a local minimum rather than the global minimum. 
+
+
 ```javascript
 /**
  * Randomly mutates the population
@@ -357,6 +410,12 @@ const mutatePopulation = function(population, mutatePercentage)
 
 ## Immigration
 
+Immigration or "new blood" is the process of dumping random organisms into your population at each generation.
+This prevents us from getting stuck in a local minimum rather than the global minimum.
+There are more advanced techniques to accomplish this same concept.
+My favorite approach (not implemented here) is raising **x** populations simultaneously and every **y** generations
+you take **z** organisms from each population and move them to another population. 
+
 ```javascript
 /**
  * Introduces x random chromosomes to the population.
@@ -374,6 +433,8 @@ const newBlood = function(population, immigrationSize)
 ```
 
 ## Putting It All Together
+
+Now that we have all the ingredients for a genetic algorithm we can piece it together in a simple loop.
 
 ```javascript
 /**
@@ -425,4 +486,32 @@ const runGeneticOptimization = function(geneticChromosome, costFunction,
 };
 ```
 
-# Conclusion
+
+## Running
+
+Running the program is pretty straight forward after you have your genes and cost function defined.
+You might be wondering if there is an optimal configuration of parameters to use with this algorithm.
+The answer is that it varies based on the particular problem.
+Problems like the one graphed by this website perform very well with a low mutation rate and a high population.
+However, some higher dimensional problems won't even converge on a local answer if you set your mutation rate too low. 
+
+```javascript
+let gene1 = new Gene(1,10,10);
+...
+let geneN = new Gene(1,10,0.4);
+let geneList = [gene1,..., geneN];
+
+let exampleOrganism = new Chromosome(geneList);
+
+costFunction = function(chromosome)
+{
+    var d =...;
+    //compute cost
+    return d;
+}
+
+runGeneticOptimization(exampleOrganism, costFunction, 100, 50, 0.01, 0.3, 20, 10);
+```
+
+The complete code for the genetic algorithm and the fancy JavaScript graphs can be found in my [Random Scripts GitHub Repository](https://github.com/jrtechs/RandomScripts).
+In the future I may package this into an [npm](https://www.npmjs.com/) package.
