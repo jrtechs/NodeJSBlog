@@ -4,7 +4,7 @@ const utils = require('../utils/utils.js');
 
 const sql = require('../utils/sql');
 
-const argsFull = '-S --base-header-level=1 --toc --toc-depth=3 -N --normalize -s --mathjax -t html5';
+const argsFull = '--from markdown-markdown_in_html_blocks+raw_html -S --base-header-level=1 --toc --toc-depth=3 -N --normalize -s --mathjax -t html5';
 const argsPreview = '-S --normalize -s --mathjax -t html5';
 
 
@@ -124,6 +124,18 @@ module.exports=
                         var original = "<youtube src=\"" + ytid + "\" />";
 
                         result = result.split(original).join(youtubeHTML);
+                    }
+
+
+                    var regExp = /\<customHTML .*?>/;
+                    while (result.search(regExp) != -1)
+                    {
+                        const pathName =  "blogContent/posts/" + categoryURL + "/html/"
+                            + postURL + ".html";
+
+                        var htmlContent = utils.getFileContents(pathName).toString();
+
+                        result = result.split("<customHTML />").join(htmlContent);
                     }
 
 
