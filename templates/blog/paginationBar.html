@@ -1,0 +1,45 @@
+<nav aria-label="...">
+    <ul class="pagination">
+        {if pagination.previous}
+            <li class="page-item">
+                <a class="page-link" href="{pagination.previous.url}">
+                    Previous
+                </a>
+            </li>
+        {else}
+            <li class="page-item disabled">
+                <span class="page-link">
+                    Previous
+                </span>
+            </li>
+        {/if}
+        {for page in pagination.pages}
+            <li class="page-item active">
+
+                {if page.isCurrent}
+                    <span class="page-link">
+                        {page.number}
+                        <span class="sr-only">(current)</span>
+                    </span>
+                {else}
+                    <a class="page-link" href="{page.url}">
+                        {page.number}
+                    </a>
+                {/if}
+            </li>
+        {/for}
+        {if pagination.next}
+            <li class="page-item">
+                <a class="page-link" href="{pagination.next.url}">
+                    Next
+                </a>
+            </li>
+        {else}
+            <li class="page-item disabled">
+                <span class="page-link">
+                    Next
+                </span>
+            </li>
+        {/if}
+    </ul>
+</nav>

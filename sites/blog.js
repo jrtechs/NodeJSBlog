@@ -9,6 +9,10 @@ const whiskers = require('whiskers');
 const TEMPLATE_FILE="blog/blogMain.html";
 
 
+const PAGINATION_TEMPLATE_KEY = "paginationTemplate";
+const PAGINATION_TEMPLATE_FILE = "blog/paginationBar.html";
+
+
 //caching program to make the application run faster
 const cache = require('memory-cache');
 
@@ -74,8 +78,10 @@ module.exports=
                             // cache is not tricked into storing same blog post a ton of times
                         }
                     }
+
                     var templateContext = Object();
                     Promise.all([includes.fetchTemplate(TEMPLATE_FILE),
+                        utils.includeInObject(PAGINATION_TEMPLATE_KEY, templateContext, "templates/" + PAGINATION_TEMPLATE_FILE),
                         includes.printHeader(templateContext),
                         includes.printFooter(templateContext),
                         require(file).main(filename, request, templateContext),
