@@ -88,7 +88,7 @@ module.exports=
                         require("../blog/sidebar.js").main(templateContext)])
                             .then(function (content)
                     {
-                        var html = whiskers.render(content[0], templateContext);
+                        const html = whiskers.render(content[0], templateContext);
                         result.write(html);
                         result.end();
                         cache.put(filename + "?page=" + page, html);

@@ -35,18 +35,36 @@ module.exports=
                 reject("Invalid Page");
             }
 
+            var paginationObject = new Object();
+
             var nextPage = currentPage + 1;
             var previousPage = currentPage - 1;
 
             if (isValidPage(previousPage, postsPerPage, totalPosts))
             {
-                templateContext.newPostsURL = baseURL + "?page=" + previousPage;
+                paginationObject.previous = {url: baseURL + "?page=" + previousPage};
             }
 
             if (isValidPage(nextPage, postsPerPage, totalPosts))
             {
-                templateContext.oldPostsURL = baseURL + "?page=" + nextPage
+                paginationObject.next = {url: baseURL + "?page=" + nextPage};
             }
 
+            var page = 1;
+            var pages = [];
+            while(isValidPage(page, postsPerPage, totalPosts))
+            {
+                if(page === currentPage)
+                {
+                    pages.push({isCurrent: true, number: page})
+                }
+                else
+                {
+                    pages.push({number: page, url: baseURL + "?page=" + page})
+                }
+                page = page + 1;
+            }
+            paginationObject.pages = pages;
+            templateContext.pagination = paginationObject;
         }
     };
