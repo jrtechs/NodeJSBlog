@@ -11,12 +11,6 @@ const config = require('./utils/configLoader').getConfig();
 /** Port for the server to run on */
 const port = config.PORT;
 
-/** http server */
-const http = require('http');
-
-/** used to parse the request URL */
-const url = require('url');
-
 /** express app */
 const express = require("express");
 
@@ -42,62 +36,67 @@ const session = require('express-session');
 app.use(session({ secret: config.SESSION_SECRET, cookie: { maxAge: 6000000 }}));
 
 
-const projects = ["/steam/"];
 
-/**
- * Parses the request url and calls correct JS files
- */
-app.use(function(request, result)
-{
-    //prevents people from pointing their dns at my IP:port for my site
-    if(request.headers.host.includes("localhost:" + port) ||
-        request.headers.host.includes("jrtechs.net"))
-    {
-        const filename = url.parse(request.url, true).pathname;
 
-        var project = false;
-        projects.forEach(function(projectName)
-        {
-            if(filename.startsWith(projectName))
-            {
-                require("./sites/projects.js").main(request, result, projectName);
-                project = true;
-            }
-        });
+const routes = require('./routes');
+app.use('/', routes);
 
-        if(filename.startsWith("/admin"))
-        {
-            require("./sites/admin.js").main(request, result, filename);
-            project = true;
-        }
-
-        if(!project)
-        {
-            require("./sites/blog.js").main(request, result, filename);
-        }
-
-        try
-        {
-            const getClientAddress = (request.headers['x-forwarded-for'] || '').split(',')[0]
-                || request.connection.remoteAddress;
-            console.log(getClientAddress);
-
-            sql.logTraffic(getClientAddress, filename);
-        }
-        catch (e)
-        { }
-    }
-    else
-    {
-        // utils.printWrongHost(result);
-        result.writeHead(418, {});
-        result.end();
-    }
-});
+// /**
+//  * Parses the request url and calls correct JS files
+//  */
+// app.use(function(request, result)
+// {
+//     //prevents people from pointing their dns at my IP:port for my site
+//     if(request.headers.host.includes("localhost:" + port) ||
+//         request.headers.host.includes("jrtechs.net"))
+//     {
+//         const filename = url.parse(request.url, true).pathname;
+//
+//         var project = false;
+//         projects.forEach(function(projectName)
+//         {
+//             if(filename.startsWith(projectName))
+//             {
+//                 require("./sites/projects.js").main(request, result, projectName);
+//                 project = true;
+//             }
+//         });
+//
+//         if(filename.startsWith("/admin"))
+//         {
+//             require("./sites/admin.js").main(request, result, filename);
+//             project = true;
+//         }
+//
+//         if(!project)
+//         {
+//             require("./sites/blog.js").main(request, result, filename);
+//         }
+//
+//         try
+//         {
+//             const getClientAddress = (request.headers['x-forwarded-for'] || '').split(',')[0]
+//                 || request.connection.remoteAddress;
+//             console.log(getClientAddress);
+//
+//             sql.logTraffic(getClientAddress, filename);
+//         }
+//         catch (e)
+//         { }
+//     }
+//     else
+//     {
+//         // utils.printWrongHost(result);
+//         result.writeHead(418, {});
+//         result.end();
+//     }
+// });
 
 
 //enables gzip compression for the site
 app.use(compression());
 
 
-http.createServer(app).listen(port);
+app.listen(port, () =>
+    console.log(`App listening on port ${port}!`)
+);
