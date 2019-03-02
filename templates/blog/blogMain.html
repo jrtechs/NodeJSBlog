@@ -31,25 +31,8 @@
                 </div>
                 <br><br>
             {/for}
-            <div class="row">
-                <div class="col-6col">
-                    {if newPostsURL}
-                    <button class="btn btn-secondary btn-l" onclick="location.href='{newPostsURL}'">
-                        <b>Older Posts &raquo;</b>
-                    </button>
-                    {/if}
-                </div>
 
-                <div class="col-6">
-                    {if oldPostsURL}
-                        <span class="float-right">
-                            <button class="btn btn-secondary btn-l" onclick="location.href='{oldPostsURL}'">
-                                <b>Older Posts &raquo;</b>
-                            </button>
-                        </span>
-                    {/if}
-                </div>
-            </div>
+            {>paginationTemplate}
             <br>
         </div>
         <div class="col-md-4 col-12">
