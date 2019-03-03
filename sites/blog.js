@@ -43,10 +43,6 @@ module.exports=
             {
                 require("../includes/downloads.js").main(result, filename);
             }
-            else if (filename.includes("/contact"))
-            {
-                require("../blog/contact.js").main(request, result);
-            }
             else
             {
                 var page = request.query.page;

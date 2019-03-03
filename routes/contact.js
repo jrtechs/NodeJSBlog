@@ -1,8 +1,8 @@
 const routes = require('express').Router();
 
-routes.post('/', (request, result) =>
+routes.get('/', (request, result) =>
 {
-
+    require("../blog/contact.js").main(request, result);
 });
 
 routes.get('*', (request, result) =>

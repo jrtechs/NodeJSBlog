@@ -6,47 +6,12 @@
 //used for file io
 const fs = require('fs');
 
+const includes = require("../includes/includes");
+
 
 module.exports=
 {
-    /**
-     * A function similar to the include statement in PHP
-     * This function writes a file to the output
-     *
-     * @param fileName the file to append to the result
-     */
-    include: function(fileName)
-    {
-        return new Promise(function(resolve, reject)
-        {
-            try
-            {
-                resolve(fs.readFileSync(fileName));
-            }
-            catch (e)
-            {
-                console.log("Could not find " + fileName);
-                resolve("");
-            }
-        });
-    },
 
-    includeInObject: function(key, context, fileName)
-    {
-        return new Promise(function(resolve, reject)
-        {
-            module.exports.include(fileName).then(function(result)
-            {
-                context[key] = result;
-                resolve();
-            }).catch(function(error)
-            {
-                context[key] = "File Not Found";
-                reject(error);
-                console.log(error);
-            })
-        })
-    },
 
 
     /**

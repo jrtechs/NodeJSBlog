@@ -215,7 +215,6 @@ module.exports =
                 const html = whiskers.render(content[0], templateContext);
                 result.write(html);
                 result.end();
-
             }).catch(function(err)
             {
                 console.log(err);
