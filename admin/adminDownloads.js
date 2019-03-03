@@ -109,13 +109,11 @@ module.exports=
      * @param templateContext json object used as the template context
      * @returns {Promise} renders the template used for this page
      */
-    main: function(postData, templateContext)
+    main: function(templateContext)
     {
         return new Promise(function(resolve, reject)
         {
             Promise.all([includes.fetchTemplate(TEMPLATE_FILE),
-                addDownloadPostData(postData),
-                removeDownloads(postData),
                 displayDownloads(templateContext)]).then(function(template)
             {
                 resolve(template[0]);
@@ -125,5 +123,21 @@ module.exports=
                 reject(error);
             });
         });
+    },
+
+    processPostData: function(postData, templateContext)
+    {
+        return new Promise(function(resolve, reject)
+        {
+            Promise.all([addDownloadPostData(postData),
+                removeDownloads(postData)]).then(function()
+            {
+                resolve();
+            }).catch(function(error)
+            {
+                console.log(error);
+                reject(error);
+            })
+        })
     }
 };

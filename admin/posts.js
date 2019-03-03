@@ -84,7 +84,23 @@ module.exports=
          * @param templateContext json object used as the template context
          * @returns {Promise} renders the template used for this page
          */
-        main: function(postData, templateContext)
+        main: function(templateContext)
+        {
+            return new Promise(function(resolve, reject)
+            {
+                Promise.all([includes.fetchTemplate(TEMPLATE_FILE),
+                    fetchPostsInformation(templateContext)]).then(function(template)
+                {
+                    resolve(template[0]);
+                }).catch(function(error)
+                {
+                    console.log("error in add admin blog.js");
+                    reject(error);
+                });
+            });
+        },
+
+        processPostData(postData, templateContext)
         {
             return new Promise(function(resolve, reject)
             {

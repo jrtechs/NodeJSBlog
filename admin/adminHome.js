@@ -116,19 +116,33 @@ module.exports=
          * @param templateContext json object used as the template context
          * @returns {Promise} renders the template used for this page
          */
-        main: function(postData, templateContext)
+        main: function(templateContext)
         {
-            console.log("called");
             return new Promise(function(resolve, reject)
             {
                 Promise.all([includes.fetchTemplate(TEMPLATE_FILE),
-                    processPostAddCategory(postData),
-                    appendCategoriesToTemplate(templateContext),
-                    processPost(postData)])
+                    appendCategoriesToTemplate(templateContext)])
                         .then(function(template)
                 {
                     resolve(template[0]);
                 }).catch(function(error)
+                {
+                    console.log("error in add downloads.js");
+                    reject(error);
+                });
+            });
+        },
+
+        processPostData: function(postData, templateContexgt)
+        {
+            return new Promise(function(resolve, reject)
+            {
+                Promise.all([processPostAddCategory(postData),
+                    processPost(postData)])
+                    .then(function(data)
+                    {
+                        resolve();
+                    }).catch(function(error)
                 {
                     console.log("error in add downloads.js");
                     reject(error);

@@ -15,21 +15,21 @@ routes.use('/downloads', downloads);
 const users = require('./users');
 routes.use('/users', users);
 
+const utils = require('../../utils/utils.js');
+
 routes.get('/', (request, result) =>
 {
-    if(utils.checkPrivilege(request) >= utils.PRIVILEGE.MEMBER)
-    {
-        utils.renderHTML(request, result, "users.html", getUserInformation);
-    }
-    else
-    {
-        utils.printError(result, "You need to be logged in");
-    }
+    utils.constructAdminPage(request, result, require("../../admin/adminHome").main)
+});
+
+routes.post('/', (request, result) =>
+{
+    utils.constructAdminPage(request, result, require("../../admin/adminHome").processPostData);
 });
 
 routes.get('*', (request, result) =>
 {
-    //error
+    utils.print404(result);
 });
 
 module.exports = routes;

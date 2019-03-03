@@ -6,6 +6,9 @@
 //used for file io
 const fs = require('fs');
 
+const whiskers = require('whiskers');
+
+
 const includes = require("../includes/includes");
 
 
@@ -118,6 +121,49 @@ module.exports=
             result.write(html);
             result.end();
         })
+    },
 
+
+    constructAdminPage: function(request, result, templateFiller)
+    {
+        var templateContext = Object();
+        var promises = [];
+
+        promises.push(includes.fetchTemplate("admin/adminMain.html"));
+        promises.push(includes.printAdminHeader(templateContext));
+        promises.push(includes.printFooter(templateContext));
+
+        if(module.exports.loggedIn(request))
+        {
+            promises.push(templateFiller(templateContext));
+        }
+        else
+        {
+            //login
+            const clientAddress = (request.headers['x-forwarded-for'] || '').split(',')[0]
+                || request.connection.remoteAddress;
+            promises.push(require("../admin/login").main(request, clientAddress,templateContext));
+        }
+
+        Promise.all(promises).then(function(content)
+        {
+            result.write(whiskers.render(content[0], templateContext));
+            result.end();
+        }).catch(function(err)
+        {
+            console.log(err);
+            throw err;
+        });
+    },
+
+    adminPostRoute: function(request, result, templateFiller)
+    {
+
+    },
+
+
+    loggedIn(request)
+    {
+        return(request.session && request.session.user);
     }
 };

@@ -153,7 +153,7 @@ module.exports =
      */
     printAdminHeader(templateContext)
     {
-        return utils.includeInObject(HEADER_KEY, templateContext, ADMIN_HEADER);
+        return module.exports.includeInObject(HEADER_KEY, templateContext, ADMIN_HEADER);
     },
 
 

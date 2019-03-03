@@ -167,7 +167,26 @@ module.exports=
                     resolve(template[0]);
                 }).catch(function(error)
                 {
-                    console.log("error in add downloads.js");
+                    console.log("error in users.js");
+                    reject(error);
+                });
+            });
+        },
+
+        processPostData: function(postData, templateContext)
+        {
+            return new Promise(function(resolve, reject)
+            {
+                Promise.all([includes.fetchTemplate(TEMPLATE_FILE),
+                    addUserPostData(postData),
+                    removeUserPost(postData),
+                    editUserPost(postData, templateContext),
+                    getUserInformation(templateContext)]).then(function(template)
+                {
+                    resolve(template[0]);
+                }).catch(function(error)
+                {
+                    console.log("error in users.js");
                     reject(error);
                 });
             });
