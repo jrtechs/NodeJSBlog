@@ -6,6 +6,9 @@ routes.use('/about', about);
 const contact = require('./contact');
 routes.use('/contact', contact);
 
+const downloads = require('./downloads');
+routes.use('/downloads', downloads);
+
 const includes = require('./includes');
 routes.use('/includes', includes);
 
@@ -22,7 +25,7 @@ routes.get('/', (request, result) =>
 
 routes.get('*', (request, result) =>
 {
-    //error
+    console.log("Un registered event.")
 });
 
 

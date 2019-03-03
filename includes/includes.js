@@ -133,15 +133,7 @@ module.exports =
      */
     include: function(fileName)
     {
-        try
-        {
-            return(fs.readFileSync(fileName));
-        }
-        catch (e)
-        {
-            console.log("Could not find " + fileName);
-            return("");
-        }
+        return readFile(fileName);
     },
 
     /**

@@ -2,7 +2,6 @@
 const includes = require('../includes/includes.js');
 
 
-
 /**
  * @author Jeffery Russell 10-30-18
  *

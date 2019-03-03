@@ -111,8 +111,13 @@ module.exports=
      * @param result
      * @returns {*}
      */
-    print404: function()
+    print404: function(result)
     {
-        return this.include("includes/html/404.html");
+        includes.include("includes/html/404.html").then(function(html)
+        {
+            result.write(html);
+            result.end();
+        })
+
     }
 };
