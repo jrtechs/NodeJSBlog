@@ -29,13 +29,19 @@ const processPostAddCategory = function(postData)
             if(sql.insert(q) != 0)
             {
                 console.log("category added");
+                resolve();
             }
             else
             {
+                reject();
                 console.log("error adding category");
             }
         }
-        resolve("");
+        else
+        {
+            resolve();
+        }
+
     });
 };
 
@@ -74,7 +80,6 @@ const processPost = function(postData)
             urls = urls.split(" ").join("-");
             urls =urls.toLowerCase();
 
-
             var q = "insert into posts (category_id, picture_url, published, name, url)  values ";
 
             q += "('" + post.add_post_category + "', '" +  post.add_post_picture +
@@ -83,7 +88,7 @@ const processPost = function(postData)
             {
                 var map = require('../utils/generateSiteMap');
                 map.main();
-                resolve("");
+                resolve();
             }).catch(function(error)
             {
                 reject(error);
@@ -93,15 +98,17 @@ const processPost = function(postData)
         {
             require("../sites/blog.js").clearCache();
             require("../includes/includes.js").clearCache();
+            resolve();
         }
         else if(post.git_pull)
         {
             const execSync = require('child_process').execSync;
-            code = execSync('git pull')
+            code = execSync('git pull');
+            resolve();
         }
         else
         {
-            resolve("");
+            resolve();
         }
     });
 };
@@ -124,29 +131,31 @@ module.exports=
                     appendCategoriesToTemplate(templateContext)])
                         .then(function(template)
                 {
-                    resolve(template[0]);
+                    templateContext.adminPage = template[0];
+                    resolve();
                 }).catch(function(error)
                 {
-                    console.log("error in add downloads.js");
+                    console.log("error in add adminHome.js");
                     reject(error);
                 });
             });
         },
 
-        processPostData: function(postData, templateContexgt)
+        processPostData: function(postData)
         {
             return new Promise(function(resolve, reject)
             {
                 Promise.all([processPostAddCategory(postData),
                     processPost(postData)])
-                    .then(function(data)
+                    .then(function()
                     {
+                        console.log("all resolved");
                         resolve();
                     }).catch(function(error)
-                {
-                    console.log("error in add downloads.js");
-                    reject(error);
-                });
+                    {
+                        console.log("error in add downloads.js");
+                        reject(error);
+                    });
             });
         }
     };

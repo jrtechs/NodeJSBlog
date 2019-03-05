@@ -135,6 +135,7 @@ module.exports=
 
         if(module.exports.loggedIn(request))
         {
+            templateContext.loggedIn = true;
             promises.push(templateFiller(templateContext));
         }
         else
@@ -156,8 +157,56 @@ module.exports=
         });
     },
 
-    adminPostRoute: function(request, result, templateFiller)
+    adminPostPageWithOutput: function(request, result, templateFiller)
     {
+        module.exports.getPostData(request).then(function(postData)
+        {
+            var templateContext = Object();
+            var promises = [];
+
+            promises.push(includes.fetchTemplate("admin/adminMain.html"));
+            promises.push(includes.printAdminHeader(templateContext));
+            promises.push(includes.printFooter(templateContext));
+
+            if (module.exports.loggedIn(request))
+            {
+                templateContext.loggedIn = true;
+                promises.push(templateFiller(templateContext, postData));
+            }
+            else
+            {
+                //login
+                const clientAddress = (request.headers['x-forwarded-for'] || '').split(',')[0]
+                    || request.connection.remoteAddress;
+                promises.push(require("../admin/login").main(request, clientAddress, templateContext));
+            }
+
+            Promise.all(promises).then(function (content)
+            {
+                result.write(whiskers.render(content[0], templateContext));
+                result.end();
+            }).catch(function (err) {
+                console.log(err);
+                throw err;
+            });
+        });
+    },
+
+    adminPostRoute: function(request, templateFiller)
+    {
+        return new Promise(function(resolve, reject)
+        {
+            module.exports.getPostData(request).then(function(postData)
+            {
+                templateFiller(postData).then(function()
+                {
+                    resolve();
+                })
+            }).catch(function(e)
+            {
+                reject(e);
+            })
+        })
 
     },
 

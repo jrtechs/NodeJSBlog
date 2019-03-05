@@ -10,6 +10,9 @@ const sql = require('../utils/sql');
 const qs = require('querystring');
 
 
+const utils = require('../utils/utils');
+
+
 /**
  * Detects if the post data came from the edit form in blog table or edit post
  * in the edit post form.
@@ -91,16 +94,17 @@ module.exports=
                 Promise.all([includes.fetchTemplate(TEMPLATE_FILE),
                     fetchPostsInformation(templateContext)]).then(function(template)
                 {
-                    resolve(template[0]);
+                    templateContext.adminPage = template[0];
+                    resolve();
                 }).catch(function(error)
                 {
-                    console.log("error in add admin blog.js");
+                    console.log("error in add admin posts.js");
                     reject(error);
                 });
             });
         },
 
-        processPostData(postData, templateContext)
+        processPostData(templateContext, postData)
         {
             return new Promise(function(resolve, reject)
             {
@@ -108,10 +112,11 @@ module.exports=
                     processPostData(postData, templateContext),
                     fetchPostsInformation(templateContext)]).then(function(template)
                 {
-                    resolve(template[0]);
+                    templateContext.adminPage = template[0];
+                    resolve();
                 }).catch(function(error)
                 {
-                    console.log("error in add admin blog.js");
+                    console.log("error in add admin posts.js");
                     reject(error);
                 });
             });

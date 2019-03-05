@@ -10,6 +10,7 @@ routes.get('/', (request, result) =>
 
 routes.post('/', (request, result) =>
 {
+    console.log("login request");
     utils.constructAdminPage(request, result, require("../../admin/login").main)
 });
 

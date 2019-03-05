@@ -24,7 +24,10 @@ routes.get('/', (request, result) =>
 
 routes.post('/', (request, result) =>
 {
-    utils.constructAdminPage(request, result, require("../../admin/adminHome").processPostData);
+    utils.adminPostRoute(request, require("../../admin/adminHome").processPostData).then(function()
+    {
+        result.redirect("/admin");
+    });
 });
 
 routes.get('*', (request, result) =>
