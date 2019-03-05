@@ -116,7 +116,8 @@ module.exports=
             Promise.all([includes.fetchTemplate(TEMPLATE_FILE),
                 displayDownloads(templateContext)]).then(function(template)
             {
-                resolve(template[0]);
+                templateContext.adminPage = template[0];
+                resolve();
             }).catch(function(error)
             {
                 console.log("error in add downloads.js");
@@ -125,7 +126,7 @@ module.exports=
         });
     },
 
-    processPostData: function(postData, templateContext)
+    processPostData: function(postData)
     {
         return new Promise(function(resolve, reject)
         {
@@ -135,7 +136,7 @@ module.exports=
                 resolve();
             }).catch(function(error)
             {
-                console.log(error);
+                console.log("Error in admin downloads");
                 reject(error);
             })
         })
