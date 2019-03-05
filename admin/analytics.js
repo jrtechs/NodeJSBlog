@@ -50,17 +50,17 @@ module.exports=
          * Fetches context information for the admin blog page and handles post
          * data sent regarding editing blog.
          *
-         * @param postData posted by user
          * @param templateContext json object used as the template context
          * @returns {Promise} renders the template used for this page
          */
-        main: function(postData, templateContext)
+        main: function(templateContext)
         {
             return new Promise(function(resolve, reject)
             {
                 Promise.all([includes.fetchTemplate(TEMPLATE_FILE), generateData(templateContext)]).then(function(template)
                 {
-                    resolve(template[0]);
+                    templateContext.adminPage = template[0];
+                    resolve();
                 }).catch(function(error)
                 {
                     console.log("error in add admin blog.js");
