@@ -128,40 +128,18 @@ module.exports =
         },
 
 
-        buildBlogPage: function(request, result, templateFiller)
+        buildBlogPageWithURL: function(request, result, templateFiller, filename)
         {
             var page = request.query.page;
             if(typeof page == "undefined")
                 page = 1;
             page = Number(page);
 
-            var filename = url.parse(request.url, true).pathname;
-
             const html = cache.get(filename + "?page=" + page);
 
             result.writeHead(200, {'Content-Type': 'text/html'});
             if (html == null)
             {
-                // var file = "";
-                //
-                // if (filename === '' || filename === '/')
-                // {
-                //     file = "../blog/homePage.js";
-                // }
-                // else
-                // {
-                //     var urlSplit = filename.split("/");
-                //
-                //     if (urlSplit.length >= 2 && urlSplit[1] === 'category') //single category page
-                //         file = "../blog/category.js";
-                //     else
-                //     {
-                //         file = "../blog/posts.js";
-                //         page = 1; // all blog are single page, everyone must be one to ensure
-                //         // cache is not tricked into storing same blog post a ton of times
-                //     }
-                // }
-
                 var templateContext = Object();
                 Promise.all([includes.fetchTemplate(TEMPLATE_FILE),
                     includes.includeInObject(PAGINATION_TEMPLATE_KEY, templateContext, "templates/" + PAGINATION_TEMPLATE_FILE),
@@ -177,19 +155,25 @@ module.exports =
                         result.end();
                         cache.put(filename + "?page=" + page, html);
                     }).catch(function (err)
-                    {
-                        console.log("dewie");
-                        console.log(err);
-                        cache.del(filename + "?page=" + page);
+                {
+                    console.log("dewie");
+                    console.log(err);
+                    cache.del(filename + "?page=" + page);
 
-                        module.exports.print404(result)
-                    });
+                    module.exports.print404(result)
+                });
             }
             else
             {
                 result.write(html);
                 result.end();
             }
+        },
+
+        buildBlogPage: function(request, result, templateFiller)
+        {
+            var filename = url.parse(request.url, true).pathname;
+            module.exports.buildBlogPageWithURL(request, result,templateFiller, filename);
         },
 
         /**

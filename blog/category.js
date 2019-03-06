@@ -26,7 +26,7 @@ module.exports=
                 sql.getPostsFromCategory(category).then(function(posts)
                 {
                     Promise.all([blogBodyRenderer.renderBatchOfPosts(requestURL, posts, page, 5, templateContext),
-                        require('./renderNextBar').main(requestURL, page, 5, posts.length, templateContext)]).then(function()
+                        require('./renderNextBar').main("/category" + request.url, page, 5, posts.length, templateContext)]).then(function()
                     {
                         resolve();
                     });

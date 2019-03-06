@@ -25,23 +25,22 @@ routes.use('/includes', includes);
 const category = require('./category');
 routes.use('/category', category);
 
-
+const pageBuilder = require('../utils/pageBuilder');
 
 const projects = ["/steam/"];
 
 
-
-
+//blog home page
 routes.get('/', (request, result) =>
 {
-    //blog home page
+    pageBuilder.buildBlogPage(request, result, require("../blog/homePage").main)
 });
 
-
+//regular blog posts
 routes.get('*', (request, result) =>
 {
-    console.log("Un registered event.")
+    pageBuilder.buildBlogPage(request, result,
+        require("../blog/posts").main, request.url);
 });
-
 
 module.exports = routes;
