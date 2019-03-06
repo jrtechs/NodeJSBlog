@@ -1,15 +1,15 @@
 const routes = require('express').Router();
 
-const utils = require('../../utils/utils.js');
+const builder = require('../../utils/pageBuilder');
 
 routes.get('/', (request, result) =>
 {
-    utils.constructAdminPage(request, result, require("../../admin/posts").main)
+    builder.constructAdminPage(request, result, require("../../admin/posts").main)
 });
 
 routes.post('/', (request, result) =>
 {
-    utils.adminPostPageWithOutput(request, result ,require("../../admin/posts").processPostData)
+    builder.adminPostPageWithOutput(request, result ,require("../../admin/posts").processPostData)
 });
 
 module.exports = routes;

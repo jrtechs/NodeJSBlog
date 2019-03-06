@@ -20,6 +20,13 @@ routes.use('/downloads', downloads);
 const includes = require('./includes');
 routes.use('/includes', includes);
 
+
+/** category pages */
+const category = require('./category');
+routes.use('/category', category);
+
+
+
 const projects = ["/steam/"];
 
 

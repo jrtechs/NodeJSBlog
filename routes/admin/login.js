@@ -1,17 +1,16 @@
 const routes = require('express').Router();
 
-const utils = require('../../utils/utils.js');
+const builder = require('../../utils/pageBuilder.js');
 
 routes.get('/', (request, result) =>
 {
-    utils.constructAdminPage(request, result, require("../../admin/adminHome").main)
+    builder.constructAdminPage(request, result, require("../../admin/adminHome").main)
 });
 
 
 routes.post('/', (request, result) =>
 {
-    console.log("login request");
-    utils.constructAdminPage(request, result, require("../../admin/login").main)
+    builder.constructAdminPage(request, result, require("../../admin/login").main)
 });
 
 module.exports = routes;

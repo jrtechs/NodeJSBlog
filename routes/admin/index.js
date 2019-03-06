@@ -15,16 +15,16 @@ routes.use('/downloads', downloads);
 const users = require('./users');
 routes.use('/users', users);
 
-const utils = require('../../utils/utils.js');
+const builder = require('../../utils/pageBuilder.js');
 
 routes.get('/', (request, result) =>
 {
-    utils.constructAdminPage(request, result, require("../../admin/adminHome").main)
+    builder.constructAdminPage(request, result, require("../../admin/adminHome").main)
 });
 
 routes.post('/', (request, result) =>
 {
-    utils.adminPostRoute(request, require("../../admin/adminHome").processPostData).then(function()
+    builder.adminPostRoute(request, require("../../admin/adminHome").processPostData).then(function()
     {
         result.redirect("/admin");
     });
@@ -32,7 +32,7 @@ routes.post('/', (request, result) =>
 
 routes.get('*', (request, result) =>
 {
-    utils.print404(result);
+    builder.print404(result);
 });
 
 module.exports = routes;

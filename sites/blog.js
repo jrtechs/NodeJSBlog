@@ -34,77 +34,67 @@ module.exports=
          */
         main: function(request, result, filename)
         {
-            if(contentLoader.serveStaticContent(request, result, filename, ""))
-            {
-                //do nothing
-            }
-            //downloads
-            else if (filename.includes("/downloads/"))
-            {
-                require("../includes/downloads.js").main(result, filename);
-            }
-            else
-            {
-                var page = request.query.page;
-                if(typeof page == "undefined")
-                    page = 1;
-                page = Number(page);
 
-                const html = cache.get(filename + "?page=" + page);
+            var page = request.query.page;
+            if(typeof page == "undefined")
+                page = 1;
+            page = Number(page);
 
-                result.writeHead(200, {'Content-Type': 'text/html'});
-                if (html == null)
+            const html = cache.get(filename + "?page=" + page);
+
+            result.writeHead(200, {'Content-Type': 'text/html'});
+            if (html == null)
+            {
+                var file = "";
+
+                if (filename === '' || filename === '/')
                 {
-                    var file = "";
-
-                    if (filename === '' || filename === '/')
-                    {
-                        file = "../blog/homePage.js";
-                    }
-                    else
-                    {
-                        var urlSplit = filename.split("/");
-
-                        if (urlSplit.length >= 2 && urlSplit[1] === 'category') //single category page
-                            file = "../blog/category.js";
-                        else
-                        {
-                            file = "../blog/posts.js";
-                            page = 1; // all blog are single page, everyone must be one to ensure
-                            // cache is not tricked into storing same blog post a ton of times
-                        }
-                    }
-
-                    var templateContext = Object();
-                    Promise.all([includes.fetchTemplate(TEMPLATE_FILE),
-                        utils.includeInObject(PAGINATION_TEMPLATE_KEY, templateContext, "templates/" + PAGINATION_TEMPLATE_FILE),
-                        includes.printHeader(templateContext),
-                        includes.printFooter(templateContext),
-                        require(file).main(filename, request, templateContext),
-                        require("../blog/sidebar.js").main(templateContext)])
-                            .then(function (content)
-                    {
-                        const html = whiskers.render(content[0], templateContext);
-                        result.write(html);
-                        result.end();
-                        cache.put(filename + "?page=" + page, html);
-                    }).catch(function (err)
-                    {
-                        console.log(err);
-                        cache.del(filename + "?page=" + page);
-                        utils.print404().then(function(content)
-                        {
-                            result.write(content);
-                            result.end();
-                        })
-                    });
+                    file = "../blog/homePage.js";
                 }
                 else
                 {
+                    var urlSplit = filename.split("/");
+
+                    if (urlSplit.length >= 2 && urlSplit[1] === 'category') //single category page
+                        file = "../blog/category.js";
+                    else
+                    {
+                        file = "../blog/posts.js";
+                        page = 1; // all blog are single page, everyone must be one to ensure
+                        // cache is not tricked into storing same blog post a ton of times
+                    }
+                }
+
+                var templateContext = Object();
+                Promise.all([includes.fetchTemplate(TEMPLATE_FILE),
+                    utils.includeInObject(PAGINATION_TEMPLATE_KEY, templateContext, "templates/" + PAGINATION_TEMPLATE_FILE),
+                    includes.printHeader(templateContext),
+                    includes.printFooter(templateContext),
+                    require(file).main(filename, request, templateContext),
+                    require("../blog/sidebar.js").main(templateContext)])
+                        .then(function (content)
+                {
+                    const html = whiskers.render(content[0], templateContext);
                     result.write(html);
                     result.end();
-                }
+                    cache.put(filename + "?page=" + page, html);
+                }).catch(function (err)
+                {
+                    console.log(err);
+                    cache.del(filename + "?page=" + page);
+                    utils.print404().then(function(content)
+                    {
+                        result.write(content);
+                        result.end();
+                    })
+                });
             }
+            else
+            {
+                result.write(html);
+                result.end();
+            }
+
         },
 
         /**

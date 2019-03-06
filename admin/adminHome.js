@@ -96,7 +96,7 @@ const processPost = function(postData)
         }
         else if(post.clear_cache)
         {
-            require("../sites/blog.js").clearCache();
+            require("../utils/pageBuilder").clearCache();
             require("../includes/includes.js").clearCache();
             resolve();
         }

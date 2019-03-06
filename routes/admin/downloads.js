@@ -1,15 +1,15 @@
 const routes = require('express').Router();
 
-const utils = require('../../utils/utils.js');
+const builder = require('../../utils/pageBuilder');
 
 routes.get('/', (request, result) =>
 {
-    utils.constructAdminPage(request, result, require("../../admin/adminDownloads").main)
+    builder.constructAdminPage(request, result, require("../../admin/adminDownloads").main)
 });
 
 routes.post('/', (request, result) =>
 {
-    utils.adminPostRoute(request ,require("../../admin/adminDownloads").processPostData).then(function()
+    builder.adminPostRoute(request ,require("../../admin/adminDownloads").processPostData).then(function()
     {
         result.redirect('/admin/downloads');
     })
