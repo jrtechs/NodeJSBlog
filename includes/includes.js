@@ -7,9 +7,6 @@
  * @author Jeffery Russell
  */
 
-//used for file IO
-const utils = require('../utils/utils.js');
-
 const HEADER_KEY = "header";
 
 const FOOTER_KEY = "footer";
@@ -112,7 +109,6 @@ module.exports =
         {
             readFile(fileName).then(function(result)
             {
-                console.log(result);
                 context[key] = result;
                 resolve();
             }).catch(function(error)

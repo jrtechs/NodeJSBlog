@@ -149,15 +149,12 @@ module.exports =
                     require("../blog/sidebar.js").main(templateContext)])
                     .then(function (content)
                     {
-                        console.log(JSON.stringify(content));
                         const html = whiskers.render(content[0], templateContext);
                         result.write(html);
                         result.end();
                         cache.put(filename + "?page=" + page, html);
                     }).catch(function (err)
                 {
-                    console.log("dewie");
-                    console.log(err);
                     cache.del(filename + "?page=" + page);
 
                     module.exports.print404(result)

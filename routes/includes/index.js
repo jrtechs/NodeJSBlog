@@ -10,9 +10,13 @@ const contentLoader = require('../../includes/staticContentServer.js');
 routes.get('*', (request, result) =>
 {
     var filename = url.parse(request.url, true).pathname;
-
-    if(!contentLoader.serveStaticContent(request, result, filename, "includes"))
+    console.log(request.originalURL);
+    console.log(request.url.path);
+    if(!contentLoader.serveStaticContent(request, result, request.originalUrl, ""))
     {
+
+
+
         //missing content
     }
 });

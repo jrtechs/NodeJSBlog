@@ -19,6 +19,7 @@ routes.use('/downloads', downloads);
 /** static content like css, js, and images */
 const includes = require('./includes');
 routes.use('/includes', includes);
+routes.use('/blogContent', includes);
 
 
 /** category pages */
