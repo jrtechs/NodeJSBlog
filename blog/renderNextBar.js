@@ -40,14 +40,16 @@ module.exports=
             var nextPage = currentPage + 1;
             var previousPage = currentPage - 1;
 
+
+            var strippedURL = baseURL.split("?page=")[0];
             if (isValidPage(previousPage, postsPerPage, totalPosts))
             {
-                paginationObject.previous = {url: baseURL + "?page=" + previousPage};
+                paginationObject.previous = {url: strippedURL + "?page=" + previousPage};
             }
 
             if (isValidPage(nextPage, postsPerPage, totalPosts))
             {
-                paginationObject.next = {url: baseURL + "?page=" + nextPage};
+                paginationObject.next = {url: strippedURL + "?page=" + nextPage};
             }
 
             var page = 1;
@@ -60,7 +62,7 @@ module.exports=
                 }
                 else
                 {
-                    pages.push({number: page, url: baseURL + "?page=" + page})
+                    pages.push({number: page, url: strippedURL + "?page=" + page})
                 }
                 page = page + 1;
             }

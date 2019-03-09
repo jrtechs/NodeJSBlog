@@ -201,7 +201,7 @@ module.exports =
      */
     sendHTML: function(result, fileName)
     {
-        readFile("." + fileName).then(function(content)
+        readFile(fileName).then(function(content)
         {
             result.writeHead(200, {'Content-Type': 'text/html'});
             result.write(content);

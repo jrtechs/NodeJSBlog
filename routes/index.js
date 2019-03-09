@@ -28,7 +28,9 @@ routes.use('/category', category);
 
 const pageBuilder = require('../utils/pageBuilder');
 
-const projects = ["/steam/"];
+const project = require('./projects');
+routes.use('/steam', project);
+
 
 
 //blog home page
