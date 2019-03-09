@@ -1,6 +1,6 @@
 const routes = require('express').Router();
 
-const utils = require('../utils/utils.js');
+const pageBuilder = require('../utils/pageBuilder');
 
 routes.get('/', (request, result) =>
 {
@@ -10,7 +10,7 @@ routes.get('/', (request, result) =>
 
 routes.get('*', (request, result) =>
 {
-    utils.print404(result);
+    pageBuilder.print404(result);
 });
 
 module.exports = routes;

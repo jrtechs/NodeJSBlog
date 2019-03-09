@@ -3,9 +3,7 @@
  including html files easier for me programming.
  */
 
-
-//file IO
-const utils = require('../utils/utils.js');
+const pageBuilder = require('../utils/pageBuilder');
 
 //DB query
 const sql = require('../utils/sql');
@@ -38,13 +36,13 @@ module.exports=
                         }
                         else
                         {
-                            utils.print404(res);
+                            pageBuilder.print404(res);
                         }
                     });
                 }
                 else
                 {
-                    utils.print404(res);
+                    pageBuilder.print404(res);
                 }
             });
         }
