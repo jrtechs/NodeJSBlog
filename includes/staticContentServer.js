@@ -2,7 +2,6 @@
 const includes = require('../includes/includes.js');
 
 
-
 /**
  * @author Jeffery Russell 10-30-18
  *
@@ -13,7 +12,9 @@ module.exports=
 
         serveStaticContent: function(request, result, filename, baseURL)
         {
-            fullPath = baseURL + filename;
+            var fullPath = baseURL + filename;
+            if(fullPath.charAt(0) === '/')
+                fullPath = fullPath.substring(1,);
             if (filename.includes(".svg") || filename.includes(".svg"))
             {
                 includes.sendSVG(result, fullPath);

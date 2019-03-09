@@ -109,21 +109,36 @@ module.exports=
      * @param templateContext json object used as the template context
      * @returns {Promise} renders the template used for this page
      */
-    main: function(postData, templateContext)
+    main: function(templateContext)
     {
         return new Promise(function(resolve, reject)
         {
             Promise.all([includes.fetchTemplate(TEMPLATE_FILE),
-                addDownloadPostData(postData),
-                removeDownloads(postData),
                 displayDownloads(templateContext)]).then(function(template)
             {
-                resolve(template[0]);
+                templateContext.adminPage = template[0];
+                resolve();
             }).catch(function(error)
             {
                 console.log("error in add downloads.js");
                 reject(error);
             });
         });
+    },
+
+    processPostData: function(postData)
+    {
+        return new Promise(function(resolve, reject)
+        {
+            Promise.all([addDownloadPostData(postData),
+                removeDownloads(postData)]).then(function()
+            {
+                resolve();
+            }).catch(function(error)
+            {
+                console.log("Error in admin downloads");
+                reject(error);
+            })
+        })
     }
 };

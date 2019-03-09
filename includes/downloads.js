@@ -26,13 +26,10 @@ module.exports=
             return new Promise(function(resolve, reject)
             {
                 const urlSplit = requestURL.split("/");
-                console.log(urlSplit);
-                if(urlSplit.length == 3 || urlSplit.length == 4)
+                if(urlSplit.length == 2 || urlSplit.length == 4)
                 {
-                    console.log(urlSplit[2]);
-                    sql.getDownload(urlSplit[2]).then(function(result)
+                    sql.getDownload(urlSplit[1]).then(function(result)
                     {
-                        console.log(result);
                         if(result.length == 1)
                         {
                             const file = './blogContent/downloads/' +
@@ -41,19 +38,13 @@ module.exports=
                         }
                         else
                         {
-                            utils.print404(res).then(function()
-                            {
-                                resolve();
-                            })
+                            utils.print404(res);
                         }
                     });
                 }
                 else
                 {
-                    utils.print404().then(function(content)
-                    {
-                        resolve(content);
-                    })
+                    utils.print404(res);
                 }
             });
         }

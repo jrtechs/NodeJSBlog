@@ -29,7 +29,6 @@ module.exports=
                 filename = baseURL + "index.html";
             }
 
-
             if (!contentLoader.serveStaticContent(request, result, filename, "/blogContent/projects"))
             {
                 console.log(filename);

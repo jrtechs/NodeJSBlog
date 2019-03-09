@@ -154,7 +154,24 @@ module.exports=
          * @param templateContext json object used as the template context
          * @returns {Promise} renders the template used for this page
          */
-        main: function(postData, templateContext)
+        main: function(templateContext)
+        {
+            return new Promise(function(resolve, reject)
+            {
+                Promise.all([includes.fetchTemplate(TEMPLATE_FILE),
+                    getUserInformation(templateContext)]).then(function(template)
+                {
+                    templateContext.adminPage = template[0];
+                    resolve();
+                }).catch(function(error)
+                {
+                    console.log("error in users.js");
+                    reject(error);
+                });
+            });
+        },
+
+        processPostData: function(templateContext, postData)
         {
             return new Promise(function(resolve, reject)
             {
@@ -164,10 +181,11 @@ module.exports=
                     editUserPost(postData, templateContext),
                     getUserInformation(templateContext)]).then(function(template)
                 {
-                    resolve(template[0]);
+                    templateContext.adminPage = template[0];
+                    resolve();
                 }).catch(function(error)
                 {
-                    console.log("error in add downloads.js");
+                    console.log("error in users.js");
                     reject(error);
                 });
             });

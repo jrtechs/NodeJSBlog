@@ -16,34 +16,26 @@ module.exports=
          */
         main: function(requestURL, request, templateContext)
         {
+            console.log(requestURL);
             return new Promise(function(resolve, reject)
             {
                 var page = request.query.page;
 
-                const splitURL = requestURL.split("/");
-                if(splitURL.length >= 3)
-                {
+                const category = requestURL.split("/").join("");
 
-                    sql.getPostsFromCategory(splitURL[2]).then(function(posts)
+                sql.getPostsFromCategory(category).then(function(posts)
+                {
+                    Promise.all([blogBodyRenderer.renderBatchOfPosts(requestURL, posts, page, 5, templateContext),
+                        require('./renderNextBar').main("/category" + request.url, page, 5, posts.length, templateContext)]).then(function()
                     {
-                        Promise.all([blogBodyRenderer.renderBatchOfPosts(requestURL, posts, page, 5, templateContext),
-                            require('./renderNextBar').main(requestURL, page, 5, posts.length, templateContext)]).then(function()
-                        {
-                            resolve();
-                        });
-                    }).catch(function()
-                    {
-                        delete templateContext["posts"];
                         resolve();
                     });
-                }
-
-                else
+                }).catch(function()
                 {
-                    //page is not found but, posts list will be empty
-                    // so 404 will display
-                    resolve();
-                }
+                    delete templateContext["posts"];
+                    reject();
+                });
+
             });
         }
     };
