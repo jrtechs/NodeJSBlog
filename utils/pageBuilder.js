@@ -180,5 +180,21 @@ module.exports =
         {
             console.log("Blog cache cleared");
             cache.clear();
+        },
+
+
+        buildPageWithTemplate: function(request, result, templateFiller, templateFile)
+        {
+            var templateContext = Object();
+            Promise.all([includes.include("templates/" + templateFile),
+                includes.printHeader(templateContext),
+                includes.printFooter(templateContext),
+                require("../blog/sidebar.js").main(templateContext)])
+                    .then(function (content)
+                    {
+                        const html = whiskers.render(content[0], templateContext);
+                        result.write(html);
+                        result.end();
+                    })
         }
     };

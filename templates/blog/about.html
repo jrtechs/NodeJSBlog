@@ -1,0 +1,63 @@
+{header}
+
+<style>
+    .centered
+    {
+        position: absolute;
+        top: 25%;
+        left: 35%;
+        transform: translate(-25%, -25%);
+    }
+
+    .centered .tagLine
+    {
+        font-size:2vw;
+        font-weight: 200;
+    }
+
+    .banner
+    {
+        height: 50vh !important;
+        width:100%;
+        min-height: 350px;
+
+        background: transparent;
+        background: url("/includes/img/background_light.png") center center fixed;
+        color: #fff;
+    }
+
+    .banner .name
+    {
+        font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-size:5vw;
+        font-weight: 700;
+        display: block;
+        text-transform: uppercase;
+    }
+
+</style>
+
+<div class="banner">
+    <div class="centered name text-center">Jeffery's Blog<br>
+        <span class="tagLine">
+            <center>
+                Computer Science, Researcher, Open Source
+            </center>
+        </span>
+    </div>
+</div>
+<br><br>
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-8 col-12">
+
+        </div>
+        <div class="col-md-4 col-12">
+            {>sideBar}
+        </div>
+    </div>
+
+</div>
+
+{footer}
