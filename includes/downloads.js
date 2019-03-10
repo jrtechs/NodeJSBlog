@@ -21,29 +21,26 @@ module.exports=
          */
         main: function(res, requestURL)
         {
-            return new Promise(function(resolve, reject)
+            const urlSplit = requestURL.split("/");
+            if(urlSplit.length == 2 || urlSplit.length == 4)
             {
-                const urlSplit = requestURL.split("/");
-                if(urlSplit.length == 2 || urlSplit.length == 4)
+                sql.getDownload(urlSplit[1]).then(function(result)
                 {
-                    sql.getDownload(urlSplit[1]).then(function(result)
+                    if(result.length == 1)
                     {
-                        if(result.length == 1)
-                        {
-                            const file = './blogContent/downloads/' +
-                                result[0].file;
-                            res.download(file);
-                        }
-                        else
-                        {
-                            pageBuilder.print404(res);
-                        }
-                    });
-                }
-                else
-                {
-                    pageBuilder.print404(res);
-                }
-            });
+                        const file = './blogContent/downloads/' +
+                            result[0].file;
+                        res.download(file);
+                    }
+                    else
+                    {
+                        pageBuilder.print404(res);
+                    }
+                });
+            }
+            else
+            {
+                pageBuilder.print404(res);
+            }
         }
     };
