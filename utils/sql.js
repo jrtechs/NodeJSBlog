@@ -189,16 +189,16 @@ module.exports=
         return new Promise(function(resolve, reject)
         {
             var splitURL = requestURL.split("/")
-            var q = "select * from categories where url='" + splitURL[1] + "'";
+            var q = "SELECT * FROM categories WHERE url='" + splitURL[1] + "'";
 
             fetch(q).then(function (result_category)
             {
                 if(result_category.length != 0)
                 {
 
-                    var q2 = "select * from posts where category_id='" +
+                    var q2 = "SELECT * FROM posts WHERE category_id='" +
                         result_category[0].category_id +
-                        "'  and url='" + splitURL[2] + "'";
+                        "'  AND url='" + splitURL[2] + "'";
 
                     fetch(q2).then(function (result_posts)
                     {
@@ -222,7 +222,7 @@ module.exports=
      */
     getCategories : function()
     {
-        const q = "select * from categories";
+        const q = "SELECT * FROM categories ORDER BY name";
         return fetch(q);
     },
 
