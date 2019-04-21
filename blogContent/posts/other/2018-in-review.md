@@ -1,7 +1,10 @@
-Inspired by [Justin Flory](https://justinwflory.com/) and [Dan Schneiderman](http://www.schneidy.com),
-I decided to make a 2018 review post. I believe that it would be a good way to reflect upon what I did
-in 2018 and make plans for 2019. This post will be a very high level overview of the projects and
-activities that I did in 2018 -- nothing personal. Pictures say a thousand words, so, I will include a lot.
+Inspired by [Justin Flory](https://justinwflory.com/) and [Dan
+Schneiderman](http://www.schneidy.com), I decided to make a 2018
+review post. I believe that it would be a good way to reflect upon
+what I did in 2018 and make plans for 2019. This post will be a very
+high level overview of the projects and activities that I did in 2018
+-- nothing personal. Pictures say a thousand words, so, I will include
+a lot. 
 
 # January:
 
@@ -11,7 +14,7 @@ activities that I did in 2018 -- nothing personal. Pictures say a thousand words
 
 **Started Second Semester of College**
 
-Classes:
+Classes: 
 
 - Mechanics of Programming
 - Statistics
@@ -92,9 +95,9 @@ Classes:
 
 **Second Year of College**
 
-First year on the Eboard of RITlug as Vice President.
+First year on the Eboard of RITlug as Vice President. 
 
-Classes:
+Classes: 
 
 - Linear Algebra
 - Analysis Of Algorithms
