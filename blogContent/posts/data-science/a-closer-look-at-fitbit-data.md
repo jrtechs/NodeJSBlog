@@ -1,11 +1,11 @@
-Health trackers are the current craze. After I bought a Fitbit,  I
+Health trackers are the current craze. After I bought a Fitbit, I
 wanted to determine what exactly could I do with my Fitbit data. Can we
 learn something from this data that we did not know before?
 Most people don't need a watch to tell them that they walked a lot
 today or that they got a ton of sleep. We typically have a pretty good
 gauge of our basic physical health. I am interested in figuring out
-how we can use data science to look at our health data over a longer
-period of time and learn something useful.   
+how we can use data science to look at our health over a longer
+period of time and learn something.   
 
 Lets first look at a few things that people typically use Fitbit data for
 before we jump into the weeds.    
@@ -19,22 +19,22 @@ more frequently. Having something which keeps track of your progress
 is a great motivator. Not only is your daily steps recorded for your
 own viewing, you can share that data with your friends as a
 competition. Although I only have one friend on Fitbit, I found that was
-a good motivator to hit ten thousand steps per day.   
+a good motivator to hit ten thousand steps every day.   
 
 Goals which are not concrete never get accomplished. Simply
 saying that "I will get in shape" is a terrible goal. In order for you
 to actually accomplish your goals, they need to be quantifiable, reasonable, and
 measurable. Rather than saying "I will improve my health this year",
 you can say "I will loose ten pounds this year by increasing my daily
-step count to twelve thousand and going to the gym twice a week". One
+step count to twelve thousand and go to the gym twice a week". One
 goal is wishy washy where the other is concrete and measurable. Having
 concrete data from Fitbit allows you to quantify your goals and set
 milestones for you to accomplish. Along the way to achieving your
 goal, you can easily track your progress.    
 
-Simply knowing your Fitbit data can help you make some better educated
-decisions about your fitness. By comparing your data against what is
-healthy you can tweak your lifestyle. For example: if you notice that
+Simply knowing your Fitbit data can help you make more informed 
+decisions about your fitness. You can tweak your life style after comparing your data against what is
+considered healthy. For example: if you notice that
 you are only getting 6 hours of sleep per night, you can look up the
 recommended amount of sleep and tweak your sleep routine until you hit
 that target.    
@@ -52,13 +52,13 @@ There are two options that we can use to fetch data from Fitbit.
 
 Fitbit has an [OAuth 2.0 web
 API](https://dev.fitbit.com/build/reference/web-api/) that you can
-use. You first have to register your application on Fitbit's website
-to receive a client ID and a client secret. 
+use. You have to register your application on Fitbit's website
+to receive a client ID and a client secret to connect to the API. 
 
 I decided to fetch the Fitbit data using an Express app with node.
 Fetching the data this way will make it really easy to use on a
 live website. Node has tons of NPM modules which makes connecting to
-Fitbit's API really easy. I'm using Passport which is a pretty common
+Fitbit's API relatively easy. I'm using [Passport](http://www.passportjs.org/) which is a common
 authentication middleware for Express.  
 
 
@@ -139,7 +139,7 @@ app.get('/error', (request, result) =>
 ```
 
 Now that we are authenticated with Fitbit, we can finally make
-queries. I created a helper function called queryAPI which attempts
+queries to Fitbit's Server. I created a helper function called "queryAPI" which attempts
 to authenticate if it is not already authenticated and then fetches
 the API result from a provided URL.  
 
@@ -155,7 +155,8 @@ const queryAPI = function(result, path)
         }
 
         unirest.get(path)
-            .headers({'Accept': 'application/json', 'Content-Type': 'application/json', Authorization: "Bearer " +  accessTokenTemp})
+            .headers({'Accept': 'application/json', 'Content-Type': 'application/json', 
+                Authorization: "Bearer " +  accessTokenTemp})
             .end(function (response)
             {
                 if(response.hasOwnProperty("success") && response.success == false)
@@ -194,8 +195,8 @@ there is a nice page where you can export your data.
 ![Fitbit Website Data Export](media/fitbit/fitbitDataExport.png)
 
 The on demand export is pretty useless because it can only go back a
-month. On top of that, you don't get to download any heart rate data.
-The only data that you do get is aggregated by day. This might be fine
+month. On top of that, you don't get to download any detailed heart rate data.
+The data that you get is aggregated by day. This might be fine
 for some use cases; however, this will not suffice for any interesting
 analysis. 
 
@@ -204,11 +205,11 @@ I decided to try the account archive option out of curiosity.
 ![Fitbit Archive Data](media/fitbit/fitbitArchiveData.png)
 
 The Fitbit data archive was very organized and kept meticulous records
-of everything. All of the data was in JSON format and was organized
-in separate files labeled by date. Fitbit keeps around 1MB
+of everything. All of the data was organized
+in separate JSON files labeled by date. Fitbit keeps around 1MB
 of data on you per day; most of this data is from the heart rate
 sensors. Although 1MB of data may sound like a ton of data, it is probably a
-lot less if you store it in a format other than JSON. Since Fitbit
+lot less if you store it in formats other than JSON. Since Fitbit
 hires a lot of people for hadoop and SQL development, they are most
 likely using [Apache Hive](https://hive.apache.org/) to store user
 information on the backend. Distributing the data to users as JSON is
@@ -218,13 +219,13 @@ really convenient since it makes learning the data schema very easy.
 
 Since the Data Archive is far easier, I'm going to start visualizing the 
 data retrieved from the JSON archive. In the future I may 
-use the Fitbit API if I decide to make this a live website or something. 
-Using R to visualize this would be easy, however; I want to use some
+use the Fitbit API if I decide to make this a live website. 
+Using R to visualize this would be convenient, however; I want to use some
 pretty javascript graphs so I can host this as a demo on my website.
 
 ## Heart Rate
 
-My biggest quirk with the Fitbit website is that it only displays your continuous
+My biggest complaint with Fitbit's website is that they only display your continuous
 heart rate in one day intervals. If you zoom out to the week or month view, it aggregates it
 as the number of minutes you are in each heart rate zone.
 This is fine for the fitbit app where you have limited screen space and no good ways of zooming in 
@@ -235,12 +236,12 @@ and out of the graphs.
 ![Fitbit Monthly Heart Rate Graph](media/fitbit/fitBitMonthly.png)
 
 I really want to be able to view my heart rate over the course of a 
-few days. To view my continuous heart rate I'm going to 
+few days. To visualize the continuous heart rate I'm going to 
 use [VisJS](http://visjs.org/docs/graph2d/) because
 it works really well with time series data.
 
-This is some Javascript code which imports user selected JSON files
-to the web page and parses it as Javascript objects.
+To start, I wrote some Javascript which reads the local JSON files
+from the Fitbit data export. 
 
 ```html
 <div class="col-4 shadow-lg p-3 bg-white rounded">
@@ -299,7 +300,7 @@ to the web page and parses it as Javascript objects.
 </script>
 ```
 
-The actual Javascript objects look like this:
+The heart rate JSON files look like this:
 
 ```json
 [{
@@ -319,18 +320,18 @@ The actual Javascript objects look like this:
 ]
 ```
 
-I found it interesting that each point had a confidence score associated with it. I wonder
+I found it interesting that each point had a confidence value associated with it. I wonder
 how Fitbit is using that confidence information. Since it does not directly appear anywhere in the app,
-they may be using it to exclude inaccurate points from the heart rate graphs to make it smoother.
+Fitbit may just be using it to exclude inaccurate points from the heart rate graphs and calculations.
 A really annoying thing about this data is that the time stamps don't contain any information on the 
-timezone. When graphing this data, I will shift the times by 4 hours so that it aligns
+timezone. When graphing this data, I shifted the times by 4 hours so that it aligns
 with eastern standard time.
  
 
-After we read the data from the user selected heart rate files, we can treat this object as an array
-of arrays. Each array represents a file or an entire days worth of heart rate data. Each day is an
+After we read the data from the user selected heart rate files, we can treat that object as an array
+of arrays. Each array represents a file containing an entire days worth of heart rate measurements. Each day is an
 array of time stamped points with heart rate information. Using the code from the 
-[VisJS example](http://visjs.org/docs/graph2d/), it is relatively straightforward to plot this data.
+[VisJS examples](http://visjs.org/docs/graph2d/), it is relatively straightforward to plot this data.
 
 ```javascript
 function generateHeartRateGraph(jsonFiles)
@@ -342,7 +343,8 @@ function generateHeartRateGraph(jsonFiles)
         for(var j = 0; j < jsonFiles[i].length; j++)
         {
             var localTime = new Date(jsonFiles[i][j].dateTime);
-            items.push({y:jsonFiles[i][j].value.bpm, x:localTime.setHours(localTime.getHours() - 4)});
+            items.push({y:jsonFiles[i][j].value.bpm,
+                x:localTime.setHours(localTime.getHours() - 4)});
         }
     }
     var dataset = new vis.DataSet(items);
@@ -378,7 +380,7 @@ the app only displays a simple list.
 
 ![Fitbit Activity History Log](media/fitbit/activityHistory.png)
 
-The JSON files for sleep store a ton of data! For the sake of the time line I am only interested
+The JSON filea for sleep store a ton of data! For the sake of the time line, I am only interested
 in the start and finish times. Unlike the heart rate data, this actually stores the time zone.
 
 ```json
@@ -430,9 +432,9 @@ in the start and finish times. Unlike the heart rate data, this actually stores 
     },
 ```
 
-The JSON file for each activity stores a lot of information on heart rate.
+The JSON file for each activity stores a lot of information on heart rate during the exercise.
 Similar to the heart rate file, this date format does not take into account time zones. Grr!
-Rather than storing a finish date like the sleep JSON file, this keeps track of the total duration
+Rather than storing the finish time like the sleep JSON file, this keeps track of the total duration
 of the event in milliseconds. 
 
 ```json
@@ -494,9 +496,8 @@ of the event in milliseconds.
 }
 ```
 
-After we import both the sleep files and activity files from the user we can use the VisJS library
+After we import both the sleep files and activity files, we can use the VisJS library
 to construct a timeline.
-
 
 ```javascript
 function generateTimeline(jsonFiles)
@@ -570,7 +571,14 @@ events get really small, but, it does a pretty good job at visualizing a few day
 
 ![Fitbit Activity TimeLine](media/fitbit/morningRoutine.png)
 
-# Pulling Outside Data
+# Future Analysis
 
+There is a ton of data to look at here and thousands of different angles which I can take.
+Since this blog post is getting rather long, I'm going to split this up and write a few more articles on Fitbit data.
+I currently have three ideas for future blog posts on this topic.
 
-# Analysis
+- What factors affect sleep quality the most.
+- Using fuzzy logic with Fitbit data to plan, train, and assess fitness goals.
+- Third party data to use with Fitbit.
+
+The full source code to the web page that I created today can be found on my [Github](https://github.com/jrtechs/HomePage/blob/master/fitbitVisualizer.html).
