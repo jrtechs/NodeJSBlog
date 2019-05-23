@@ -20,6 +20,8 @@ routes.use('/downloads', downloads);
 const includes = require('./includes');
 routes.use('/includes', includes);
 routes.use('/blogContent', includes);
+routes.use('/sitemap.txt', includes);
+routes.use('/robots.txt', includes);
 
 
 /** category pages */
