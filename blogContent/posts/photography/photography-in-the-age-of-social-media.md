@@ -72,4 +72,6 @@ constantly shaped, customized, tweaked and perfected. I am confident
 that the best picture of a waterfall has not been taken yet. We are
 still a long way away from creating the perfect social media app.
 Despite everything being an image of an image, learning from other
-will help us grow as creators and develop our own unique style. 
+will help us grow as creators and develop our own unique style.
+
+![Pixley Falls](media/pixleyFalls.jpg) 
