@@ -1,6 +1,19 @@
 {header}
 
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.12/css/lg-transitions.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.12/css/lightgallery.min.css" />
+
 <div class="container">
+
+    <div id="lightgallery">
+        <a href="/blogContent/photos/2019/june/mohawk-river-trail/DSC02145.jpg">
+            <img src="/blogContent/photos/2019/june/mohawk-river-trail/DSC02145.jpg" />
+        </a>
+        <a href="/blogContent/photos/2019/june/mohawk-river-trail/DSC02145.jpg">
+            <img src="/blogContent/photos/2019/june/mohawk-river-trail/DSC02145.jpg" />
+        </a>
+    </div>
 
 </div>
 <!--
@@ -11,4 +24,20 @@
                    `     \;
                   jgs    ;_\
 -->
+
+<script
+        src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+        crossorigin="anonymous">
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#lightgallery").lightGallery();
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/picturefill/2.3.1/picturefill.min.js"></script>
+<script src="/includes/js/lg/lightgallery-all.min.js"></script>
+<script src="/includes/js/lg/jquery.mousewheel.min.js"></script>
+
 {footer}

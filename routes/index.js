@@ -24,6 +24,9 @@ routes.use('/sitemap.txt', includes);
 routes.use('/robots.txt', includes);
 
 
+const photosPages = require('./photos');
+routes.use('/photos', photosPages);
+
 /** category pages */
 const category = require('./category');
 routes.use('/category', category);
