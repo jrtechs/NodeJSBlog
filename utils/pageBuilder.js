@@ -188,6 +188,7 @@ module.exports =
             var templateContext = Object();
             Promise.all([includes.include("templates/" + templateFile),
                 includes.printHeader(templateContext),
+                templateFiller(request.url, request, templateContext),
                 includes.printFooter(templateContext),
                 require("../blog/sidebar.js").main(templateContext)])
                     .then(function (content)

@@ -5,14 +5,32 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.12/css/lightgallery.min.css" />
 
 <div class="container">
+<br><br><br><br>
+    <div id="lightgallery" class="row p-4">
 
-    <div id="lightgallery">
-        <a href="/blogContent/photos/2019/june/mohawk-river-trail/DSC02145.jpg">
-            <img src="/blogContent/photos/2019/june/mohawk-river-trail/DSC02145.jpg" />
-        </a>
-        <a href="/blogContent/photos/2019/june/mohawk-river-trail/DSC02145.jpg">
-            <img src="/blogContent/photos/2019/june/mohawk-river-trail/DSC02145.jpg" />
-        </a>
+        {for img in images}
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb p-1" data-src='{img.full}'>
+                <a href="{img.full}">
+                    <img src="{img.preview}" />
+                </a>
+            </div>
+        {/for}
+
+        {if error}
+            <div class="row p-lg-0">
+                <h1 class="align-content-center">Page Not Found</h1>
+                <div class="align-content-center">
+                    <img src="/includes/img/404.jpg" alt="Page not found" width="70%" />
+                </div>
+            </div>
+            <br><br>
+        {/if}
+        <!--<a href="/blogContent/photos/2019/june/mohawk-river-trail/DSC02145.jpg">-->
+            <!--<img src="/blogContent/photos/2019/june/mohawk-river-trail/DSC02145.jpg" />-->
+        <!--</a>-->
+        <!--<a href="/blogContent/photos/2019/june/mohawk-river-trail/DSC02145.jpg">-->
+            <!--<img src="/blogContent/photos/2019/june/mohawk-river-trail/DSC02145.jpg" />-->
+        <!--</a>-->
     </div>
 
 </div>
