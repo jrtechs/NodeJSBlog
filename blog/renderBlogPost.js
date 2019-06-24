@@ -174,7 +174,21 @@ module.exports=
          */
         convertToHTML: function(markdownContents, type)
         {
-            return new Promise(function(resolve, reject)
+            if(type == -1)
+            {
+                return module.exports.pandocWrapper(markdownContents, argsFull);
+            }
+            else
+            {
+                return module.exports.pandocWrapper(markdownContents, argsFull);
+            }
+        },
+
+
+
+        pandocWrapper: function(markdownContents, pandocArgs)
+        {
+            return new Promise((resolve, reject)=>
             {
                 // Set your callback function
                 callback = function (err, html)
@@ -189,15 +203,9 @@ module.exports=
 
                     resolve(html);
                 };
-                if(type == -1)
-                {
-                    pandoc(markdownContents, argsFull, callback);
-                }
-                else
-                {
-                    pandoc(markdownContents, argsPreview, callback);
-                }
+                pandoc(markdownContents, pandocArgs, callback);
             });
+
         },
 
 

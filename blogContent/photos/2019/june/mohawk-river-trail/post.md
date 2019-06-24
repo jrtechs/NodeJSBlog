@@ -1,3 +1,3 @@
 # Mohawk River Trail
 
-General description goes here. 
+Testing the macro functionality of the vintage cannon FD lens that I bought on Craigslist.

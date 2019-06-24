@@ -2,6 +2,8 @@ const routes = require('express').Router();
 
 const pageBuilder = require('../../utils/pageBuilder');
 
+const renderBlogPost = require('../../blog/renderBlogPost');
+
 const utils = require('../../utils/utils');
 
 const whiskers = require('whiskers');
@@ -20,23 +22,41 @@ routes.get('/', (request, result) =>
 const photosBaseDir = "blogContent/photos";
 photoPageBuilder = function(filename, request, templateContext)
 {
-    if(fs.existsSync(photosBaseDir + filename))
+    return new Promise((resolve, reject)=>
     {
-        templateContext.images = [];
-        var imagePath =  "/" +  photosBaseDir + filename + "/";
-        fs.readdirSync(photosBaseDir + filename).forEach(file=>
+        if(fs.existsSync(photosBaseDir + filename + "/post.md"))
         {
-            if(file.includes('.jpg')) //doesn't pick up mark down files
+            var markdownContent = utils.getFileContents(
+                photosBaseDir + filename + "/post.md");
+
+            renderBlogPost.pandocWrapper(markdownContent, "-t html5")
+                .then((html)=>
             {
-                templateContext.images.push({full:imagePath+ file,
-                    preview:imagePath + "preview/" + file});
-            }
-        });
-    }
-    else
-    {
-        templateContext.error = true;
-    }
+                templateContext.images = [];
+                templateContext.mainPost = html;
+                var imagePath =  "/" +  photosBaseDir + filename + "/";
+                fs.readdirSync(photosBaseDir + filename).forEach(file=>
+                {
+                    if(file.includes('.jpg')) //doesn't pick up mark down files
+                    {
+                        templateContext.images.push({full:imagePath+ file,
+                            preview:imagePath + "preview/" + file});
+                    }
+                });
+
+                resolve();
+            }).catch((error)=>
+            {
+                reject(error);
+            })
+
+        }
+        else
+        {
+            templateContext.error = true;
+            resolve();
+        }
+    })
 };
 
 routes.get('*', (request, result) =>

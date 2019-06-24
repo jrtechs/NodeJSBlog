@@ -35,7 +35,7 @@ app.use(function(request, result)
     {
         result.writeHead(200, {'Content-Type': 'text/html'});
         Promise.all([includes.printHeader(),
-            require('./utils/renderBlogPost.js').generateBlogPostComponent('/programming/', 'cs-theory-exam-2-review', -1),
+            require('./blog/renderBlogPost.js').generateBlogPostComponent('/programming/', 'cs-theory-exam-2-review', -1),
             includes.printFooter()]).then(function (content)
         {
             result.write(content.join(''));
