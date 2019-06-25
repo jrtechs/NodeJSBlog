@@ -15,17 +15,22 @@ const fs = require('fs');
 routes.get('/', (request, result) =>
 {
     //do something later
+    result.write("Not implemented yet.");
+    result.end();
 });
 
 
 
 const photosBaseDir = "blogContent/photos";
+
 photoPageBuilder = function(filename, request, templateContext)
 {
+    const imagePath =  "/" +  photosBaseDir + filename + "/";
     return new Promise((resolve, reject)=>
     {
         if(fs.existsSync(photosBaseDir + filename + "/post.md"))
         {
+
             var markdownContent = utils.getFileContents(
                 photosBaseDir + filename + "/post.md");
 
@@ -34,7 +39,6 @@ photoPageBuilder = function(filename, request, templateContext)
             {
                 templateContext.images = [];
                 templateContext.mainPost = html;
-                var imagePath =  "/" +  photosBaseDir + filename + "/";
                 fs.readdirSync(photosBaseDir + filename).forEach(file=>
                 {
                     if(file.includes('.jpg')) //doesn't pick up mark down files
@@ -50,6 +54,21 @@ photoPageBuilder = function(filename, request, templateContext)
                 reject(error);
             })
 
+        }
+        else if(fs.existsSync(photosBaseDir + filename + "/dir.md"))
+        {
+            templateContext.folders = [];
+            templateContext.directory = true;
+            fs.readdirSync(photosBaseDir + filename).forEach(file=>
+            {
+                if(!file.includes('.md') && !file.includes('.jpg')) //only pick up folders
+                {
+                    templateContext.folders.push({url: "/photos" + filename + "/" + file,
+                        img:imagePath + file + "/1.jpg"});
+                }
+            });
+
+            resolve();
         }
         else
         {

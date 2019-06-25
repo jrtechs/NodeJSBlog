@@ -11,36 +11,59 @@
         {mainPost}
     </div>
 
-    <div id="lightgallery" class="row p-2 align-content-center">
-
-        {for img in images}
-            <div class="col-lg-4 col-md-6 col-xs-12 thumb p-12 text-center" data-src='{img.full}'>
-                <div class="span4"></div>
-                <div class="span4">
-                <a href="{img.full}">
-                    <img class="img-thumbnail img-responsive center-block"  width="100%" src="{img.full}" />
-                </a>
+    {if directory}
+        <div class="row p-2 align-content-center">
+            {for dir in folders}
+                <div class="col-lg-4 col-md-6 col-xs-12 thumb p-12 text-center"'>
+                    <div class="span4"></div>
+                    <div class="span4">
+                        <a href="{dir.url}">
+                            <img class="img-thumbnail img-responsive center-block"  width="100%" src="{dir.img}" />
+                        </a>
+                    </div>
+                    <div class="span4"></div>
                 </div>
-                <div class="span4"></div>
-            </div>
-        {/for}
+            {/for}
+        </div>
 
-        {if error}
-            <div class="row p-lg-0">
-                <h1 class="align-content-center">Page Not Found</h1>
-                <div class="align-content-center center-block">
-                    <img src="/includes/img/404.jpg" alt="Page not found" width="70%" />
+    {else}
+
+        <div id="lightgallery" class="row p-2 align-content-center">
+
+            {for img in images}
+                <div class="col-lg-4 col-md-6 col-xs-12 thumb p-12 text-center" data-src='{img.full}'>
+                    <div class="span4"></div>
+                    <div class="span4">
+                        <a href="{img.full}">
+                            <img class="img-thumbnail img-responsive center-block"  width="100%" src="{img.full}" />
+                        </a>
+                    </div>
+                    <div class="span4"></div>
                 </div>
-            </div>
-            <br><br>
-        {/if}
-        <!--<a href="/blogContent/photos/2019/june/mohawk-river-trail/DSC02145.jpg">-->
+            {/for}
+
+
+            <!--<a href="/blogContent/photos/2019/june/mohawk-river-trail/DSC02145.jpg">-->
             <!--<img src="/blogContent/photos/2019/june/mohawk-river-trail/DSC02145.jpg" />-->
-        <!--</a>-->
-        <!--<a href="/blogContent/photos/2019/june/mohawk-river-trail/DSC02145.jpg">-->
+            <!--</a>-->
+            <!--<a href="/blogContent/photos/2019/june/mohawk-river-trail/DSC02145.jpg">-->
             <!--<img src="/blogContent/photos/2019/june/mohawk-river-trail/DSC02145.jpg" />-->
-        <!--</a>-->
+            <!--</a>-->
+        </div>
+    {/if}
+
+
+    {if error}
+    <div class="row p-lg-0">
+        <h1 class="align-content-center">Page Not Found</h1>
+        <div class="align-content-center center-block">
+            <img src="/includes/img/404.jpg" alt="Page not found" width="70%" />
+        </div>
     </div>
+    <br><br>
+    {/if}
+
+
 
 </div>
 <!--
