@@ -12,12 +12,13 @@ const url = require('url');
 
 const fs = require('fs');
 
-routes.get('/', (request, result) =>
-{
-    //do something later
-    result.write("Not implemented yet.");
-    result.end();
-});
+// routes.get('/', (request, result) =>
+// {
+//     //do something later
+//     result.write("Not implemented yet.");
+//     result.end();
+// });
+
 
 
 
@@ -37,8 +38,8 @@ photoPageBuilder = function(filename, request, templateContext)
             renderBlogPost.pandocWrapper(markdownContent, "-t html5")
                 .then((html)=>
             {
-                templateContext.images = [];
                 templateContext.mainPost = html;
+                templateContext.images = [];
                 fs.readdirSync(photosBaseDir + filename).forEach(file=>
                 {
                     if(file.includes('.jpg')) //doesn't pick up mark down files
@@ -68,7 +69,18 @@ photoPageBuilder = function(filename, request, templateContext)
                 }
             });
 
-            resolve();
+            renderBlogPost.pandocWrapper(utils.getFileContents(
+                photosBaseDir + filename + "/dir.md"), "-t html5")
+            .then((html)=>
+            {
+                templateContext.mainPost = html;
+                resolve();
+            }).catch((error)=>
+            {
+                console.log(error);
+                templateContext.error = true;
+                resolve();
+            });
         }
         else
         {
@@ -80,6 +92,13 @@ photoPageBuilder = function(filename, request, templateContext)
 
 routes.get('*', (request, result) =>
 {
+    pageBuilder.buildPageWithTemplate(request, result,
+        photoPageBuilder, "photos/photosEntry.html");
+});
+
+routes.get('/', (request, result) =>
+{
+    console.log("wham");
     pageBuilder.buildPageWithTemplate(request, result,
         photoPageBuilder, "photos/photosEntry.html");
 });
