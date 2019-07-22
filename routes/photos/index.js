@@ -31,7 +31,6 @@ photoPageBuilder = function(filename, request, templateContext)
     {
         if(fs.existsSync(photosBaseDir + filename + "/post.md"))
         {
-
             var markdownContent = utils.getFileContents(
                 photosBaseDir + filename + "/post.md");
 
@@ -62,7 +61,7 @@ photoPageBuilder = function(filename, request, templateContext)
             templateContext.directory = true;
             fs.readdirSync(photosBaseDir + filename).forEach(file=>
             {
-                if(!file.includes('.md') && !file.includes('.jpg')) //only pick up folders
+                if(!file.includes('.md') && !file.includes('.jpg') && !file.includes('private')) //only pick up folders
                 {
                     templateContext.folders.push({url: "/photos" + filename + "/" + file,
                         img:imagePath + file + "/1.jpg"});
