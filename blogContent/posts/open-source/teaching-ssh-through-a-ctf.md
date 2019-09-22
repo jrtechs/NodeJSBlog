@@ -11,7 +11,7 @@ This section will go over the SSH challenge and how to solve it.
 Please note: although passwords, hosts, etc are given, the challenge is no-longer active so none of them will work.
 
 
-## 1 Basic SSH
+## Basic SSH
 
 This initial challenge was simply connecting to the base VM with a provided username and password.
 
@@ -30,7 +30,7 @@ password: password21
 ```
 
 
-## 2 SSH With Different Port
+## SSH With Different Port
 
 Based on the previous hint, you have to SSH into another SSH server from the base VM running on a non-default port.
 
@@ -51,7 +51,7 @@ user: ritlug2
 auth: key in home directory
 ```
 
-## 3 SSH With Key File
+## SSH With Key File
 
 While in the first container, SSH into another container with a key file.
 
@@ -74,7 +74,7 @@ password: something?
 ```
 
 
-## 4 SSH into Custom SSH Python Server
+## SSH into Custom SSH Python Server
 
 SSH into a custom SSH server and play a RITlug trivia game.
 
@@ -93,7 +93,7 @@ teleirc
 mirrors.ritlug.com
 ```
 
-## 5 Access and Play and Hack Game on Internal Web Server
+## Access and Play and Hack Game on Internal Web Server
 
 This is the part of the challenge where it starts getting more difficult.
 This challenge requires you to port forward localhost:someport to the remote machine's localhost:7777 so you can access a website on your computer.
@@ -135,7 +135,7 @@ After you acquired a score of over 100 "stonks" you see this at the /endGame pag
 ![ssh game](media/ssh/finalHint.png)
 
 
-## 6 Forward Local Web Server to Remote Host
+## Forward Local Web Server to Remote Host
 
 Deciphering and figuring out how to complete this challenge was by far the hardest challenge.
 There was a remote nginx web server running in a docker container which only had its SSH and web ports exposed.
