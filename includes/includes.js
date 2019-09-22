@@ -187,6 +187,16 @@ module.exports =
     },
 
 
+    /** Might want to change this to be non cached later
+     *
+     * @param result
+     * @param fileName
+     */
+    sendPDF: function(result, fileName)
+    {
+        sendCachedContent(fileName, 'application/pdf', result);
+    },
+
 
     fetchTemplate: function(templateName)
     {

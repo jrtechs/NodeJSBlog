@@ -8,6 +8,7 @@ routes.get('*', (request, result) =>
     {
 
         //missing content
+        result.end();
     }
 });
 

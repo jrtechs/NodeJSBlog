@@ -27,6 +27,11 @@ module.exports=
                 includes.sendImage(result, fullPath);
                 return true;
             }
+            else if (filename.includes(".pdf"))
+            {
+                includes.sendPDF(result, fullPath);
+                return true;
+            }
             //css and font files
             else if (filename.includes(".woff2") || filename.includes(".css") ||
                 filename.includes(".txt"))
