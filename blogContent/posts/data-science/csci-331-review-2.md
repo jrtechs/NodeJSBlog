@@ -37,7 +37,7 @@ Ex CSP problems:
 
 ## Problem formulation
 
-![CSP formulation ex](media/exam2/cspEx.PNG)
+![CSP formulation ex](media/exam2/cspEx.png)
 
 ### Variables
 
@@ -64,17 +64,17 @@ Nodes in graph are variables, arcs show constraints
 
 ## Backtracking
 
-![Backtracking graph](media/exam2/backtracking.PNG)
+![Backtracking graph](media/exam2/backtracking.png)
 
 ### Minimum remaining value
 
-![](media/exam2/mrv.PNG)
+![](media/exam2/mrv.png)
 
 Choose the variable wit the fewest legal values left.
 
 ### Degree heuristic
 
-![](media/exam2/degree.PNG)
+![](media/exam2/degree.png)
 
 Tie-breaker for minimum remaining value heuristic.
 Choose the variable with the most constraints on remaining variables. 
@@ -83,36 +83,36 @@ Choose the variable with the most constraints on remaining variables.
 
 Choose the least constraining value: one that rules out fewest values in remaining variables.
 
-![lsv](media/exam2/lsv.PNG)
+![lsv](media/exam2/lsv.png)
 
 ### Forward checking
 
 Keep track of remaining legal values for unassigned variables and terminate search when any variable has no legal values left.
 This will help reduce how many nodes in the tree you have to expand. 
 
-![forward checking](media/exam2/forwardChecking.PNG)
+![forward checking](media/exam2/forwardChecking.png)
 
 ### Constraint propagation
 
-![](media/exam2/constraintProp.PNG)
+![](media/exam2/constraintProp.png)
 
 ### Arc consistency
 
-![](media/exam2/arc.PNG)
+![](media/exam2/arc.png)
 
 ### Tree structured CSPs
 
 Theorem: if constraint graph has no loops, the CSP ca be solved in $O(n*d^2)$ time.
 General CSP is $O(d^n)$
 
-![](media/exam2/treeCSP.PNG)
+![](media/exam2/treeCSP.png)
 
 ## Connections to tree search, iterative improvement
 
 To apply this to hill-climbing, you select any conflicted variable and then use a min-conflicts heuristic
 to choose a value that violates the fewest constraints.
 
-![](media/exam2/nQueens.PNG)
+![](media/exam2/nQueens.png)
 
 
 # CH 13: Uncertainty
@@ -163,8 +163,8 @@ Eg: P(tired | monday) = .9.
 
 ## Bayes rule
 
-![](media/exam2/bay.PNG)
+![](media/exam2/bay.png)
 
 ## Independence
 
-![](media/exam2/independence.PNG)
+![](media/exam2/independence.png)
