@@ -4,7 +4,7 @@
 
 Idea: escape local maxima by allowing some bad moves but gradually decrease their size and frequency.
 This is similar to gradient descent.
-Idea comes from making glass where you start very hot and then slowely cool down the temperature.
+Idea comes from making glass where you start very hot and then slowly cool down the temperature.
 
 
 ## Beam search
@@ -17,7 +17,7 @@ Problem: quite often all k states end up on same local hill. This can somewhat b
 ## Genetic algorithms
 
 Inspired by Charles Darwin's theory of evolution.
-The algorithm is an extension of local beam search with cuccessors generated from pairs of individuals rather than a successor function.
+The algorithm is an extension of local beam search with successors generated from pairs of individuals rather than a successor function.
 
 ![GA overview](media/exam1/gaOverview.png)
 
@@ -121,13 +121,13 @@ to choose a value that violates the fewest constraints.
 
 ### Probability space
 
-The probability space $\omega$ is all possible outcomes.
+The probability space $\Omega$ is all possible outcomes.
 A dice roll has 6 possible outcomes.
 
 ### Atomic Event
 
 An atomic event w is a single element from the probability space.
-$w \in \omega$
+$w \in \Omega$
 Ex: rolling a dice of 4
 The probability of w is between [0,1].
 
@@ -135,7 +135,7 @@ The probability of w is between [0,1].
 
 ### Event
 
-An event A is any subset of the probability space $\omega$
+An event A is any subset of the probability space $\Omega$
 The probability of an event is the sum of the probabilities of the atom events in the event.
 
 Ex: probability of rolling a even number dice is 1/2.
