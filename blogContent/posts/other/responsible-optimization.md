@@ -33,12 +33,12 @@ be “move fast and break things”, however, after Zuckerburg was
 lambasted in front of congress, that motto is slowly changing.  
 
 
-Facebook like many tech companies creddits it’s major success to
+Facebook like many tech companies credits its major success to
 optimizing a sometimes niche problem -- this is something that
 programmers love to do and computers are perfect at. Facebook
-optimized how people consume media, but they did it at the detriment
+optimized how people consume media, but they did it to the detriment
 of quality content. Youtube tremendously optimized how we view videos
-by suggesting us recommended videos to watch, but, if often suggests
+by suggesting us recommended videos to watch, but, it often suggests
 repulsive content. Uber optimized how people found rides, but it
 resulted in an influx of part time drivers that are slowly pushing out
 full time drivers. This is not to say that optimization is a bad
@@ -54,24 +54,24 @@ This now begs the question: how do we do we solve these issues? This
 is something that Thompson didn’t discuss in depth nor had a great
 answer for. We could point our fingers at governments, companies, or
 consumers and tell them to solve the problem. Surely having the
-government enact some well constructed public policy based on the
+government enact some well-constructed public policy based on the
 current policy environment would solve the issues… right? The problem
 in the age of big data is that things are changing at a rapid pace and
 by the time we realize the dangers of a particular issue, it may have
 already caused grave damages or morphed into another form. Look at
 gambling for example, we have had decades of laws and regulations
-surrounding underage gambling, however, online gambling issues has
-been consistently creeping its way into policy discussion over the
-last five. It is fascinating that most public policy generated in the
+surrounding underage gambling, however, online gambling issues have
+been consistently creeping their way into policy discussion over the
+last five years. It is fascinating that most public policy generated in the
 technology field is actually created in the court systems. This is
 good in the sense that the court system is often faster than passing a
 new law, but, it is also very problematic. Old laws when used to
-interpret a nuanced technological problem often yields outcomes that
+interpret a nuanced technological problem often yield outcomes that
 the original authors of the law would possibly disagree with. 
 
 
 Although Thompson’s talk raises more questions and problems than
-tangible easy to implement solutions, we must start having discussions
+tangible easy-to-implement solutions, we must start having discussions
 like this so we can enact a cultural change around how we approach
 optimization tasks. Adding back careful reflection and deliberation
 back to currently optimized tasks on the internet could give us more
