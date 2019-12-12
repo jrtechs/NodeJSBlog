@@ -13,6 +13,7 @@ module.exports=
         serveStaticContent: function(request, result, filename, baseURL)
         {
             var fullPath = baseURL + filename;
+            var filename = filename.toLowerCase();
             if(fullPath.charAt(0) === '/')
                 fullPath = fullPath.substring(1,);
             if (filename.includes(".svg") || filename.includes(".svg"))
