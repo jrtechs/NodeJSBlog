@@ -148,11 +148,11 @@ Rochester Maker faire.
 
 ### Hamlin Beach
 
-![](media/2019-review/observatory.jpg)
+![](media/2019-review/hamlin.jpg)
 
 ### Chimney Bluffs
 
-![](media/2019-review/hamlin.jpg)
+![](media/2019-review/blufs.jpg)
 
 
 # Favorites of 2019
