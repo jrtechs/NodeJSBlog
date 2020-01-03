@@ -4,7 +4,7 @@ const utils = require('../utils/utils.js');
 
 const sql = require('../utils/sql');
 
-const argsFull = '--from markdown-markdown_in_html_blocks+raw_html --base-header-level=1 --toc --toc-depth=3 -N --mathjax -t html5';
+const argsFull = '--from markdown-markdown_in_html_blocks+raw_html --toc --toc-depth=3 -N --mathjax -t html5';
 const argsPreview = '--mathjax -t html5';
 
 
@@ -198,14 +198,19 @@ module.exports=
                         reject(err);
                     }
 
-                    html = html.split("<img").join("<img style=\"max-width: 100%;\" ");
-                    html = html.split("<code>").join("<code class='hljs cpp'>");
-
-                    resolve(html);
+                    if(html === undefined)
+                    {
+                        resolve("");
+                    }
+                    else
+                    {
+                        html = html.split("<img").join("<img style=\"max-width: 100%;\" ");
+                        html = html.split("<code>").join("<code class='hljs cpp'>");
+                        resolve(html);
+                    }
                 };
                 pandoc(markdownContents, pandocArgs, callback);
             });
-
         },
 
 
