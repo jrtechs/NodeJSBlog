@@ -22,6 +22,7 @@ const config = require('../utils/configLoader').getConfig();
 /** SQL connection */
 const con = mysql.createConnection({
     host: config.SQL_HOST,
+    port: config.SQL_PORT,
     user: config.SQL_USER,
     password: config.SQL_PASSWORD,
     database: config.SQL_DATABASE

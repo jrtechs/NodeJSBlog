@@ -1,0 +1,165 @@
+{header}
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous">
+</script>
+
+<style>
+
+    :root {
+        --primary:rgba(16,116,231,1);
+        --secondary:rgba(46,188,79,1);
+        --dark:rgba(36,41,46,1);
+        --dark-2:rgba(43,49,55,1);
+        --white:rgba(255,255,255,1);
+    }
+
+    .vis-timeline {
+        border: none;
+        font-size: 16px;
+        color: var(--white);
+        background-color: var(--dark);
+    }
+    .vis-item {
+        font-size: 16px;
+        color: var(--dark);
+        background-color: var(--white);
+        box-sizing: border-box;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.06), 0px 4px 6px rgba(0, 0, 0, 0.06);
+        border-color: transparent;
+    }
+    .vis-item.vis-box {
+        border-radius: 2px;
+        padding: 0;
+        border: none;
+    }
+    .vis-item .vis-item-content {
+        padding: 8px 10px;
+    }
+    .vis-item.vis-box.vis-selected {
+        border: 2px solid var(--primary);
+    }
+    .vis-item.vis-line {
+        border-width: 2px;
+        border-color: var(--primary)
+    }
+    .vis-item.vis-dot {
+        border-color: var(--primary);
+    }
+    .vis-item.vis-selected {
+        border-color: var(--primary);
+        background-color: var(--white);
+        box-shadow: 0px 20px 25px rgba(0, 0, 0, 0.2), 0px 10px 10px rgba(0, 0, 0, 0.14);
+    }
+    .vis-time-axis .vis-text {
+        color: var(--white)!important;
+        padding-top: 8px;
+        padding-left: 16px;
+    }
+    .vis-time-axis .vis-grid.vis-minor {
+        border-width: 2px;
+        border-color: rgba(255, 255, 255, .29);
+    }
+    .vis-labelset .vis-label {
+        color: var(--white);
+    }
+    .vis-time-axis .vis-grid.vis-major {
+        border-width: 1px;
+        border-color: rgba(255, 255, 255, .5);
+    }
+</style>
+
+
+<br><br><br><br><br>
+<div id="timeline"></div>
+<br><br>
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-8 col-12">
+            <div class="card">
+                <div id="previewPost"></div>
+            </div>
+            <br><br>
+        </div>
+        <div class="col-md-4 col-12">
+            {>sideBar}
+        </div>
+    </div>
+</div>
+
+<script src="/includes/js/vis/dist/vis-timeline-graph2d.min.js"></script>
+<link href="/includes/js/vis/dist/vis-timeline-graph2d.min.css" rel="stylesheet" type="text/css" />
+
+
+<script type="text/javascript">
+
+
+    function runAjax(url, successCallBack, errorCallBack)
+    {
+        console.log(url);
+        $.ajax({
+            type:'GET',
+            url: url,
+            crossDomain: true,
+            dataType: "json",
+            success: successCallBack,
+            error:errorCallBack,
+            timeout: 3000
+        });
+    }
+
+    function fetchPosts()
+    {
+        return new Promise((resolve, reject)=>
+        {
+            runAjax("api/posts", (data)=>
+            {
+                var datasetContents = [];
+
+                for(var i=0; i < data.length; i++)
+                {
+                    datasetContents.push(
+                        {
+                            start: new Date(data[i].published),
+                            content: data[i].name
+                        }
+                    );
+                }
+                resolve(datasetContents);
+            },
+            (error)=>
+            {
+                resolve([]);
+            });
+        });
+    }
+
+
+    var container = document.getElementById('timeline');
+
+    $(document).ready(function()
+    {
+        fetchPosts().then((data)=>
+        {
+            var options = 
+            {
+                editable: false,
+                margin: {
+                    item: 20,
+                    axis: 40
+                },
+                start:data[12].start,
+                end:data[0].start
+            };
+
+            var items = new vis.DataSet(data);
+            var timeline = new vis.Timeline(container, items, options);
+        });
+    });
+
+</script>
+
+
+{footer}
