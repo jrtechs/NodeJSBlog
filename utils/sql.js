@@ -22,6 +22,7 @@ const config = require('../utils/configLoader').getConfig();
 /** SQL connection */
 const con = mysql.createConnection({
     host: config.SQL_HOST,
+    port: config.SQL_PORT,
     user: config.SQL_USER,
     password: config.SQL_PASSWORD,
     database: config.SQL_DATABASE
@@ -156,15 +157,20 @@ module.exports=
      */
     getPostById: function(id)
     {
-        console.log("select * from posts where post_id='" + id + "' limit 1");
-
-        return new Promise(function(resolve, reject)
+        return new Promise((resolve, reject)=>
         {
             fetch("select * from posts where post_id='" + id + "' limit 1")
                 .then(function(post)
             {
-                resolve(post[0]);
-            }).catch(function(error)
+                if(post.length === 1)
+                {
+                    resolve(post[0]);
+                }
+                else
+                {
+                    reject();
+                }
+            }).catch((error)=>
             {
                 reject(error);
             });

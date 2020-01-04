@@ -59,7 +59,9 @@
 <script>hljs.initHighlightingOnLoad();</script>
 
 <script>
-    ( function() {
+
+    function lazyLoad()
+    {
 
         var youtube = document.querySelectorAll( ".youtube" );
 
@@ -85,7 +87,11 @@
                 this.appendChild( iframe );
             } );
         };
+    }
 
+    ( function() {
+
+        lazyLoad();
     } )();
 </script>
 
