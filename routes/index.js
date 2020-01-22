@@ -50,8 +50,15 @@ routes.get('/posts', (request, result) =>
 const project = require('./projects');
 routes.use('/steam', project);
 
+<<<<<<< Updated upstream
 const api = require('./api');
 routes.use('/api', api);
+=======
+
+const feed = require('./rss');
+routes.use('/rss', feed);
+
+>>>>>>> Stashed changes
 
 //blog home page
 routes.get('/', (request, result) =>
