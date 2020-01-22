@@ -135,6 +135,7 @@ const fetchWithCategoryInformation = function(sqlPosts)
                     var obj = new Object();
                     obj.name = post.name;
                     obj.url = post.url;
+                    obj.published = post.published;
                     obj.category = urls[0].url;
                     res(obj);
                 });
@@ -282,7 +283,7 @@ module.exports=
     {
         return new Promise(function(resolve, reject)
         {
-            var q = "select name,url, category_id from posts order " +
+            var q = "select name,url, published, category_id from posts order " +
                 "by post_id desc limit 10";
             fetch(q).then(function(sqlPosts)
             {

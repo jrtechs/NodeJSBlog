@@ -22,6 +22,26 @@ var feed = new RSS({
 // var xml = require('xml');
 var xmlFeed = feed.xml();
 
+const sql = require('../utils/sql');
+
+sql.getRecentPosts().then((data)=>
+{
+    for(var i = 0; i < data.length; i++)
+    {
+        feed.item({
+            title: data[i].name,
+            url: "https://jrtechs.net/" + data[i].category + "/" + data[i].url,
+            date: data[i].published
+        });
+    }
+    xmlFeed = feed.xml();
+}).catch((err)=>
+{
+    console.log(err);
+});
+
+
+
 
 routes.get('/', (request, result) =>
 {
