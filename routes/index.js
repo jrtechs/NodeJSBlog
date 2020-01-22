@@ -53,6 +53,10 @@ routes.use('/steam', project);
 const api = require('./api');
 routes.use('/api', api);
 
+const feed = require('./rss');
+routes.use('/rss', feed);
+
+
 //blog home page
 routes.get('/', (request, result) =>
 {
