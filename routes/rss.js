@@ -26,7 +26,7 @@ const generateRSSfeed = function()
 
     return new Promise((resolve, reject)=>
     {
-        sql.getRecentPosts(limit=200).then((data)=>
+        sql.getRecentPosts(200).then((data)=>
         {
             for(var i = 0; i < data.length; i++)
             {

@@ -279,12 +279,13 @@ module.exports=
      *
      * @return {*|Promise}
      */
-    getRecentPosts: function()
+    getRecentPosts: function(limit)
     {
+        limit = (limit == null) ? 10 : limit;
         return new Promise(function(resolve, reject)
         {
             var q = "select name,url, published, category_id from posts order " +
-                "by post_id desc limit 10";
+                "by post_id desc limit " + limit;
             fetch(q).then(function(sqlPosts)
             {
                 fetchWithCategoryInformation(sqlPosts).then(function(data)
