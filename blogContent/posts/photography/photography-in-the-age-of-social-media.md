@@ -1,7 +1,7 @@
 John Green's recent video on
 [Vlogbrothers](https://www.youtube.com/vlogbrothers) got me thinking a
 lot about why I take photos and the impact that social media has had
-on my journey in photography.    
+on my journey in photography.     
 
 <youtube src="8gdJiNqP35k" />
 
@@ -15,7 +15,7 @@ real and breathtaking. Photography was a tool, allowing me to archive
 and remember the past: a way of stamping reality. John Green in his
 videos said "I sometimes feel like something isn't really real unless
 I've documented it, as if my memories and even my life will just slip
-past like the clouds through last night's sky".      
+past like the clouds through last night's sky".       
 
 I lost interest in photography shortly after I started middle school.
 The only photography that I did do was for social media. Apps like
@@ -25,7 +25,7 @@ your friends with. This is how I slowly learned that photography is a
 right moment to take a photo and turn it into a Snapchat story. This
 is not a huge issue; it is okay to share your experiences with people
 you care about. However, we need to recognize that we present a
-polished version of ourselves on social media.    
+polished version of ourselves on social media.     
 
 Despite acknowledging the vast distance between photography on social
 media and reality, it is hard for our minds to quantify the stark
@@ -39,7 +39,7 @@ Although "comparison is the thief of joy", quitting social media is
 not the only solution. Only following close friends, limiting app
 usage, and only using messaging centered apps are all great ways to
 reap the benefits of social media while avoiding most of the negative
-consequences.     
+consequences.      
 
 Enough of my social media tangent, lets get back to photography. I
 recently got back into photography as an artistic hobby rather than a
@@ -51,7 +51,7 @@ intellectually simulating, yet not super rigorous and tiring.
 Photography encourages you to explore new places and meet new people.
 In photography you are always learning, growing, and improving. I
 really enjoy watching movies; however, I don't believe that it's a
-great hobby since there is no personal growth.  
+great hobby since there is no personal growth.   
 
 I am obsessed with photography for the same reason I love programming:
 there is a constant creative drive to make and share something new
@@ -72,6 +72,6 @@ constantly shaped, customized, tweaked and perfected. I am confident
 that the best picture of a waterfall has not been taken yet. We are
 still a long way away from creating the perfect social media app.
 Despite everything being an image of an image, learning from other
-will help us grow as creators and develop our own unique style.
+will help us grow as creators and develop our own unique style. 
 
 ![Pixley Falls](media/pixleyFalls.jpg) 
