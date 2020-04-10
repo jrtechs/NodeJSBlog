@@ -49,10 +49,12 @@ To make up for these differences of working at home, I have made some
 helpful adjustments to my schedule to make myself more productive as a
 remote worker:  
 
-Creating and updating physical lists Changing environments every few
-hours Maintaining a regular sleep schedule Creating artificial rewards
-like watching youtube after I finish an essay Reading before bed
-Following an exercise routine 
+- Creating and updating physical lists
+- Changing environments every few hours 
+- Maintaining a regular sleep schedule 
+- Creating artificial rewards like watching youtube after I finish an essay 
+- Reading before bed
+- Following an exercise routine 
 
 Although this advice won't work for everyone, I suggest that you try
 some of these things if you are struggling at remote work. A lot of
