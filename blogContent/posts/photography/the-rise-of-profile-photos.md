@@ -2,7 +2,7 @@ Given enough time in a shower, you develop shower thoughts --  but
 mostly you get pruney fingers. Given the current social distancing
 measures, everyone has taken to the internet to get their work done. I
 am now working, taking classes, and hanging out with friends on the
-internet on a daily bases. The omnipresent prevalence of online
+internet on a daily basis. The omnipresent prevalence of online
 platforms has gotten me thinking a lot about how we express our
 identity on the internet. Specifically, profile pictures have seized
 my attention lately.  
@@ -30,7 +30,7 @@ Your profile is a place to carve out your home on the internet.
 Not everybody puts effort or thought into profiles, that is perfectly
 fine. However, as people start to do more things online, we will see
 more in-depth and creative profiles. As one of my friends put
-it a long time ago: "Upload a dam photo! You don't want to be another
+it a long time ago: "Upload a damn photo! You don't want to be another
 faceless Jeff on the internet". 
 
 ![blank profile image](media/profileImage/empty.png)

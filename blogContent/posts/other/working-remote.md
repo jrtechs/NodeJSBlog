@@ -28,13 +28,13 @@ end. I am getting more work done at my job as a research assistant,
 and I am putting more time into classes that I find interesting, like
 computer vision. However, dedicating time towards mundane tasks like
 learning about an esoteric computer architecture or writing essays for
-my professional communication task takes more effort than they used
+my professional communication class takes more effort than they used
 to.  
 
 ![List on whiteboard](media/remote-work/list.jpg)
 
 When we are isolated from others and don't have to physically go
-places to get work done, we have fewer motivators for action. At
+places, we have fewer motivators for actions. At
 college, my most productive times were either in the library or at my
 office. Physically not going into class every day, or not being able
 to physically work around other people removes some of the motivators
@@ -45,9 +45,8 @@ to also get work done -- no matter how trivial the task.
 
 ![Desk](media/remote-work/desk.jpg)
 
-To make up for these differences of working at home, I have made some
-helpful adjustments to my schedule to make myself more productive as a
-remote worker:  
+To get better at remote work, I have made some
+adjustments to my schedule:  
 
 - Creating and updating physical lists
 - Changing environments every few hours 
