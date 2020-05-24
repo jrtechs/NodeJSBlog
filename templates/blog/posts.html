@@ -5,6 +5,9 @@
     crossorigin="anonymous">
 </script>
 
+<link href="/includes/js/vis/dist/vis-timeline-graph2d.min.css" rel="stylesheet" type="text/css" />
+
+
 <style>
 
     :root {
@@ -23,8 +26,8 @@
     }
     .vis-item {
         font-size: 16px;
-        color: var(--dark);
-        background-color: var(--white);
+        color: var(--white);
+        background-color: #317caf;
         box-sizing: border-box;
         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.06), 0px 4px 6px rgba(0, 0, 0, 0.06);
         border-color: transparent;
@@ -48,6 +51,7 @@
         border-color: var(--primary);
     }
     .vis-item.vis-selected {
+        color: var(--dark);
         border-color: var(--primary);
         background-color: var(--white);
         box-shadow: 0px 20px 25px rgba(0, 0, 0, 0.2), 0px 10px 10px rgba(0, 0, 0, 0.14);
@@ -100,7 +104,6 @@
 </div>
 
 <script src="/includes/js/vis/dist/vis-timeline-graph2d.min.js"></script>
-<link href="/includes/js/vis/dist/vis-timeline-graph2d.min.css" rel="stylesheet" type="text/css" />
 
 
 <script type="text/javascript">
