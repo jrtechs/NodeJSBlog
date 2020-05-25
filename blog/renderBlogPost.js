@@ -46,7 +46,7 @@ module.exports=
         generateBlogPostHeader: function(post)
         {
             if(post.picture_url !== "n/a")
-                post. hasPicture = true;
+                post.hasPicture = true;
 
             post.published = post.published.toDateString();
             return;
@@ -69,8 +69,9 @@ module.exports=
                 {
                     module.exports.generateBlogPostComponent(category[0].url, post.url, blocks).then(function(html)
                     {
-                       post.blogBody = html;
-                       resolve();
+                        post.categoryURL = category[0].url;
+                        post.blogBody = html;
+                        resolve();
                     });
                 });
             })
@@ -148,14 +149,6 @@ module.exports=
                     {
                         html += "<p>" + htmlBlocks[i];
                     }
-
-                    html += "      <div style=\"\">\n" +
-                        "          <p class='text-center'><button class=\"btn btn-secondary btn-lg " +
-                        "w3-padding-large w3-white w3-border\"  onclick=\"location.href='" +
-                        "http://jrtechs.net/" + categoryURL + "/" + postURL +
-                        "'\"><b>READ MORE &raquo;</b></button></p>\n" +
-                        "      </div>\n";
-
                     resolve(html);
 
                 }).catch(function(error)
@@ -243,6 +236,10 @@ module.exports=
                     {
                         promises.push(new Promise(function(res, rej)
                         {
+                            if(posts.length != 1)
+                            {
+                                templateContext.preview = true
+                            }
                             module.exports.generateBlogPost(posts[i], posts.length === 1 ? -1: 3).then(function(tempContext)
                             {
                                 res(tempContext);
@@ -253,8 +250,6 @@ module.exports=
                         }));
                     }
                 }
-
-                //promises.push(require('../blog/renderNextBar').main(baseURL, currentPage, numOfPosts, blog.length));
 
                 Promise.all(promises).then(function(posts)
                 {
