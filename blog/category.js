@@ -22,7 +22,7 @@ module.exports=
                 var page = request.query.page;
 
                 const category = requestURL.split("/").join("");
-
+                templateContext["title"] = category;
                 sql.getPostsFromCategory(category).then(function(posts)
                 {
                     Promise.all([blogBodyRenderer.renderBatchOfPosts(requestURL, posts, page, 5, templateContext),

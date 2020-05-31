@@ -178,7 +178,6 @@ module.exports=
         },
 
 
-
         pandocWrapper: function(markdownContents, pandocArgs)
         {
             return new Promise((resolve, reject)=>
@@ -208,7 +207,7 @@ module.exports=
 
 
         /**
-         * Renders a bunch of blog post  previews to the user
+         * Renders a bunch of blog post previews to the user
          *
          * @param baseURL-- url of the page
          * @param posts -- sql data about the blog to render
@@ -236,12 +235,12 @@ module.exports=
                     {
                         promises.push(new Promise(function(res, rej)
                         {
-                            if(posts.length != 1)
-                            {
-                                templateContext.preview = true
-                            }
                             module.exports.generateBlogPost(posts[i], posts.length === 1 ? -1: 3).then(function(tempContext)
                             {
+                                if(posts.length != 1)
+                                {
+                                    templateContext.preview = true
+                                }
                                 res(tempContext);
                             }).catch(function(error)
                             {
@@ -254,6 +253,10 @@ module.exports=
                 Promise.all(promises).then(function(posts)
                 {
                     templateContext.posts = posts;
+                    if(posts.length == 1)
+                        templateContext.title = posts[0].name;
+                    else if(currentPage != 1 && baseURL === "/")
+                        templateContext.title = "page " + currentPage;
                     resolve();
                 }).catch(function(error)
                 {
