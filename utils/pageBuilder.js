@@ -12,9 +12,13 @@ const url = require('url');
 
 const TEMPLATE_FILE="blog/blogMain.html";
 
+const HEADER_TEMPLATE_FILE="blog/header.html";
+const HEADER_TEMPLATE_KEY="header";
+
 
 const PAGINATION_TEMPLATE_KEY = "paginationTemplate";
 const PAGINATION_TEMPLATE_FILE = "blog/paginationBar.html";
+
 
 
 module.exports =
@@ -143,7 +147,7 @@ module.exports =
                 var templateContext = Object();
                 Promise.all([includes.fetchTemplate(TEMPLATE_FILE),
                     includes.includeInObject(PAGINATION_TEMPLATE_KEY, templateContext, "templates/" + PAGINATION_TEMPLATE_FILE),
-                    includes.printHeader(templateContext),
+                    includes.includeInObject(HEADER_TEMPLATE_KEY, templateContext, "templates/" + HEADER_TEMPLATE_FILE),
                     includes.printFooter(templateContext),
                     templateFiller(filename, request, templateContext),
                     require("../blog/sidebar.js").main(templateContext)])
