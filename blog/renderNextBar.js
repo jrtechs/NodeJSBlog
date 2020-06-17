@@ -56,6 +56,10 @@ module.exports=
             var pages = [];
             while(isValidPage(page, postsPerPage, totalPosts))
             {
+                if(page === 11)
+                {
+                    break;
+                }
                 if(page === currentPage)
                 {
                     pages.push({isCurrent: true, number: page})
