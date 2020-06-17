@@ -1,10 +1,40 @@
 # NodeJSBlog
-This is a project I did to recreate my word press blog using plane node js. If I were to 
-do this again, I would use PHP. NodeJS is great, however, it was a pain to deal 
-with all the asynchronous calls when trying to create a web page in a linear fashion.
 
-If you want to run this project, it requires Mysql, npm, and node to be installed. For 
-deployment I used a [Nginx](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-16-04) 
+This is a personal blog where I write about everything from projects to tutorials on sophisticated machine learning algorithms. 
+If you want to stay up to date with new posts, subscribe to my [RSS feed](https://jrtechs.net/rss).
+
+This project is a custom express application that uses pandoc to render latex/markdown files as HTML pages. 
+This site has its very own admin portal to manage posts and downloads.
+
+![Posts Page](docs/postsPage.png)
+
+## Dependencies
+
+- mysql
+- node + npm
+- pandoc
+- nxinx (for https)
+
+## Running
+
+Installing the node-dependencies is as easy as running the npn install command:
+
+```
+npm install
+```
+
+All configurations are currentl found in the config.json file.
+In this file you specify things like port, sql connection, etc.
+
+There is a provided bash script that will run the application
+
+```
+chmod +x run.sh
+./run.sh
+```
+
+
+For deployment I used a [Nginx](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-16-04) 
 proxy to expose the node application running on port 8000 to port 80. This proxy is necessary
 because you can't run a node application as port 80 unless you are root, which would be a 
 security vulnerability. 
@@ -33,25 +63,25 @@ unless otherwise stated.
 
 
 ## Node Dependencies
-```bash
-npm install express
-npm install express-session
-npm install mysql
-npm install sanitizer
-npm install promise
-npm install highlight
-npm install crypto
-npm install remarkable
-npm install markdown
-npm install highlight.js
-npm install compression
-npm install memory-cache --save
-npm install request
-npm install nodemailer
-npm install nodemailer-smtp-transport
-npm install whiskers
 
-npm install node-pandoc
+```bash
+- express
+- express-session
+- mysql
+- sanitizer
+- promise
+- highlight
+- crypto
+- remarkable
+- markdown
+- highlight.js
+- compression
+- memory-cache --save
+- request
+- nodemailer
+- nodemailer-smtp-transport
+- whiskers
+- node-pandoc
 ```
 
 
@@ -110,6 +140,7 @@ server
 
 
 ## Projects Sites
+
 As I develop more projects I would like an easy way to add and host them on my website without having to create another sub-domain and generate more ssl certs. 
 I simply want the project site to be accessible under https://jrtechs.net/project_name.
 
