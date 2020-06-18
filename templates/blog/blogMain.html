@@ -1,4 +1,116 @@
 {>header}
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous">
+</script>
+
+<script>
+
+    var postsToLoad= [1,3,4,5,6,7,8,12];
+
+    /**
+     * Runs a get request using ajax
+     */
+    function runAjax(url, successCallBack, errorCallBack)
+    {
+        console.log(url);
+        $.ajax({
+            type:'GET',
+            url: url,
+            crossDomain: true,
+            dataType: "json",
+            success: successCallBack,
+            error:errorCallBack,
+            timeout: 3000
+        });
+    }
+
+    /** Lazy loads youtube videos on the page
+     */
+    function lazyLoad()
+    {
+        var youtube = document.querySelectorAll( ".youtube" );
+
+        for (var i = 0; i < youtube.length; i++) {
+
+            var source = "https://img.youtube.com/vi/"+ youtube[i].dataset.embed +"/sddefault.jpg";
+
+            var image = new Image();
+            image.src = source;
+            image.addEventListener( "load", function() {
+                youtube[ i ].appendChild( image );
+            }( i ) );
+
+            youtube[i].addEventListener( "click", function() {
+
+                var iframe = document.createElement( "iframe" );
+
+                iframe.setAttribute( "frameborder", "0" );
+                iframe.setAttribute( "allowfullscreen", "" );
+                iframe.setAttribute( "src", "https://www.youtube.com/embed/"+ this.dataset.embed +"?rel=0&showinfo=0&autoplay=1" );
+
+                this.innerHTML = "";
+                this.appendChild( iframe );
+            } );
+        };
+    }
+
+    function buildPostHTML(post)
+    {
+        var pic = '';
+        if(post.hasPicture)
+        {
+            pic = '<img src="/blogContent/headerImages/' + post.picture_url + '" style="width:100%;">';
+        }
+        return '<div class="blogPost">' + pic + '<div class="p-4"><b><h3>' + post.name + '</h3></b><h5>' + post.published + '</span></h5><div>' + post.blogBody + '<p class="text-center"><a class="btn btn-secondary btn-lg text-white" href="https://jrtechs.net/' + post.categoryURL + '"/"' + post.url + '"><b>Read More &raquo;</b></a></p></div></div></div><br><br><br>';
+    }
+
+    function addPosts(id)
+    {
+        return new Promise(function(resolve, reject)
+        {
+            runAjax("api/preview/" + id,
+                (html)=>
+            {
+                var content = buildPostHTML(html)
+
+                $("#newPosts").append(content);
+                //lazy loads youtube videos
+                lazyLoad();
+
+                //highlights code
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightBlock(block);
+                });
+                //renders latex math
+                MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+                resolve();
+            },
+            (err)=>
+            {
+                console.log(err);
+                reject();
+            });
+        })
+    }
+
+    async function loadMore()
+    {
+        for(var i = 0; i < 3; i++)
+        {
+            if(postsToLoad.length == 0)
+            {
+                $('#morePostsBtn').html('');
+                break;
+            }
+                
+            await addPosts(postsToLoad.pop());
+        }
+        console.log("Wham");
+    }
+</script>
+
 <br><br><br><br><br>
 <div class="container">
 
@@ -40,7 +152,18 @@
             <br><br>
             {/for}
 
-            {>paginationTemplate}
+            <div id="newPosts"></div>
+
+            {if preview}
+            <div class="row justify-content-center w-100" id="morePostsBtn">
+                <div class="col-md-6 col-12">
+                    <p class="text-center">
+                        <a class="btn btn-secondary btn-lg text-white" id="readMore"
+                            onclick="loadMore()"><b>More Posts &raquo;</b></a>
+                    </p>
+                </div>
+            </div>
+            {/if}
             <br>
         </div>
         <div class="col-md-4 col-12">

@@ -15,6 +15,21 @@ routes.get('/posts', (request, result) =>
 });
 
 
+routes.get('/preview/:postID', (request, result) =>
+{
+    sql.getPostById(request.params.postID).then((sqlData)=>
+    {
+        renderPost.generateBlogPost(sqlData, 3).then((rendered)=>
+        { 
+            result.json(rendered).end();
+        });
+    }).catch((err)=>
+    {
+        result.status(404).json({error: 404}).end();
+    })
+});
+
+
 routes.get('/render/:postID', (request, result) =>
 {
     sql.getPostById(request.params.postID).then((sqlData)=>
@@ -27,7 +42,6 @@ routes.get('/render/:postID', (request, result) =>
     {
         result.status(404).json({error: 404}).end();
     })
-
 });
 
 routes.get('*', (request, result) =>
