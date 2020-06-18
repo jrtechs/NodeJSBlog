@@ -13,7 +13,7 @@ module.exports=
         main: function(requestURL, request, templateContext)
         {
             var page = request.query.page;
-
+            templateContext["categoryID"] = 0;
             return new Promise(function(resolve, reject)
             {
                 sql.getAllPosts().then(function(posts)

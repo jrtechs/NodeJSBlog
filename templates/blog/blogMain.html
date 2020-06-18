@@ -7,7 +7,7 @@
 
 <script>
 
-    var postsToLoad= [1,3,4,5,6,7,8,12];
+    var postsToLoad= [];
 
     /**
      * Runs a get request using ajax
@@ -63,14 +63,14 @@
         {
             pic = '<img src="/blogContent/headerImages/' + post.picture_url + '" style="width:100%;">';
         }
-        return '<div class="blogPost">' + pic + '<div class="p-4"><b><h3>' + post.name + '</h3></b><h5>' + post.published + '</span></h5><div>' + post.blogBody + '<p class="text-center"><a class="btn btn-secondary btn-lg text-white" href="https://jrtechs.net/' + post.categoryURL + '"/"' + post.url + '"><b>Read More &raquo;</b></a></p></div></div></div><br><br><br>';
+        return '<div class="blogPost">' + pic + '<div class="p-4"><b><h3>' + post.name + '</h3></b><h5>' + post.published + '</span></h5><div>' + post.blogBody + '<p class="text-center"><a class="btn btn-secondary btn-lg text-white" href="https://jrtechs.net/' + post.categoryURL + '/' + post.url + '"><b>Read More &raquo;</b></a></p></div></div></div><br><br>';
     }
 
     function addPosts(id)
     {
         return new Promise(function(resolve, reject)
         {
-            runAjax("api/preview/" + id,
+            runAjax("/api/preview/" + id,
                 (html)=>
             {
                 var content = buildPostHTML(html)
@@ -105,10 +105,26 @@
                 break;
             }
                 
-            await addPosts(postsToLoad.pop());
+            await addPosts(postsToLoad.shift());
         }
         console.log("Wham");
     }
+
+    $(document).ready(function()
+    {
+        runAjax("/api/getPostsIds/{categoryID}",
+            (idsList)=>
+        {
+            postsToLoad=idsList;
+        },
+        (err)=>
+        {
+            console.log(err);
+            reject();
+        });
+    });
+
+
 </script>
 
 <br><br><br><br><br>
@@ -155,13 +171,11 @@
             <div id="newPosts"></div>
 
             {if preview}
-            <div class="row justify-content-center w-100" id="morePostsBtn">
-                <div class="col-md-6 col-12">
-                    <p class="text-center">
-                        <a class="btn btn-secondary btn-lg text-white" id="readMore"
-                            onclick="loadMore()"><b>More Posts &raquo;</b></a>
-                    </p>
-                </div>
+            <div class="justify-content-center w-100 blogPost" id="morePostsBtn">
+                <a class="btn btn-secondary btn-lg btn-block text-white w-100 text-center" id="readMore"
+                    onclick="loadMore()"><b>More Posts &raquo;</b></a>
+
+
             </div>
             {/if}
             <br>
