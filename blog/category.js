@@ -25,6 +25,7 @@ module.exports=
                 templateContext["title"] = category;
                 sql.getPostsFromCategory(category).then(function(posts)
                 {
+                    templateContext["categoryID"] = posts[0].category_id;
                     Promise.all([blogBodyRenderer.renderBatchOfPosts(requestURL, posts, page, 5, templateContext),
                         require('./renderNextBar').main("/category" + request.url, page, 5, posts.length, templateContext)]).then(function()
                     {

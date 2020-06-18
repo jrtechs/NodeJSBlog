@@ -178,6 +178,35 @@ module.exports=
         });
     },
 
+    getPostIds: function(categoryID)
+    {
+        return new Promise((resolve, reject)=>
+        {
+            if(categoryID == 0)
+            {
+                fetch("select post_id from posts order by published desc")
+                    .then(function(ids)
+                {
+                    resolve(ids);
+                }).catch((error)=>
+                {
+                    reject(error);
+                });
+            }
+            else
+            {
+                fetch("select post_id from posts where category_id='" + categoryID + "' order by published desc")
+                    .then(function(ids)
+                {
+                    resolve(ids);
+                }).catch((error)=>
+                {
+                    reject(error);
+                });
+            }
+        });
+    },
+
     insert: function(sqlStatement)
     {
         return insert(sqlStatement);
