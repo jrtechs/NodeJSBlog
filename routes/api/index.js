@@ -3,6 +3,30 @@ const sql = require('../../utils/sql');
 
 const renderPost = require('../../blog/renderBlogPost');
 
+
+routes.get('/getPostsIds/:category', (request, result) =>
+{
+    if(request.params.category.length !== 1 && 
+        request.params.category.length !== 2)
+    {
+        result.json("boo").end();
+        return;
+    }
+    sql.getPostIds(request.params.category).then((sqlData)=>
+    {
+        var arr = [];
+        for(var i = 5; i < sqlData.length; i++)
+        {
+            arr.push(sqlData[i].post_id)
+        }
+        result.json(arr).end();
+    }).catch((err)=>
+    {
+        result.status(404).json({error: 404}).end();
+    })
+});
+
+
 routes.get('/posts', (request, result) =>
 {
     sql.getAllPosts().then((data)=>
