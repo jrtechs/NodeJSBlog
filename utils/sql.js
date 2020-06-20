@@ -225,28 +225,25 @@ module.exports=
         return new Promise(function(resolve, reject)
         {
             var splitURL = requestURL.split("/")
-            var q = "SELECT * FROM categories WHERE url='" + splitURL[1] + "'";
-
-            fetch(q).then(function (result_category)
+            if(splitURL.length >= 1)
             {
-                if(result_category.length != 0)
+                var q = "SELECT posts.post_id, posts.pinned, posts.name, posts.url, posts.category_id, posts.published, posts.picture_url FROM categories INNER JOIN posts on categories.category_id=posts.category_id and categories.url='" + splitURL[1] + "' AND posts.url='" + splitURL[2] + "'";
+                fetch(q).then(function (sql_res)
                 {
-
-                    var q2 = "SELECT * FROM posts WHERE category_id='" +
-                        result_category[0].category_id +
-                        "'  AND url='" + splitURL[2] + "'";
-
-                    fetch(q2).then(function (result_posts)
+                    if(sql_res.length != 0)
                     {
-                        resolve(result_posts);
-                    });
-                }
-                else
-                {
-                    resolve(0);
-                }
-            });
-
+                        resolve(sql_res);
+                    }
+                    else
+                    {
+                        resolve(0);
+                    }
+                });
+            }
+            else
+            {
+                resolve(0);
+            }
         });
     },
 
