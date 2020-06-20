@@ -111,44 +111,6 @@ const createHashedPassword = function(password)
 };
 
 
-/**
- * Helper function which fetches the category url for all the
- * posts returned in the posts table and appends them to the
- * posts json objects.
- *
- * @param sqlPosts
- * @returns {Promise}
- */
-const fetchWithCategoryInformation = function(sqlPosts)
-{
-    return new Promise(function(resolve, reject)
-    {
-        var promises = [];
-        sqlPosts.forEach(function(post)
-        {
-            promises.push(new Promise(function(res, rej)
-            {
-                var getCategory = "select url from categories where " +
-                    "category_id='" + post.category_id + "'";
-                fetch(getCategory).then(function(urls)
-                {
-                    var obj = new Object();
-                    obj.name = post.name;
-                    obj.url = post.url;
-                    obj.published = post.published;
-                    obj.category = urls[0].url;
-                    res(obj);
-                });
-            }));
-        });
-        Promise.all(promises).then(function(goodies)
-        {
-            resolve(goodies);
-        });
-    });
-};
-
-
 module.exports=
 {
     /**
@@ -180,31 +142,9 @@ module.exports=
 
     getPostIds: function(categoryID)
     {
-        return new Promise((resolve, reject)=>
-        {
-            if(categoryID == 0)
-            {
-                fetch("select post_id from posts order by published desc")
-                    .then(function(ids)
-                {
-                    resolve(ids);
-                }).catch((error)=>
-                {
-                    reject(error);
-                });
-            }
-            else
-            {
-                fetch("select post_id from posts where category_id='" + categoryID + "' order by published desc")
-                    .then(function(ids)
-                {
-                    resolve(ids);
-                }).catch((error)=>
-                {
-                    reject(error);
-                });
-            }
-        });
+        var q = categoryID == 0 ? "select post_id from posts order by published desc" : 
+            "select post_id from posts where category_id='" + categoryID + "' order by published desc";
+        return fetch(q);
     },
 
     insert: function(sqlStatement)
@@ -268,23 +208,8 @@ module.exports=
      */
     getPostsFromCategory: function(requestURL)
     {
-        return new Promise(function(resolve, reject)
-        {
-            var q = "select * from categories where url ='" + requestURL + "'";
-            fetch(q).then(function(categories)
-            {
-                if(categories.length != 0)
-                {
-                    var qPosts = "select * from posts where category_id='" +
-                        categories[0].category_id + "' order by published desc";
-                    resolve(fetch(qPosts));
-                }
-                else
-                {
-                    resolve([]);
-                }
-            });
-        });
+        var q = "SELECT posts.post_id, posts.pinned, posts.name, posts.url, posts.category_id, posts.published, posts.picture_url FROM categories INNER JOIN posts on categories.category_id=posts.category_id and categories.url='" + requestURL + "' order by posts.published desc";
+        return fetch(q);
     },
 
 
@@ -308,18 +233,9 @@ module.exports=
     getRecentPosts: function(limit)
     {
         limit = (limit == null) ? 10 : limit;
-        return new Promise(function(resolve, reject)
-        {
-            var q = "select name,url, published, category_id from posts order " +
-                "by post_id desc limit " + limit;
-            fetch(q).then(function(sqlPosts)
-            {
-                fetchWithCategoryInformation(sqlPosts).then(function(data)
-                {
-                    resolve(data);
-                })
-            });
-        });
+        var q = "select posts.name, posts.url, posts.published, posts.category_id, categories.url as category from posts INNER JOIN categories on posts.category_id=categories.category_id order " +
+            "by post_id desc limit " + limit;
+        return fetch(q);
     },
 
 
@@ -330,18 +246,7 @@ module.exports=
      */
     getPinnedPosts: function()
     {
-        return new Promise(function(resolve, reject)
-        {
-            var q = "select name,url, category_id from posts where pinned=1 order " +
-                "by post_id desc limit 10";
-            fetch(q).then(function(sqlPosts)
-            {
-                fetchWithCategoryInformation(sqlPosts).then(function(data)
-                {
-                    resolve(data);
-                })
-            });
-        });
+        return fetch("select posts.name, posts.url, posts.category_id, categories.url as category from posts INNER JOIN categories on posts.category_id=categories.category_id where pinned=1 order by post_id desc");
     },
 
 
