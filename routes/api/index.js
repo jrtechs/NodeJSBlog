@@ -31,7 +31,7 @@ function getURL(sqlData)
     return "https://jrtechs.net/" + sqlData.category + "/" +  sqlData.url;
 }
 
-routes.get('/recentSVG', (request, result) =>
+routes.get('/recentSVG.svg', (request, result) =>
 {
     sql.getRecentPosts(4).then((sqlData)=>
     {  
