@@ -31,12 +31,19 @@ function getURL(sqlData)
     return "https://jrtechs.net/" + sqlData.category + "/" +  sqlData.url;
 }
 
-routes.get('/recentSVG.svg', (request, result) =>
+
+/**
+ * Returns an svg containing the recent blog posts
+ * 
+ * Used on github profile readme:
+ * https://github.com/jrtechs
+ */
+routes.get('/recentSVG', (request, result) =>
 {
     sql.getRecentPosts(4).then((sqlData)=>
     {  
         result.writeHead(200, {'Content-Type': 'image/svg+xml',
-            'Cache-Control': 'public, max-age=2678400',
+            'Cache-Control': 'no-cache',
             'Vary': 'Accept-Encoding'});
         var res = `
         <svg width="400" height="200" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
