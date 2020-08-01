@@ -46,7 +46,7 @@ routes.get('/recentSVG', (request, result) =>
             'Cache-Control': 'no-cache',
             'Vary': 'Accept-Encoding'});
         var res = `
-        <svg width="450" height="200" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <svg width="100%" height="200" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <g>
                 <title>background</title>
                 <rect x="-1" y="-1" width="808" height="202" id="canvas_background" fill="#fff"/>
