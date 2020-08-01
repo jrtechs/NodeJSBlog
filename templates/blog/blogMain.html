@@ -77,11 +77,11 @@
 
                 $("#newPosts").append(content);
                 //lazy loads youtube videos
-                lazyLoad();
+                //lazyLoad();
 
                 //highlights code
                 Prism.highlightAll();
-                
+
                 //renders latex math
                 MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
                 resolve();
@@ -106,7 +106,7 @@
                 
             await addPosts(postsToLoad.shift());
         }
-        console.log("Wham");
+        lazyLoad();
     }
 
     $(document).ready(function()

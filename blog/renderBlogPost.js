@@ -126,15 +126,14 @@ module.exports=
                     while (result.search(re) != -1)
                     {
                         var ytid = result.substring(result.search(re) + 14, result.search(re)+ 11 + 14);
-                        var youtubeHTML = "<div class=\"wrapper\">\n" +
-                            "\t<div class=\"youtube\" data-embed=\"" +
-                             ytid +
-                            "\" />\n" +
-                            "\t\t<div class=\"play-button\"></div>\n" +
-                            "\t</div>\n" +
-                            "</div>\n";
+                        var youtubeHTML = `
+                            <div class="wrapper">
+                                <div class="youtube" data-embed="${ytid}">
+                                    <div class="play-button"></div>
+                                </div>
+                            </div>`;
 
-                        var original = "<youtube src=\"" + ytid + "\" />";
+                        var original = `<youtube src="${ytid}" />`;
 
                         result = result.split(original).join(youtubeHTML);
                     }
