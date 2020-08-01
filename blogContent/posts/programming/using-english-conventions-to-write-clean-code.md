@@ -1,5 +1,6 @@
 Is that English?
-```
+
+```java
 private boolean canCompressBlock(Coordinate start, int size){
    return size == (int)Arrays.stream(this.rawImage, start.getRow(), start.getRow() + size)
            .filter(r-> size == (int)Arrays.stream(r, start.getCol(), start.getCol() + size)

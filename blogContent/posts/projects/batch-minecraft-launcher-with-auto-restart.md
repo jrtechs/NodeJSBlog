@@ -1,4 +1,4 @@
-```
+```dos
 
 @echo off
 

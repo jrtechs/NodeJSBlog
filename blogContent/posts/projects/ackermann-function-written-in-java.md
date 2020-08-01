@@ -1,4 +1,4 @@
-```
+```java
 class Ackermann_function
 {
     public static void main(String[] args)
