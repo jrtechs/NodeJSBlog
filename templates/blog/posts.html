@@ -167,15 +167,14 @@
             $('#POST_BODY').html(html.blogBody);
             $('#POST_PICTURE').html(html.hasPicture ?
                 '<img src="/blogContent/headerImages/' + html.picture_url + '" style="width:100%;">' :
-                 '');
+            '');
 
             //lazy loads youtube videos
             lazyLoad();
 
             //highlights code
-            document.querySelectorAll('pre code').forEach((block) => {
-                hljs.highlightBlock(block);
-            });
+            Prism.highlightAll();
+
             //renders latex math
             MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
         },

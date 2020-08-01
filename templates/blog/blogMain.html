@@ -80,9 +80,8 @@
                 lazyLoad();
 
                 //highlights code
-                document.querySelectorAll('pre code').forEach((block) => {
-                    hljs.highlightBlock(block);
-                });
+                Prism.highlightAll();
+                
                 //renders latex math
                 MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
                 resolve();

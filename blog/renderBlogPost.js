@@ -4,7 +4,7 @@ const utils = require('../utils/utils.js');
 
 const sql = require('../utils/sql');
 
-const argsFull = '--from markdown-markdown_in_html_blocks+raw_html --toc --toc-depth=3 -N --mathjax -t html5';
+const argsFull = '--from markdown-markdown_in_html_blocks+raw_html --toc --toc-depth=3 -N --mathjax -t html5 --no-highlight';
 const argsPreview = '--mathjax -t html5';
 
 
@@ -100,6 +100,18 @@ module.exports=
 
                 module.exports.convertToHTML(markDown, blocks).then(function(result)
                 {
+                    // hackey stuff to fix this open issue on pandoc https://github.com/jgm/pandoc/issues/3858
+                    //search for pattern <pre class="LANG"><code> and replace with <code class="language-LANG">
+                    var re = /\<pre class=".*?"><code>/;
+                    while (result.search(re) != -1)
+                    {
+                        var preTag = result.match(/\<pre class=".*?"><code>/g)[0];
+                        var finishIndex = preTag.split('"', 2).join('"').length;
+                        lang = preTag.substring(12, finishIndex);
+                        var newHTML = `<pre><code class="language-${lang}">`
+                        var original = `<pre class="${lang}"><code>`;
+                        result = result.split(original).join(newHTML);
+                    }
 
                     result = result.split("<figcaption>").join("<figcaption style=\"visibility: hidden;\">");
 
@@ -197,7 +209,7 @@ module.exports=
                     else
                     {
                         html = html.split("<img").join("<img style=\"max-width: 100%;\" ");
-                        html = html.split("<code>").join("<code class='hljs cpp'>");
+                        // html = html.split("<code>").join("<code class='hljs cpp'>");
                         resolve(html);
                     }
                 };
