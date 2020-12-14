@@ -1,7 +1,7 @@
-High-performance parallel computing is all the buzz right now, and new technologies such as CUDA is making it more accessible to do GPU computing. However, it is vital to know in what scenarios GPU/CPU processing is faster. This post explores several variables that affect CUDA vs. CPU performance.
+High-performance parallel computing is all the buzz right now, and new technologies such as CUDA make it more accessible to do GPU computing. However, it is vital to know in what scenarios GPU/CPU processing is faster. This post explores several variables that affect CUDA vs. CPU performance.
 The full [Jupyter notebook](https://github.com/jrtechs/RandomScripts/blob/master/notebooks/cuda-vs-cpu.ipynb) for this blog post is posted on my GitHub.
 
-For reference, I am using a Nvidia GTX 1060 running CUDA version 10.2 on Linux. 
+For reference, I am using an Nvidia GTX 1060 running CUDA version 10.2 on Linux. 
 
 ```python
 !nvidia-smi
@@ -34,7 +34,8 @@ For reference, I am using a Nvidia GTX 1060 running CUDA version 10.2 on Linux.
     +-----------------------------------------------------------------------------+
 ```
 
-The first thing we can do is write a function that will measure how fast we can compute every element's sin in a matrix.
+For our first experiment, we take the sinusoidal mathematical function on every element in a matrix.
+The independent variable, in this case, is how large our matrix is. Note: the size is defined by the matrix's width, which means that the number of elements will grow exponentially compared to the width.
 
 ```python
 import torch
@@ -100,7 +101,7 @@ plot_cuda_vs_cpu(cpu_t, cuda_t, sizes)
 
 ![png](media/cuda-performance/output_6_0.png)
 
-It is interesting to note that it is faster to perform the task on the CPU for small matrixes. Where for larger arrays, the CUDA outperforms the CPU by large margins.
+It is interesting to note that it is faster to perform the CPU task for small matrixes. Where for larger arrays, the CUDA outperforms the CPU by large margins.
 
 On a large scale, it looks like the CUDA times are not increasing, but if we only plot the CUDA times, we can see that it also increases linearly. 
 
@@ -116,7 +117,7 @@ plt.show()
 ![png](media/cuda-performance/output_7_0.png)
 
 
-It is useful to know that on larger matrixes, the GPU outperforms the CPU, but that doesn't tell the whole story. There are reasons why we don't run everything on the GPU.
+It is useful to know that the GPU outperforms the CPU on larger matrixes, but that doesn't tell the whole story. There are reasons why we don't run everything on the GPU.
 It takes time to copy data between the GPU's memory and main memory (RAM).
 
 
@@ -149,7 +150,7 @@ plot_cuda_vs_cpu(cpu_t, cuda_t, sizes)
 ![png](media/cuda-performance/output_9_0.png)
 
 After copying the matrix to the GPU, we see that the CUDA and CPU performances are nearly identical in time complexities.
-However, in real-world applications, we don't just leave the data sitting on the GPU: we also need to copy it back to the main memory.
+However, in real-world applications, we don't just leave the GPU data: we also need to copy it back to the main memory.
 
 This test initializes the matrix on the main memory, copies it to the GPU to operate, and then copies the array back to the main memory.
 
@@ -222,7 +223,7 @@ plot_cuda_vs_cpu(cpu_t, cuda_t, iterations, xLab="Number of Operations")
 As we see in this trial, as we perform more consecutive operations on the matrix without changing devices, we see significant performance benefits for using CUDA.
 
 As we see, whether GPU vs. CPU computing is going to be faster isn't always a clear cut answer.
-The CPU is very good at performing tasks fast, but it is not excellent at performing a large number of parallel computations, which is where GPU computing excels.
+The CPU is very good at performing tasks fast, but it is not excellent at performing data-parallel computations, which is where GPU computing excels.
 IO is another driving factor in whether doing GPU vs. CPU computing will be faster.
 If the program has a lot of IO bottlenecks, then CPU computing may be faster.
 When designing an application that leverages GPU processing, it is essential to limit the number of times needed to transfer data to the main memory.
