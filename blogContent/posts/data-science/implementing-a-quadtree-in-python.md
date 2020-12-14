@@ -2,15 +2,19 @@ This blog post is the first part of a multi-post series on using quadtrees in Py
 This post goes over quadtrees' basics and how you can implement a basic point quadtree in Python.
 Future posts aim to apply quadtrees in image segmentation and analysis.
 
-A quadtree is a data structure where each node has exactly four children. This property makes it particularly suitable for spatial searching.
-In a point-quadtree, leaf nodes are a single unit of spatial information. A quadtree is constructed by continuously dividing each node until each leaf node only has a single node inside of it.
-However, this partitioning can be modified so that each leaf node only contains at most K elements or that each cell can be at a maximum X large.
+A quadtree is a data structure where each node has exactly four children. This property makes it particularly suitable for spatial searching. 
+Quadtrees are generalized as "k-d/k-dimensional" trees when you have more than 4 divisions at each node. 
+In a point-quadtree, leaf nodes are a single unit of spatial information. 
+A quadtree is constructed by continuously dividing each node until each leaf node only has a single node inside of it.
+However, this partitioning can be modified so that each leaf node contains no more than K elements or that each cell can be at a maximum X large. 
+This stopping criterion is similar to that of the stopping criteria when creating a decision tree. 
 
-Although usually used in two-dimensions, quadtrees can be expanded to an arbitrary amount of dimensions. The lovely property of quadtrees is that it is a "dimensional reduction" algorithm. Rather than operating in O(n^2) for a traditional linear search in two dimensions, a quadtree can accomplish close to O(log n) time for most operations.
+Although usually used in two-dimensions, quadtrees can be expanded to an arbitrary amount of dimensions.
+The lovely property of quadtrees is that it is a "dimensional reduction" algorithm. Rather than operating in O(n^2) for a traditional linear search in two dimensions, a quadtree can accomplish close to O(log n) time for most operations.
 
 # Implementing a Point Quadtree
 
-To implement a quadtree, we only need a few pieces. First, we need some way to represent our spacial information.
+To implement a quadtree, we only need a few pieces. First, we need some way to represent our spatial information.
 In this application, we are only using points; however, we may choose to associate data with each point for an application.
 
 ```python
@@ -20,7 +24,7 @@ class Point():
         self.y = y
 ```
 
-The second thing that we need is a tree representation.
+The second thing that we need is a tree data structure.
 Like all tree nodes, it has children; however, what is unique about a quadtree is that each node represents a geometric region.
 This geometric region has a shape represented by a location and a width and height. Additionally, if this is a leaf node, we need to have our node store the region's points.
 
@@ -44,7 +48,7 @@ This geometric region has a shape represented by a location and a width and heig
         return self.points
 ```
 
-To generate the quadtree, we will be taking a top-down approach were we recursively divide the node into four regions until a certain threshold has been satisfied.
+To generate the quadtree, we will be taking a top-down approach where we recursively divide the node into four regions until a certain threshold has been satisfied.
 In this case, we are stopping division when each node contains less than k nodes.
 
 ```python
@@ -94,7 +98,7 @@ def find_children(node):
 The QTree class is used to tie together all the data associated with creating a quadtree.
 This class is also used to generate dummy data and graph it using matplotlib.
 
-```python
+```Python
 import random
 import matplotlib.pyplot as plt # plotting libraries
 import matplotlib.patches as patches
@@ -136,11 +140,11 @@ Creating a quadtree where each cell can only contain at the most section will pr
 
 ![png](media/quad-tree/output_4_1.png)
 
-If we change the hyperparameter to split until there is at most two objects per cell, we get larger cells.
+If we change the hyperparameter to split until there are at most two objects per cell, we get larger cells.
 
 ![png](media/quad-tree/output_5_1.png)
 
 # Future Work
 
-In the near future, I plan on making a post on how you can use quadtrees to do image compression.
+In the future, I plan on making a post on how you can use quadtrees to do image compression.
 
