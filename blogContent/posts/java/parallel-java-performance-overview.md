@@ -19,7 +19,7 @@ public List<E> runTasks(Vector<Work<E>> tasks)
 }
 ```
 
-I am using the lambda streaming notation due to its conciseness for list processing; if you are not familiar with functional Java, I recommend you check out my latest [blog post](https://jrtechs.net/java/fun-with-functional-java) on it. 
+I am using the lambda streaming notation due to its conciseness for list processing; if you are not familiar with lambda statements, I recommend checking out my latest [blog post on functional Java](https://jrtechs.net/java/fun-with-functional-java) on it. 
 
 
 # Threads
@@ -158,7 +158,7 @@ public List<E> runTasks(Vector<Work<E>> tasks)
 
 # Comparison
 
-To neatly test all the different implementations, I wrote a class that times the performance of each method using the same tasks.
+To neatly test all the different implementations, I wrote a class that times each method's performance using the same tasks.
 Initially, this was simply a static method, but I refactored it to be an entire class because I wanted to work with any generic type that I define for my Work object.
 
 ```java
@@ -211,7 +211,7 @@ def plot_result(single, threads, manager, streams, sizes, xLab="Tasks", yLab="Ex
 
 ## Overhead With Implementations
 
-This task simply returns the value passed into it-- in the "real world," you would never do this. This test gives us a gauge at how much overhead is associated with running a task in each method.
+This task simply returns the value passed into it-- in the "real world," you would never do this. This test gives us a gauge of how much overhead is associated with running a task in each method.
 
 ```java
 public class DoNothing<E> extends WorkGenerator<E>
@@ -272,8 +272,8 @@ This experiment illustrates how IO-bound tasks may perform better on a thread ra
 
 ## Tasks Doing Arithmetic
 
-To test the performance doing arithmetic (or "real work"), I generated an obnoxiously confusing math statement to execute.
-Note: Math.random() takes a severe performance hit when running in a multi-threaded environment.
+To test the performance of doing arithmetic (or "real work"), I generated an obnoxiously confusing math statement to execute.
+Note Math.random() takes a severe performance hit when running in a multi-threaded environment.
 For multi-threaded code, it is better to use the ThreadLocalRandom class.
 
 ```java
@@ -312,12 +312,12 @@ where:
 
 The NQ model is often used to determine whether parallelism will offer a speedup.
 N and Q work with each other: for problems with trivially small Q, you would need a much larger N to parallel approaches worth it.
-NQ is generally a useful heuristic because for small tasks or tasks that don't divide nicely, doing parallel computing, just adds overhead that you may not make up for by utilizing multiple cores.
-In the latter arithmetic example, an N of 1000, was not enough to make parallelization using the threaded method advantageous. 
+NQ is generally a useful heuristic because small tasks or tasks that don't divide nicely, doing parallel computing, just adds overhead that you may not make up for by utilizing multiple cores.
+In the latter arithmetic example, an N of 1000 was not enough to make parallelization using the threaded method advantageous. 
 
 ![](media/parallel-java/math_big.png)
 
-Even the less optimal approach saw significant performance gains over the single-threaded approach after our N and Q were sufficiently large. 
+Even the less optimal approach saw significant performance gains over the single-threaded program after our N and Q were sufficiently large. 
 The results lead us into a discussion about Amdahl's Law:
 
 $$
@@ -330,7 +330,7 @@ where
 - s is the speedup of the part of the job that benefits from improved system resources;
 - p is the proportion of execution time that the segment was benefiting from improved resources initially occupied.
 
-Amdahl's law states that the sequential part of your program bounds the max increase in performance that you can get using parallel computing. IE: even if you made 95% of your application parallelized, the max performance increase you can achieve is 20x. However, if the program were somehow 100% parallel, the speedup would be directly correlated to the number of processors you had.
+Amdahl's law states that the sequential part of your program bounds the max increase in performance you can get using parallel computing. IE: even if you made 95% of your application parallelized, the max performance increase you can achieve is 20x. However, if the program were somehow 100% parallel, the speedup would be directly correlated to the number of processors you had.
 
 ![Amdahls Law](media/parallel-java/AmdahlsLaw.png)
 *Graph Courtesy of [Wikipedia](https://en.wikipedia.org/wiki/Amdahl%27s_law) [CC-BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)*
@@ -362,7 +362,7 @@ $$
 $$
 
 
-Using our value of 0.98 for P, we can see that the max parallel performance increase we can accomplish is 50x. Neet. Why is this important you might ask? Well, Amdahl's law illustrates the law of diminishing returns. The first few cores that we add will be more beneficial than the last few threads. 
+Using our value of 0.98 for P, we can see that the max parallel performance increase we can accomplish is 50x. Neet. Why is this important, you might ask? Well, Amdahl's law illustrates the law of diminishing returns. The first few cores that we add will be more beneficial than the last few threads. 
 
 The following graph graphs Amdahl's law with our P-value of 0.98:
 
@@ -374,7 +374,7 @@ If I was obtaining a computer to run this program, I might decide that it is bes
 
 # Takeaways
 
-- Thread pools are almost always more efficient than spawning a thread for each task, unless, the tasks are heavily IO bound and have blocked calls.
+- Thread pools are almost always more efficient than spawning a thread for each task, unless the functions are heavily IO bound and have blocked calls.
 - Different thread pool implementations such as Java's Parallel Streams and ManagedThreadPool will yield similar big-O complexities.
 - Parallelization is only faster if you have a sufficient amount of sufficiently large tasks to complete in parallel-- the law of NQ.
-- Amdahl's law can compute your program's theoretical speed with more processors. 
+- Amdahl's law can compute your program's theoretical speed with more processors.

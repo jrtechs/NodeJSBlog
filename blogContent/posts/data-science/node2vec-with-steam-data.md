@@ -47,7 +47,7 @@ git pull python3 updated_requirements
 Pip makes installing the dependencies easy using a requirements file.
 
 
-```Python
+```python
 !pip install -r node2vec/requirements.txt
 ```
 
@@ -122,7 +122,7 @@ with open("output/jrtechs2.emd") as fp:
 
 Right now, I am interested in visualizing the output. However, that is impractical since it has 50 dimensions! Using the TSNE method, we can reduce the dimensionality so that we can visualize it. Alternatively, we could use another algorithm like Principal Component Analysis (PCA).
 
-```Python
+```python
 from sklearn.decomposition import IncrementalPCA    # inital reduction
 from sklearn.manifold import TSNE                   # final reduction
 import numpy as np                      
@@ -184,7 +184,7 @@ name_map
 
 Using the TSNE dimensionality reduction output, we can view all the nodes on a single plot. To make the graph look more delightful, we only label a fraction of the nodes.
 
-```Python
+```python
 import matplotlib.pyplot as plt
 import random
 
