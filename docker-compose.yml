@@ -10,7 +10,16 @@ services:
         restart: always
         environment:
             MYSQL_ROOT_PASSWORD: password
-        ports:
-            - "3306:3306"
         volumes:
             - "./db:/var/lib/mysql"
+
+
+    blog:
+        build: .
+        volumes:
+            - ./:/src
+        ports:
+            - 8000:8000
+        restart: always
+        links:
+            - db:database
