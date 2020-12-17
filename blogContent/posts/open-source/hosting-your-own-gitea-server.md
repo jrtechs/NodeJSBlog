@@ -30,7 +30,7 @@ instructions may get stale, but the gist is going to remain the same
 for the foreseeable future. We are adding the docker's certificates to
 our package manager and then installing it. 
 
-```
+```bash
 apt update
 apt upgrade
 apt install apt-transport-https ca-certificates curl software-properties-common gnupg2
@@ -43,7 +43,7 @@ apt install docker-ce
 
 Install Docker-Compose 
 
-```
+```bash
 curl -L https://github.com/docker/compose/releases/download/1.25.0-rc2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 ```
@@ -89,7 +89,7 @@ Once we have our docker-compose.yml saved, we can launch it when we
 are in the same directory as it using docker-compose. After this
 launches we now have our Gitea server running on port 3000 
 
-```
+```bash
 docker-compose build
 docker-compose up
 ```
@@ -107,27 +107,27 @@ Encrypt](https://letsencrypt.org/) to add HTTPS encryption.
 
 Installing Nginx is easy because it is in most Linux package managers.
 
-```
+```bash
 apt-get install nginx
 ```
 
 Next, we tell Systemd to start Nginx on startup. 
 
-```
+```bash
 systemctl enable nginx
 ```
 
 Next we modify the Nginx config file to add a reverse proxy. This will
 forward all traffic on git.jrtechs.net to the localhosts's port 3000. 
 
-```
+```bash
 vim /etc/nginx/sites-available/default
 ```
 
 Add this content to the very bottom of the default config file
 changing "git.jrtechs.net." 
 
-```
+```bash
 server 
 {
     listen 80;
@@ -148,21 +148,21 @@ server
 This command tests the Nginx file you just modified to make sure it is
 syntactically correct.  
 
-```
+```bash
 nginx -t
 ```
 
 Next, we reload Nginx starting the reverse Nginx proxy we just
 created.  
 
-```
+```bash
 /etc/init.d/nginx reload
 ```
 
 
 Now that Nginx got configured, we can set-up Certbot for encryption. 
 
-```
+```bash
 sudo add-apt-repository ppa:certbot/certbot
 sudo apt install python-certbot-nginx
 ```
@@ -171,7 +171,7 @@ This step is beautiful because it has the Let's Encrypt Certbot modify
 the Nginx configuration files to make it work over https. When
 prompted, select the option that redirects all HTTP traffic to https. 
 
-```
+```bash
 systemctl stop nginx
 certbot --authenticator standalone --installer nginx -d git.jrtechs.net
 systemctl start nginx
