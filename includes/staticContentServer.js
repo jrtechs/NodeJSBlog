@@ -63,6 +63,11 @@ module.exports=
                 includes.sendHTML(result, fullPath);
                 return true;
             }
+            else if (filename.includes(".gif"))
+            {
+                includes.sendGif(result, fullPath);
+                return true;
+            }
             return false;
         }
     };

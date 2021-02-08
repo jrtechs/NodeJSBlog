@@ -175,6 +175,13 @@ module.exports =
         sendCachedContent(fileName, 'image/png', result);
     },
 
+    //pronounced jjjif
+    sendGif: function(result, fileName)
+    {
+        sendCachedContent(fileName, 'image/gif', result);
+    },
+
+
 
     /**Sends the user an image from the specified fileName.
      *
