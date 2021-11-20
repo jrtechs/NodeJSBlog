@@ -40,6 +40,30 @@ because you can't run a node application as port 80 unless you are root, which w
 security vulnerability. 
 
 
+
+### Running with Docker
+
+To simplify development and deployment you can run the entire node blog and mysql server from docker using docker-compose.
+
+
+```bash
+docker-compose up
+```
+
+or
+
+```bash
+docker-compose up db
+docker-compose up blog
+```
+
+To Access mysql server of docker daemon for maintenence. Note: you need to configure username and password in docker-compose.yml and config.json.
+
+```bash
+mysql --port=3306 --host=127.0.0.1 -u root --password=password
+```
+
+
 ## Legal
 
 **Unless otherwise stated**, everything in this repository can be 
@@ -147,3 +171,19 @@ I simply want the project site to be accessible under https://jrtechs.net/projec
 ### State Diagram of Plan
 
 ![diagram](docs/projectsSites.svg)
+
+
+# DB Backup and Restore
+
+This will dump everything in the database to a plain text file. A base SQL schema can be found in docs//sqlConfig.md
+
+```
+sudo mysqldump -u [user] -p [database_name] > [filename].sql
+```
+
+This will take a database dump and load it into a active mysql instance.
+Note: the database (can be empty) must already exist.
+
+```
+sudo mysql -u [user] -p [database_name] < [filename].sql
+```
