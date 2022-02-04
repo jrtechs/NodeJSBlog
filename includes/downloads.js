@@ -28,7 +28,7 @@ module.exports=
                 {
                     if(result.length == 1)
                     {
-                        const file = './blogContent/downloads/' +
+                        const file = './content/downloads/' +
                             result[0].file;
                         res.download(file);
                     }

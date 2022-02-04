@@ -13,7 +13,6 @@ services:
         volumes:
             - "./db:/var/lib/mysql"
 
-
     blog:
         build: .
         volumes:

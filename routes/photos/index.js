@@ -22,7 +22,7 @@ const fs = require('fs');
 
 
 
-const photosBaseDir = "blogContent/photos";
+const photosBaseDir = "content/photos";
 
 photoPageBuilder = function(filename, request, templateContext)
 {
