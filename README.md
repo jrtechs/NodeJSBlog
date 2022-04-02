@@ -102,8 +102,6 @@ unless otherwise stated.
 - compression
 - memory-cache --save
 - request
-- nodemailer
-- nodemailer-smtp-transport
 - whiskers
 - node-pandoc
 ```
