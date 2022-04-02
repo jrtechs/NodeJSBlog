@@ -19,7 +19,7 @@ routes.use('/downloads', downloads);
 /** static content like css, js, and images */
 const includes = require('./includes');
 routes.use('/includes', includes);
-routes.use('/blogContent', includes);
+routes.use('/content', includes);
 routes.use('/sitemap.txt', includes);
 routes.use('/robots.txt', includes);
 
@@ -60,6 +60,7 @@ routes.use('/rss', feed);
 //blog home page
 routes.get('/', (request, result) =>
 {
+    console.log("ummmm ping?");
     pageBuilder.buildBlogPage(request, result, require("../blog/homePage").main)
 });
 

@@ -5,6 +5,7 @@
 
 //used for file io
 const fs = require('fs');
+const path = require('path')
 
 
 module.exports=
@@ -101,4 +102,29 @@ module.exports=
             }
         });
     },
+
+    /**
+     * Verifies the contents of the config file
+     * and returns it. If the config is incomplete,
+     * it terminates the program.
+     *
+     * @returns {*|any}
+     */
+    getConfig: function()
+    {
+        const configContents = ["PORT", "SESSION_SECRET",
+            "CACHE", "ADMIN_CHECK"];
+
+        var config = JSON.parse(fs.readFileSync('/src/config.json', 'utf8'));
+
+        for(var i = 0; i < configContents.length; i++)
+        {
+            if(!config.hasOwnProperty(configContents[i]))
+            {
+                console.log("Missing config property: " + configContents[i]);
+                process.exit(1);
+            }
+        }
+        return config;
+    }
 };

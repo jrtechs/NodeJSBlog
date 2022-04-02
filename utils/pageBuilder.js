@@ -6,6 +6,11 @@ const includes = require("../includes/includes");
 
 const cache = require('memory-cache');
 
+
+const CACHE_ENABLED = utils.getConfig()['CACHE'];
+
+const ADMIN_CHECK = utils.getConfig()["ADMIN_CHECK"];
+
 /** used to parse the request URL */
 const url = require('url');
 
@@ -128,7 +133,7 @@ module.exports =
 
         loggedIn(request)
         {
-            return(request.session && request.session.user);
+            return(ADMIN_CHECK == false || (request.session && request.session.user));
         },
 
 
@@ -139,7 +144,7 @@ module.exports =
                 page = 1;
             page = Number(page);
 
-            const html = cache.get(filename + "?page=" + page);
+            const html = CACHE_ENABLED == true ? cache.get(filename + "?page=" + page) : null;
 
             result.writeHead(200, {'Content-Type': 'text/html'});
             if (html == null)
@@ -156,7 +161,10 @@ module.exports =
                         const html = whiskers.render(content[0], templateContext);
                         result.write(html);
                         result.end();
-                        cache.put(filename + "?page=" + page, html);
+                        if(CACHE_ENABLED == true)
+                        {
+                            cache.put(filename + "?page=" + page, html);
+                        }
                     }).catch(function (err)
                 {
                     cache.del(filename + "?page=" + page);

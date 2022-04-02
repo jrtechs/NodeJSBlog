@@ -47,8 +47,7 @@ module.exports=
         {
             if(post.picture_url !== "n/a")
                 post.hasPicture = true;
-
-            post.published = post.published.toDateString();
+            post.published = new Date(post.published).toDateString();
             return;
         },
 
@@ -91,11 +90,11 @@ module.exports=
         {
             return new Promise(function(resolve, reject)
             {
-                const pathName =  "blogContent/posts/" + categoryURL + "/"
+                const pathName =  "content/posts/" + categoryURL + "/"
                     + postURL + ".md";
                 var markDown = utils.getFileContents(pathName).toString();
 
-                markDown = markDown.split("(media/").join("(" + "../blogContent/posts/"
+                markDown = markDown.split("(media/").join("(" + "../content/posts/"
                     + categoryURL + "/media/");
 
                 module.exports.convertToHTML(markDown, blocks).then(function(result)
@@ -142,7 +141,7 @@ module.exports=
                     var regExp = /\<customHTML .*?>/;
                     while (result.search(regExp) != -1)
                     {
-                        const pathName =  "blogContent/posts/" + categoryURL + "/html/"
+                        const pathName =  "content/posts/" + categoryURL + "/html/"
                             + postURL + ".html";
 
                         var htmlContent = utils.getFileContents(pathName).toString();

@@ -42,7 +42,7 @@ module.exports=
             }
             else if (filename.includes(".json"))
             {
-                if(fullPath.includes("includes/") || fullPath.includes("blogContent"))
+                if(fullPath.includes("includes/") || fullPath.includes("content"))
                 {
                     includes.sendHTML(result, fullPath);
                     return true;
@@ -51,7 +51,7 @@ module.exports=
             //scripts
             else if (filename.includes(".js"))
             {
-                if(fullPath.includes("includes/") || fullPath.includes("blogContent"))
+                if(fullPath.includes("includes/") || fullPath.includes("content"))
                 {
                     includes.sendJS(result, fullPath);
                     return true;

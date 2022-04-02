@@ -17,21 +17,10 @@ const crypto = require('crypto');
 const qs = require('querystring');
 
 /** Used to load the config file from the disk */
-const config = require('../utils/configLoader').getConfig();
+const config = require('../utils/utils').getConfig();
 
-/** SQL connection */
-const con = mysql.createConnection({
-    host: config.SQL_HOST,
-    port: config.SQL_PORT,
-    user: config.SQL_USER,
-    password: config.SQL_PASSWORD,
-    database: config.SQL_DATABASE
-});
-
-con.connect(function(err) {
-    if (err)
-        console.log(err);
-});
+const sqlite3 = require('sqlite3').verbose();
+const con = new sqlite3.Database('./blog.db');
 
 
 /**
@@ -44,7 +33,8 @@ const fetch = function(sqlStatement)
 {
     return new Promise(function(resolve, reject)
     {
-        con.query(sanitizer.sanitize(sqlStatement), function (err, result)
+        
+        con.all(sanitizer.sanitize(sqlStatement), function (err, result)
         {
             if(err)
             {
@@ -69,14 +59,14 @@ const insert = function(sqlStatement)
 {
     return new Promise(function(resolve, reject)
     {
-        con.query(sanitizer.sanitize(sqlStatement), function (err, result)
+        con.exec(sanitizer.sanitize(sqlStatement), function (err, result)
         {
             if (err)
             {
                 console.log(err);
                 reject();
             }
-            resolve(result.insertId);
+            resolve(0);
         });
     })
 };
@@ -551,37 +541,5 @@ module.exports=
             });
 
         });
-    },
-
-
-    /**
-     * Logs visited page for backend server analytics.
-     *
-     * @param ip
-     * @param page
-     */
-    logTraffic: function(ip, page)
-    {
-        if(page.length > 40)
-        {
-            console.log("Error, request too long to log ip:"
-                + ip + " page: " + page);
-            return;
-        }
-
-        if(ip.length > 20)
-        {
-            ip = "";
-        }
-
-        const q = "insert into traffic_log (url, ip, date) values " +
-            "('" + page + "', '" + ip + "', now())";
-
-        insert(q);
-    },
-
-    getTraffic: function()
-    {
-        return fetch("select * from traffic_log");
     }
 };

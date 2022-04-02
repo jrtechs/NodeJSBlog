@@ -1,8 +1,5 @@
 const routes = require('express').Router();
 
-const analytics = require('./analytics');
-routes.use('/analytics', analytics);
-
 const login = require('./login');
 routes.use('/login', login);
 

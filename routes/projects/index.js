@@ -21,7 +21,7 @@ routes.get('*', (request, result) =>
     }
 
     if(!contentLoader.serveStaticContent(request, result,
-        request.originalUrl + extra, "blogContent/projects"))
+        request.originalUrl + extra, "content/projects"))
     {
 
     }

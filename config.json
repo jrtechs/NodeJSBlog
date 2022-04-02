@@ -1,16 +1,6 @@
 {
   "PORT": 8000,
-
-  "SESSION_SECRET": "random-data-to-seed-session-data",
-
-  "SQL_HOST": "localhost",
-  "SQL_DATABASE": "jrtechs_blog",
-  "SQL_USER": "root",
-  "SQL_PASSWORD": "password",
-
-
-  "CAPTCHA_SECRET": "captcha-secret",
-  "GMAIL_ACCOUNT": "email@gmail.com",
-  "EMAIL_PASSWORD": "email-password",
-  "DESTINATION_EMAIL": "destination email address"
+  "CACHE": false,
+  "ADMIN_CHECK": true,
+  "SESSION_SECRET": "random-data-to-seed-session-data"
 }

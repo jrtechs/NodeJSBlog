@@ -32,7 +32,7 @@ const processPostData = function(postData, renderContext)
             renderContext.editPost = true;
             sql.getPostById(postParsed.edit_post).then(function(post)
             {
-                post.published = post.published.toISOString().split('T')[0];
+                post.published = new Date(post.published).toDateString();
                 renderContext.post = post;
                 resolve();
             });

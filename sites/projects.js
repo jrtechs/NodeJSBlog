@@ -29,7 +29,7 @@ module.exports=
                 filename = baseURL + "index.html";
             }
 
-            if (!contentLoader.serveStaticContent(request, result, filename, "/blogContent/projects"))
+            if (!contentLoader.serveStaticContent(request, result, filename, "/content/projects"))
             {
                 console.log(filename);
                 //do something?

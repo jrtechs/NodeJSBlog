@@ -61,7 +61,7 @@
         var pic = '';
         if(post.hasPicture)
         {
-            pic = '<img src="/blogContent/headerImages/' + post.picture_url + '" style="width:100%;">';
+            pic = '<img src="/content/headerImages/' + post.picture_url + '" style="width:100%;">';
         }
         return '<div class="blogPost">' + pic + '<div class="p-4"><b><h3>' + post.name + '</h3></b><h5>' + post.published + '</span></h5><div>' + post.blogBody + '<p class="text-center"><a class="btn btn-secondary btn-lg text-white" href="https://jrtechs.net/' + post.categoryURL + '/' + post.url + '"><b>Read More &raquo;</b></a></p></div></div></div><br><br>';
     }
@@ -134,7 +134,7 @@
             {for post in posts}
             <div class="blogPost">
                 {if post.hasPicture}
-                <img src="/blogContent/headerImages/{post.picture_url}" style="width:100%;">
+                <img src="/content/headerImages/{post.picture_url}" style="width:100%;">
                 {/if}
 
                 <div class="p-4">

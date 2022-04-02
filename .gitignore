@@ -1,4 +1,7 @@
 *.iml
 .idea
+.vscode
 node_modules
 package-lock.json
+sitemap.txt
+blog.db
