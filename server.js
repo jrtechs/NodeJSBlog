@@ -6,7 +6,7 @@
  */
 
 /** Stores the configuration for the server */
-const config = require('./utils/configLoader').getConfig();
+const config = require('./utils/utils').getConfig();
 
 /** Port for the server to run on */
 const port = config.PORT;
@@ -23,7 +23,6 @@ const compression = require('compression');
 /**Updates the site map whenever the server is started */
 const map = require('./utils/generateSiteMap.js');
 map.main();
-
 
 /**session data for login */
 const session = require('express-session');

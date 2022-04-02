@@ -4,4 +4,4 @@
 node_modules
 package-lock.json
 sitemap.txt
-db/
+blog.db

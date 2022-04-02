@@ -47,8 +47,7 @@ module.exports=
         {
             if(post.picture_url !== "n/a")
                 post.hasPicture = true;
-
-            post.published = post.published.toDateString();
+            post.published = new Date(post.published).toDateString();
             return;
         },
 
