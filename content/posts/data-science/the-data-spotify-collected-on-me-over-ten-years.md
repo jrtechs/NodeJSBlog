@@ -970,3 +970,6 @@ Spotify presents infinite options and that makes the decision of what to make me
 
 Maybe it's just nostalgia talking and music streaming is actually the superior way to experience music, but, I still feel like we traded something when going from owning a music library to renting access to an unlimited amount of music.
 Based on this data, I'm going to take the plunge and try to re-discover what music ownership feels like in 2026.
+
+
+**AI disclosure**: This post was **NOT** written nor formatted with any AI. Any mistakes are mine alone.
