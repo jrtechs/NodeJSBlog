@@ -19,9 +19,9 @@ const qs = require('querystring');
 /** Used to load the config file from the disk */
 const config = require('../utils/utils').getConfig();
 
+// move this to config.json
 const sqlite3 = require('sqlite3').verbose();
 const con = new sqlite3.Database('./blog.db');
-
 
 /**
  * Function used to query the database for records

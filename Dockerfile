@@ -1,6 +1,6 @@
 # jeffery russell 12-17-2020
 
-FROM node:buster-slim
+FROM node:25-slim
 
 WORKDIR /src/
 

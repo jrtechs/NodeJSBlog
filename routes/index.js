@@ -60,7 +60,6 @@ routes.use('/rss', feed);
 //blog home page
 routes.get('/', (request, result) =>
 {
-    console.log("ummmm ping?");
     pageBuilder.buildBlogPage(request, result, require("../blog/homePage").main)
 });
 
