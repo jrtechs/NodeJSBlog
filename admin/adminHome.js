@@ -149,11 +149,9 @@ module.exports=
                     processPost(postData)])
                     .then(function()
                     {
-                        console.log("all resolved");
                         resolve();
                     }).catch(function(error)
                     {
-                        console.log("error in add downloads.js");
                         reject(error);
                     });
             });

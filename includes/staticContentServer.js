@@ -9,7 +9,6 @@ const includes = require('../includes/includes.js');
  */
 module.exports=
     {
-
         serveStaticContent: function(request, result, filename, baseURL)
         {
             var fullPath = baseURL + filename;
