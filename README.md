@@ -43,26 +43,12 @@ security vulnerability.
 
 ### Running with Docker
 
-To simplify development and deployment you can run the entire node blog and mysql server from docker using docker-compose.
+To simplify development and deployment you can run the entire node blog from docker using docker-compose.
 
 
 ```bash
 docker-compose up
 ```
-
-or
-
-```bash
-docker-compose up db
-docker-compose up blog
-```
-
-To Access mysql server of docker daemon for maintenence. Note: you need to configure username and password in docker-compose.yml and config.json.
-
-```bash
-mysql --port=3306 --host=127.0.0.1 -u root --password=password
-```
-
 
 ## Legal
 
@@ -86,27 +72,6 @@ unless otherwise stated.
 
 
 
-## Node Dependencies
-
-```bash
-- express
-- express-session
-- mysql
-- sanitizer
-- promise
-- highlight
-- crypto
-- remarkable
-- markdown
-- highlight.js
-- compression
-- memory-cache --save
-- request
-- whiskers
-- node-pandoc
-```
-
-
 ## Color scheme
 
 The color scheme has been changing a lot recently. 
@@ -120,10 +85,12 @@ highlight:00F0E1, 88BAFF
 
 
 ## Image Optimization
+
 Stuff for automated image compression
+
 ```
-apt-get install jpegoptim
-apt-get install optipng
+sudo apt install jpegoptim
+sudo apt install optipng
 
 ./optimizeImages.sh
 ```
