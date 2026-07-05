@@ -143,8 +143,7 @@ Arduino directory.
 
 Open up your Arduino software and paste the following code in the editor:
 
-```
-
+```c++
 #include <TimerOne.h>
 #define RESOLUTION1 40
 
