@@ -47,7 +47,7 @@ const processLogin = function(request, clientAddress, templateContext)
                 {
                     //what actually logs in the user
                     request.session.user = loginResult.user;
-                    console.log("user has logged in");
+                    console.log("user has logged in from " + clientAddress);
                     templateContext.goodLoginAttempt = true;
                     resolve();
                 }
