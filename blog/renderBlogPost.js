@@ -66,7 +66,7 @@ module.exports=
             {
                 sql.getCategory(post.category_id).then(function(category)
                 {
-                    module.exports.generateBlogPostComponent(category[0].url, post.url, blocks).then(function(html)
+                    module.exports.generateBlogPostComponent(category[0].url, post.url, blocks, post.pandoc_args).then(function(html)
                     {
                         post.categoryURL = category[0].url;
                         post.blogBody = html;
@@ -112,7 +112,7 @@ module.exports=
                         result = result.split(original).join(newHTML);
                     }
 
-                    result = result.split("<figcaption>").join("<figcaption style=\"visibility: hidden;\">");
+                    result = result.split('<figcaption aria-hidden="true">').join("<figcaption style=\"visibility: hidden;\">");
 
                     //this line prevents older versions of pandoc from including invalid cdm scripts
                     result = result.split("<script src=\"https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML-full\" type=\"text/javascript\"></script>").join("");
@@ -175,20 +175,20 @@ module.exports=
          * @param type
          * @returns {Promise}
          */
-        convertToHTML: function(markdownContents, type)
+        convertToHTML: function(markdownContents, type, pandocArgs)
         {
             if(type == -1)
             {
-                return module.exports.pandocWrapper(markdownContents, argsFull);
+                return module.exports.pandocWrapper(markdownContents, argsFull, pandocArgs);
             }
             else
             {
-                return module.exports.pandocWrapper(markdownContents, argsFull);
+                return module.exports.pandocWrapper(markdownContents, argsFull, pandocArgs);
             }
         },
 
 
-        pandocWrapper: function(markdownContents, pandocArgs)
+        pandocWrapper: function(markdownContents, pandocArgs, extraPandocArgs)
         {
             return new Promise((resolve, reject)=>
             {
@@ -211,7 +211,7 @@ module.exports=
                         resolve(html);
                     }
                 };
-                pandoc(markdownContents, pandocArgs, callback);
+                pandoc(markdownContents, extraPandocArgs ? pandocArgs + ' ' + extraPandocArgs : pandocArgs, callback);
             });
         },
 
