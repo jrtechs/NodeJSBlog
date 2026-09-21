@@ -7,7 +7,7 @@ For reference, I am using an Nvidia GTX 1060 running CUDA version 10.2 on Linux.
 !nvidia-smi
 ```
 
-```
+```text
     Wed Jul  1 11:16:12 2020       
     +-----------------------------------------------------------------------------+
     | NVIDIA-SMI 440.82       Driver Version: 440.82       CUDA Version: 10.2     |

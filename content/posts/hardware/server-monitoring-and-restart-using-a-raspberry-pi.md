@@ -77,7 +77,14 @@ else:
 
 Here is a quick demo video of running these two scripts.
 
-<customHTML />
+```{=html}
+<div class="d-flex justify-content-center p-4">
+    <video id="videoPlayer" width="100%" controls onerror="failed(event)">
+        <source src="https://video.jrtechs.net/video?v=/reboot-demo-compressed.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>
+```
 
 The only thing that's left to do is connect a basic script that will run as a cronjob to detect if the server crashes and then reboot it.
 

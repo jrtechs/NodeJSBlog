@@ -24,7 +24,7 @@ npm install -s rss
 
 Based on the documentation for the package, I initialized the RSS generator object. 
 
-```
+```text
 // defines basic details about your blog
 var feed = new RSS({
     title: 'jrtechs',

@@ -3,7 +3,14 @@ I wanted something that I could use to embed videos in websites and aggregate al
 In the end, I created a lightweight node application with an administration interface, API tokens, and the ability to stream videos.
 Now, I can embed videos in my blog like this:
 
-<customHTML />
+```{=html}
+<div class="d-flex justify-content-center p-4">
+    <video id="videoPlayer" width="100%" controls onerror="failed(event)">
+        <source src="https://video.jrtechs.net/video?v=/2-4-21-Gon-Timelapse.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>
+```
 
 Although I could have accomplished the same thing with zero effort by using Youtube-- that's now how I roll.
 I wanted to get better at programming with Node, and I wanted a self-hostable lightweight open-source project.

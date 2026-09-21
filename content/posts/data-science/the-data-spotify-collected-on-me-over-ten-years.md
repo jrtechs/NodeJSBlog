@@ -244,7 +244,7 @@ If you are looking at scaling a microservice, you need to know how many and how 
 The one log type file that stood out to me was a file called "CarDetectionEvent.json".
 This file contained data over 5 months and 395 events. 
 
-```
+```text
   {
     "context_time": 1766601074444,
     "context_receiver_service_timestamp": 1766601104444,

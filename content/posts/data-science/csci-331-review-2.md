@@ -140,7 +140,7 @@ The probability of an event is the sum of the probabilities of the atom events i
 
 Ex: probability of rolling a even number dice is 1/2.
 
-```
+```text
 P(die roll odd) = P(1)+P(2)+3P(5) = 1/6+1/6+1/6 = 1/2
 ```
 

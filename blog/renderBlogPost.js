@@ -4,7 +4,7 @@ const utils = require('../utils/utils.js');
 
 const sql = require('../utils/sql');
 
-const argsFull = '--from markdown-markdown_in_html_blocks+raw_html --toc --toc-depth=3 -N --mathjax -t html5 --no-highlight';
+const argsFull = '--from markdown-markdown_in_html_blocks+raw_html+raw_attribute --toc --toc-depth=3 -N --mathjax -t html5 --no-highlight';
 const argsPreview = '--mathjax -t html5';
 
 
@@ -138,28 +138,11 @@ module.exports=
                     }
 
 
-                    var regExp = /\<customHTML .*?>/;
-                    while (result.search(regExp) != -1)
-                    {
-                        const pathName =  "content/posts/" + categoryURL + "/html/"
-                            + postURL + ".html";
-
-                        var htmlContent = utils.getFileContents(pathName).toString();
-
-                        result = result.split("<customHTML />").join(htmlContent);
-                    }
-
-
                     if(blocks == -1)
-                        resolve(result);
+                        return resolve(result);
 
                     const htmlBlocks = result.split("<p>");
-                    var html = "";
-                    for(var i = 0; i < blocks; i++)
-                    {
-                        html += "<p>" + htmlBlocks[i];
-                    }
-                    resolve(html);
+                    resolve(htmlBlocks.slice(0, blocks).join("<p>"));
 
                 }).catch(function(error)
                 {

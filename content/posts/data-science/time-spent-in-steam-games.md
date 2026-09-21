@@ -34,7 +34,7 @@ The dependencies for this [notebook](https://github.com/jrtechs/RandomScripts/tr
 !pip install matplotlib
 ```
 
-```
+```text
     Collecting pandas
       Downloading pandas-1.0.5-cp38-cp38-manylinux1_x86_64.whl (10.0 MB)
     [K     |████████████████████████████████| 10.0 MB 4.3 MB/s eta 0:00:01

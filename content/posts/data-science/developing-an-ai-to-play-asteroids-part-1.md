@@ -79,7 +79,7 @@ in both types of seeded environments.
 ![Seed Effect](media/asteroids/randomSeed.png)
 
 
-```
+```text
 Random Agent Time Seed: 
     mean:1005.6333333333333 
     max:3220.0 
@@ -102,7 +102,7 @@ be no apparent difference between the distributions of scores. One
 might expect that having more randomness would at least change the
 variance of the scores, but none of that has happened.
 
-```
+```text
 Random agent vs Random fixed seed
 F_onewayResult(
     statistic=1.2300971733588375, 
@@ -247,7 +247,7 @@ scores observed. It is arguably misleading to only provide a single
 score for an agent as its performance because the environment seed has
 a large impact on the non-random agent's scores.
 
-```
+```text
 Reflex Agent: 
     mean:2385.25
     max:8110.0 
@@ -272,7 +272,7 @@ reflex agent's worst performance was significantly better than the
 random agent's worst performance. Also, the best performance of the
 reflex agent shatters the best performance of the random agent. 
 
-```
+```text
 Random agent vs reflex
 F_onewayResult(
     statistic=299.86689786081956, 
@@ -481,7 +481,7 @@ def runGeneticAlgorithm(populationSize, maxGenerations,
 ![training](media/asteroids/GA200.png)
 
 
-```
+```text
 Generation: 200
 Best Score: 8090.0
 Average Score: 2492.6666666666665
@@ -503,7 +503,7 @@ randomized by setting it to the current time.
 ![200 Trials GA Random Seed](media/asteroids/GAvsRandom.png)
 
 
-```
+```text
 GA Performance Trained on Fixed Seed:
     mean:2257.9 
     max:5600.0
@@ -514,7 +514,7 @@ GA Performance Trained on Fixed Seed:
 ```
 
 
-```
+```text
 Random Random Seed:
     mean:1079.45 
     max:2800.0 
@@ -524,7 +524,7 @@ Random Random Seed:
     n:200
 ```
 
-```
+```text
 F_onewayResult(
     statistic=214.87432376234608, 
     pvalue=3.289638100969386e-39

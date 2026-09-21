@@ -3,7 +3,9 @@ about how to use SSH. After a quick presentation going over the basics of SSH
 there was a CTF-esk challenge. We had a great turnout and engagement during this
 meeting so I look forward to making more interactive workshops like this in the future.  
 
-<customHTML />
+```{=html}
+<embed src="https://jrtechs.net/content/posts/open-source/html/everything-ssh.pdf" type="application/pdf" width="100%" height="500px">
+```
 
 # SSH Challenge
 
@@ -15,14 +17,14 @@ Please note: although passwords, hosts, etc are given, the challenge is no-longe
 
 This initial challenge was simply connecting to the base VM with a provided username and password.
 
-```
+```text
 ssh ritlug@demo.ritlug.com
 ```
 
 In the home directory there is a file called hint.md.
 Since no text editors were installed, you had to use the cat command to view the contents of the file.
 
-```
+```text
 host: localhost
 user: ritlug1
 port: 8888
@@ -34,7 +36,7 @@ password: password21
 
 Based on the previous hint, you have to SSH into another SSH server from the base VM running on a non-default port.
 
-```
+```text
 # on main connection(demo.ritlug.com)
 ssh ritlug1@localhost -p 8888
 ```
@@ -42,7 +44,7 @@ ssh ritlug1@localhost -p 8888
 Once again you will find a file called hint.md in the home directory. There is also
 a key file called id_rsa in the home directory.
 
-```
+```text
 Time to jump ships again :)
 
 host: ssh2
@@ -55,14 +57,14 @@ auth: key in home directory
 
 While in the first container, SSH into another container with a key file.
 
-```
+```text
 # on ritlug1@localhost connection
 ssh ritlug2@ssh2 -i id_rsa
 ```
 
 The hint in this vm is as follows:
 
-```
+```text
 Shall we play a game?
 
 SSH back into the starting vm (demo.ritlug.com)
@@ -78,7 +80,7 @@ password: something?
 
 SSH into a custom SSH server and play a RITlug trivia game.
 
-```
+```text
 # on main ssh connection
 ssh ritlug4@localhost -p 3333
 ```
@@ -87,7 +89,7 @@ ssh ritlug4@localhost -p 3333
 
 Since the screenshot does not show it, here are the answers to the three RITlug trivia questions:
 
-```
+```text
 rit-lug.slack.com
 teleirc
 mirrors.ritlug.com
@@ -98,7 +100,7 @@ mirrors.ritlug.com
 This is the part of the challenge where it starts getting more difficult.
 This challenge requires you to port forward localhost:someport to the remote machine's localhost:7777 so you can access a website on your computer.
 
-```
+```text
 # On your computer
 ssh -L 7777:localhost:7777 ritlug@demo.ritlug.com
 ```
@@ -167,7 +169,7 @@ To do this it took three steps. First, you have to start some web server. Second
 VM's ssh port to your computer. Next using that local forwarded port, you have to reverse forward the port of your web server
 to the remote computer. 
 
-```
+```text
 # start your web server listening on port 8989 or something
 node server.js
 
@@ -191,7 +193,7 @@ This section goes over how to run the docker containers used in this challenge o
 
 ## Install Docker
 
-```
+```text
 apt update
 apt upgrade
 apt install apt-transport-https ca-certificates curl software-properties-common gnupg2
@@ -205,7 +207,7 @@ apt install docker-ce
 
 ## Install Docker-Compose
 
-```
+```text
 curl -L https://github.com/docker/compose/releases/download/1.25.0-rc2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 ```
@@ -215,7 +217,7 @@ chmod +x /usr/local/bin/docker-compose
 
 Create firewall to block everything that is not ports 80 or 22
 
-```
+```text
 apt-get install ufw
 ufw enable
 ufw allow 22:80/tcp
@@ -230,7 +232,7 @@ Docker tampers directly with IPTables, so, ufw alone won't block people from acc
 
 Edit /etc/default/docker and uncomment the DOCKER_OPTS line:
 
-```
+```text
 DOCKER_OPTS="--dns 8.8.8.8 --dns 8.8.4.4 --iptables=false"
 ```
 
@@ -240,7 +242,7 @@ Since we are using systemd with Docker Compose, we have to set the iptables flag
 
 /etc/docker/daemon.json
 
-```
+```text
 {
     "iptables": false
 }
@@ -249,14 +251,14 @@ Since we are using systemd with Docker Compose, we have to set the iptables flag
 
 ## Add Base User For Demo
 
-```
+```text
 useradd -ms /bin/bash ritlug
 echo ritlug:ritLugSep6! | chpasswd
 ```
 
 ## Install project files on system
 
-```
+```text
 git clone https://github.com/jrtechs/ssh-challenge.git
 
 cd ssh-challenge
@@ -268,7 +270,7 @@ chmod 0555 /home/ritlug/
 
 ## Running the Project
 
-```
+```text
 docker-compose build
 docker-compose up
 ```

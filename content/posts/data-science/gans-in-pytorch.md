@@ -2,7 +2,9 @@ Generative adversarial networks (GAN) are all the buzz in AI right now due to th
 Last semester, my final Computer Vision (CSCI-431) research project was on comparing the results of three different GAN architectures using the NMIST dataset.
 I'm writing this post to go over some of the PyTorch code used because PyTorch makes it easy to write GANs.
 
-<customHTML />
+```{=html}
+<embed src="https://jrtechs.net/content/posts/data-science/html/CV_Final_Project_Final.pdf" type="application/pdf" width="100%" height="500px">
+```
 
 # GAN Background
 
@@ -168,7 +170,7 @@ It is a little known fact that you can use Tensorboard even if you are using PyT
 
 Tensorboard gets installed via pip:
 
-```
+```text
 pip install tensorboard
 ```
 
@@ -192,13 +194,13 @@ writer.close()
 
 After the model finishes training, you can open the TensorBoard logs using the "tensorboard" command in the terminal.
 
-```
+```text
 tensorboard --logdir=runs
 ```
 
 Opening "http://0.0.0.0:6006/" in your browser will give you access to the TensorBoard web UI.
 
-```
+```text
 [TensorBoard screen grab](media/gan/tensorboard.png)
 ```
 

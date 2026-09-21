@@ -702,7 +702,7 @@ Strings:
 
 ex:
 
-```
+```text
 [ s1 - s2 ]
 [ -n s1 ]
 ```

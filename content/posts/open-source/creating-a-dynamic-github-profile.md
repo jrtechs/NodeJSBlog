@@ -125,7 +125,7 @@ This is a nice hack if you merely want to update an external image in your readm
 
 The cleaner route that I opted for was to simply disable caching by Camo using the Cache-Control header in my API route. Now when we curl the Camo cache for my image, it looks like this:
 
-```
+```text
 ┌─[jeff@matrix] - [/home/jeff] - [2020-07-25 10:59:32]
 └─[0] <> curl -I https://camo.githubusercontent.com/1dc7d7611b4dbdca4b54c6cacdd2823f1bce4fca/68747470733a2f2f6a7274656368732e6e65742f6170692f726563656e745356472e7376673f
 

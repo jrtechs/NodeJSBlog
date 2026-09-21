@@ -21,7 +21,7 @@ Pro tip: if you are in a notebook adding a "!" will execute your command on the 
 !pwd
 ```
 
-```
+```text
     /home/jeff/Documents/python
 ```
 
@@ -39,7 +39,7 @@ torch.empty(5, 2)
 ```
 
 
-```
+```text
     tensor([[4.8132e-36, 4.5597e-41],
             [1.4906e-11, 3.0957e-41],
             [4.4842e-44, 0.0000e+00],
@@ -57,7 +57,7 @@ print(x)
 print(x.shape)
 ```
 
-```
+```text
     tensor([[0.7825, 0.7864, 0.1257],
             [0.7588, 0.6572, 0.9262],
             [0.4881, 0.6329, 0.3424],
@@ -73,7 +73,7 @@ Similarly, there is a function for random integers.
 torch.randint(low=0, high=5, size=(3,3))
 ```
 
-```
+```text
     tensor([[4, 2, 1],
             [2, 0, 3],
             [2, 2, 2]])
@@ -85,7 +85,7 @@ torch.randint(low=0, high=5, size=(3,3))
 torch.ones(3,1)
 ```
 
-```
+```text
     tensor([[1.],
             [1.],
             [1.]])
@@ -110,7 +110,7 @@ x = torch.zeros(5, 2, dtype=torch.long)
 print(x)
 ```
 
-```
+```text
     tensor([[0, 0],
             [0, 0],
             [0, 0],
@@ -126,7 +126,7 @@ print(x.size())
 print(x.shape)
 ```
 
-```
+```text
     torch.Size([5, 2])
     torch.Size([5, 2])
 ```
@@ -146,7 +146,7 @@ result = torch.add(x, y)
 torch.add(x, y, out= result) 
 ```
 
-```
+```text
     tensor([[0.4942, 0.7370],
             [0.9927, 0.7068],
             [0.1702, 0.9578],
@@ -161,7 +161,7 @@ Pytorch added multiple functions with "_" for standard operators that operate on
 y.add_(result)
 ```
 
-```
+```text
     tensor([[0.9885, 1.4740],
             [1.9855, 1.4135],
             [0.3405, 1.9155],
@@ -179,7 +179,7 @@ print(y[:, 0]) # gets first col
 print(y[1, :]) # gets second row
 ```
 
-```
+```text
     tensor(0.9885)
     tensor(0.9885)
     0.98846435546875
@@ -196,7 +196,7 @@ print(y.view(1,10))
 print(y.view(2,5))
 ```
 
-```
+```text
     tensor([[0.9885, 1.4740, 1.9855, 1.4135, 0.3405, 1.9155, 1.3020, 0.9984, 0.4964,
              0.9856]])
     tensor([[0.9885, 1.4740, 1.9855, 1.4135, 0.3405],
@@ -212,7 +212,7 @@ One of the great things about PyTorch is that you can run everything on either t
 torch.cuda.is_available() # prints if CUDA is available on system
 ```
 
-```
+```text
     True
 ```
 
@@ -226,7 +226,7 @@ x.to(device) # puts the x matrix on device selected
 ```
 
 
-```
+```text
     tensor([[0.7825, 0.7864, 0.1257],
             [0.7588, 0.6572, 0.9262],
             [0.4881, 0.6329, 0.3424],
@@ -249,7 +249,7 @@ gg = torch.from_numpy(g)
 print(gg)
 ```
 
-```
+```text
     tensor([0., 0., 0., 0., 0.], dtype=torch.float64)
 ```
 
@@ -277,7 +277,7 @@ print(time_numpy(10000))
 print(time_torch(10000))
 ```
 
-```
+```text
     1.8906972408294678
     0.003466367721557617
 ```
@@ -326,7 +326,7 @@ net.cuda() # puts the NN on the GPU
 print(net) # displays NN structure
 ```
 
-```
+```text
     Net(
       (fc1): Linear(in_features=1, out_features=1, bias=True)
     )
@@ -339,7 +339,7 @@ Printing the network like this is useful because you can see the dimensions of t
 print(list(net.parameters()))
 ```
 
-```
+```text
     [Parameter containing:
     tensor([[0.2431]], device='cuda:0', requires_grad=True), Parameter containing:
     tensor([0.3372], device='cuda:0', requires_grad=True)]
@@ -390,7 +390,7 @@ for epoch in range(100):
             print("Epoch {} - loss: {}".format(epoch, loss.data[0]))
 ```
 
-```
+```text
     Epoch 0 - loss: 5.854729652404785
     Epoch 1 - loss: 2.294259548187256
     Epoch 2 - loss: 0.5001814961433411
@@ -409,7 +409,7 @@ for epoch in range(100):
 print(list(net.parameters()))
 ```
 
-```
+```text
     [Parameter containing:
     tensor([[2.9989]], device='cuda:0', requires_grad=True), Parameter containing:
     tensor([0.0063], device='cuda:0', requires_grad=True)]
@@ -427,7 +427,7 @@ print(input)
 print(net(input))
 ```
 
-```
+```text
     tensor([[[1.]]], device='cuda:0')
     tensor([[[3.0051]]], device='cuda:0', grad_fn=<AddBackward0>)
 ```
@@ -452,7 +452,7 @@ net = Net().cuda()
 net
 ```
 
-```
+```text
     Net(
       (fc1): Linear(in_features=1, out_features=10, bias=True)
       (fc2): Linear(in_features=10, out_features=1, bias=True)
@@ -476,7 +476,7 @@ for epoch in range(100):
             print("Epoch {} - loss: {}".format(epoch, loss.data))
 ```
 
-```
+```text
     Epoch 0 - loss: 7.190098285675049
     Epoch 1 - loss: 1.51701192407927e-06
     Epoch 2 - loss: 0.1253584325313568

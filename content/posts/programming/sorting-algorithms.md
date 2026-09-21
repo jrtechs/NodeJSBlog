@@ -109,7 +109,7 @@ This functional notation heavily uses the notion of array comprehensions.
 
 ## Memory Greedy Solution
 
-```
+```text
 def quickSortNormal(data):
     """
     This is the traditional implementation of quick sort
@@ -125,7 +125,7 @@ def quickSortNormal(data):
 
 ## Accumulation Solution
 
-```
+```text
 def quick_sort_accumulation(data, a):
     """
     Implementation of quickSort which forces tail recursion
@@ -149,7 +149,7 @@ def quicksort(data):
 
 ## In-Place Sorting Implementation
 
-```
+```text
 def iterative_partition(data, left, right):
     """
     Function which partitions the data into two segments,

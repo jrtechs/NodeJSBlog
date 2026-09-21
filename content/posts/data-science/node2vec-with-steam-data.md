@@ -37,7 +37,7 @@ Additionally, if you want to dive deeper into graph learning, I suggest that you
 I'm using a simple implementation of Node2Vec that I found on GitHub: [aditya-grover/node2vec](https://github.com/aditya-grover/node2vec).
 I'm using this package because it is a faithful implementation of the original paper and doesn't require you to install too many dependencies. This project was written in Python 2, so to get Python 3 support, you will need to merge in changes from someone's fork because the maintainer is not reviewing any of the pull requests.
 
-```
+```text
 git clone https://github.com/aditya-grover/node2vec
 git remote add python3 https://github.com/mcwehner/node2vec
 git pull python3 master

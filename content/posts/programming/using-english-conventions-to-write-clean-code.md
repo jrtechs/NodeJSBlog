@@ -109,13 +109,13 @@ People can make their programs more readable through documentation, clear
 variable, and helper methods. Most inexperienced programmers use terrible
 variable names which have no relationship to what they are storing. Take the
 following example:
-```
+```text
 String s1;
 String s2;
 String s3;
 ```
 
-```
+```text
 String firstName;
 String middleName;
 String lastName;
@@ -133,12 +133,12 @@ examined a particular student as he struggled to find a balance between personal
 ideas and sources when writing an essay(188). Although programmers and writers
 may know what they are talking about, they also need to communicate those ideas
 with the reader through ample sources and documentation.
-```
+```text
 \++++++++[\>++++[\>++\>+++\>+++\>+\<\<\<\<-]\>+\>+\>-\>\>+[\<]\<-]\>\>.\>---.+++++++..+++.\>\>.\<-.\<.+++.------.--------.\>\>+.\>++.
 ```
 Would you believe me if I told you that the segment of code above this sentence
 when ran in a Brainfuck compiler prints “Hello World”?
-```
+```text
 print("Hello World")
 ```
 This programming segment also prints “Hello World”, but in Python. There is a
